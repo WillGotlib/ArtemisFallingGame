@@ -70,7 +70,6 @@ public class BulletFire : MonoBehaviour
         } else  {
             // Ricochet
             // Vector3 v = Vector3.Reflect(transform.up, collision.contacts[0].normal);
-            // float rot = 90 - Mathf.Atan2(v.z, v.x) * Mathf.Rad2Deg;
             // transform.eulerAngles = new Vector3(0, rot, 0);
 
             ContactPoint contact = collision.contacts[0];
@@ -82,6 +81,8 @@ public class BulletFire : MonoBehaviour
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
             
             rb.velocity = reflectedVelo.normalized * bulletSpeed;
+            float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
+            transform.eulerAngles = new Vector3(0, rot, 0);
             print("Old velocity: " + oldvel.ToString() + " Old speed: " + speed.ToString() + " New vel: " + rb.velocity.ToString() + " New speed: " + rb.velocity.magnitude.ToString());
 
             // Subtract bounces and maybe destroy
