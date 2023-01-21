@@ -76,6 +76,8 @@ public class BulletFire : MonoBehaviour
             Vector3 oldvel = rb.velocity;
             float speed = oldvel.magnitude;
 
+            print("CONTACT NORMAL = " + contact.normal.ToString());
+
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
             
             rb.velocity = reflectedVelo.normalized * bulletSpeed;
