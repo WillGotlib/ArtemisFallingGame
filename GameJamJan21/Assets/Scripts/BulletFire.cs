@@ -73,6 +73,9 @@ public class BulletFire : MonoBehaviour
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
             // Call the add score function
             scoring.UpdateScore();
+            // Destroy but keep velocity!
+            Destroy(collision.gameObject);
+            rb.velocity = vel;
         } else  {
             // Ricochet
             ricochetBullet(collision);
@@ -87,10 +90,10 @@ public class BulletFire : MonoBehaviour
             print("CONTACT NORMAL = " + contact.normal.ToString());
 
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
-            
-            rb.velocity = reflectedVelo.normalized * bulletSpeed;
             float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
+            
+            rb.velocity = reflectedVelo.normalized * bulletSpeed;
             print("Old velocity: " + oldvel.ToString() + " Old speed: " + speed.ToString() + " New vel: " + rb.velocity.ToString() + " New speed: " + rb.velocity.magnitude.ToString());
 
             // Subtract bounces and maybe destroy
@@ -101,10 +104,6 @@ public class BulletFire : MonoBehaviour
     }
 
     void OnCollisionExit(Collision collision) {
-        if (collision.gameObject.tag == "Transient")
-        {
-            Destroy(collision.gameObject);
-            rb.velocity = vel;
-        }
+        // pass
     }
 }
