@@ -18,12 +18,15 @@ public class BulletFire : MonoBehaviour
     private Vector3 m_EulerAngleVelocity;
     private Vector3 vel;
 
+    public ScoreUI scoring;
+
     // Start is called before the first frame update
     void Start()
     {
         m_EulerAngleVelocity = new Vector3(0, 100, 0);   
         rb = GetComponent <Rigidbody> ();
         // rb.velocity = Vector3.back;
+        scoring = GameObject.FindObjectOfType<ScoreUI>();
     }
 
     // Update is called once per frame
@@ -53,7 +56,7 @@ public class BulletFire : MonoBehaviour
     }
 
     void InFlightBulletMove() {
-        print(rb.velocity);
+        // print(rb.velocity);
         // rb.velocity = transform.forward * bulletSpeed;
     }
 
@@ -64,9 +67,11 @@ public class BulletFire : MonoBehaviour
         // Reflect if applicable
         if (collision.gameObject.tag == "Transient")
         {
+            print("Encountered transient object");
             // Do nothing and pass through
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
             // Call the add score function
+            scoring.UpdateScore();
         } else  {
             // Ricochet
             // Vector3 v = Vector3.Reflect(transform.up, collision.contacts[0].normal);
