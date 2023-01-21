@@ -53,6 +53,7 @@ public class BulletFire : MonoBehaviour
 
     void PreShotOrienting() {
         transform.Rotate(0, Input.GetAxisRaw("Horizontal") * rotationSpeed, 0);
+        transform.Rotate(Input.GetAxisRaw("Vertical") * rotationSpeed, 0, 0);
     }
 
     void InFlightBulletMove() {
