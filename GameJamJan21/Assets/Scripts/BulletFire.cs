@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletFire : MonoBehaviour
 {
-    private Rigidbody rb;
+    public Rigidbody rb;
     public int maxBounces = 6;
     
     public float rotationSpeed = 0.3f;
