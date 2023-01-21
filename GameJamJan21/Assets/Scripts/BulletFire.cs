@@ -37,6 +37,7 @@ public class BulletFire : MonoBehaviour
             print("Pressed space!");
             fire_status = 1;
             rb.velocity = transform.forward * bulletSpeed;
+            // Play sound
         }
 
         if (fire_status == 0) {
