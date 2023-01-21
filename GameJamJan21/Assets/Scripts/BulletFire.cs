@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletFire : MonoBehaviour
 {
     private Rigidbody rb;
+    public GameObject bullet;
     public int maxBounces = 6;
     
     public float rotationSpeed = 0.3f;
@@ -100,7 +101,9 @@ public class BulletFire : MonoBehaviour
             // Subtract bounces and maybe destroy
             maxBounces -= 1;
             if (maxBounces < 1) {
-                Destroy(gameObject);
+                rb.velocity = new Vector3(0,0,0);
+                bullet.GetComponent<MeshRenderer>().enabled = false;
+                // Destroy(gameObject);
             }
     }
 
