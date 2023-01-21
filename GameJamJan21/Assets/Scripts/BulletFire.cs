@@ -20,6 +20,7 @@ public class BulletFire : MonoBehaviour
     private Vector3 vel;
 
     public ScoreUI scoring;
+    AudioSource audioBullet;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,8 @@ public class BulletFire : MonoBehaviour
             fire_status = 1;
             rb.velocity = transform.forward * bulletSpeed;
             // Play sound
+            audioBullet = GetComponent<AudioSource>();
+            audioBullet.Play(0);
         }
 
         if (fire_status == 0) {
