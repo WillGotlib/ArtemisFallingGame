@@ -75,9 +75,11 @@ public class BulletFire : MonoBehaviour
             scoring.UpdateScore();
         } else  {
             // Ricochet
-            // Vector3 v = Vector3.Reflect(transform.up, collision.contacts[0].normal);
-            // transform.eulerAngles = new Vector3(0, rot, 0);
+            ricochetBullet(collision);
+        }
+    }
 
+    void ricochetBullet(Collision collision) {
             ContactPoint contact = collision.contacts[0];
             Vector3 oldvel = vel;
             float speed = oldvel.magnitude;
@@ -96,7 +98,13 @@ public class BulletFire : MonoBehaviour
             if (maxBounces < 1) {
                 Destroy(gameObject);
             }
-        }
+    }
 
+    void OnCollisionExit(Collision collision) {
+        if (collision.gameObject.tag == "Transient")
+        {
+            Destroy(collision.gameObject);
+            rb.velocity = vel;
+        }
     }
 }
