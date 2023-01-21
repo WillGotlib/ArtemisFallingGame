@@ -29,11 +29,14 @@ public class BulletScript : MonoBehaviour
             // Do nothing and pass through
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
             // Call the add score function
-        } else if (collision.gameObject.tag == "Reflector") {
+        } else {
             // Ricochet
             ContactPoint contact = collision.contacts[0];
+            Vector3 oldvel = rb.velocity;
+            float speed = oldvel.magnitude;
             
-            rb.velocity = Vector3.Reflect(transform.forward, contact.normal);
+            rb.velocity = Vector3.Reflect(oldvel.normalized, contact.normal);
+            print("Old velocity: " + oldvel.ToString() + " Old speed: " + speed.ToString() + " New vel: " + rb.velocity.ToString() + " New speed: " + rb.velocity.magnitude.ToString());
 
             // Subtract bounces and maybe destroy
             maxBounces -= 1;
