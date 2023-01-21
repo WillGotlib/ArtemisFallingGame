@@ -34,6 +34,10 @@ public class BulletFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gameObject == null || rb == null) {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && fire_status == 0)
         {
             print("Pressed space!");
