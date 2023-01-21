@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletFire : MonoBehaviour
 {
     private Rigidbody rb;
+    public GameObject bullet;
     public int maxBounces = 6;
     
     public float rotationSpeed = 0.3f;
@@ -19,6 +20,7 @@ public class BulletFire : MonoBehaviour
     private Vector3 vel;
 
     public ScoreUI scoring;
+    AudioSource audioBullet;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +39,9 @@ public class BulletFire : MonoBehaviour
             print("Pressed space!");
             fire_status = 1;
             rb.velocity = transform.forward * bulletSpeed;
+            // Play sound
+            audioBullet = GetComponent<AudioSource>();
+            audioBullet.Play(0);
         }
 
         if (fire_status == 0) {
@@ -99,7 +104,9 @@ public class BulletFire : MonoBehaviour
             // Subtract bounces and maybe destroy
             maxBounces -= 1;
             if (maxBounces < 1) {
-                Destroy(gameObject);
+                rb.velocity = new Vector3(0,0,0);
+                bullet.GetComponent<MeshRenderer>().enabled = false;
+                // Destroy(gameObject);
             }
     }
 
