@@ -16,6 +16,7 @@ public class BulletFire : MonoBehaviour
 
     private Vector3 motion;
     private Vector3 m_EulerAngleVelocity;
+    private Vector3 vel;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,7 @@ public class BulletFire : MonoBehaviour
         else {
             print("Bullet path over");
         }
+        vel = rb.velocity;
     }
 
     void PreShotOrienting() {
@@ -57,7 +59,6 @@ public class BulletFire : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        print(rb.velocity.ToString());
         print("collided with something");
         // Check tag for Transient or Reflector
         // Reflect if applicable
@@ -73,7 +74,7 @@ public class BulletFire : MonoBehaviour
             // transform.eulerAngles = new Vector3(0, rot, 0);
 
             ContactPoint contact = collision.contacts[0];
-            Vector3 oldvel = rb.velocity;
+            Vector3 oldvel = vel;
             float speed = oldvel.magnitude;
 
             print("CONTACT NORMAL = " + contact.normal.ToString());
