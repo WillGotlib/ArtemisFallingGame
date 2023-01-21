@@ -17,7 +17,9 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // Change to be player position
+        Ray preview = new Ray(rb.position, rb.velocity);
+        RaycastHit hit;
     }
 
     void OnCollisionEnter(Collision collision)
