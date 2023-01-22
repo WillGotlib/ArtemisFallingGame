@@ -1,45 +1,84 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;           
+using UnityEngine.InputSystem.Controls;
 
 public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
     public float speed = 6f;
+    public float sensitivity = 5f;
     private bool aiming_status = false;
     public GameObject projectile;
     private GameObject bullet;
     float turnSmoothVelocity;
+    Vector3 moveDirection;
+    Vector3 lookDirection;
+    new Camera camera;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        camera = GetComponentInChildren<Camera>();
+    }
+
+    public void OnMovement(InputValue value)
+    {
+        // Read value from control. The type depends on what type of controls.
+        // the action is bound to.
+        moveDirection = value.Get<Vector3>();
+
+        // IMPORTANT: The given InputValue is only valid for the duration of the callback.
+        //            Storing the InputValue references somewhere and calling Get<T>()
+        //            later does not work correctly.
+    }
+
+    public void OnLook(InputValue value)
+    {
+        // Read value from control. The type depends on what type of controls.
+        // the action is bound to.
+        lookDirection = value.Get<Vector3>();
+        lookDirection = lookDirection * sensitivity * -1;
+
+        // IMPORTANT: The given InputValue is only valid for the duration of the callback.
+        //            Storing the InputValue references somewhere and calling Get<T>()
+        //            later does not work correctly.
+    }
+
+    public void OnAim()
+    {
+        if (aiming_status == false) {
+            startAiming();
+            aiming_status = true;
+        } else {
+            stopAiming();
+            aiming_status = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        camera.transform.localRotation = Quaternion.Euler(lookDirection);
+
         if (aiming_status == false) {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
-            Vector3 direction = new Vector3(horizontal, 0, vertical).normalized;
-
-            int sensitivity = 3;
-            float turnSmoothTime = 0.1f;
-            
-            float rotateHorizontal = Input.GetAxis("Mouse X");
-            float rotateVertical = Input.GetAxis("Mouse Y");
-            transform.Rotate(transform.up * rotateHorizontal * sensitivity);
-            // transform.Rotate(transform.right * rotateVertical);
-
-            if (direction.magnitude >= 0.1f) {
-                float targetAngle = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg;
+            if (moveDirection.magnitude >= 0.1f) {
+                // TODO: The rotation is making the movement weird
+                float turnSmoothTime = 0.5f;
+                float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                controller.Move(moveDir.normalized * speed * Time.deltaTime);
+                // Camera relative stuff
+                print(moveDirection);
+                Vector3 forward = camera.transform.forward;
+                Vector3 right = camera.transform.right;
+                Vector3 forwardRelative = moveDirection.z * forward;
+                Vector3 rightRelative = moveDirection.x * right;
+                Vector3 relativeMove = forwardRelative + rightRelative;
+
+                controller.Move(relativeMove * speed * Time.deltaTime);
             }
 
             if (Input.GetMouseButtonDown(1)) {
