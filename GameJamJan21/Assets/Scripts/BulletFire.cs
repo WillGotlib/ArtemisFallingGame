@@ -1,4 +1,13 @@
+using System;
 using UnityEngine;
+
+public enum FiringState
+{
+    NotFired,
+    InFlight,
+    Finished,
+    Destroyed, // this state is so that the finished case only runs once
+}
 
 public class BulletFire : MonoBehaviour
 {
@@ -8,17 +17,14 @@ public class BulletFire : MonoBehaviour
     
     public float rotationSpeed = 0.3f;
     public float bulletSpeed = 3f;
-    // 0 = Not fired
-    // 1 = In flight
-    // 2 = Finished/finishing flight
-    private int fire_status = 0;
+    [NonSerialized] public FiringState fireStatus = FiringState.NotFired;
 
     private Vector3 motion;
     private Vector3 m_EulerAngleVelocity;
     private Vector3 vel;
 
-    public ScoreUI scoring;
-    AudioSource audioBullet;
+    [NonSerialized] public ScoreUI scoring;
+    private AudioSource _audioBullet;
 
     // Start is called before the first frame update
     void Start()
@@ -27,31 +33,38 @@ public class BulletFire : MonoBehaviour
         rb = GetComponent <Rigidbody> ();
         // rb.velocity = Vector3.back;
         scoring = GameObject.FindObjectOfType<ScoreUI>();
+        
+        _audioBullet = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && fire_status == 0)
+        switch (fireStatus)
         {
-            print("Pressed space!");
-            fire_status = 1;
-            rb.velocity = transform.forward * bulletSpeed;
-            // Play sound
-            audioBullet = GetComponent<AudioSource>();
-            audioBullet.Play(0);
-        }
-
-        if (fire_status == 0) {
-            PreShotOrienting();
-        }
-        else if (fire_status == 1) {
-            InFlightBulletMove();
-        }
-        else {
-            print("Bullet path over");
+            case FiringState.NotFired:
+                PreShotOrienting();
+                break;
+            case FiringState.InFlight:
+                InFlightBulletMove();
+                break;
+            case FiringState.Finished:
+                print("Bullet path over");
+                fireStatus = FiringState.Destroyed;
+                break;
+            default:
+                break;
         }
         vel = rb.velocity;
+    }
+
+    public void Fire()
+    {
+        fireStatus = FiringState.InFlight;
+        rb.velocity = transform.forward * bulletSpeed;
+        
+        // Play sound
+        _audioBullet.Play(0);
     }
 
     void PreShotOrienting() {
@@ -104,6 +117,7 @@ public class BulletFire : MonoBehaviour
             if (maxBounces < 1) {
                 rb.velocity = new Vector3(0,0,0);
                 bullet.GetComponent<MeshRenderer>().enabled = false;
+                fireStatus = FiringState.Finished;
                 // Destroy(gameObject);
             }
     }

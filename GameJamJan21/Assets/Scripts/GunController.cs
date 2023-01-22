@@ -5,14 +5,17 @@ using UnityEngine;
 public class GunController : MonoBehaviour
 {
     public int maxAmmo = 12;
+    public int maxBouncers = 1;
     // not serialized so that other things can read and update this, ammo refills or the ui that shows ammo
-    [NonSerialized] public int AmmoCount;
+    [NonSerialized] public int ammoCount;
+    [NonSerialized] public int bouncingCount;
 
     [Header("Object values")] public Animator animationController;
     
     void Start()
     {
-        AmmoCount = maxAmmo;
+        ammoCount = maxAmmo;
+        bouncingCount = maxBouncers;
     }
 
     void Update()
