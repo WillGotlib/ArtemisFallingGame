@@ -117,7 +117,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6298338442955094647}
+  - {fileID: 5641640861417560114}
   - {fileID: 8163768010944472932}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fcf4bf1cd81b471aa9fe9fb516bad94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullet: {fileID: 6639398615065698509}
+  bullet: {fileID: 4972240987904475784}
   maxBounces: 9
   rotationSpeed: 0.3
   bulletSpeed: 10
@@ -272,7 +272,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1001 &5828370456670576028
+--- !u!1001 &5314699478796746713
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -337,17 +337,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
       propertyPath: m_Name
-      value: Bullet
+      value: bullet
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
---- !u!4 &6298338442955094647 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
-  m_PrefabInstance: {fileID: 5828370456670576028}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &6639398615065698509 stripped
+--- !u!1 &4972240987904475784 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
-  m_PrefabInstance: {fileID: 5828370456670576028}
+  m_PrefabInstance: {fileID: 5314699478796746713}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5641640861417560114 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
+  m_PrefabInstance: {fileID: 5314699478796746713}
   m_PrefabAsset: {fileID: 0}
