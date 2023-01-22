@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraSwitch: MonoBehaviour
 {
-    public GameObject[] cameras;
+    public Camera[] cameras;
     private int choice = 0;
     
     // Start is called before the first frame update
@@ -30,9 +30,10 @@ public class CameraSwitch: MonoBehaviour
     
     void DisableObjects()
     {
-        for (int i = 0; i < cameras.Length; i++)
+        Camera[] allCameras = Camera.allCameras;
+        for (int i = 0; i < allCameras.Length; i++)
         {
-            cameras[i].SetActive(false);
+            allCameras[i].gameObject.SetActive(false);
         }
     }
 }
