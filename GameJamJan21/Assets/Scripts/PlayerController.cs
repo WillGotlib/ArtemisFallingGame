@@ -16,11 +16,13 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     Vector3 lookDirection;
     new Camera camera;
+    GameObject cameraController;
 
     // Start is called before the first frame update
     void Start()
     {
         camera = GetComponentInChildren<Camera>();
+        cameraController = GameObject.Find("CameraControl");
     }
 
     public void OnMovement(InputValue value)
@@ -32,6 +34,12 @@ public class PlayerController : MonoBehaviour
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
         //            Storing the InputValue references somewhere and calling Get<T>()
         //            later does not work correctly.
+    }
+
+    public void OnSwitchCamera() {
+        if (cameraController != null) {
+            cameraController.GetComponent<CameraSwitch>().SwitchCamera();
+        }
     }
 
     public void OnLook(InputValue value)
@@ -66,7 +74,6 @@ public class PlayerController : MonoBehaviour
             if (moveDirection.magnitude >= 0.1f) {
 
                 // Camera relative stuff
-                print(moveDirection);
                 Vector3 forward = camera.transform.forward;
                 Vector3 right = camera.transform.right;
                 Vector3 forwardRelative = moveDirection.z * forward;

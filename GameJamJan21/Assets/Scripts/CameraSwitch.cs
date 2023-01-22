@@ -27,6 +27,16 @@ public class CameraSwitch: MonoBehaviour
             cameras[choice].gameObject.SetActive(true);
         }
     }
+
+    public void SwitchCamera() {
+        DisableObjects();
+        choice += 1;
+        if (choice >= cameras.Length)
+        {
+            choice = 0;
+        }
+        cameras[choice].gameObject.SetActive(true);     
+    }
     
     void DisableObjects()
     {
