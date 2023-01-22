@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;           
+using UnityEngine.InputSystem.Controls;
 
 public class BulletFire : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class BulletFire : MonoBehaviour
     private Vector3 motion;
     private Vector3 m_EulerAngleVelocity;
     private Vector3 vel;
+    private Vector3 lookDirection;
 
     public ScoreUI scoring;
     AudioSource audioBullet;
@@ -31,6 +34,20 @@ public class BulletFire : MonoBehaviour
         scoring = GameObject.FindObjectOfType<ScoreUI>();
     }
 
+    public void OnFire()
+    {
+        fire_status = 1;
+        rb.velocity = transform.forward * bulletSpeed;
+        // Play sound
+        audioBullet = GetComponent<AudioSource>();
+        audioBullet.Play(0);
+    }
+
+    public void OnBulletLook(InputValue value) {
+        lookDirection = value.Get<Vector3>();
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -42,10 +59,6 @@ public class BulletFire : MonoBehaviour
         {
             print("Pressed space!");
             fire_status = 1;
-            rb.velocity = transform.forward * bulletSpeed;
-            // Play sound
-            audioBullet = GetComponent<AudioSource>();
-            audioBullet.Play(0);
         }
 
         if (fire_status == 0) {
@@ -61,7 +74,7 @@ public class BulletFire : MonoBehaviour
     }
 
     void PreShotOrienting() {
-        transform.Rotate(0, Input.GetAxisRaw("Horizontal") * rotationSpeed, 0);
+        transform.Rotate(0, lookDirection.x * rotationSpeed, 0);
         //transform.Rotate(Input.GetAxisRaw("Vertical") * rotationSpeed, 0, 0);
     }
 

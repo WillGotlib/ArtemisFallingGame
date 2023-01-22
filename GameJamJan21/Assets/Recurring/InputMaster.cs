@@ -53,6 +53,15 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchCamera"",
+                    ""type"": ""Button"",
+                    ""id"": ""b43816c3-833f-463f-9baf-cead8331356c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -220,6 +229,131 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a30bda2-55bf-4464-9143-32e8190e599e"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""BulletAim"",
+            ""id"": ""f7297c83-70c0-4c0a-9b4d-2da00c71f281"",
+            ""actions"": [
+                {
+                    ""name"": ""BulletLook"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""be109faa-ceeb-45a2-95a1-bf4e274cfe8d"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""46f018cf-6fc6-462f-940e-50d1b7bae837"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""3D Vector"",
+                    ""id"": ""f09663cb-90d3-4635-b470-e49acce609c3"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BulletLook"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""347dcca6-48f3-4940-a6ea-272e93e25dbd"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BulletLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""f1704ef7-51a1-4eb2-a18e-022dc862c5be"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BulletLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""4c5a29e1-2f28-4fce-b009-4b2cf20d6c93"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BulletLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""f1662b1a-1790-4686-8bce-f5ac710a3616"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BulletLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""7a5ea912-4956-4d12-b2e3-fd600417bb2b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BulletLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""39101ffa-96d3-466c-af6d-5cb04b45826b"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BulletLook"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""469e01a2-b83d-4466-858e-cb7da3514f1f"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -243,6 +377,11 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_SwitchCamera = m_Player.FindAction("SwitchCamera", throwIfNotFound: true);
+        // BulletAim
+        m_BulletAim = asset.FindActionMap("BulletAim", throwIfNotFound: true);
+        m_BulletAim_BulletLook = m_BulletAim.FindAction("BulletLook", throwIfNotFound: true);
+        m_BulletAim_Fire = m_BulletAim.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -305,6 +444,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_SwitchCamera;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -312,6 +452,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
+        public InputAction @SwitchCamera => m_Wrapper.m_Player_SwitchCamera;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -330,6 +471,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLook;
+                @SwitchCamera.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
+                @SwitchCamera.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
+                @SwitchCamera.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchCamera;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -343,10 +487,54 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
+                @SwitchCamera.started += instance.OnSwitchCamera;
+                @SwitchCamera.performed += instance.OnSwitchCamera;
+                @SwitchCamera.canceled += instance.OnSwitchCamera;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // BulletAim
+    private readonly InputActionMap m_BulletAim;
+    private IBulletAimActions m_BulletAimActionsCallbackInterface;
+    private readonly InputAction m_BulletAim_BulletLook;
+    private readonly InputAction m_BulletAim_Fire;
+    public struct BulletAimActions
+    {
+        private @InputMaster m_Wrapper;
+        public BulletAimActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @BulletLook => m_Wrapper.m_BulletAim_BulletLook;
+        public InputAction @Fire => m_Wrapper.m_BulletAim_Fire;
+        public InputActionMap Get() { return m_Wrapper.m_BulletAim; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BulletAimActions set) { return set.Get(); }
+        public void SetCallbacks(IBulletAimActions instance)
+        {
+            if (m_Wrapper.m_BulletAimActionsCallbackInterface != null)
+            {
+                @BulletLook.started -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnBulletLook;
+                @BulletLook.performed -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnBulletLook;
+                @BulletLook.canceled -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnBulletLook;
+                @Fire.started -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnFire;
+            }
+            m_Wrapper.m_BulletAimActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @BulletLook.started += instance.OnBulletLook;
+                @BulletLook.performed += instance.OnBulletLook;
+                @BulletLook.canceled += instance.OnBulletLook;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
+            }
+        }
+    }
+    public BulletAimActions @BulletAim => new BulletAimActions(this);
     private int m_NintendoControlSchemeSchemeIndex = -1;
     public InputControlScheme NintendoControlSchemeScheme
     {
@@ -361,5 +549,11 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         void OnAim(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnSwitchCamera(InputAction.CallbackContext context);
+    }
+    public interface IBulletAimActions
+    {
+        void OnBulletLook(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
     }
 }
