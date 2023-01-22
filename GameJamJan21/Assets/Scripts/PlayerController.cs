@@ -64,11 +64,6 @@ public class PlayerController : MonoBehaviour
 
         if (aiming_status == false) {
             if (moveDirection.magnitude >= 0.1f) {
-                // TODO: The rotation is making the movement weird
-                float turnSmoothTime = 0.5f;
-                float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
                 // Camera relative stuff
                 print(moveDirection);
@@ -77,6 +72,11 @@ public class PlayerController : MonoBehaviour
                 Vector3 forwardRelative = moveDirection.z * forward;
                 Vector3 rightRelative = moveDirection.x * right;
                 Vector3 relativeMove = forwardRelative + rightRelative;
+
+                float turnSmoothTime = 2f;
+                float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(relativeMove), turnSmoothTime * Time.deltaTime);
 
                 controller.Move(relativeMove * speed * Time.deltaTime);
             }
