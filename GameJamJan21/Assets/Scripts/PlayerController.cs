@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     Vector3 moveDirection;
     Vector3 lookDirection;
     new Camera camera;
+    bool followingCamera = true;
     GameObject cameraController;
 
     // Start is called before the first frame update
@@ -23,6 +24,10 @@ public class PlayerController : MonoBehaviour
     {
         camera = GetComponentInChildren<Camera>();
         cameraController = GameObject.Find("CameraControl");
+        if (camera == null) {
+            camera = GameObject.Find("Top-Down Camera").GetComponentInChildren<Camera>();
+            followingCamera = false;
+        }
     }
 
     public void OnMovement(InputValue value)
@@ -68,13 +73,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        camera.transform.localRotation = Quaternion.Euler(lookDirection);
+        if (followingCamera == true)
+            camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
         if (aiming_status == false) {
             if (moveDirection.magnitude >= 0.1f) {
 
                 // Camera relative stuff
-                Vector3 forward = camera.transform.forward;
+                /**Vector3 forward = camera.transform.forward;
                 Vector3 right = camera.transform.right;
                 Vector3 forwardRelative = moveDirection.z * forward;
                 Vector3 rightRelative = moveDirection.x * right;
@@ -83,9 +89,9 @@ public class PlayerController : MonoBehaviour
                 float turnSmoothTime = 2f;
                 float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(relativeMove), turnSmoothTime * Time.deltaTime);
-
-                controller.Move(relativeMove * speed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(relativeMove), turnSmoothTime * Time.deltaTime);**/
+                
+                controller.Move(moveDirection * speed * Time.deltaTime);
             }
 
             if (Input.GetMouseButtonDown(1)) {

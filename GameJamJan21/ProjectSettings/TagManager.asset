@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Reflector
   - Transient
+  - Spawnpoint
   layers:
   - Default
   - TransparentFX

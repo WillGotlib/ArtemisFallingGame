@@ -42,11 +42,11 @@ public class BulletFire : MonoBehaviour
 
     public void OnFire()
     {
-        fire_status = 1;
+        fireStatus = FiringState.InFlight;
         rb.velocity = transform.forward * bulletSpeed;
         // Play sound
-        audioBullet = GetComponent<AudioSource>();
-        audioBullet.Play(0);
+        _audioBullet = GetComponent<AudioSource>();
+        _audioBullet.Play(0);
     }
 
     public void OnBulletLook(InputValue value) {
@@ -135,7 +135,7 @@ public class BulletFire : MonoBehaviour
                 rb.velocity = new Vector3(0,0,0);
                 bullet.GetComponent<MeshRenderer>().enabled = false;
                 fireStatus = FiringState.Finished;
-                // Destroy(gameObject);
+                Destroy(gameObject);
             }
     }
 
