@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     new Camera camera;
     bool followingCamera = true;
     GameObject cameraController;
+    public float gravity = 0.000001f;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +77,13 @@ public class PlayerController : MonoBehaviour
         if (followingCamera == true)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
+        CharacterController controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
+        moveDirection.y = 0;
+        if (!controller.isGrounded) {
+            moveDirection.y = -(Time.deltaTime * speed * gravity);
+            controller.Move(moveDirection * speed * Time.deltaTime);
+        }
+
         if (aiming_status == false) {
             if (moveDirection.magnitude >= 0.1f) {
 
@@ -90,7 +98,7 @@ public class PlayerController : MonoBehaviour
                 float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(relativeMove), turnSmoothTime * Time.deltaTime);**/
-                
+
                 controller.Move(moveDirection * speed * Time.deltaTime);
             }
 

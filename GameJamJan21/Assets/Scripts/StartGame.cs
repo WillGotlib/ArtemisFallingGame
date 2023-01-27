@@ -14,6 +14,7 @@ public class StartGame : MonoBehaviour
 
         foreach (GameObject spawn in spawnPoints) {
             Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation);
+            Destroy(spawn);
         }
     }
 
