@@ -4,12 +4,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;           
 using UnityEngine.InputSystem.Controls;
 
+public enum PlayerState {
+    Free,
+    Locked,
+    Aiming
+}
+
 public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
     public float speed = 6f;
     public float sensitivity = 5f;
-    private bool aiming_status = false;
     public GameObject projectile;
     private GameObject bullet;
     float turnSmoothVelocity;
@@ -19,6 +24,7 @@ public class PlayerController : MonoBehaviour
     bool followingCamera = true;
     GameObject cameraController;
     public float gravity = 0.000001f;
+    PlayerState state = PlayerState.Free;
 
     // Start is called before the first frame update
     void Start()
@@ -31,11 +37,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void hitByShot() {
+        LockState();
+        Destroy(gameObject);
+    }
+
     public void OnMovement(InputValue value)
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
-        moveDirection = value.Get<Vector3>();
+        if (state == PlayerState.Free) {
+            moveDirection = value.Get<Vector3>();
+        } else {
+            moveDirection = new Vector3(0, 0, 0);
+        }
+        
 
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
         //            Storing the InputValue references somewhere and calling Get<T>()
@@ -43,7 +59,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnSwitchCamera() {
-        if (cameraController != null) {
+        if (cameraController != null && state != PlayerState.Locked) {
             cameraController.GetComponent<CameraSwitch>().SwitchCamera();
         }
     }
@@ -52,9 +68,10 @@ public class PlayerController : MonoBehaviour
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
-        lookDirection = value.Get<Vector3>();
-        lookDirection = lookDirection * sensitivity * -1;
-
+        if (state != PlayerState.Locked) {
+            lookDirection = value.Get<Vector3>();
+            lookDirection = lookDirection * sensitivity * -1;
+        }
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
         //            Storing the InputValue references somewhere and calling Get<T>()
         //            later does not work correctly.
@@ -62,12 +79,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim()
     {
-        if (aiming_status == false) {
-            startAiming();
-            aiming_status = true;
-        } else {
-            stopAiming();
-            aiming_status = false;
+        if (state != PlayerState.Locked) {
+            if (state != PlayerState.Aiming) {
+                startAiming();
+            } else {
+                stopAiming();
+            }
         }
     }
 
@@ -81,10 +98,11 @@ public class PlayerController : MonoBehaviour
         if (!controller.isGrounded) {
             print(transform.position);
             Vector3 fall = new Vector3(0, -(gravity), 0);
-            controller.Move(fall * speed * Time.deltaTime);
+            controller.Move(fall * Time.deltaTime);
         }
 
-        if (aiming_status == false) {
+        print(state);
+        if (state != PlayerState.Aiming) {
             if (moveDirection.magnitude >= 0.1f) {
 
                 // Camera relative stuff
@@ -103,26 +121,20 @@ public class PlayerController : MonoBehaviour
 
                 controller.Move(moveDirection * speed * Time.deltaTime);
             }
-
-            if (Input.GetMouseButtonDown(1)) {
-                startAiming();
-            }
                 
-        } else {
-            if (Input.GetMouseButtonDown(1))
-                stopAiming();
         }
     }
 
     void startAiming() {
-        aiming_status = true;
+        AimState();
         GameObject bullet = Object.Instantiate(projectile, gameObject.transform, false);
         Vector3 cur_pos = gameObject.transform.position;
         bullet.transform.position = new Vector3(cur_pos[0] + 0.5f, cur_pos[1] + 0.2f, cur_pos[2] + 0.5f);
+        bullet.GetComponent<BulletFire>().setShooter(this);
     }
 
     void stopAiming() {
-        aiming_status = false;
+        FreeState();
         Object[] allBullets = Object.FindObjectsOfType(typeof(GameObject));
         foreach(GameObject obj in allBullets) {
             if(obj.transform.name == "Bullet Parent(Clone)" && obj.transform.parent == gameObject.transform){
@@ -130,5 +142,17 @@ public class PlayerController : MonoBehaviour
             }
         }
         Destroy(bullet);
+    }
+
+    public void FreeState() {
+        state = PlayerState.Free;
+    }
+
+    public void LockState() {
+        state = PlayerState.Locked;
+    }
+
+    public void AimState() {
+        state = PlayerState.Aiming;
     }
 }

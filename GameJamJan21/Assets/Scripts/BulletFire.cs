@@ -28,6 +28,7 @@ public class BulletFire : MonoBehaviour
 
     [NonSerialized] public ScoreUI scoring;
     private AudioSource _audioBullet;
+    private PlayerController shooter;
 
     // Start is called before the first frame update
     void Start()
@@ -79,6 +80,7 @@ public class BulletFire : MonoBehaviour
     {
         fireStatus = FiringState.InFlight;
         rb.velocity = transform.forward * bulletSpeed;
+        shooter.FreeState();
         
         // Play sound
         _audioBullet.Play(0);
@@ -109,6 +111,11 @@ public class BulletFire : MonoBehaviour
             // Destroy but keep velocity!
             Destroy(collision.gameObject);
             rb.velocity = vel;
+        } else if (collision.gameObject.tag == "Player") {
+            print("Encountered player");
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.hitByShot();
+            finishShot();
         } else  {
             // Ricochet
             ricochetBullet(collision);
@@ -132,14 +139,18 @@ public class BulletFire : MonoBehaviour
             // Subtract bounces and maybe destroy
             maxBounces -= 1;
             if (maxBounces < 1) {
-                rb.velocity = new Vector3(0,0,0);
-                bullet.GetComponent<MeshRenderer>().enabled = false;
-                fireStatus = FiringState.Finished;
-                Destroy(gameObject);
+                finishShot();
             }
     }
 
-    void OnCollisionExit(Collision collision) {
-        // pass
+    void finishShot() {
+        rb.velocity = new Vector3(0,0,0);
+        bullet.GetComponent<MeshRenderer>().enabled = false;
+        fireStatus = FiringState.Finished;
+        Destroy(gameObject);
+    }
+
+    public void setShooter(PlayerController player) {
+        shooter = player;
     }
 }
