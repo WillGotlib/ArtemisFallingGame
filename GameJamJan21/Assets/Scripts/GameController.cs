@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public GameOverScreen GameOverScreen;
-    bool gameHasEnded = false;
 
     public void GameOver(int status) {
         GameOverScreen.Setup(status);

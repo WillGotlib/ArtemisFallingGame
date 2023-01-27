@@ -78,10 +78,10 @@ public class PlayerController : MonoBehaviour
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
         CharacterController controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
-        moveDirection.y = 0;
         if (!controller.isGrounded) {
-            moveDirection.y = -(Time.deltaTime * speed * gravity);
-            controller.Move(moveDirection * speed * Time.deltaTime);
+            print(transform.position);
+            Vector3 fall = new Vector3(0, -(gravity), 0);
+            controller.Move(fall * speed * Time.deltaTime);
         }
 
         if (aiming_status == false) {
@@ -93,11 +93,13 @@ public class PlayerController : MonoBehaviour
                 Vector3 forwardRelative = moveDirection.z * forward;
                 Vector3 rightRelative = moveDirection.x * right;
                 Vector3 relativeMove = forwardRelative + rightRelative;
+                **/
+                moveDirection.y = 0;
 
                 float turnSmoothTime = 2f;
-                float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.y) * Mathf.Rad2Deg;
+                float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(relativeMove), turnSmoothTime * Time.deltaTime);**/
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), turnSmoothTime * Time.deltaTime);
 
                 controller.Move(moveDirection * speed * Time.deltaTime);
             }
