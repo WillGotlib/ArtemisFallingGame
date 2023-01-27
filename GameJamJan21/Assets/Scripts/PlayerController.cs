@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
         aiming_status = false;
         Object[] allBullets = Object.FindObjectsOfType(typeof(GameObject));
         foreach(GameObject obj in allBullets) {
-            if(obj.transform.name == "Bullet Parent(Clone)"){
+            if(obj.transform.name == "Bullet Parent(Clone)" && obj.transform.parent == gameObject.transform){
                 Destroy(obj);
             }
         }
