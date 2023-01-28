@@ -221,6 +221,8 @@ MonoBehaviour:
   sensitivity: 20
   projectile: {fileID: 7842087154744338828, guid: eff26a5f26609f14fbef9701d319a669, type: 3}
   gravity: 10
+  dashIntensity: 200
+  dashCooldown: 3
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0

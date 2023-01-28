@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     GameObject cameraController;
     public float gravity = 0.000001f;
     PlayerState state;
+    public float dashIntensity = 10;
+    public float dashCooldown = 5;
+    float currentCooldown;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +39,7 @@ public class PlayerController : MonoBehaviour
             followingCamera = false;
         }
         state = PlayerState.Free;
+        currentCooldown = 0;
     }
 
     public void hitByShot() {
@@ -90,14 +94,24 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnDash() {
-        if (Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.z)) {
-            // pass
+        if (currentCooldown <= 0) {
+            var abs_x = Mathf.Abs(moveDirection.x);
+            var abs_z = Mathf.Abs(moveDirection.z);
+            if (abs_x == 0 && abs_z == 0) {
+                return;
+            }
+            currentCooldown = dashCooldown;
+            controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        print(currentCooldown);
+        if (currentCooldown > 0)
+            currentCooldown -= Time.deltaTime;
+
         if (followingCamera == true)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
@@ -126,7 +140,6 @@ public class PlayerController : MonoBehaviour
 
                 controller.Move(moveDirection * speed * Time.deltaTime);
             }
-                
         }
     }
 
