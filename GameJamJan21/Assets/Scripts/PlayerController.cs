@@ -89,6 +89,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnDash() {
+        if (Mathf.Abs(moveDirection.x) > Mathf.Abs(moveDirection.z)) {
+            // pass
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -101,7 +107,6 @@ public class PlayerController : MonoBehaviour
             controller.Move(fall * Time.deltaTime);
         }
 
-        print(state);
         if (state != PlayerState.Aiming) {
             if (moveDirection.magnitude >= 0.1f) {
 

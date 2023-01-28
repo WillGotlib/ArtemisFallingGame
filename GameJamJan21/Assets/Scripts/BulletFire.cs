@@ -134,6 +134,7 @@ public class BulletFire : MonoBehaviour
             float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
             
+            reflectedVelo.y = 0;
             rb.velocity = reflectedVelo.normalized * bulletSpeed;
             print("Old velocity: " + oldvel.ToString() + " Old speed: " + speed.ToString() + " New vel: " + rb.velocity.ToString() + " New speed: " + rb.velocity.magnitude.ToString());
 
