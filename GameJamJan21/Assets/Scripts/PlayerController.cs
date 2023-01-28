@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     bool followingCamera = true;
     GameObject cameraController;
     public float gravity = 0.000001f;
-    PlayerState state = PlayerState.Free;
+    PlayerState state;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
             camera = GameObject.Find("Top-Down Camera").GetComponentInChildren<Camera>();
             followingCamera = false;
         }
+        state = PlayerState.Free;
     }
 
     public void hitByShot() {
@@ -96,7 +97,6 @@ public class PlayerController : MonoBehaviour
 
         CharacterController controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
         if (!controller.isGrounded) {
-            print(transform.position);
             Vector3 fall = new Vector3(0, -(gravity), 0);
             controller.Move(fall * Time.deltaTime);
         }

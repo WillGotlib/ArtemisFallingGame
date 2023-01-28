@@ -45,6 +45,7 @@ public class BulletFire : MonoBehaviour
     {
         fireStatus = FiringState.InFlight;
         rb.velocity = transform.forward * bulletSpeed;
+        shooter.FreeState();
         // Play sound
         _audioBullet = GetComponent<AudioSource>();
         _audioBullet.Play(0);
