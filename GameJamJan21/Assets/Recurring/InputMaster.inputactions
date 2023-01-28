@@ -189,7 +189,7 @@
                 {
                     "name": "left",
                     "id": "ab4e1c9c-588d-4a06-bc25-d390fd4353b2",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardControls",
@@ -200,7 +200,7 @@
                 {
                     "name": "right",
                     "id": "e3210a54-c81a-4624-9621-0d91aa80869b",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardControls",
@@ -211,7 +211,7 @@
                 {
                     "name": "forward",
                     "id": "e1df98ea-a4a5-48b0-96d7-108d3e6387c6",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardControls",
@@ -222,7 +222,7 @@
                 {
                     "name": "backward",
                     "id": "2bdd3e79-58b6-4892-9d2e-5729d1e3062c",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardControls",
@@ -266,7 +266,7 @@
                 {
                     "name": "left",
                     "id": "d6830ea6-e678-4a39-8ebe-4647053bac8f",
-                    "path": "<Gamepad>/leftStick/left",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "NintendoControlScheme",
@@ -277,7 +277,7 @@
                 {
                     "name": "right",
                     "id": "706cf2dc-2519-4785-b29e-0b7ae94a0942",
-                    "path": "<Gamepad>/leftStick/right",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "NintendoControlScheme",
@@ -288,7 +288,7 @@
                 {
                     "name": "forward",
                     "id": "81f89b47-595f-49c0-801c-8d993ba40de3",
-                    "path": "<Gamepad>/leftStick/up",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "NintendoControlScheme",
@@ -299,7 +299,7 @@
                 {
                     "name": "backward",
                     "id": "36899d3f-5b68-4c7d-9fd7-d4cca6b66791",
-                    "path": "<Gamepad>/leftStick/down",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "NintendoControlScheme",

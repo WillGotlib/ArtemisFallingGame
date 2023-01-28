@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 7842087153980711341}
-  maxBounces: 9
+  maxBounces: 4
   rotationSpeed: 0.3
   bulletSpeed: 10
 --- !u!54 &7842087154744338826
