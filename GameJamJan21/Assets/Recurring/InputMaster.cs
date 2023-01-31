@@ -28,15 +28,6 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
             ""id"": ""4326a9e9-02c1-4856-8f00-2281c484c1cf"",
             ""actions"": [
                 {
-                    ""name"": ""Aim"",
-                    ""type"": ""Button"",
-                    ""id"": ""69370eef-4b71-4293-9558-02914e221421"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Movement"",
                     ""type"": ""PassThrough"",
                     ""id"": ""b031336f-603d-43c4-8d4e-13d21ce98de5"",
@@ -71,33 +62,20 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""26e35e71-35b9-4582-8cfe-9418ea43ecf0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": """",
-                    ""id"": ""48a308f4-c2d5-401d-a8d6-30a7e539c8b0"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
-                    ""action"": ""Aim"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""599387ec-aa70-415c-b1d1-b60908972cdc"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardControls"",
-                    ""action"": ""Aim"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""3D Vector"",
+                    ""name"": ""3D Vector (Gamepad)"",
                     ""id"": ""9098078e-ad98-4bfc-85bd-3eb1aa31c2b2"",
                     ""path"": ""3DVector"",
                     ""interactions"": """",
@@ -174,6 +152,83 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""3D Vector (Keyboard)"",
+                    ""id"": ""105a7b4a-9cc7-4398-8405-c68511141df7"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""20134827-8dd1-4c7f-a2fb-845d25b3ca32"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardControls"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""991bf715-cf1c-4db1-80c0-e97e966ace9c"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardControls"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f82e9143-ddb6-4e19-b6d4-c566af977a9d"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""dff94c01-9c5d-420f-928b-3fc365d5cb86"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""6cef1053-9c79-4933-966d-d024e1a4a62f"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""f4a8b490-d62f-4f7b-b198-0bb5254963a8"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""7a30bda2-55bf-4464-9143-32e8190e599e"",
                     ""path"": ""<Gamepad>/rightShoulder"",
@@ -185,7 +240,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""3D Vector"",
+                    ""name"": ""3D Vector (Keyboard)"",
                     ""id"": ""8df30c49-a980-4936-854a-cc00b8b6fdc1"",
                     ""path"": ""3DVector"",
                     ""interactions"": """",
@@ -262,7 +317,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""3D Vector"",
+                    ""name"": ""3D Vector (Gamepad)"",
                     ""id"": ""16d0416e-0daa-43ed-8ce4-493cba4faa73"",
                     ""path"": ""3DVector"",
                     ""interactions"": """",
@@ -278,7 +333,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
+                    ""groups"": ""GamepadControlScheme"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -289,7 +344,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
+                    ""groups"": ""GamepadControlScheme"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -300,7 +355,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
+                    ""groups"": ""GamepadControlScheme"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -311,7 +366,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
+                    ""groups"": ""GamepadControlScheme"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -322,7 +377,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
+                    ""groups"": ""GamepadControlScheme"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -333,7 +388,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
+                    ""groups"": ""GamepadControlScheme"",
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -355,8 +410,30 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
+                    ""groups"": ""GamepadControlScheme"",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9faee438-42fe-47a8-b857-05afd4b2b4c2"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardControls"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6d450d3d-c551-463e-846a-af8e87941f4b"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""GamepadControlScheme"",
+                    ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -365,134 +442,20 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         {
             ""name"": ""BulletAim"",
             ""id"": ""f7297c83-70c0-4c0a-9b4d-2da00c71f281"",
-            ""actions"": [
-                {
-                    ""name"": ""BulletLook"",
-                    ""type"": ""PassThrough"",
-                    ""id"": ""be109faa-ceeb-45a2-95a1-bf4e274cfe8d"",
-                    ""expectedControlType"": ""Vector3"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Fire"",
-                    ""type"": ""Button"",
-                    ""id"": ""46f018cf-6fc6-462f-940e-50d1b7bae837"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": ""3D Vector"",
-                    ""id"": ""f09663cb-90d3-4635-b470-e49acce609c3"",
-                    ""path"": ""3DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BulletLook"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""347dcca6-48f3-4940-a6ea-272e93e25dbd"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
-                    ""action"": ""BulletLook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""f1704ef7-51a1-4eb2-a18e-022dc862c5be"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
-                    ""action"": ""BulletLook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""4c5a29e1-2f28-4fce-b009-4b2cf20d6c93"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardControls"",
-                    ""action"": ""BulletLook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""f1662b1a-1790-4686-8bce-f5ac710a3616"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardControls"",
-                    ""action"": ""BulletLook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""forward"",
-                    ""id"": ""7a5ea912-4956-4d12-b2e3-fd600417bb2b"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BulletLook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""backward"",
-                    ""id"": ""39101ffa-96d3-466c-af6d-5cb04b45826b"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""BulletLook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""469e01a2-b83d-4466-858e-cb7da3514f1f"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KeyboardControls"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3046ddff-1617-4d33-8805-df7287e8b98f"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": [
         {
-            ""name"": ""NintendoControlScheme"",
-            ""bindingGroup"": ""NintendoControlScheme"",
+            ""name"": ""GamepadControlScheme"",
+            ""bindingGroup"": ""GamepadControlScheme"",
             ""devices"": [
+                {
+                    ""devicePath"": ""<DualShockGamepad>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
                 {
                     ""devicePath"": ""<SwitchProControllerHID>"",
                     ""isOptional"": false,
@@ -515,15 +478,13 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_SwitchCamera = m_Player.FindAction("SwitchCamera", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         // BulletAim
         m_BulletAim = asset.FindActionMap("BulletAim", throwIfNotFound: true);
-        m_BulletAim_BulletLook = m_BulletAim.FindAction("BulletLook", throwIfNotFound: true);
-        m_BulletAim_Fire = m_BulletAim.FindAction("Fire", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -583,20 +544,20 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
-    private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_SwitchCamera;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_Fire;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
         public PlayerActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @SwitchCamera => m_Wrapper.m_Player_SwitchCamera;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -606,9 +567,6 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
@@ -621,13 +579,13 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Fire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @Fire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
+                @Fire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFire;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Aim.started += instance.OnAim;
-                @Aim.performed += instance.OnAim;
-                @Aim.canceled += instance.OnAim;
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
@@ -640,6 +598,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Fire.started += instance.OnFire;
+                @Fire.performed += instance.OnFire;
+                @Fire.canceled += instance.OnFire;
             }
         }
     }
@@ -648,14 +609,10 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     // BulletAim
     private readonly InputActionMap m_BulletAim;
     private IBulletAimActions m_BulletAimActionsCallbackInterface;
-    private readonly InputAction m_BulletAim_BulletLook;
-    private readonly InputAction m_BulletAim_Fire;
     public struct BulletAimActions
     {
         private @InputMaster m_Wrapper;
         public BulletAimActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
-        public InputAction @BulletLook => m_Wrapper.m_BulletAim_BulletLook;
-        public InputAction @Fire => m_Wrapper.m_BulletAim_Fire;
         public InputActionMap Get() { return m_Wrapper.m_BulletAim; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -665,33 +622,21 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_BulletAimActionsCallbackInterface != null)
             {
-                @BulletLook.started -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnBulletLook;
-                @BulletLook.performed -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnBulletLook;
-                @BulletLook.canceled -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnBulletLook;
-                @Fire.started -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnFire;
-                @Fire.performed -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnFire;
-                @Fire.canceled -= m_Wrapper.m_BulletAimActionsCallbackInterface.OnFire;
             }
             m_Wrapper.m_BulletAimActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @BulletLook.started += instance.OnBulletLook;
-                @BulletLook.performed += instance.OnBulletLook;
-                @BulletLook.canceled += instance.OnBulletLook;
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
             }
         }
     }
     public BulletAimActions @BulletAim => new BulletAimActions(this);
-    private int m_NintendoControlSchemeSchemeIndex = -1;
-    public InputControlScheme NintendoControlSchemeScheme
+    private int m_GamepadControlSchemeSchemeIndex = -1;
+    public InputControlScheme GamepadControlSchemeScheme
     {
         get
         {
-            if (m_NintendoControlSchemeSchemeIndex == -1) m_NintendoControlSchemeSchemeIndex = asset.FindControlSchemeIndex("NintendoControlScheme");
-            return asset.controlSchemes[m_NintendoControlSchemeSchemeIndex];
+            if (m_GamepadControlSchemeSchemeIndex == -1) m_GamepadControlSchemeSchemeIndex = asset.FindControlSchemeIndex("GamepadControlScheme");
+            return asset.controlSchemes[m_GamepadControlSchemeSchemeIndex];
         }
     }
     private int m_KeyboardControlsSchemeIndex = -1;
@@ -705,15 +650,13 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     }
     public interface IPlayerActions
     {
-        void OnAim(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnSwitchCamera(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
     }
     public interface IBulletAimActions
     {
-        void OnBulletLook(InputAction.CallbackContext context);
-        void OnFire(InputAction.CallbackContext context);
     }
 }

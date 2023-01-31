@@ -114,7 +114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5547021015208205208
 Transform:
   m_ObjectHideFlags: 0
@@ -576,7 +576,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ee1356a18c5444285d6396b4ae700f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletType: {fileID: 9165814152039018566, guid: 46b405b11a4104e4d94c322cc2ca5117, type: 3}
   maxAmmo: 12
+  maxBouncers: 1
   animationController: {fileID: 2263409211759763732}
 --- !u!1 &9090801182086252134
 GameObject:

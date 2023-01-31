@@ -13,7 +13,7 @@ public class FireController : MonoBehaviour
             print("Pressed space!");
             // play gun animation and fire bullet
             gun.SecondaryFire();
-            bullet.Fire();
+            bullet.Fire(transform.forward);
         }
     }
 }

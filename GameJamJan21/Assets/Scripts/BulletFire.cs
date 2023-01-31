@@ -13,9 +13,12 @@ public enum FiringState
 
 public class BulletFire : MonoBehaviour
 {
-    private Rigidbody rb;
+    public Rigidbody rb;
     public GameObject bullet;
     public int maxBounces = 6;
+
+    public int splashRadius = 1;
+    public GameObject splashZone;
     
     public float rotationSpeed = 0.3f;
     public float bulletSpeed = 3f;
@@ -24,36 +27,23 @@ public class BulletFire : MonoBehaviour
     private Vector3 motion;
     private Vector3 m_EulerAngleVelocity;
     private Vector3 vel;
-    private Vector3 lookDirection;
 
     [NonSerialized] public ScoreUI scoring;
     private AudioSource _audioBullet;
     private PlayerController shooter;
+    private Vector3 lookDirection;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         m_EulerAngleVelocity = new Vector3(0, 100, 0);   
-        rb = GetComponent <Rigidbody> ();
-        // rb.velocity = Vector3.back;
+        rb = GetComponent<Rigidbody> ();
+        rb.velocity = new Vector3(0,0,0);
         scoring = GameObject.FindObjectOfType<ScoreUI>();
+        print("Created bullet.");
         
         _audioBullet = GetComponent<AudioSource>();
-    }
-
-    public void OnFire()
-    {
-        fireStatus = FiringState.InFlight;
-        rb.velocity = transform.forward * bulletSpeed;
-        shooter.FreeState();
-        // Play sound
-        _audioBullet = GetComponent<AudioSource>();
-        _audioBullet.Play(0);
-    }
-
-    public void OnBulletLook(InputValue value) {
-        lookDirection = value.Get<Vector3>();
-        
     }
 
     // Update is called once per frame
@@ -77,14 +67,17 @@ public class BulletFire : MonoBehaviour
         vel = rb.velocity;
     }
 
-    public void Fire()
+    public void Fire(Vector3 direction)
     {
         fireStatus = FiringState.InFlight;
-        rb.velocity = transform.forward * bulletSpeed;
-        shooter.FreeState();
+        rb = GetComponent<Rigidbody>();
+        print("Forward for this bullet: " + this.transform.forward);
+        rb.velocity = direction.normalized * bulletSpeed;
         
         // Play sound
+        _audioBullet = GetComponent<AudioSource>(); // Necessary?
         _audioBullet.Play(0);
+        Debug.Log("Shot bullet!");
     }
 
     void PreShotOrienting() {
@@ -94,7 +87,7 @@ public class BulletFire : MonoBehaviour
 
     void InFlightBulletMove() {
         // print(rb.velocity);
-        // rb.velocity = transform.forward * bulletSpeed;
+        rb.velocity = transform.forward * bulletSpeed;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -124,25 +117,25 @@ public class BulletFire : MonoBehaviour
     }
 
     void ricochetBullet(Collision collision) {
-            ContactPoint contact = collision.contacts[0];
-            Vector3 oldvel = vel;
-            float speed = oldvel.magnitude;
+        ContactPoint contact = collision.contacts[0];
+        Vector3 oldvel = vel;
+        float speed = oldvel.magnitude;
 
-            print("CONTACT NORMAL = " + contact.normal.ToString());
+        print("CONTACT NORMAL = " + contact.normal.ToString());
 
-            Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
-            float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
-            transform.eulerAngles = new Vector3(0, rot, 0);
-            
-            reflectedVelo.y = 0;
-            rb.velocity = reflectedVelo.normalized * bulletSpeed;
-            print("Old velocity: " + oldvel.ToString() + " Old speed: " + speed.ToString() + " New vel: " + rb.velocity.ToString() + " New speed: " + rb.velocity.magnitude.ToString());
+        Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
+        float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
+        transform.eulerAngles = new Vector3(0, rot, 0);
+        
+        reflectedVelo.y = 0;
+        rb.velocity = reflectedVelo.normalized * bulletSpeed;
+        print("Old velocity: " + oldvel.ToString() + " Old speed: " + speed.ToString() + " New vel: " + rb.velocity.ToString() + " New speed: " + rb.velocity.magnitude.ToString());
 
-            // Subtract bounces and maybe destroy
-            maxBounces -= 1;
-            if (maxBounces < 1) {
-                finishShot();
-            }
+        // Subtract bounces and maybe destroy
+        maxBounces -= 1;
+        if (maxBounces < 1) {
+            finishShot();
+        }
     }
 
     void finishShot() {

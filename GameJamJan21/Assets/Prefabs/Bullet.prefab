@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8163768010944472932
 Transform:
   m_ObjectHideFlags: 0
@@ -138,7 +138,6 @@ MonoBehaviour:
   maxBounces: 9
   rotationSpeed: 0.3
   bulletSpeed: 10
-  scoring: {fileID: 0}
 --- !u!54 &7560826534295098678
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -175,7 +174,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9165814152039018566}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!82 &7769586475236240067
 AudioSource:
   m_ObjectHideFlags: 0
