@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+    server:
+        image: artemis-falling-server
+        build: .
+
+        ports:
+            - "37892:50051"

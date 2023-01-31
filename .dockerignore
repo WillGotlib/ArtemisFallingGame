@@ -1,0 +1,10 @@
+.git/
+
+.vscode/
+.idea/
+
+Grpc-Tools/
+Scripts/
+
+GameJamJan21/
+Server/proto

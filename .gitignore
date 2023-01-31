@@ -8,5 +8,5 @@ Grpc-Tools/
 GameJamJan21/Assets/Plugins/
 
 # generated files
-Client
+Server/proto
 GameJamJan21/Assets/Scripts/Online/Generated
