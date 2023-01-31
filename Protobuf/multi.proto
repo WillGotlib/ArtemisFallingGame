@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+option go_package = "proto/";
+option csharp_namespace = "protoBuff";
+
+service Game {
+  rpc List (SessionRequest) returns (SessionList) {}
+  rpc Connect (ConnectRequest) returns (ConnectResponse) {}
+  rpc Stream (stream Request) returns (stream Response) {}
+}
+
+message SessionRequest{
+
+}
+
+message SessionList{
+  repeated Server servers = 1;
+}
+
+message Server{
+  string id = 1;
+  uint32 online = 2;
+  uint32 max = 3;
+}
+
+message ConnectRequest {
+  string session = 1;
+}
+
+message ConnectResponse {
+  string token = 1;
+  repeated Entity entities = 2;
+}
+
+message Request {
+  repeated StreamAction requests= 1;
+}
+
+
+message Response {
+  repeated StreamAction responses = 1;
+}
+
+message StreamAction {
+  oneof action {
+    MoveEntity moveEntity = 1;
+    AddEntity addEntity = 2;
+    RemoveEntity removeEntity = 3;
+    UpdateEntity updateEntity = 4;
+  }
+}
+
+message Position {
+  float x = 1;
+  float y = 2;
+}
+
+message Entity {
+  string id = 1;
+  Position position = 2;
+  string type = 3;
+  string Data = 4;
+
+}
+message AddEntity {
+  Entity entity = 1;
+  optional bool keepOnDisconnect = 2;
+}
+
+message UpdateEntity {
+  Entity entity = 1;
+}
+
+message RemoveEntity {
+  string id = 1;
+}
+
+message MoveEntity {
+  string id = 1;
+  Position position = 2;
+}
