@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;           
-using UnityEngine.InputSystem.Controls;
 
 public enum PlayerState {
     Free,
@@ -12,7 +9,6 @@ public enum PlayerState {
 
 public class PlayerController : MonoBehaviour
 {
-    public CharacterController controller;
     public float speed = 6f;
     public float sensitivity = 5f;
     public GameObject projectile;
@@ -28,6 +24,10 @@ public class PlayerController : MonoBehaviour
     public float dashIntensity = 10;
     public float dashCooldown = 5;
     float currentCooldown;
+    
+    
+    private CharacterController _controller;
+    private NetworkedPlayerController _networkedPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +40,11 @@ public class PlayerController : MonoBehaviour
         }
         state = PlayerState.Free;
         currentCooldown = 0;
+        _controller = GetComponent<CharacterController>();
+        _networkedPlayer = GetComponent<NetworkedPlayerController>();
+
+        if (!_networkedPlayer.controlled)
+            GetComponent<PlayerInput>().enabled = false;
     }
 
     public void hitByShot() {
@@ -101,13 +106,17 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             currentCooldown = dashCooldown;
-            controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity);
+            _controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity);
         }
     }
 
+    
     // Update is called once per frame
     void Update()
     {
+        if (!_networkedPlayer.controlled) return; // dont run logic if not the active character
+        // todo get transfer metadata to other games using the data function in the network controller
+        
         print(currentCooldown);
         if (currentCooldown > 0)
             currentCooldown -= Time.deltaTime;
@@ -115,10 +124,9 @@ public class PlayerController : MonoBehaviour
         if (followingCamera == true)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
-        CharacterController controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
-        if (!controller.isGrounded) {
+        if (!_controller.isGrounded) {
             Vector3 fall = new Vector3(0, -(gravity), 0);
-            controller.Move(fall * Time.deltaTime);
+            _controller.Move(fall * Time.deltaTime);
         }
 
         if (state != PlayerState.Aiming) {
@@ -138,7 +146,7 @@ public class PlayerController : MonoBehaviour
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), turnSmoothTime * Time.deltaTime);
 
-                controller.Move(moveDirection * speed * Time.deltaTime);
+                _controller.Move(moveDirection * (speed * Time.deltaTime));
             }
         }
     }

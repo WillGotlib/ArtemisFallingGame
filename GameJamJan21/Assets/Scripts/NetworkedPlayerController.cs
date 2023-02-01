@@ -1,4 +1,5 @@
-﻿using Online;
+﻿using System;
+using Online;
 using UnityEngine;
 
 public class NetworkedPlayerController : MonoBehaviour, NetworkedElement

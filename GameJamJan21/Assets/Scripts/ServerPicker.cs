@@ -3,6 +3,7 @@ using Grpc.Core;
 using Online;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -28,7 +29,7 @@ public class ServerPicker : MonoBehaviour
         }
     }
 
-    public async void ConnectToSession()
+    public void ConnectToSession()
     {
         var sessionID = sessionName.text;
         if (sessionID.Length < 3 || sessionID.Length > 25)
@@ -38,10 +39,26 @@ public class ServerPicker : MonoBehaviour
         }
 
         SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single); //todo loading bar
-        if (!await FindObjectOfType<NetworkManager>().Connect(sessionID)) 
-            SceneManager.LoadScene("ServerSelector", LoadSceneMode.Single); // return to selector scene if load failed
-    }
 
+        SceneManager.sceneLoaded += GetLoadFunc(sessionID);
+    }
+    private static UnityAction<Scene,LoadSceneMode> _sceneChangeFunc;
+
+    private UnityAction<Scene, LoadSceneMode> GetLoadFunc(string sessionID)
+    {
+        async void Func(Scene scene, LoadSceneMode sceneMode)
+        {
+            Debug.Log("onSceneChange");
+            if (!await FindObjectOfType<NetworkManager>().Connect(sessionID))
+                SceneManager.LoadScene("ServerSelector",
+                    LoadSceneMode.Single); // return to selector scene if load failed
+            SceneManager.sceneLoaded += _sceneChangeFunc;
+        }
+        
+        _sceneChangeFunc = Func;
+        return Func;
+    }
+    
     public async void UpdateServer()
     {
         var channel = await Connection.ChangeAddress(serverAddr.text);

@@ -217,7 +217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25bf2869b2515aa43bd3be871833493f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 3349455145992540266}
   speed: 2
   sensitivity: 20
   projectile: {fileID: 7842087154744338828, guid: eff26a5f26609f14fbef9701d319a669, type: 3}
