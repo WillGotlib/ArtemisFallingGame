@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Online;
 using UnityEngine;
 
 public class StartGame : MonoBehaviour
@@ -12,7 +11,7 @@ public class StartGame : MonoBehaviour
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
 
-        var spawnpoint = spawnPoints[Random.Range(0, spawnPoints.Length)]; //todo change this to player index
+        var spawnpoint = spawnPoints[GRPC.GetIndex()];
         var o = Instantiate(playerPrefab, spawnpoint.transform.position, spawnpoint.transform.rotation);
         o.GetComponent<NetworkedPlayerController>().controlled=true;
         

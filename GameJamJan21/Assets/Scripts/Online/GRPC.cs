@@ -8,7 +8,6 @@ using protoBuff;
 using UnityEngine;
 using Channel = System.Threading.Channels.Channel;
 using Server = protoBuff.Server;
-using StatusCode = Grpc.Core.StatusCode;
 
 namespace Online
 {
@@ -81,7 +80,13 @@ namespace Online
             SendRequest(new Request { Requests = { request } });
         }
 
-        public static Exception error;
+        public static int GetIndex()
+        {
+            return _index;
+        }
+
+        private static Exception _error;
+        private static int _index;
         private readonly Game.GameClient _client;
         private AsyncDuplexStreamingCall<Request, Response> _stream;
         private string _token;
@@ -92,6 +97,7 @@ namespace Online
 
         private GRPC()
         {
+            _index = -1;
             _active = false;
             _queue = Channel.CreateUnbounded<Request>();
             _client = new Game.GameClient(Connection.GetChannel());
@@ -109,6 +115,7 @@ namespace Online
         {
             var conn = _client.Connect(new ConnectRequest { Session = session });
             _token = conn.Token;
+            _index = (int)conn.Index;
             return conn.Entities;
         }
 
@@ -174,7 +181,7 @@ namespace Online
                 }
                 catch (RpcException e)
                 {
-                    error = e;
+                    _error = e;
                 }
             }
         }

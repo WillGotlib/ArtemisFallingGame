@@ -11,14 +11,16 @@ type Client struct {
 	Done         chan error
 	Id           Token
 	Session      *Game
+	Index        int
 }
 
-func NewClient(game *Game) *Client {
+func NewClient(game *Game, index int) *Client {
 	return &Client{
 		Id:          NewToken(),
 		Done:        make(chan error, 1),
 		LastMessage: time.Now(),
 		Session:     game,
+		Index:       index,
 	}
 }
 

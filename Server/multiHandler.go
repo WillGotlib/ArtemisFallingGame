@@ -3,8 +3,6 @@ package main
 //todo
 // empty sersions get deleted
 // have server ping everyone to find disconnects // keepalive
-//todo give players an index when they join
-//todo track rotation
 
 import (
 	"artemisFallingServer/backend"
@@ -30,7 +28,7 @@ type GameServer struct {
 	ChangeChannel chan backend.Change
 	games         map[string]*backend.Game
 	gameTimeouts  map[string]context.CancelFunc
-	sessionUsers  map[string][]backend.Token
+	sessionUsers  map[string][]*backend.Client
 	clients       map[backend.Token]*backend.Client
 	mu            sync.RWMutex
 }
@@ -42,7 +40,7 @@ func NewGameServer() *GameServer {
 		gameTimeouts:  make(map[string]context.CancelFunc),
 		clients:       make(map[backend.Token]*backend.Client),
 		ChangeChannel: make(chan backend.Change, 10),
-		sessionUsers:  make(map[string][]backend.Token),
+		sessionUsers:  make(map[string][]*backend.Client),
 	}
 	server.watchChanges()
 	server.watchTimeout()
@@ -59,7 +57,7 @@ func (s *GameServer) Stop() {
 func (s *GameServer) addClient(c *backend.Client) {
 	s.mu.Lock()
 	s.clients[c.Id] = c
-	s.sessionUsers[c.Session.GameId] = append(s.sessionUsers[c.Session.GameId], c.Id)
+	s.sessionUsers[c.Session.GameId] = append(s.sessionUsers[c.Session.GameId], c)
 	s.mu.Unlock()
 }
 
@@ -76,10 +74,10 @@ func (s *GameServer) removeClient(id backend.Token) {
 		s.mu.Unlock()
 		return
 	}
-	serverUsers := make([]backend.Token, len(users)-1, maxClients)
+	serverUsers := make([]*backend.Client, len(users)-1, maxClients)
 	count := 0
 	for _, i := range users {
-		if i == c.Id {
+		if i == c {
 			continue
 		}
 		serverUsers[count] = i
@@ -98,7 +96,7 @@ func (s *GameServer) makeSession(id string) bool {
 	_, ok := s.games[id]
 	if !ok {
 		s.games[id] = backend.NewGame(s.ChangeChannel, id)
-		s.sessionUsers[id] = make([]backend.Token, 0, maxClients)
+		s.sessionUsers[id] = make([]*backend.Client, 0, maxClients)
 		s.games[id].Start()
 		log.Println("starting new session", id)
 	}
@@ -122,7 +120,7 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 	}
 
 	for _, c := range s.sessionUsers[id] {
-		s.clients[c].Done <- errors.New("session has shut down")
+		c.Done <- errors.New("session has shut down")
 	}
 
 	s.mu.Lock()
@@ -243,12 +241,25 @@ func (s *GameServer) Connect(ctx context.Context, req *pb.ConnectRequest) (*pb.C
 	game := s.games[sessionId]
 	entities := game.GetProtoEntities()
 
-	client := backend.NewClient(game)
+	taken := make([]bool, maxClients)
+	for _, p := range sessionUsers {
+		taken[p.Index] = true
+	}
+	var index int
+	for index = 0; index < maxClients; index++ {
+		if taken[index] {
+			continue
+		}
+		break
+	}
+
+	client := backend.NewClient(game, index)
 	s.addClient(client)
 
 	return &pb.ConnectResponse{
 		Token:    client.Id.String(),
 		Entities: entities,
+		Index:    uint32(index),
 	}, nil
 }
 

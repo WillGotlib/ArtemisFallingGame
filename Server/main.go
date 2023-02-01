@@ -18,7 +18,7 @@ import (
 
 var (
 	port     = flag.Int("port", 50051, "port number for server")
-	mClients = flag.Int("maxPlayersPerSession", 4, "port number for server")
+	mClients = flag.Int("maxPlayersPerSession", 2, "port number for server")
 
 	addr       string
 	maxClients int
