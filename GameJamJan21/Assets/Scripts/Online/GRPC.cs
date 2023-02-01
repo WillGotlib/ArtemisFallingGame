@@ -8,6 +8,7 @@ using protoBuff;
 using UnityEngine;
 using Channel = System.Threading.Channels.Channel;
 using Server = protoBuff.Server;
+using OnlineChannel = Grpc.Core.Channel;
 
 namespace Online
 {
@@ -20,34 +21,34 @@ namespace Online
         /// </summary>
         /// <param name="session">The session id/name can be anything, new names will create a new session</param>
         /// <returns>list of protoBuff.Entity's present in the session</returns>
-        public static RepeatedField<Entity> Connect(string session)
+        public static async Task<RepeatedField<Entity>> Connect(string session)
         {
-            return Grpc()._connect(session);
+            return (await Grpc())._connect(session);
         }
 
         /// <summary>
         /// Lists all the active sessions in on the server
         /// </summary>
         /// <returns>A list of protoBuff.Server objects</returns>
-        public static RepeatedField<Server> List()
+        public static async Task<RepeatedField<Server>> List()
         {
-            return Grpc()._client.List(new SessionRequest()).Servers;
+            return (await Grpc())._client.List(new SessionRequest()).Servers;
         }
 
         /// <summary>
         /// Starts the stream to the server
         /// </summary>
-        public static void StartStream()
+        public static async void StartStream()
         {
-            Grpc()._startStream();
+            (await Grpc())._startStream();
         }
 
         /// <summary>
         /// Turns off the stream and disconnects from the channel
         /// </summary>
-        public static void Disconnect()
+        public static async void Disconnect()
         {
-            Grpc()._disconnect();
+            (await Grpc())._disconnect();
         }
 
         /// <summary>
@@ -66,7 +67,7 @@ namespace Online
         public static async void SendRequest(Request request)
         {
             if (_active)
-                await Grpc()._queue.Writer.WriteAsync(request);
+                await (await Grpc())._queue.Writer.WriteAsync(request);
             else
                 IdleQueue.Enqueue(request);
         }
@@ -95,19 +96,19 @@ namespace Online
         private readonly Channel<Request, Request> _queue;
         private static readonly Queue<Request> IdleQueue = new();
 
-        private GRPC()
+        private GRPC(OnlineChannel channel)
         {
             _index = -1;
             _active = false;
             _queue = Channel.CreateUnbounded<Request>();
-            _client = new Game.GameClient(Connection.GetChannel());
+            _client = new Game.GameClient(channel);
         }
 
         private static GRPC _instance;
 
-        private static GRPC Grpc()
+        private static async Task<GRPC> Grpc()
         {
-            _instance ??= new GRPC();
+            _instance ??= new GRPC(await Connection.GetChannel());
             return _instance;
         }
 

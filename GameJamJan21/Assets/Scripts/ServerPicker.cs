@@ -28,7 +28,7 @@ public class ServerPicker : MonoBehaviour
         }
     }
 
-    public void ConnectToSession()
+    public async void ConnectToSession()
     {
         var sessionID = sessionName.text;
         if (sessionID.Length < 3 || sessionID.Length > 25)
@@ -37,13 +37,14 @@ public class ServerPicker : MonoBehaviour
             return;
         }
 
-        if (FindObjectOfType<NetworkManager>().Connect(sessionID))
-            SceneManager.LoadSceneAsync(gameSceneName, LoadSceneMode.Single); //todo loading bar
+        SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single); //todo loading bar
+        if (!await FindObjectOfType<NetworkManager>().Connect(sessionID)) 
+            SceneManager.LoadScene("ServerSelector", LoadSceneMode.Single); // return to selector scene if load failed
     }
 
-    public void UpdateServer()
+    public async void UpdateServer()
     {
-        var channel = Connection.ChangeAddress(serverAddr.text);
+        var channel = await Connection.ChangeAddress(serverAddr.text);
         if (channel.State != ChannelState.Ready && channel.State != ChannelState.Idle)
         {
             serverChooser.SetActive(false);
@@ -55,12 +56,12 @@ public class ServerPicker : MonoBehaviour
         GetServers();
     }
 
-    private void GetServers()
+    private async void GetServers()
     {
         foreach (Transform child in elementContainer.transform)
             Destroy(child.gameObject);
         
-        var servers = GRPC.List();
+        var servers = await GRPC.List();
         if (servers.Count == 0)
         {
             UpdateSelection("game " + Random.Range(0, 2057));

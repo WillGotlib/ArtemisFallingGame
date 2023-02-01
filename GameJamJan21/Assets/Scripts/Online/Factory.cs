@@ -17,7 +17,7 @@ namespace Online
             _factoryPosition = Helpers.ToVector3(entity.Position);
             _factoryRotation = Helpers.ToQuaternion(entity.Rotation);
 
-            var o = Instantiate(obj, _factoryPosition, new Quaternion());
+            var o = Instantiate(obj, _factoryPosition, _factoryRotation);
             _factoryObject = o.GetComponent<NetworkedElement>();
             return _factoryObject;
         }
@@ -39,7 +39,7 @@ namespace Online
                 return;
             }
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

@@ -105,12 +105,12 @@ namespace Online
             GRPC.SendRequest(req);
         }
 
-        public bool Connect(string sessionID)
+        public async Task<bool> Connect(string sessionID)
         {
             RepeatedField<Entity> entities;
             try
             {
-                entities = GRPC.Connect(sessionID);
+                entities = await GRPC.Connect(sessionID);
             }
             catch (RpcException e)
             {
@@ -118,7 +118,7 @@ namespace Online
                 return false;
             }
 
-            //Debug.Log(entities);
+            Debug.Log(entities);
 
             foreach (var entity in entities)
             {
@@ -145,7 +145,7 @@ namespace Online
         {
             foreach (var response in action.Responses)
             {
-                //Debug.Log(action);
+                Debug.Log(action);
                 RunOnMainthread function = null;
                 switch (response.ActionCase)
                 {

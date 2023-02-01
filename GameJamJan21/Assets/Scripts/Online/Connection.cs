@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Grpc.Core;
 using UnityEngine;
 
@@ -7,12 +8,12 @@ namespace Online
     public sealed class Connection
     {
         private const int DefaultPort = 37892;
-        
+
         /// <summary>
         ///  Connects to the saved address
         /// </summary>
         /// <returns>Grpc.Core.Channel object</returns>
-        public static Channel GetChannel()
+        public static Task<Channel> GetChannel()
         {
             return connection()._getChannel();
         }
@@ -22,13 +23,14 @@ namespace Online
         /// </summary>
         /// <param name="address">a string url with port (example: localhost:50051)</param>
         /// <returns>Grpc.Core.Channel object</returns>
-        public static Channel ChangeAddress(string address)
+        public static Task<Channel> ChangeAddress(string address)
         {
-            var u  = new UriBuilder("tcp://"+address);
+            var u = new UriBuilder("tcp://" + address);
             if (u.Port == -1)
             {
                 u.Port = DefaultPort;
             }
+
             if (u.Host == "")
             {
                 u.Host = "localhost";
@@ -46,12 +48,12 @@ namespace Online
         /// <returns>address of server</returns>
         public static string GetAddress()
         {
-            return _address.Port == DefaultPort ? _address.Host :GetAddress(true);
+            return _address.Port == DefaultPort ? _address.Host : GetAddress(true);
         }
 
         public static string GetAddress(bool _)
         {
-            return _address.Host+":"+_address.Port;
+            return _address.Host + ":" + _address.Port;
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace Online
         }
 
         private Channel _channel;
-        private static Uri _address = new ("tcp://localhost:"+DefaultPort);
+        private static Uri _address = new("tcp://localhost:" + DefaultPort);
 
         private Connection()
         {
@@ -78,7 +80,7 @@ namespace Online
             return _instance;
         }
 
-        private Channel _getChannel()
+        private async Task<Channel> _getChannel()
         {
             if (_channel != null && _channel.State != ChannelState.Shutdown)
             {
@@ -86,6 +88,7 @@ namespace Online
             }
 
             _channel = new Channel(GetAddress(true), ChannelCredentials.Insecure);
+            await _channel.ConnectAsync(deadline: DateTime.UtcNow.AddSeconds(2));
             return _channel;
         }
 

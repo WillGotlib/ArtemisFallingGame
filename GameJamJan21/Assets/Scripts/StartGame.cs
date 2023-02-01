@@ -12,9 +12,11 @@ public class StartGame : MonoBehaviour
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
 
         var spawnpoint = spawnPoints[GRPC.GetIndex()];
-        var o = Instantiate(playerPrefab, spawnpoint.transform.position, spawnpoint.transform.rotation);
-        o.GetComponent<NetworkedPlayerController>().controlled=true;
-        
+        var o = Instantiate(playerPrefab, spawnpoint.transform.position, spawnpoint.transform.rotation)
+            .GetComponent<NetworkedPlayerController>();
+        o.controlled=true;
+        FindObjectOfType<NetworkManager>().RegisterObject(o);
+
         foreach (GameObject spawn in spawnPoints) {
             Destroy(spawn);
         }

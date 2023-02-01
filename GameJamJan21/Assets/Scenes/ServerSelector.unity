@@ -1269,7 +1269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fadeee0b1a14d440b6e9d6b4fe9368b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnables: []
+  spawnables:
+  - {fileID: 6668230694903963034, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
   updateFps: 60
 --- !u!4 &1076657656
 Transform:

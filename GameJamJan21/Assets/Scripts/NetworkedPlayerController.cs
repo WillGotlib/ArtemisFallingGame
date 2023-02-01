@@ -7,12 +7,6 @@ public class NetworkedPlayerController : MonoBehaviour, NetworkedElement
     public string networkTypeId;
     public bool removeOnDisconnect = true;
 
-    public void Awake()
-    {
-        if (!controlled)return;
-        FindObjectOfType<NetworkManager>().RegisterObject(this);
-    }
-
     public string Data()
     {
         return "";

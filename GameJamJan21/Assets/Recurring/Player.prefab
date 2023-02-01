@@ -237,8 +237,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlled: 0
-  networkId: PLAYER
-  rigidbody: {fileID: 0}
+  networkTypeId: PLAYER
+  removeOnDisconnect: 1
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0
