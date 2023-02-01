@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 namely/protoc as PROTOCOMPILER
+FROM namely/protoc as PROTOCOMPILER
 WORKDIR /compile
 
 COPY Protobuf/ .
@@ -17,10 +17,17 @@ COPY --from=PROTOCOMPILER /compile/proto proto/
 
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-w -s" -o server
 
+FROM gruebel/upx as COMPRESSOR
+WORKDIR /compress
+
+COPY --from=BUILDER /build/server ./server.org
+
+RUN upx --best --lzma -o server server.org
+
 FROM --platform=${TARGETPLATFORM:-linux/amd64} scratch
 WORKDIR /app
 
-COPY --from=BUILDER /build/server ./
+COPY --from=COMPRESSOR /compress/server ./
 
 EXPOSE 37892
 CMD ["/app/server"]
