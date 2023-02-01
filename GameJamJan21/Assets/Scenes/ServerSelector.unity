@@ -702,7 +702,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1860937572}
+        m_TargetAssemblyTypeName: ServerPicker, Assembly-CSharp
+        m_MethodName: ServerValid
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2214,7 +2226,8 @@ MonoBehaviour:
   gameSceneName: ConceptLevel
   elementPrefab: {fileID: 6867204265643978436, guid: 51ec99d84f6a06344846a8decbd34830, type: 3}
   elementContainer: {fileID: 1185321362}
-  serverChooser: {fileID: 159461626}
+  joinButton: {fileID: 0}
+  serverChooser: {fileID: 1663477420}
   serverAddr: {fileID: 1798698754}
   sessionName: {fileID: 665156684}
 --- !u!1 &1875090749

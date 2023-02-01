@@ -31,7 +31,7 @@ namespace Online
 
             try
             {
-                _factoryObject?.HandleUpdate(_factoryPosition, _factoryRotation, _factoryData);
+                _factoryObject.HandleUpdate(_factoryPosition, _factoryRotation, _factoryData);
             }
             catch (Exception e)
             {
@@ -39,7 +39,7 @@ namespace Online
                 return;
             }
 
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

@@ -1,11 +1,14 @@
 using System;
+using Google.Protobuf.Collections;
 using Grpc.Core;
 using Online;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using Server = protoBuff.Server;
 
 public class ServerPicker : MonoBehaviour
 {
@@ -15,10 +18,14 @@ public class ServerPicker : MonoBehaviour
     public GameObject elementPrefab;
     public Transform elementContainer;
 
+    public Button joinButton;
+
     public GameObject serverChooser;
     public TMP_InputField serverAddr;
     public TMP_InputField sessionName;
 
+    private RepeatedField<Server> servers;
+    
     void Start()
     {
         serverAddr.SetTextWithoutNotify(Connection.GetAddress());
@@ -27,6 +34,21 @@ public class ServerPicker : MonoBehaviour
         {
             throw new Exception("scene is required");
         }
+    }
+
+    public void ServerValid()
+    {
+        var input = sessionName.text;
+        
+        foreach (var server in servers)
+        {
+            if (input == server.Id && server.Max == server.Online)
+            {
+                joinButton.interactable = false;
+                return;
+            }
+        }
+        joinButton.interactable = true;
     }
 
     public void ConnectToSession()
@@ -78,7 +100,7 @@ public class ServerPicker : MonoBehaviour
         foreach (Transform child in elementContainer.transform)
             Destroy(child.gameObject);
         
-        var servers = await GRPC.List();
+        servers = await GRPC.List();
         if (servers.Count == 0)
         {
             UpdateSelection("game " + Random.Range(0, 2057));
