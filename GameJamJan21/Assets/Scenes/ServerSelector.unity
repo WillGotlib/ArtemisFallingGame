@@ -158,10 +158,10 @@ RectTransform:
   m_Father: {fileID: 1860937571}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.71772957, y: 0.7838462}
-  m_AnchorMax: {x: 0.9793709, y: 0.7838462}
-  m_AnchoredPosition: {x: -289.5, y: -204}
-  m_SizeDelta: {x: 755, y: 655}
+  m_AnchorMin: {x: 0.6182335, y: 0.6915968}
+  m_AnchorMax: {x: 0.9793709, y: 0.771}
+  m_AnchoredPosition: {x: -279, y: -210.5}
+  m_SizeDelta: {x: 734, y: 692}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &159461628
 CanvasRenderer:
@@ -901,7 +901,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Join
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1196,7 +1196,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1216995188}
   m_HandleRect: {fileID: 1216995187}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1256,7 +1256,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1076657655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1269,9 +1269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fadeee0b1a14d440b6e9d6b4fe9368b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnables:
-  - {fileID: 828692435716272524, guid: f2debdbd0b63ce046a5dfb11b663a878, type: 3}
-  - {fileID: 9165814152039018566, guid: 46b405b11a4104e4d94c322cc2ca5117, type: 3}
+  spawnables: []
   updateFps: 60
 --- !u!4 &1076657656
 Transform:
@@ -1325,7 +1323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00088500977}
+  m_AnchoredPosition: {x: 0, y: 0.00012207031}
   m_SizeDelta: {x: 991, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1185321363
@@ -1735,7 +1733,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1663477423}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1860937572}
+        m_TargetAssemblyTypeName: ServerPicker, Assembly-CSharp
+        m_MethodName: ConnectToSession
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1663477423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1857,7 +1867,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1691923173}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1860937572}
+        m_TargetAssemblyTypeName: ServerPicker, Assembly-CSharp
+        m_MethodName: UpdateServer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1691923173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2125,7 +2147,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 800}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -2188,8 +2210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76e99207e6036864596a5f71d76ee159, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSceneName: ConceptLevel
   elementPrefab: {fileID: 6867204265643978436, guid: 51ec99d84f6a06344846a8decbd34830, type: 3}
   elementContainer: {fileID: 1185321362}
+  serverChooser: {fileID: 159461626}
   serverAddr: {fileID: 1798698754}
   sessionName: {fileID: 665156684}
 --- !u!1 &1875090749

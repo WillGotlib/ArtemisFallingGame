@@ -62,8 +62,6 @@ namespace Online
             }
 
             DontDestroyOnLoad(gameObject);
-
-            Connect();
         }
 
         public void Update()
@@ -111,12 +109,12 @@ namespace Online
             GRPC.SendRequest(req);
         }
 
-        public void Connect()
+        public void Connect(string sessionID)
         {
             RepeatedField<Entity> entities;
             try
             {
-                entities = GRPC.Connect("The Only One");
+                entities = GRPC.Connect(sessionID);
             }
             catch (RpcException e)
             {
@@ -145,7 +143,7 @@ namespace Online
 
             StartCoroutine(UpdatePosition());
         }
-        
+
         private void onMessage(Response action)
         {
             foreach (var response in action.Responses)

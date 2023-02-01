@@ -1,3 +1,4 @@
+using System;
 using Grpc.Core;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ namespace Online
 {
     public sealed class Connection
     {
+        private const int DefaultPort = 37892;
+        
         /// <summary>
         ///  Connects to the saved address
         /// </summary>
@@ -21,8 +24,19 @@ namespace Online
         /// <returns>Grpc.Core.Channel object</returns>
         public static Channel ChangeAddress(string address)
         {
+            var u  = new UriBuilder("tcp://"+address);
+            if (u.Port == -1)
+            {
+                u.Port = DefaultPort;
+            }
+            if (u.Host == "")
+            {
+                u.Host = "localhost";
+            }
+
+            if (_address.Equals(u.Uri)) return GetChannel();
             Dispose();
-            _address = address;
+            _address = u.Uri;
             return GetChannel();
         }
 
@@ -32,7 +46,12 @@ namespace Online
         /// <returns>address of server</returns>
         public static string GetAddress()
         {
-            return _address;
+            return _address.Port == DefaultPort ? _address.Host :GetAddress(true);
+        }
+
+        public static string GetAddress(bool _)
+        {
+            return _address.Host+":"+_address.Port;
         }
 
         /// <summary>
@@ -44,7 +63,7 @@ namespace Online
         }
 
         private Channel _channel;
-        private static string _address = "localhost:50051";
+        private static Uri _address = new ("tcp://localhost:"+DefaultPort);
 
         private Connection()
         {
@@ -66,7 +85,7 @@ namespace Online
                 return _channel;
             }
 
-            _channel = new Channel(_address, ChannelCredentials.Insecure);
+            _channel = new Channel(GetAddress(true), ChannelCredentials.Insecure);
             return _channel;
         }
 
