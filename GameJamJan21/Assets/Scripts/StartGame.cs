@@ -12,8 +12,11 @@ public class StartGame : MonoBehaviour
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
 
+        var spawnpoint = spawnPoints[Random.Range(0, spawnPoints.Length)]; //todo change this to player index
+        var o = Instantiate(playerPrefab, spawnpoint.transform.position, spawnpoint.transform.rotation);
+        o.GetComponent<NetworkedPlayerController>().controlled=true;
+        
         foreach (GameObject spawn in spawnPoints) {
-            Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation);
             Destroy(spawn);
         }
     }

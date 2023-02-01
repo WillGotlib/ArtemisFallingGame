@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 6668230694903963035}
   - component: {fileID: 3349455145992540266}
   - component: {fileID: 3349455145992540241}
+  - component: {fileID: 902622852097515750}
   - component: {fileID: 3349455145992540270}
   m_Layer: 0
   m_Name: Player
@@ -223,6 +224,21 @@ MonoBehaviour:
   gravity: 10
   dashIntensity: 200
   dashCooldown: 3
+--- !u!114 &902622852097515750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfe54b4da3214bd8a9b91bbcd6c5c8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlled: 0
+  networkId: PLAYER
+  rigidbody: {fileID: 0}
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0

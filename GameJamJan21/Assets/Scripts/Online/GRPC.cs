@@ -7,7 +7,8 @@ using Grpc.Core;
 using protoBuff;
 using UnityEngine;
 using Channel = System.Threading.Channels.Channel;
-using Request = protoBuff.Request;
+using Server = protoBuff.Server;
+using StatusCode = Grpc.Core.StatusCode;
 
 namespace Online
 {
@@ -29,7 +30,7 @@ namespace Online
         /// Lists all the active sessions in on the server
         /// </summary>
         /// <returns>A list of protoBuff.Server objects</returns>
-        public static RepeatedField<protoBuff.Server> List()
+        public static RepeatedField<Server> List()
         {
             return Grpc()._client.List(new SessionRequest()).Servers;
         }
@@ -80,7 +81,7 @@ namespace Online
             SendRequest(new Request { Requests = { request } });
         }
 
-
+        public static Exception error;
         private readonly Game.GameClient _client;
         private AsyncDuplexStreamingCall<Request, Response> _stream;
         private string _token;
@@ -167,7 +168,14 @@ namespace Online
                     return;
                 }
 
-                await _stream.RequestStream.WriteAsync(req);
+                try
+                {
+                    await _stream.RequestStream.WriteAsync(req);
+                }
+                catch (RpcException e)
+                {
+                    error = e;
+                }
             }
         }
     }

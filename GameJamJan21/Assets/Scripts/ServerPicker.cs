@@ -37,8 +37,8 @@ public class ServerPicker : MonoBehaviour
             return;
         }
 
-        FindObjectOfType<NetworkManager>().Connect(sessionID);
-        SceneManager.LoadSceneAsync(gameSceneName, LoadSceneMode.Single); //todo loading bar
+        if (FindObjectOfType<NetworkManager>().Connect(sessionID))
+            SceneManager.LoadSceneAsync(gameSceneName, LoadSceneMode.Single); //todo loading bar
     }
 
     public void UpdateServer()

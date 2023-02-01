@@ -1,15 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using System.Threading.Tasks;
 using Google.Protobuf.Collections;
 using Grpc.Core;
-using UnityEngine;
 using protoBuff;
-using Request = protoBuff.Request;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
+using UnityEngine;
 
 //todo add try catches in places to get errors
 // todo make sure that there is a connection / detect disconnect
@@ -109,7 +105,7 @@ namespace Online
             GRPC.SendRequest(req);
         }
 
-        public void Connect(string sessionID)
+        public bool Connect(string sessionID)
         {
             RepeatedField<Entity> entities;
             try
@@ -119,10 +115,10 @@ namespace Online
             catch (RpcException e)
             {
                 if (e.StatusCode == StatusCode.Unknown) Debug.LogWarning(e.Status.Detail);
-                return;
+                return false;
             }
 
-            Debug.Log(entities);
+            //Debug.Log(entities);
 
             foreach (var entity in entities)
             {
@@ -136,19 +132,20 @@ namespace Online
             catch (RpcException e)
             {
                 if (e.StatusCode == StatusCode.Unknown) Debug.LogWarning(e.Status.Detail);
-                return;
+                return false;
             }
 
             PostRegistrers();
 
             StartCoroutine(UpdatePosition());
+            return true;
         }
 
         private void onMessage(Response action)
         {
             foreach (var response in action.Responses)
             {
-                Debug.Log(action);
+                //Debug.Log(action);
                 RunOnMainthread function = null;
                 switch (response.ActionCase)
                 {
