@@ -35,7 +35,8 @@ func (b *baseAction) ActionCode(g *Game) string {
 
 type MoveAction struct {
 	baseAction
-	Position Coordinate
+	Position *Coordinate
+	Rotation *Rotation
 }
 
 func (m *MoveAction) Perform(game *Game) Change {
@@ -44,11 +45,11 @@ func (m *MoveAction) Perform(game *Game) Change {
 		return nil
 	}
 
-	pos := m.Position
-	entity.Set(pos)
+	entity.Set(m.Position, m.Rotation)
 	// Inform the client that the entity moved.
 	change := &MoveChange{
-		Position:  &pos,
+		Position:  m.Position,
+		Rotation:  m.Rotation,
 		baseEvent: m.baseEvent,
 	}
 	return change

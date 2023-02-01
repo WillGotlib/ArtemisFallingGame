@@ -19,7 +19,7 @@ namespace Online
         public int updateFps = 60; // update at 60 fps
 
         private readonly Dictionary<string, NetworkedElement> _objects;
-        private readonly Dictionary<string, Vector2> _objectLastPos;
+        private readonly Dictionary<string, (Vector3, Quaternion)> _objectLastPos;
 
         private delegate void RunOnMainthread();
 
@@ -29,7 +29,7 @@ namespace Online
 
         {
             _objects = new Dictionary<string, NetworkedElement>();
-            _objectLastPos = new Dictionary<string, Vector2>();
+            _objectLastPos = new Dictionary<string, (Vector3, Quaternion)>();
             _mainthreadQueue = new Queue<RunOnMainthread>();
             GRPC.RegisterMessageCallback(onMessage);
         }
@@ -183,6 +183,7 @@ namespace Online
 
             if (objectID == "") throw new Exception("Cant update, not registered");
 
+            var pos = obj.GetPosition();
             GRPC.SendRequest(new StreamAction
             {
                 UpdateEntity = new UpdateEntity
@@ -191,7 +192,8 @@ namespace Online
                     {
                         Data = obj.Data(),
                         Id = objectID,
-                        Position = ToPosition(obj.GetPosition()),
+                        Position = Helpers.ToPosition(pos.Item1),
+                        Rotation = Helpers.ToRotation(pos.Item2),
                         Type = obj.ID()
                     }
                 }
@@ -222,13 +224,15 @@ namespace Online
         private void UpdateEntity(Entity entity)
         {
             if (isControlled(entity.Id)) return;
-            _objects[entity.Id].HandleUpdate(ToVector2(entity.Position), entity.Data);
+            _objects[entity.Id]
+                .HandleUpdate(Helpers.ToVector3(entity.Position), Helpers.ToQuaternion(entity.Rotation), entity.Data);
         }
 
         private void MoveEntity(MoveEntity moveAction)
         {
             if (isControlled(moveAction.Id)) return;
-            _objects[moveAction.Id].HandleUpdate(ToVector2(moveAction.Position), "");
+            _objects[moveAction.Id].HandleUpdate(Helpers.ToVector3(moveAction.Position),
+                Helpers.ToQuaternion(moveAction.Rotation), "");
         }
 
         private void OnDestroy()
@@ -248,24 +252,6 @@ namespace Online
             GRPC.Disconnect();
         }
 
-        private static Position ToPosition(Vector2 position)
-        {
-            return new Position
-            {
-                X = position.x,
-                Y = position.y
-            };
-        }
-
-        private static Vector2 ToVector2(Position position)
-        {
-            return new Vector2
-            {
-                x = position.X,
-                y = position.Y
-            };
-        }
-
         private void PostRegistrers()
         {
             foreach (var (id, obj) in _objects)
@@ -277,6 +263,7 @@ namespace Online
 
         private void PostRegistration(string id, NetworkedElement obj)
         {
+            var pos = obj.GetPosition();
             var req = new StreamAction
             {
                 AddEntity = new AddEntity
@@ -287,7 +274,8 @@ namespace Online
                         Id = id,
                         Type = obj.ID(),
                         Data = obj.Data(),
-                        Position = ToPosition(obj.GetPosition())
+                        Position = Helpers.ToPosition(pos.Item1),
+                        Rotation = Helpers.ToRotation(pos.Item2)
                     }
                 }
             };
@@ -314,7 +302,8 @@ namespace Online
                         MoveEntity = new MoveEntity
                         {
                             Id = id,
-                            Position = ToPosition(pos)
+                            Position = Helpers.ToPosition(pos.Item1),
+                            Rotation = Helpers.ToRotation(pos.Item2)
                         }
                     });
                 }

@@ -6,19 +6,18 @@ namespace Online
 {
     public class Factory : MonoBehaviour
     {
-        private Entity _factoryEntity;
         private NetworkedElement _factoryObject;
-        private Vector2 _factoryPosition;
+        private string _factoryData;
+        private Vector3 _factoryPosition;
+        private Quaternion _factoryRotation;
 
         public NetworkedElement SpawnElement(Entity entity, GameObject obj)
         {
-            _factoryEntity = entity;
-            _factoryPosition = new Vector2 { x = _factoryEntity.Position.X, y = _factoryEntity.Position.Y };
+            _factoryData = entity.Data;
+            _factoryPosition = Helpers.ToVector3(entity.Position);
+            _factoryRotation = Helpers.ToQuaternion(entity.Rotation);
 
-
-            Vector3 pos = _factoryPosition;
-            (pos.y, pos.z) = (pos.z, pos.y);
-            var o = Instantiate(obj, pos, new Quaternion());
+            var o = Instantiate(obj, _factoryPosition, new Quaternion());
             _factoryObject = o.GetComponent<NetworkedElement>();
             return _factoryObject;
         }
@@ -32,7 +31,7 @@ namespace Online
 
             try
             {
-                _factoryObject?.HandleUpdate(_factoryPosition, _factoryEntity.Data);
+                _factoryObject?.HandleUpdate(_factoryPosition, _factoryRotation, _factoryData);
             }
             catch (Exception e)
             {

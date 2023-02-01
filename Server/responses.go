@@ -42,6 +42,7 @@ func (s *GameServer) handleMoveChange(change backend.MoveChange) {
 		Action: &pb.StreamAction_MoveEntity{
 			MoveEntity: &pb.MoveEntity{
 				Position: change.Position.ToProto(),
+				Rotation: change.Rotation.ToProto(),
 				Id:       change.EntityID().String(),
 			},
 		},

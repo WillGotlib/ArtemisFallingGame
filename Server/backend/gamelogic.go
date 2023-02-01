@@ -75,10 +75,11 @@ func (g *Game) GetProtoEntities() []*pb.Entity {
 	return entities
 }
 
-func (g *Game) MoveEntity(id uuid.UUID, action *Action, position Coordinate) {
+func (g *Game) MoveEntity(id uuid.UUID, action *Action, position *Coordinate, rotation *Rotation) {
 	g.ActionChannel <- &MoveAction{
 		baseAction: g.getBaseAction(id, action),
 		Position:   position,
+		Rotation:   rotation,
 	}
 }
 

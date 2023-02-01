@@ -27,6 +27,7 @@ func (c *AddEntityChange) dummy() {}
 type MoveChange struct {
 	baseEvent
 	Position *Coordinate
+	Rotation *Rotation
 }
 
 func (c *MoveChange) dummy() {}

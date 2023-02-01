@@ -1,5 +1,4 @@
-﻿using System;
-using Online;
+﻿using Online;
 using UnityEngine;
 
 public class NetworkedPlayerController : MonoBehaviour, NetworkedElement
@@ -29,19 +28,15 @@ public class NetworkedPlayerController : MonoBehaviour, NetworkedElement
         return controlled ? ElementType.Owner : ElementType.Listener;
     }
 
-    public Vector2 GetPosition()
+    public (Vector3,Quaternion) GetPosition()
     {
-        var pos = transform.position;
-        return new Vector2 { x = pos.x, y = pos.z };
+        return (transform.position, transform.rotation);
     }
 
-    public void HandleUpdate(Vector2 position, string data)
+    public void HandleUpdate(Vector3 position, Quaternion rotation, string data)
     {
-        transform.position = new Vector3
-        {
-            x = position.x,
-            z = position.y,
-        };
+        transform.position = position;
+        transform.rotation = rotation;
     }
 
     public string ID()

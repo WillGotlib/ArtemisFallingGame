@@ -9,9 +9,8 @@ namespace Online
         /// <summary>
         /// Gets the position of the object
         /// </summary>
-        /// <returns>Vector2 position of the object</returns>
-        public Vector2 GetPosition();
-
+        /// <returns>Vector3, Quaternion tuple of the position and rotation of the object</returns>
+        public (Vector3, Quaternion) GetPosition();
         /// <summary>
         /// Gets if the object should listen to info from the server on where it should be or if it should inform the server of its position
         /// </summary>
@@ -44,9 +43,10 @@ namespace Online
         /// <summary>
         /// Update function, for listener objects
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="data"></param>
-        public void HandleUpdate(Vector2 position, string data);
+        /// <param name="position">position of the player</param>
+        /// <param name="rotation">rotation of the player</param>
+        /// <param name="data">(optional) special info supplied by the data function, only sent when the update function of the network manager is called</param>
+        public void HandleUpdate(Vector3 position, Quaternion rotation, string data);
     }
 
     /// <summary>

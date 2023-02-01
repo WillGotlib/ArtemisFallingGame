@@ -29,11 +29,12 @@ message ConnectRequest {
 
 message ConnectResponse {
   string token = 1;
-  repeated Entity entities = 2;
+  uint32 index = 2;
+  repeated Entity entities = 3;
 }
 
 message Request {
-  repeated StreamAction requests= 1;
+  repeated StreamAction requests = 1;
 }
 
 
@@ -53,13 +54,22 @@ message StreamAction {
 message Position {
   float x = 1;
   float y = 2;
+  float z = 3;
+}
+
+message Rotation {
+  float w = 1;
+  float x = 2;
+  float y = 3;
+  float z = 4;
 }
 
 message Entity {
   string id = 1;
   Position position = 2;
-  string type = 3;
-  string Data = 4;
+  Rotation rotation = 3;
+  string type = 4;
+  string Data = 5;
 
 }
 message AddEntity {
@@ -78,4 +88,5 @@ message RemoveEntity {
 message MoveEntity {
   string id = 1;
   Position position = 2;
+  Rotation rotation = 3;
 }
