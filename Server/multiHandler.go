@@ -3,6 +3,8 @@ package main
 //todo
 // empty sersions get deleted
 // have server ping everyone to find disconnects // keepalive
+//todo give players an index when they join
+//todo track rotation
 
 import (
 	"artemisFallingServer/backend"
@@ -20,7 +22,6 @@ import (
 const (
 	EmptySessionTimeout = 10 * time.Second // 10 seconds should be plenty of time for someone to join
 	clientTimeout       = 2 * time.Minute
-	maxClients          = 4
 )
 
 // GameServer is used to stream game information with clients.
@@ -216,7 +217,7 @@ func (s *GameServer) List(ctx context.Context, req *pb.SessionRequest) (*pb.Sess
 		servers = append(servers, &pb.Server{
 			Id:     u,
 			Online: uint32(len(s.sessionUsers[u])),
-			Max:    maxClients,
+			Max:    uint32(maxClients),
 		})
 	}
 	return &pb.SessionList{
