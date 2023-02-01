@@ -4,7 +4,7 @@ using UnityEngine;
 public class StartGame : MonoBehaviour
 {
     public GameObject playerPrefab;
-    GameObject[] spawnPoints;
+    public GameObject[] spawnPoints;
 
     // Start is called before the first frame update
     void Start()
