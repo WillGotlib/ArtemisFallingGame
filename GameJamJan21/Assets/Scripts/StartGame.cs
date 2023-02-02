@@ -9,6 +9,14 @@ public class StartGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (FindObjectOfType<NetworkManager>() != null)
+            StartOnlineGame();
+        else
+            StartLocalGame();
+    }
+
+    private void StartOnlineGame()
+    {
         var spawnpoint = spawnPoints[GRPC.GetIndex()];
         var o = Instantiate(playerPrefab, spawnpoint.transform.position, spawnpoint.transform.rotation)
             .GetComponent<NetworkedPlayerController>();
@@ -21,9 +29,11 @@ public class StartGame : MonoBehaviour
             Destroy(spawn);
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
+    
+    private void StartLocalGame(){
+        foreach (GameObject spawn in spawnPoints) {
+            Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation);
+            Destroy(spawn);
+        }
     }
 }

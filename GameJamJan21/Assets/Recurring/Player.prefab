@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 6668230694903963035}
   - component: {fileID: 3349455145992540266}
   - component: {fileID: 3349455145992540241}
-  - component: {fileID: 902622852097515750}
+  - component: {fileID: 7643336244930375641}
   - component: {fileID: 3349455145992540270}
   m_Layer: 0
   m_Name: Player
@@ -115,7 +115,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6668230694903963034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4872, y: 0.47, z: -4.012}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.36011863, y: 0.40012738, z: 0.292129}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -223,7 +223,7 @@ MonoBehaviour:
   gravity: 10
   dashIntensity: 200
   dashCooldown: 3
---- !u!114 &902622852097515750
+--- !u!114 &7643336244930375641
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe54b4da3214bd8a9b91bbcd6c5c8fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlled: 0
+  controlled: 1
   networkTypeId: PLAYER
   removeOnDisconnect: 1
 --- !u!114 &3349455145992540270
