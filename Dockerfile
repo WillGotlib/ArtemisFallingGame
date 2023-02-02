@@ -1,33 +1,40 @@
-FROM namely/protoc as PROTOCOMPILER
+# syntax=docker/dockerfile:1
+FROM --platform=linux/amd64 namely/protoc as PROTOCOMPILER
 WORKDIR /compile
 
 COPY Protobuf/ .
 RUN protoc --go-grpc_out=./ --go_out=./ ./*.proto && echo "built go protos"
 
-FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:alpine as BUILDER
+
+FROM golang:alpine as BUILDER
+#--platform=${BUILDPLATFORM}
 WORKDIR /build
 
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
-ARG TARGETOS
-ARG TARGETARCH
+COPY Server/go.mod Server/go.sum ./
+RUN go mod download
 
 COPY Server/ ./
 COPY --from=PROTOCOMPILER /compile/proto proto/
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-w -s" -o server
+#ARG TARGETOS TARGETARCH
+#ARG TARGETVARIANT
 
-FROM gruebel/upx as COMPRESSOR
-WORKDIR /compress
+RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o server
+# GOOS=${TARGETOS} GOARCH=${TARGETARCH}
 
-COPY --from=BUILDER /build/server ./server.org
 
-RUN upx --best --lzma -o server server.org
+# FROM --platform=linux/amd64 gruebel/upx as COMPRESSOR
+# WORKDIR /compress
 
-FROM --platform=${TARGETPLATFORM:-linux/amd64} scratch
+# COPY --from=BUILDER /build/server .
+
+# RUN upx --best --lzma server
+
+
+FROM scratch
 WORKDIR /app
 
-COPY --from=COMPRESSOR /compress/server ./
+COPY --from=BUILDER /build/server .
 
 EXPOSE 37892
 CMD ["/app/server"]
