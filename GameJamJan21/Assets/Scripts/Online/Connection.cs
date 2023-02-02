@@ -7,6 +7,7 @@ namespace Online
 {
     public sealed class Connection
     {
+        private const string DefaultAddr = "ziv.shalit.name";//"localhost";
         private const int DefaultPort = 37892;
 
         /// <summary>
@@ -21,7 +22,7 @@ namespace Online
         /// <summary>
         /// Changes the address for the server and connect to it
         /// </summary>
-        /// <param name="address">a string url with port (example: localhost:50051)</param>
+        /// <param name="address">a string url with port (example: localhost:37892)</param>
         /// <returns>Grpc.Core.Channel object</returns>
         public static Task<Channel> ChangeAddress(string address)
         {
@@ -33,7 +34,7 @@ namespace Online
 
             if (u.Host == "")
             {
-                u.Host = "localhost";
+                u.Host = DefaultAddr;
             }
 
             if (_address.Equals(u.Uri)) return GetChannel();
@@ -65,7 +66,7 @@ namespace Online
         }
 
         private Channel _channel;
-        private static Uri _address = new("tcp://localhost:" + DefaultPort);
+        private static Uri _address = new("tcp://" + DefaultAddr + ":" + DefaultPort);
 
         private Connection()
         {

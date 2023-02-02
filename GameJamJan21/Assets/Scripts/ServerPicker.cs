@@ -34,6 +34,8 @@ public class ServerPicker : MonoBehaviour
         {
             throw new Exception("scene is required");
         }
+
+        UpdateServer();
     }
 
     public void ServerValid()
