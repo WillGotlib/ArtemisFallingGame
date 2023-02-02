@@ -142,6 +142,10 @@ public class BulletFire : MonoBehaviour
         rb.velocity = new Vector3(0,0,0);
         bullet.GetComponent<MeshRenderer>().enabled = false;
         fireStatus = FiringState.Finished;
+        print("Bullet terminating");
+        GameObject splash = UnityEngine.Object.Instantiate(splashZone);
+        print("Created splash zone");
+        splash.transform.position = this.transform.position;
         Destroy(gameObject);
     }
 

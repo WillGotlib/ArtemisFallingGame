@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
         // if (state != PlayerState.Aiming) {
         
         if (lookDirection.magnitude >= 0.5f) {
-            print("LOOK VALUE: " + lookDirection + " TRANSFORM DIRECTION: " + this.transform.forward);
+            // print("LOOK VALUE: " + lookDirection + " TRANSFORM: " + this.transform.position);
             this.transform.Rotate(lookDirection);
         }
         if (moveDirection.magnitude >= 0.1f) {
@@ -143,7 +143,7 @@ public class PlayerController : MonoBehaviour
 
             float playerAngle = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up) + 90;
             Quaternion rotation = Quaternion.AngleAxis(playerAngle, Vector3.up);
-            print("INITIAL DIRECTION: " + moveDirection + " ANGLE: " + playerAngle + " TRANSFORM DIR: " + rotation * moveDirection);
+            // print("INITIAL DIRECTION: " + moveDirection + " ANGLE: " + playerAngle + " TRANSFORM DIR: " + rotation * moveDirection);
             // float turnSmoothTime = 2f;
             // float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
             // float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);

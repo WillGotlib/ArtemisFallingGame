@@ -134,8 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fcf4bf1cd81b471aa9fe9fb516bad94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   bullet: {fileID: 4972240987904475784}
-  maxBounces: 9
+  maxBounces: 5
+  splashRadius: 1
+  splashZone: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
   rotationSpeed: 0.3
   bulletSpeed: 10
 --- !u!54 &7560826534295098678
