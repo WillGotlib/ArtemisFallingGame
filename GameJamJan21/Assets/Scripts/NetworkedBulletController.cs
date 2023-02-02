@@ -9,7 +9,7 @@ public class NetworkedBulletController : NetworkedObject, NetworkedElement
 
     public string Data()
     {
-        return "";
+        return ""; //todo send velocity to other bullets on wall change
     }
 
     public void Destroy()

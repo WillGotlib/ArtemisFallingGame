@@ -250,7 +250,7 @@ namespace Online
         {
             Disconnect();
         }
-        
+
         [RuntimeInitializeOnLoadMethod]
         static void RunOnStart()
         {
@@ -260,7 +260,7 @@ namespace Online
                 GRPC.Disconnect();
                 Connection.Dispose(); //todo make task that starts that will quit the app and a progress bar
                 var state = Connection.GetChannelState();
-                return state == ChannelState.Shutdown || state==ChannelState.TransientFailure;
+                return state == ChannelState.Shutdown || state == ChannelState.TransientFailure;
             };
         }
 
@@ -336,7 +336,8 @@ namespace Online
                     });
                 }
 
-                GRPC.SendRequest(new Request { Requests = { requests } });
+                if (requests.Count > 0)
+                    GRPC.SendRequest(new Request { Requests = { requests } });
 
                 yield return new WaitForSeconds(1f / updateFps);
             }
