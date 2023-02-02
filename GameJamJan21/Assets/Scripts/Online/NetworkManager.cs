@@ -64,7 +64,13 @@ namespace Online
         {
             while (_mainthreadQueue.Count > 0)
             {
-                _mainthreadQueue.Dequeue()();
+                try
+                {
+                    _mainthreadQueue.Dequeue()();
+                }
+                catch (MissingReferenceException e)
+                {
+                }
             }
         }
 
@@ -292,7 +298,16 @@ namespace Online
                     if (element.GetControlType() == ElementType.Listener) continue;
                     // ideally projectiles should be controlled by the server but i am making them be controlled by the sender for simplicities sake
 
-                    var pos = element.GetPosition();
+                    (Vector3, Quaternion) pos;
+                    try
+                    {
+                        pos = element.GetPosition();
+                    }
+                    catch (MissingReferenceException e)
+                    {
+                        continue; // object was destroyed
+                    }
+
                     if (_objectLastPos.ContainsKey(id) &&
                         _objectLastPos[id] == pos) continue;
                     _objectLastPos[id] = pos;

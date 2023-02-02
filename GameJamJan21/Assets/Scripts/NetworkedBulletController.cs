@@ -1,9 +1,9 @@
 ﻿using Online;
 using UnityEngine;
 
-public class NetworkedPlayerController : NetworkedObject, NetworkedElement
+public class NetworkedBulletController : NetworkedObject, NetworkedElement
 {
-    private NetworkedPlayerController() : base("PLAYER")
+    private NetworkedBulletController() : base("BULLET")
     {
     }
 
@@ -14,7 +14,7 @@ public class NetworkedPlayerController : NetworkedObject, NetworkedElement
 
     public void Destroy()
     {
-        if (!controlled)Destroy(gameObject);
+        if (!controlled) Destroy(gameObject); // have the person who fired the bullet handle killing
     }
 
     public (Vector3, Quaternion) GetPosition()

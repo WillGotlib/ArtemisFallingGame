@@ -1,4 +1,5 @@
 using System;
+using Online;
 using UnityEngine;
 using UnityEngine.InputSystem;           
 using UnityEngine.InputSystem.Controls;
@@ -30,6 +31,9 @@ public class BulletFire : MonoBehaviour
     private AudioSource _audioBullet;
     private PlayerController shooter;
 
+    private NetworkManager _networkedManager;
+    private NetworkedBulletController _networkedBullet;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +43,11 @@ public class BulletFire : MonoBehaviour
         scoring = GameObject.FindObjectOfType<ScoreUI>();
         
         _audioBullet = GetComponent<AudioSource>();
+        
+        _networkedManager = FindObjectOfType<NetworkManager>();
+        _networkedBullet = GetComponent<NetworkedBulletController>();
+        if (_networkedManager != null && _networkedBullet.controlled)
+            _networkedManager.RegisterObject(_networkedBullet);
     }
 
     public void OnFire()
@@ -154,5 +163,11 @@ public class BulletFire : MonoBehaviour
 
     public void setShooter(PlayerController player) {
         shooter = player;
+    }
+
+    private void OnDestroy()
+    {
+        if (_networkedManager != null)
+            _networkedManager.UnregisterObject(_networkedBullet);
     }
 }

@@ -1,7 +1,9 @@
+using Online;
 using UnityEngine;
-using UnityEngine.InputSystem;           
+using UnityEngine.InputSystem;
 
-public enum PlayerState {
+public enum PlayerState
+{
     Free,
     Locked,
     Aiming
@@ -24,8 +26,8 @@ public class PlayerController : MonoBehaviour
     public float dashIntensity = 10;
     public float dashCooldown = 5;
     float currentCooldown;
-    
-    
+
+
     private CharacterController _controller;
     private NetworkedPlayerController _networkedPlayer;
 
@@ -34,42 +36,55 @@ public class PlayerController : MonoBehaviour
     {
         camera = GetComponentInChildren<Camera>();
         cameraController = GameObject.Find("CameraControl");
-        if (camera == null) {
+        if (camera == null)
+        {
             camera = GameObject.Find("Top-Down Camera").GetComponentInChildren<Camera>();
             followingCamera = false;
         }
+
         state = PlayerState.Free;
         currentCooldown = 0;
         _controller = GetComponent<CharacterController>();
         _networkedPlayer = GetComponent<NetworkedPlayerController>();
 
-        if (!_networkedPlayer.controlled)
+        if (_networkedPlayer != null && !_networkedPlayer.controlled)
             GetComponent<PlayerInput>().enabled = false;
     }
 
-    public void hitByShot() {
+    public void hitByShot()
+    {
         LockState();
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        GetComponent<NetworkManager>()?.UnregisterObject(_networkedPlayer);
     }
 
     public void OnMovement(InputValue value)
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
-        if (state == PlayerState.Free) {
+        if (state == PlayerState.Free)
+        {
             moveDirection = value.Get<Vector3>();
-        } else {
+        }
+        else
+        {
             moveDirection = new Vector3(0, 0, 0);
         }
-        
+
 
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
         //            Storing the InputValue references somewhere and calling Get<T>()
         //            later does not work correctly.
     }
 
-    public void OnSwitchCamera() {
-        if (cameraController != null && state != PlayerState.Locked) {
+    public void OnSwitchCamera()
+    {
+        if (cameraController != null && state != PlayerState.Locked)
+        {
             cameraController.GetComponent<CameraSwitch>().SwitchCamera();
         }
     }
@@ -78,7 +93,8 @@ public class PlayerController : MonoBehaviour
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
-        if (state != PlayerState.Locked) {
+        if (state != PlayerState.Locked)
+        {
             lookDirection = value.Get<Vector3>();
             lookDirection = lookDirection * sensitivity * -1;
         }
@@ -89,34 +105,41 @@ public class PlayerController : MonoBehaviour
 
     public void OnAim()
     {
-        if (state != PlayerState.Locked) {
-            if (state != PlayerState.Aiming) {
+        if (state != PlayerState.Locked)
+        {
+            if (state != PlayerState.Aiming)
+            {
                 startAiming();
-            } else {
+            }
+            else
+            {
                 stopAiming();
             }
         }
     }
 
-    public void OnDash() {
-        if (currentCooldown <= 0) {
+    public void OnDash()
+    {
+        if (currentCooldown <= 0)
+        {
             var abs_x = Mathf.Abs(moveDirection.x);
             var abs_z = Mathf.Abs(moveDirection.z);
-            if (abs_x == 0 && abs_z == 0) {
+            if (abs_x == 0 && abs_z == 0)
+            {
                 return;
             }
+
             currentCooldown = dashCooldown;
             _controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity);
         }
     }
 
-    
+
     // Update is called once per frame
     void Update()
     {
-        if (!_networkedPlayer.controlled) return; // dont run logic if not the active character
         // todo get transfer metadata to other games using the data function in the network controller
-        
+
         print(currentCooldown);
         if (currentCooldown > 0)
             currentCooldown -= Time.deltaTime;
@@ -124,14 +147,16 @@ public class PlayerController : MonoBehaviour
         if (followingCamera == true)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
-        if (!_controller.isGrounded) {
+        if (!_controller.isGrounded)
+        {
             Vector3 fall = new Vector3(0, -(gravity), 0);
             _controller.Move(fall * Time.deltaTime);
         }
 
-        if (state != PlayerState.Aiming) {
-            if (moveDirection.magnitude >= 0.1f) {
-
+        if (state != PlayerState.Aiming)
+        {
+            if (moveDirection.magnitude >= 0.1f)
+            {
                 // Camera relative stuff
                 /**Vector3 forward = camera.transform.forward;
                 Vector3 right = camera.transform.right;
@@ -143,42 +168,52 @@ public class PlayerController : MonoBehaviour
 
                 float turnSmoothTime = 2f;
                 float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), turnSmoothTime * Time.deltaTime);
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity,
+                    turnSmoothTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection),
+                    turnSmoothTime * Time.deltaTime);
 
                 _controller.Move(moveDirection * (speed * Time.deltaTime));
             }
         }
     }
 
-    void startAiming() {
+    void startAiming()
+    {
         AimState();
-        GameObject bullet = Object.Instantiate(projectile, gameObject.transform, false);
+        GameObject bullet = Instantiate(projectile, gameObject.transform, false);
         Vector3 cur_pos = gameObject.transform.position;
         bullet.transform.position = new Vector3(cur_pos[0] + 0.5f, cur_pos[1] + 0.2f, cur_pos[2] + 0.5f);
         bullet.GetComponent<BulletFire>().setShooter(this);
     }
 
-    void stopAiming() {
+    void stopAiming()
+    {
         FreeState();
-        Object[] allBullets = Object.FindObjectsOfType(typeof(GameObject));
-        foreach(GameObject obj in allBullets) {
-            if(obj.transform.name == "Bullet Parent(Clone)" && obj.transform.parent == gameObject.transform){
+        Object[] allBullets = FindObjectsOfType(typeof(GameObject));
+        foreach (GameObject obj in allBullets)
+        {
+            if (obj.transform.name == "Bullet Parent(Clone)" && obj.transform.parent == gameObject.transform)
+            {
                 Destroy(obj);
             }
         }
+
         Destroy(bullet);
     }
 
-    public void FreeState() {
+    public void FreeState()
+    {
         state = PlayerState.Free;
     }
 
-    public void LockState() {
+    public void LockState()
+    {
         state = PlayerState.Locked;
     }
 
-    public void AimState() {
+    public void AimState()
+    {
         state = PlayerState.Aiming;
     }
 }
