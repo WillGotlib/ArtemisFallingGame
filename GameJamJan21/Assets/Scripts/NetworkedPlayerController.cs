@@ -1,12 +1,11 @@
-﻿using System;
-using Online;
+﻿using Online;
 using UnityEngine;
 
-public class NetworkedPlayerController : MonoBehaviour, NetworkedElement
+public class NetworkedPlayerController : NetworkedObject, NetworkedElement
 {
-    public bool controlled = false;
-    public string networkTypeId;
-    public bool removeOnDisconnect = true;
+    private NetworkedPlayerController() : base("PLAYER")
+    {
+    }
 
     public string Data()
     {
@@ -18,12 +17,7 @@ public class NetworkedPlayerController : MonoBehaviour, NetworkedElement
         Destroy(gameObject);
     }
 
-    public ElementType GetControlType()
-    {
-        return controlled ? ElementType.Owner : ElementType.Listener;
-    }
-
-    public (Vector3,Quaternion) GetPosition()
+    public (Vector3, Quaternion) GetPosition()
     {
         return (transform.position, transform.rotation);
     }
@@ -32,15 +26,5 @@ public class NetworkedPlayerController : MonoBehaviour, NetworkedElement
     {
         transform.position = position;
         transform.rotation = rotation;
-    }
-
-    public string ID()
-    {
-        return networkTypeId;
-    }
-
-    public bool RemoveOnDisconnect()
-    {
-        return removeOnDisconnect;
     }
 }

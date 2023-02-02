@@ -145,7 +145,7 @@ namespace Online
         {
             foreach (var response in action.Responses)
             {
-                Debug.Log(action);
+                // Debug.Log(action);
                 RunOnMainthread function = null;
                 switch (response.ActionCase)
                 {
