@@ -149,7 +149,7 @@ namespace Online
 
         private void onMessage(Response action)
         {
-            foreach (var response in action.Responses)
+            foreach (var response in action.Responses) // maybe unwrap events and fire them one by one
             {
                 // Debug.Log(action);
                 RunOnMainthread function = null;
@@ -249,6 +249,19 @@ namespace Online
         private void OnApplicationQuit()
         {
             Disconnect();
+        }
+        
+        [RuntimeInitializeOnLoadMethod]
+        static void RunOnStart()
+        {
+            Application.quitting += GRPC.Disconnect;
+            Application.wantsToQuit += () =>
+            {
+                GRPC.Disconnect();
+                Connection.Dispose(); //todo make task that starts that will quit the app and a progress bar
+                var state = Connection.GetChannelState();
+                return state == ChannelState.Shutdown || state==ChannelState.TransientFailure;
+            };
         }
 
         public async void Disconnect()

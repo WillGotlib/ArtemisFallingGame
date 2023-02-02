@@ -7,7 +7,7 @@ namespace Online
 {
     public sealed class Connection
     {
-        private const string DefaultAddr = "ziv.shalit.name";//"localhost";
+        private const string DefaultAddr = "ziv.shalit.name"; //"localhost";
         private const int DefaultPort = 37892;
 
         /// <summary>
@@ -65,11 +65,17 @@ namespace Online
             connection()._dispose();
         }
 
-        private Channel _channel;
+        public static ChannelState GetChannelState()
+        {
+            return _channel == null ? ChannelState.Shutdown : _channel.State;
+        }
+
+        private static Channel _channel;
         private static Uri _address = new("tcp://" + DefaultAddr + ":" + DefaultPort);
 
         private Connection()
         {
+            _channel = null;
         }
 
         private static Connection _instance;
