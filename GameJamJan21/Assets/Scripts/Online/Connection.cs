@@ -38,9 +38,7 @@ namespace Online
             }
 
             if (_address.Equals(u.Uri)) return GetChannel();
-            Dispose();
-            _address = u.Uri;
-            return GetChannel();
+            return connection()._getNewChannel(u.Uri);
         }
 
         /// <summary>
@@ -97,6 +95,13 @@ namespace Online
             _channel = new Channel(GetAddress(true), ChannelCredentials.Insecure);
             await _channel.ConnectAsync(deadline: DateTime.UtcNow.AddSeconds(2));
             return _channel;
+        }
+
+        private async Task<Channel> _getNewChannel(Uri u)
+        {
+            _dispose();
+            _address = u;
+            return await GetChannel();
         }
 
         private async void _dispose()

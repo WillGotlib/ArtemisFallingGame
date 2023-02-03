@@ -85,10 +85,11 @@ public class ServerPicker : MonoBehaviour
     
     public async void UpdateServer()
     {
+        serverChooser.SetActive(false);
+        GRPC.Dispose();
         var channel = await Connection.ChangeAddress(serverAddr.text);
         if (channel.State != ChannelState.Ready && channel.State != ChannelState.Idle)
         {
-            serverChooser.SetActive(false);
             Debug.Log("No channel, channel is " + channel.State);
             return;
         }

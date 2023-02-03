@@ -43,7 +43,7 @@ func (s *GameServer) handleMoveChange(change backend.MoveChange) {
 			MoveEntity: &pb.MoveEntity{
 				Position: change.Position.ToProto(),
 				Rotation: change.Rotation.ToProto(),
-				Id:       change.EntityID().String(),
+				Id:       change.EntityIDBytes(),
 			},
 		},
 	}
@@ -55,7 +55,7 @@ func (s *GameServer) handleRemoveChange(change backend.RemoveEntityChange) {
 	resp := &pb.StreamAction{
 		Action: &pb.StreamAction_RemoveEntity{
 			RemoveEntity: &pb.RemoveEntity{
-				Id: change.EntityID().String(),
+				Id: change.EntityIDBytes(),
 			},
 		},
 	}

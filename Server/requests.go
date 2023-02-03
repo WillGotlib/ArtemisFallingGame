@@ -23,7 +23,7 @@ func (s *GameServer) handleRequests(request *backend.Action) {
 
 func (s *GameServer) handleMoveRequest(req *backend.Action) {
 	request := req.Request.GetMoveEntity()
-	id, ok := ParseUUID(request.GetId())
+	id, ok := ParseID(request.GetId())
 	if !ok {
 		log.Println("can't parse id to move")
 		return
@@ -34,7 +34,7 @@ func (s *GameServer) handleMoveRequest(req *backend.Action) {
 
 func (s *GameServer) handleRemoveRequest(req *backend.Action) {
 	request := req.Request.GetRemoveEntity()
-	id, ok := ParseUUID(request.GetId())
+	id, ok := ParseID(request.GetId())
 	if !ok {
 		log.Println("can't parse id to remove")
 		return

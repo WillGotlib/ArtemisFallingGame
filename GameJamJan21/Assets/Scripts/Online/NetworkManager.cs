@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
+using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Grpc.Core;
 using protoBuff;
@@ -18,8 +20,8 @@ namespace Online
 
         public int updateFps = 60; // update at 60 fps
 
-        private readonly Dictionary<string, NetworkedElement> _objects;
-        private readonly Dictionary<string, (Vector3, Quaternion)> _objectLastPos;
+        private readonly Dictionary<ByteString, NetworkedElement> _objects;
+        private readonly Dictionary<ByteString, (Vector3, Quaternion)> _objectLastPos;
 
         private delegate void RunOnMainthread();
 
@@ -28,8 +30,8 @@ namespace Online
         public NetworkManager()
 
         {
-            _objects = new Dictionary<string, NetworkedElement>();
-            _objectLastPos = new Dictionary<string, (Vector3, Quaternion)>();
+            _objects = new Dictionary<ByteString, NetworkedElement>();
+            _objectLastPos = new Dictionary<ByteString, (Vector3, Quaternion)>();
             _mainthreadQueue = new Queue<RunOnMainthread>();
             GRPC.RegisterMessageCallback(onMessage);
         }
@@ -77,14 +79,15 @@ namespace Online
         /// be careful with this and dont have scripts register on wake since it can lead to recursion 
         public void RegisterObject(NetworkedElement obj)
         {
-            var id = Guid.NewGuid().ToString();
-            _objects.Add(id, obj);
-            PostRegistration(id, obj);
+            var id = Guid.NewGuid().ToByteArray();
+            var uid = ByteString.CopyFrom(id);
+            _objects.Add(uid, obj);
+            PostRegistration(uid, obj);
         }
 
         public void UnregisterObject(NetworkedElement obj)
         {
-            var id = "";
+            var id=ByteString.Empty;
             foreach (var (uid, element) in _objects)
             {
                 if (!element.Equals(obj)) continue;
@@ -95,7 +98,7 @@ namespace Online
             UnregisterObject(id);
         }
 
-        public void UnregisterObject(string id)
+        public void UnregisterObject(ByteString id)
         {
             if (_objects.ContainsKey(id)) return;
             _objects[id].Destroy();
@@ -179,7 +182,7 @@ namespace Online
 
         public void UpdateObject(NetworkedElement obj)
         {
-            var objectID = "";
+            var objectID = ByteString.Empty;
             foreach (var (id, element) in _objects)
             {
                 if (element != obj) continue;
@@ -187,7 +190,7 @@ namespace Online
                 break;
             }
 
-            if (objectID == "") throw new Exception("Cant update, not registered");
+            if (objectID == ByteString.Empty) throw new Exception("Cant update, not registered");
 
             var pos = obj.GetPosition();
             GRPC.SendRequest(new StreamAction
@@ -206,7 +209,7 @@ namespace Online
             });
         }
 
-        private bool isControlled(string id)
+        private bool isControlled(ByteString id)
         {
             return _objects.ContainsKey(id) && _objects[id].GetControlType() == ElementType.Owner;
         }
@@ -219,7 +222,7 @@ namespace Online
             _objects[entity.Id] = script;
         }
 
-        private void RemoveEntity(string id)
+        private void RemoveEntity(ByteString id)
         {
             if (isControlled(id)) return;
             var obj = _objects[id];
@@ -280,7 +283,7 @@ namespace Online
             }
         }
 
-        private void PostRegistration(string id, NetworkedElement obj)
+        private void PostRegistration(ByteString id, NetworkedElement obj)
         {
             var pos = obj.GetPosition();
             var req = new StreamAction

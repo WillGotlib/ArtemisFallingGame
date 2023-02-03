@@ -65,7 +65,7 @@ message Rotation {
 }
 
 message Entity {
-  string id = 1;
+  bytes id = 1;
   Position position = 2;
   Rotation rotation = 3;
   string type = 4;
@@ -82,11 +82,11 @@ message UpdateEntity {
 }
 
 message RemoveEntity {
-  string id = 1;
+  bytes id = 1;
 }
 
 message MoveEntity {
-  string id = 1;
+  bytes id = 1;
   Position position = 2;
   Rotation rotation = 3;
 }

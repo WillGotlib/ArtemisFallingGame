@@ -81,6 +81,11 @@ namespace Online
             SendRequest(new Request { Requests = { request } });
         }
 
+        public static void Dispose()
+        {
+            _instance = null;
+        }
+
         public static int GetIndex()
         {
             return _index;

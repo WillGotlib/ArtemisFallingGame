@@ -2,7 +2,10 @@ package backend
 
 import (
 	pb "artemisFallingServer/proto"
+	"encoding/hex"
+	"fmt"
 	"github.com/google/uuid"
+	"strings"
 )
 
 type Entity struct {
@@ -20,8 +23,10 @@ func (e *Entity) Set(c *Coordinate, r *Rotation) {
 }
 
 func (e *Entity) ToProto() *pb.Entity {
+	u := strings.ReplaceAll(e.ID.String(), "-", "")
+	id, _ := hex.DecodeString(u)
 	return &pb.Entity{
-		Id:       e.ID.String(),
+		Id:       id,
 		Data:     e.Data,
 		Position: e.CurrentPosition.ToProto(),
 		Rotation: e.CurrentRotation.ToProto(),
@@ -30,7 +35,8 @@ func (e *Entity) ToProto() *pb.Entity {
 }
 
 func EntityFromProto(entity *pb.Entity) (*Entity, error) {
-	id, err := uuid.Parse(entity.GetId())
+	u := fmt.Sprintf("%x", entity.GetId())
+	id, err := uuid.Parse(u)
 	if err != nil {
 		return nil, err
 	}

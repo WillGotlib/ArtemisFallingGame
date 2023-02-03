@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"github.com/google/uuid"
 )
 
-func ParseUUID(id string) (uuid.UUID, bool) {
-	uid, err := uuid.Parse(id)
+func ParseID(id []byte) (uuid.UUID, bool) {
+	u := fmt.Sprintf("%x", id)
+	uid, err := uuid.Parse(u)
 	return uid, err == nil
 }

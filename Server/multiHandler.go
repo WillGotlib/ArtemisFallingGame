@@ -9,6 +9,7 @@ import (
 	pb "artemisFallingServer/proto"
 	"context"
 	"errors"
+	"github.com/google/uuid"
 	"io"
 	"log"
 	"sync"
@@ -140,8 +141,8 @@ func (s *GameServer) getClientFromContext(ctx context.Context) (*backend.Client,
 	if len(tokenRaw) == 0 {
 		return nil, errors.New("no token provided")
 	}
-	uid, ok := ParseUUID(tokenRaw[0])
-	if !ok {
+	uid, err := uuid.Parse(tokenRaw[0])
+	if err != nil {
 		return nil, errors.New("cannot parse token")
 	}
 	s.mu.RLock()
