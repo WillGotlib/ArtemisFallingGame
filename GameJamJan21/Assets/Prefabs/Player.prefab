@@ -194,8 +194,8 @@ GameObject:
   - component: {fileID: 6668230694903963032}
   - component: {fileID: 6668230694903963035}
   - component: {fileID: 3349455145992540266}
-  - component: {fileID: 3349455145992540241}
   - component: {fileID: 3349455145992540270}
+  - component: {fileID: 2111890155133846231}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -302,25 +302,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3349455145992540241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6668230694903963034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25bf2869b2515aa43bd3be871833493f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 3349455145992540266}
-  speed: 2
-  sensitivity: 20
-  weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
-  gravity: 10
-  dashIntensity: 200
-  dashCooldown: 3
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,7 +348,27 @@ MonoBehaviour:
     m_ActionId: b031336f-603d-43c4-8d4e-13d21ce98de5
     m_ActionName: Player/Movement[/SwitchProControllerHID/leftStick/up,/SwitchProControllerHID/leftStick/down,/SwitchProControllerHID/leftStick/left,/SwitchProControllerHID/leftStick/right]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: NintendoControlScheme
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2111890155133846231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052f58a485e15ca44ac2f467414f9c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 3349455145992540266}
+  speed: 6
+  sensitivity: 1
+  weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
+  gravity: 0.000001
+  dashIntensity: 10
+  dashCooldown: 5
+  _trajectory: {fileID: 0}

@@ -12,20 +12,22 @@ public class GunController : MonoBehaviour
     // not serialized so that other things can read and update this, ammo refills or the ui that shows ammo
     [NonSerialized] public int ammoCount;
     [NonSerialized] public int bouncingCount;
+    [SerializeField] private Trajectory _trajectory;
 
     [Header("Object values")] public Animator animationController;
-    private PlayerController owner;
+    private Controller owner;
 
     void Start()
     {
         ammoCount = maxAmmo;
         bouncingCount = maxBouncers;
+        _trajectory.RegisterScene();
     }
 
-    void Update()
-    {
-        
+    void Update() {
+        _trajectory.SimulateTrajectory(this);
     }
+
 
     // returns true if fired
     public bool PrimaryFire()
@@ -35,8 +37,8 @@ public class GunController : MonoBehaviour
         Vector3 cur_pos = this.transform.position + this.transform.forward;
         bullet.transform.position = cur_pos;
         bullet.transform.rotation = this.transform.rotation;
-        bullet.GetComponent<BulletFire>().setShooter(owner);
-        bullet.GetComponent<BulletFire>().Fire(this.transform.forward);
+        bullet.GetComponent<BulletLogic>().setShooter(owner);
+        bullet.GetComponent<BulletLogic>().Fire(this.transform.forward, false);
         return true;
     }
     
@@ -46,7 +48,7 @@ public class GunController : MonoBehaviour
         return true;
     }
 
-    public void setOwner(PlayerController player) {
+    public void setOwner(Controller player) {
         owner = player;
     }
 }

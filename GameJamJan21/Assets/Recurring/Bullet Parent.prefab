@@ -122,12 +122,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7842087154744338827}
-  - component: {fileID: 7842087154744338825}
   - component: {fileID: 7842087154744338826}
   - component: {fileID: 7842087154744338824}
   - component: {fileID: 7842087154744338823}
   - component: {fileID: 7842087154744338822}
   - component: {fileID: -1257846052412838948}
+  - component: {fileID: 7375624562476028608}
   m_Layer: 0
   m_Name: Bullet Parent
   m_TagString: Untagged
@@ -151,25 +151,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7842087154744338825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7842087154744338828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fcf4bf1cd81b471aa9fe9fb516bad94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  bullet: {fileID: 7842087153980711341}
-  maxBounces: 4
-  splashRadius: 2
-  splashZone: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
-  rotationSpeed: 0.3
-  bulletSpeed: 10
 --- !u!54 &7842087154744338826
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -333,6 +314,21 @@ MonoBehaviour:
   m_DefaultActionMap: BulletAim
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &7375624562476028608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7842087154744338828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ee0b1ce762a1404286885528e564385, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 7842087154744338828}
+  maxBounces: 0
+  rotationSpeed: 0.3
 --- !u!1001 &6097871281444060791
 PrefabInstance:
   m_ObjectHideFlags: 0
