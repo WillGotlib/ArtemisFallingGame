@@ -1,26 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StartGame : MonoBehaviour
 {
     public GameObject playerPrefab;
     GameObject[] spawnPoints;
-
+    private Scene _simulatorScene;
+    private PhysicsScene _physicsScene;
+    [SerializeField] private Transform _objects;
     // Start is called before the first frame update
     void Start()
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
-
+        CreatePhysicsScene();
         foreach (GameObject spawn in spawnPoints) {
             Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation);
             Destroy(spawn);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void CreatePhysicsScene()
     {
-        
+        CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
+        _simulatorScene = SceneManager.CreateScene("Trajectory", parameters);
+        _physicsScene = _simulatorScene.GetPhysicsScene();
+        foreach (Transform obj in _objects) {
+            var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
+            // ghostObj.GetComponent<Renderer>().enabled = false;
+            SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
+        }
     }
 }
