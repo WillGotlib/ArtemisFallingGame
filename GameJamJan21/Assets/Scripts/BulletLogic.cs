@@ -9,7 +9,9 @@ public class BulletLogic : MonoBehaviour
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
     private int maxBounces;
-    private float _bulletSpeed = 3f;
+    private float _bulletSpeed = 5f;
+
+    public GameObject splashZone;
 
     private Vector3 vel;
     private Vector3 lookDirection;
@@ -35,7 +37,7 @@ public class BulletLogic : MonoBehaviour
         if (isGhost == false) {
             _audioBullet = GetComponent<AudioSource>();
             _audioBullet.Play(0);
-            maxBounces = 6;
+            maxBounces = 4;
         }
         else {
             maxBounces = 3;
@@ -50,7 +52,7 @@ public class BulletLogic : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        print("collided with something");
+        // print("collided with something");
         // Check tag for Transient or Reflector
         // Reflect if applicable
         if (collision.gameObject.tag == "Transient")
@@ -77,7 +79,7 @@ public class BulletLogic : MonoBehaviour
             Vector3 oldvel = vel;
             float speed = oldvel.magnitude;
 
-            print("CONTACT NORMAL = " + contact.normal.ToString());
+            // print("CONTACT NORMAL = " + contact.normal.ToString());
 
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
             float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
@@ -97,6 +99,11 @@ public class BulletLogic : MonoBehaviour
     void finishShot() {
         _rb.velocity = new Vector3(0,0,0);
         bullet.GetComponent<MeshRenderer>().enabled = false;
+        if (isGhost == false) {
+            print("Bullet terminating");
+            GameObject splash = UnityEngine.Object.Instantiate(splashZone);
+            splash.transform.position = this.transform.position;
+        }
         Destroy(gameObject);
     }
 

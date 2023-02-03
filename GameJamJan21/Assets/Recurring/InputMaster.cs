@@ -152,7 +152,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""3D Vector (Keyboard)"",
+                    ""name"": ""3D Vector (Keyboard P1)"",
                     ""id"": ""105a7b4a-9cc7-4398-8405-c68511141df7"",
                     ""path"": ""3DVector"",
                     ""interactions"": """",
@@ -229,6 +229,83 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""3D Vector (Keyboard P2)"",
+                    ""id"": ""eb881e71-a1e3-4c54-826f-bd5d09df697d"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""25339b49-ac5f-408c-b65f-728c57ef8f06"",
+                    ""path"": ""<Keyboard>/comma"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardControls"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""9594c34b-2a4b-48cf-b657-111bcb56f461"",
+                    ""path"": ""<Keyboard>/period"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardControls"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""b6255d27-bed6-463e-984c-d0273f9a9036"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""35cee207-ca44-41a5-9ee0-e0e32aa7a874"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""1838325c-7278-4eff-9c4d-032dd0272c7d"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""4fb4b929-446f-4b0b-8d66-271478ba2e92"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""7a30bda2-55bf-4464-9143-32e8190e599e"",
                     ""path"": ""<Gamepad>/rightShoulder"",
@@ -240,7 +317,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""3D Vector (Keyboard)"",
+                    ""name"": ""3D Vector (Keyboard P1)"",
                     ""id"": ""8df30c49-a980-4936-854a-cc00b8b6fdc1"",
                     ""path"": ""3DVector"",
                     ""interactions"": """",
@@ -394,6 +471,83 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": ""3D Vector (Keyboard P2)"",
+                    ""id"": ""5aad4f05-b101-458d-96b7-947549a535b1"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""bf251bf8-de19-46fe-a05e-926bc8c0d918"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardP2ControlScheme"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""ab6b0f43-3b1a-4f14-b757-3ad8ad003f3f"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardP2ControlScheme"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""e9bce406-df17-465a-953c-4667c3659c2d"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardP2ControlScheme"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""189fc361-3928-4102-ba4b-0aa55ded397d"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardP2ControlScheme"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""1c9bb19b-f0ba-4dd8-b7ea-c8926a87d3d8"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardP2ControlScheme"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""1f6b8a3b-aa33-439b-8325-67efabe15c32"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardP2ControlScheme"",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
                     ""name"": """",
                     ""id"": ""cd0cd2ee-fc4a-49f4-9d59-58b462f5184f"",
                     ""path"": ""<Keyboard>/space"",
@@ -422,6 +576,17 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardControls"",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0bbe71a3-b619-497d-8547-8a891f632aae"",
+                    ""path"": ""<Keyboard>/slash"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardP2ControlScheme"",
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -466,6 +631,17 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         {
             ""name"": ""KeyboardControls"",
             ""bindingGroup"": ""KeyboardControls"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""KeyboardP2ControlScheme"",
+            ""bindingGroup"": ""KeyboardP2ControlScheme"",
             ""devices"": [
                 {
                     ""devicePath"": ""<Keyboard>"",
@@ -646,6 +822,15 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         {
             if (m_KeyboardControlsSchemeIndex == -1) m_KeyboardControlsSchemeIndex = asset.FindControlSchemeIndex("KeyboardControls");
             return asset.controlSchemes[m_KeyboardControlsSchemeIndex];
+        }
+    }
+    private int m_KeyboardP2ControlSchemeSchemeIndex = -1;
+    public InputControlScheme KeyboardP2ControlSchemeScheme
+    {
+        get
+        {
+            if (m_KeyboardP2ControlSchemeSchemeIndex == -1) m_KeyboardP2ControlSchemeSchemeIndex = asset.FindControlSchemeIndex("KeyboardP2ControlScheme");
+            return asset.controlSchemes[m_KeyboardP2ControlSchemeSchemeIndex];
         }
     }
     public interface IPlayerActions
