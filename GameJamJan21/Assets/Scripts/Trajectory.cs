@@ -29,7 +29,7 @@ public class Trajectory : MonoBehaviour
         _line.positionCount = _maxIterations;
 
         for (int i = 0; i < _maxIterations; i++) {
-             _physicsScene.Simulate(Time.fixedDeltaTime * 2);
+             _physicsScene.Simulate(Time.fixedDeltaTime);
              _line.SetPosition(i, ghostBullet.transform.position);
         }
         Destroy(ghostBullet.gameObject);
