@@ -14,9 +14,12 @@ public class StartGame : MonoBehaviour
     void Start()
     {
         spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
+        int i = 0;
         CreatePhysicsScene();
         foreach (GameObject spawn in spawnPoints) {
+            print("Spawning a player");
             Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation);
+            // if 
             Destroy(spawn);
         }
     }

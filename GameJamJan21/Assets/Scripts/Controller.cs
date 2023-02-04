@@ -66,7 +66,7 @@ public class Controller : MonoBehaviour
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
-        lookDirection = value.Get<Vector3>();
+        lookDirection = value.Get<Vector3>() * sensitivity;
             // lookDirection = lookDirection * sensitivity * -1;
     }
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.

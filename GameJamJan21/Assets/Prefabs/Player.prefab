@@ -365,10 +365,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 3349455145992540266}
-  speed: 6
-  sensitivity: 1
+  speed: 4
+  sensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   gravity: 0.000001
   dashIntensity: 10
   dashCooldown: 5
-  _trajectory: {fileID: 0}
