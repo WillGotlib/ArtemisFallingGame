@@ -28,7 +28,6 @@ public class GunController : MonoBehaviour
         _trajectory.SimulateTrajectory(this);
     }
 
-
     // returns true if fired
     public bool PrimaryFire()
     {
