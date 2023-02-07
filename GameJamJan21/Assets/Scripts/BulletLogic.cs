@@ -29,24 +29,19 @@ public class BulletLogic : MonoBehaviour
     //     vel = rb.velocity;
     // }
 
-    private void Awake()
-    {
-        _audioBullet = GetComponent<AudioSource>();
-
-        _networkedManager = FindObjectOfType<NetworkManager>();
-        _networkedBullet = GetComponent<NetworkedBulletController>();
-        if (_networkedManager != null && _networkedBullet.controlled)
-            _networkedManager.RegisterObject(_networkedBullet);
-    }
-
     public void Fire(Vector3 direction, bool ghost)
     {
         _rb.velocity = direction.normalized * _bulletSpeed;
         vel = _rb.velocity;
         isGhost = ghost;
         
-        // Play sound
         if (isGhost == false) {
+            _networkedBullet = GetComponent<NetworkedBulletController>();
+            _networkedManager = FindObjectOfType<NetworkManager>();
+            if (_networkedManager != null && _networkedBullet.controlled)
+                _networkedManager.RegisterObject(_networkedBullet);
+
+            _audioBullet = GetComponent<AudioSource>();
             _audioBullet.Play(0);
             maxBounces = 4;
         }
@@ -125,6 +120,6 @@ public class BulletLogic : MonoBehaviour
     private void OnDestroy()
      {
          if (_networkedManager != null)
-             _networkedManager.UnregisterObject(_networkedBullet);
+             _networkedManager.UnregisterObject(_networkedBullet); //todo find what is registering the bullets
      }
 }
