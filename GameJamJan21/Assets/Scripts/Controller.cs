@@ -70,6 +70,9 @@ public class Controller : MonoBehaviour
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
+        if (value.Get<Vector3>() != lookDirection) {
+            print("LOOK ANGLE: " + value.Get<Vector3>());
+        }
         lookDirection = value.Get<Vector3>() * sensitivity;
             // lookDirection = lookDirection * sensitivity * -1;
     }
@@ -116,8 +119,10 @@ public class Controller : MonoBehaviour
         // if (state != PlayerState.Aiming) {
         
         if (lookDirection.magnitude >= 0.5f) {
-            print("LOOK VALUE: " + lookDirection + " TRANSFORM DIRECTION: " + this.transform.forward);
-            this.transform.Rotate(lookDirection);
+            Quaternion newAngle = Quaternion.LookRotation(lookDirection, Vector3.up);
+            print("LOOK VALUE: " + lookDirection + " ADJUSTED ANGLE: " + newAngle);
+            this.transform.rotation = newAngle;
+            // this.transform.Rotate(lookDirection);
         }
         if (moveDirection.magnitude >= 0.1f) {
 
@@ -130,15 +135,15 @@ public class Controller : MonoBehaviour
             **/
             moveDirection.y = 0;
 
-            float playerAngle = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up) + 90;
-            Quaternion rotation = Quaternion.AngleAxis(playerAngle, Vector3.up);
-            print("INITIAL DIRECTION: " + moveDirection + " ANGLE: " + playerAngle + " TRANSFORM DIR: " + rotation * moveDirection);
+            // float playerAngle = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up) + 90;
+            // Quaternion rotation = Quaternion.AngleAxis(playerAngle, Vector3.up);
+            // print("INITIAL DIRECTION: " + moveDirection + " ANGLE: " + playerAngle + " TRANSFORM DIR: " + rotation * moveDirection);
             // float turnSmoothTime = 2f;
             // float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
             // float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             // transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), turnSmoothTime * Time.deltaTime);
 
-            controller.Move((rotation * moveDirection).normalized * speed * Time.deltaTime * momentum);
+            controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum);
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         } else {

@@ -85,7 +85,7 @@ public class BulletLogic : MonoBehaviour
             transform.eulerAngles = new Vector3(0, rot, 0);
             
             reflectedVelo.y = 0;
-            print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
+            // print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
             vel = reflectedVelo.normalized * _bulletSpeed;
             // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
