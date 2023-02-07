@@ -371,3 +371,5 @@ MonoBehaviour:
   gravity: 0.000001
   dashIntensity: 10
   dashCooldown: 5
+  momentum: 0.85
+  maxMomentum: 1.15

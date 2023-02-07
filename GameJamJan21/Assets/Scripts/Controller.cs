@@ -24,6 +24,9 @@ public class Controller : MonoBehaviour
     public float dashIntensity = 10;
     public float dashCooldown = 5;
     float currentCooldown;
+    public float momentum = 0.85f;
+    private float startMomentum;
+    public float maxMomentum = 1.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +43,7 @@ public class Controller : MonoBehaviour
         Vector3 cur_pos = this.transform.position;
         weapon.transform.position = new Vector3(cur_pos[0] + 0.25f, cur_pos[1] + 0.2f, cur_pos[2] + 0.2f);
         weapon.GetComponent<GunController>().setOwner(this);
+        startMomentum = momentum;
     }
 
     public void hitByShot() {
@@ -133,7 +137,11 @@ public class Controller : MonoBehaviour
             // float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
             // transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), turnSmoothTime * Time.deltaTime);
 
-            controller.Move((rotation * moveDirection).normalized * speed * Time.deltaTime);
+            controller.Move((rotation * moveDirection).normalized * speed * Time.deltaTime * momentum);
+            if (momentum < maxMomentum)
+                momentum += 0.1f * Time.deltaTime;
+        } else {
+            momentum = startMomentum;
         }
         // }
     }
