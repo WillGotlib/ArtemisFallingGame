@@ -7,22 +7,22 @@ public class NetworkedPlayerController : NetworkedObject, NetworkedElement
     {
     }
 
-    public string Data()
+    public override string Data()
     {
         return "";
     }
 
-    public void Destroy()
+    public override void Destroy()
     {
         if (!controlled)Destroy(gameObject);
     }
 
-    public (Vector3, Quaternion) GetPosition()
+    public override (Vector3, Quaternion) GetPosition()
     {
         return (transform.position, transform.rotation);
     }
 
-    public void HandleUpdate(Vector3 position, Quaternion rotation, string data)
+    public override void HandleUpdate(Vector3 position, Quaternion rotation, string data)
     {
         transform.position = position;
         transform.rotation = rotation;

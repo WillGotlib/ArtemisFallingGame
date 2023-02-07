@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraSwitch: MonoBehaviour
+public class CameraSwitch : MonoBehaviour
 {
     public Camera[] cameras;
     private int choice = 0;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,27 +17,31 @@ public class CameraSwitch: MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Alpha1)) {
+        if (Input.GetKeyUp(KeyCode.Alpha1))
+        {
             DisableObjects();
             choice += 1;
             if (choice >= cameras.Length)
             {
                 choice = 0;
             }
+
             cameras[choice].gameObject.SetActive(true);
         }
     }
 
-    public void SwitchCamera() {
+    public void SwitchCamera()
+    {
         DisableObjects();
         choice += 1;
         if (choice >= cameras.Length)
         {
             choice = 0;
         }
-        cameras[choice].gameObject.SetActive(true);     
+
+        cameras[choice].gameObject.SetActive(true);
     }
-    
+
     void DisableObjects()
     {
         Camera[] allCameras = Camera.allCameras;

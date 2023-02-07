@@ -1,0 +1,182 @@
+﻿using Online;
+using UnityEngine;
+using UnityEngine.InputSystem;           
+
+
+public class Controller : MonoBehaviour
+{
+    public CharacterController controller;
+    public float speed = 6f;
+    public float sensitivity = 1;
+    public GameObject weaponType;
+    private GameObject weapon;
+    // private bool bulletInChamber;
+
+    float turnSmoothVelocity;
+    Vector3 moveDirection;
+    Vector3 lookDirection;
+    new Camera camera;
+    bool followingCamera = true;
+    GameObject cameraController;
+    public float gravity = 0.000001f;
+    public float dashIntensity = 10;
+    public float dashCooldown = 5;
+    float currentCooldown;
+    public float momentum = 0.85f;
+    private float startMomentum;
+    public float maxMomentum = 1.5f;
+    
+    private NetworkedPlayerController _networkedPlayer;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        currentCooldown = 0;
+         _networkedPlayer = GetComponent<NetworkedPlayerController>();
+
+         if (_networkedPlayer.controlled)
+         {
+             camera = GetComponentInChildren<Camera>();
+             cameraController = GameObject.Find("CameraControl");
+             if (camera == null) {
+                 camera = GameObject.Find("Top-Down Camera").GetComponentInChildren<Camera>();
+                 followingCamera = false;
+             }
+         }
+         
+        Debug.Log("Spawning in Weapon");
+        weapon = Object.Instantiate(weaponType, gameObject.transform, false);
+        Vector3 cur_pos = this.transform.position;
+        weapon.transform.position = new Vector3(cur_pos[0] + 0.25f, cur_pos[1] + 0.2f, cur_pos[2] + 0.2f);
+        weapon.GetComponent<GunController>().setOwner(this);
+        startMomentum = momentum;
+        
+        if (_networkedPlayer != null && !_networkedPlayer.controlled)
+             GetComponent<PlayerInput>().enabled = false;
+    }
+
+    public void hitByShot() {
+        Destroy(gameObject);
+    }
+    
+    private void OnDestroy()
+     {
+         GetComponent<NetworkManager>()?.UnregisterObject(_networkedPlayer);
+     }
+
+    public void OnMovement(InputValue value)
+    {
+        // Read value from control. The type depends on what type of controls.
+        // the action is bound to.
+        moveDirection = value.Get<Vector3>();
+        // IMPORTANT: The given InputValue is only valid for the duration of the callback.
+        //            Storing the InputValue references somewhere and calling Get<T>()
+        //            later does not work correctly.
+    }
+
+    public void OnSwitchCamera() {
+        if (cameraController != null) {
+            cameraController.GetComponent<CameraSwitch>().SwitchCamera();
+        }
+    }
+
+    public void OnLook(InputValue value)
+    {
+        // Read value from control. The type depends on what type of controls.
+        // the action is bound to.
+        lookDirection = value.Get<Vector3>() * sensitivity;
+            // lookDirection = lookDirection * sensitivity * -1;
+    }
+        // IMPORTANT: The given InputValue is only valid for the duration of the callback.
+        //            Storing the InputValue references somewhere and calling Get<T>()
+        //            later does not work correctly.
+
+    // public void OnAim()
+    // {
+    //     stopAiming();
+    // }
+
+    public void OnFire() {
+        weapon.GetComponent<GunController>().PrimaryFire();
+    }
+
+    public void OnDash() {
+        if (currentCooldown <= 0) {
+            var abs_x = Mathf.Abs(moveDirection.x);
+            var abs_z = Mathf.Abs(moveDirection.z);
+            if (abs_x == 0 && abs_z == 0) {
+                return;
+            }
+            currentCooldown = dashCooldown;
+            controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity);
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // todo get transfer metadata to other games using the data function in the network controller
+
+        if (currentCooldown > 0)
+            currentCooldown -= Time.deltaTime;
+
+        if (followingCamera == true && _networkedPlayer.controlled)
+            camera.transform.localRotation = Quaternion.Euler(lookDirection);
+
+        if (!controller.isGrounded) {
+            Vector3 fall = new Vector3(0, -(gravity), 0);
+            controller.Move(fall * Time.deltaTime);
+        }
+        // if (state != PlayerState.Aiming) {
+        
+        if (lookDirection.magnitude >= 0.5f) {
+            print("LOOK VALUE: " + lookDirection + " TRANSFORM DIRECTION: " + this.transform.forward);
+            this.transform.Rotate(lookDirection);
+        }
+        if (moveDirection.magnitude >= 0.1f) {
+
+            // Camera relative stuff
+            /**Vector3 forward = camera.transform.forward;
+            Vector3 right = camera.transform.right;
+            Vector3 forwardRelative = moveDirection.z * forward;
+            Vector3 rightRelative = moveDirection.x * right;
+            Vector3 relativeMove = forwardRelative + rightRelative;
+            **/
+            moveDirection.y = 0;
+
+            float playerAngle = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up) + 90;
+            Quaternion rotation = Quaternion.AngleAxis(playerAngle, Vector3.up);
+            print("INITIAL DIRECTION: " + moveDirection + " ANGLE: " + playerAngle + " TRANSFORM DIR: " + rotation * moveDirection);
+            // float turnSmoothTime = 2f;
+            // float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
+            // float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+            // transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), turnSmoothTime * Time.deltaTime);
+
+            controller.Move((rotation * moveDirection).normalized * speed * Time.deltaTime * momentum);
+            if (momentum < maxMomentum)
+                momentum += 0.1f * Time.deltaTime;
+        } else {
+            momentum = startMomentum;
+        }
+        // }
+    }
+
+    void startAiming() {
+        // AimState();
+        // GameObject bullet = Object.Instantiate(projectile, gameObject.transform, false);
+        // Vector3 cur_pos = gameObject.transform.position;
+        // bullet.transform.position = new Vector3(cur_pos[0] + 0.5f, cur_pos[1] + 0.2f, cur_pos[2] + 0.5f);
+        // bullet.GetComponent<BulletFire>().setShooter(this);
+    }
+
+    void stopAiming() {
+        // FreeState();
+        Object[] allBullets = Object.FindObjectsOfType(typeof(GameObject));
+        foreach(GameObject obj in allBullets) {
+            if(obj.transform.name == "Bullet Parent(Clone)" && obj.transform.parent == gameObject.transform){
+                Destroy(obj);
+            }
+        }
+        Destroy(weapon);
+    }
+}
