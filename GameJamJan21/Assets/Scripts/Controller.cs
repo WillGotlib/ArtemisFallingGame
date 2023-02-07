@@ -83,6 +83,7 @@ public class Controller : MonoBehaviour
     // }
 
     public void OnFire() {
+        print("Fired");
         weapon.GetComponent<GunController>().PrimaryFire();
     }
 

@@ -21,11 +21,12 @@ public class BulletLogic : MonoBehaviour
     private Controller shooter;
     private bool isGhost;
 
-    // // Update is called once per frame
-    // void Update()
-    // {
-    //     vel = rb.velocity;
-    // }
+    // Update is called once per frame
+    void Update()
+    {
+        // TODO: Look at this. Wasteful making this run every frame...
+        _rb.velocity = vel;
+    }
 
     public void Fire(Vector3 direction, bool ghost)
     {
@@ -79,15 +80,14 @@ public class BulletLogic : MonoBehaviour
             Vector3 oldvel = vel;
             float speed = oldvel.magnitude;
 
-            // print("CONTACT NORMAL = " + contact.normal.ToString());
-
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
             float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
             
             reflectedVelo.y = 0;
-            _rb.velocity = reflectedVelo.normalized * _bulletSpeed;
-            vel = _rb.velocity;
+            print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
+            vel = reflectedVelo.normalized * _bulletSpeed;
+            // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
             // Subtract bounces and maybe destroy
             maxBounces -= 1;
