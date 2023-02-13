@@ -27,6 +27,7 @@ public class Controller : MonoBehaviour
     public float momentum = 0.85f;
     private float startMomentum;
     public float maxMomentum = 1.5f;
+    public GameObject backupCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,7 @@ public class Controller : MonoBehaviour
         camera = GetComponentInChildren<Camera>();
         cameraController = GameObject.Find("CameraControl");
         if (camera == null) {
-            camera = GameObject.Find("Top-Down Camera").GetComponentInChildren<Camera>();
+            camera = backupCamera.GetComponentInChildren<Camera>();
             followingCamera = false;
         }
         currentCooldown = 0;

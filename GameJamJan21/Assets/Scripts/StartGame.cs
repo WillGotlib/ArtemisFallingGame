@@ -9,11 +9,12 @@ public class StartGame : MonoBehaviour
     GameObject[] spawnPoints;
     private Scene _simulatorScene;
     private PhysicsScene _physicsScene;
+    public string targetTag;
     [SerializeField] private Transform _objects;
     // Start is called before the first frame update
     void Start()
     {
-        spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
+        spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
         int i = 0;
         CreatePhysicsScene();
         foreach (GameObject spawn in spawnPoints) {

@@ -373,3 +373,4 @@ MonoBehaviour:
   dashCooldown: 5
   momentum: 0.85
   maxMomentum: 1.15
+  backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
