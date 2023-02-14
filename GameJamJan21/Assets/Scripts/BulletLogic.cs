@@ -6,6 +6,8 @@ using UnityEngine.InputSystem.Controls;
 
 public class BulletLogic : MonoBehaviour
 {
+    private GlobalStats stats;
+
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
     private int maxBounces;
@@ -25,7 +27,7 @@ public class BulletLogic : MonoBehaviour
     void Update()
     {
         // TODO: Look at this. Wasteful making this run every frame...
-        _rb.velocity = vel;
+        _rb.velocity = vel.normalized * _bulletSpeed;
     }
 
     public void Fire(Vector3 direction, bool ghost)
@@ -67,7 +69,7 @@ public class BulletLogic : MonoBehaviour
         } else if (isGhost == false && collision.gameObject.tag == "Player") {
             print("Encountered player");
             Controller player = collision.gameObject.GetComponent<Controller>();
-            player.hitByShot();
+            player.InflictDamage(0.5f);
             finishShot();
         } else  {
             // Ricochet
@@ -99,9 +101,12 @@ public class BulletLogic : MonoBehaviour
     void finishShot() {
         _rb.velocity = new Vector3(0,0,0);
         bullet.GetComponent<MeshRenderer>().enabled = false;
-        if (isGhost == false) {
+        if (!isGhost) {
             print("Bullet terminating");
             GameObject splash = UnityEngine.Object.Instantiate(splashZone);
+            SplashZone splashManager = splash.GetComponent<SplashZone>();
+            splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
+            splashManager.splashDamage = GlobalStats.bulletSplashDamage;
             splash.transform.position = this.transform.position;
         }
         Destroy(gameObject);

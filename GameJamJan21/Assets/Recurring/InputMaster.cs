@@ -333,7 +333,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
+                    ""groups"": ""NintendoControlScheme;Gamepad2"",
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
