@@ -7,12 +7,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject[] levels;
 
     private GameObject instantiated;
-    
+
     public GameObject MakeLevel()
     {
         if (levels.Length == 0 || selectedLevel < 0 || selectedLevel > levels.Length)
             throw new Exception("select valid level");
-        
+
         if (instantiated != null)
         {
             Destroy(instantiated);
@@ -23,9 +23,19 @@ public class LevelManager : MonoBehaviour
         return instantiated;
     }
 
+    private Level GetLevel()
+    {
+        return instantiated.GetComponent<Level>();
+    }
+
     public GameObject[] GetSpawnPoints()
     {
-        return instantiated.GetComponent<Level>().playerSpawnPoints;
+        return GetLevel().playerSpawnPoints;
+    }
+
+    public Transform GetObstacles()
+    {
+        return GetLevel().obstacles;
     }
 
     private void Awake()

@@ -1674,6 +1674,7 @@ MonoBehaviour:
   playerSpawnPoints:
   - {fileID: 5824767717864826423}
   - {fileID: 6322117993305127749}
+  obstacles: {fileID: 7868435818347353403}
 --- !u!1 &7604614608915383863
 GameObject:
   m_ObjectHideFlags: 0

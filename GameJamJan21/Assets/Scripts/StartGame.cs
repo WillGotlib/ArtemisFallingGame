@@ -17,7 +17,7 @@ public class StartGame : MonoBehaviour
         CreatePhysicsScene();
         foreach (GameObject spawn in spawnPoints) {
             print("Spawning a player");
-            Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation,transform);
+            Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation, transform);
             // if 
             Destroy(spawn);
         }
@@ -28,7 +28,7 @@ public class StartGame : MonoBehaviour
         CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
         _simulatorScene = SceneManager.CreateScene("Trajectory", parameters);
         _physicsScene = _simulatorScene.GetPhysicsScene();
-        foreach (Transform obj in transform) {
+        foreach (Transform obj in levelManager.GetObstacles()) {
             var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
             // ghostObj.GetComponent<Renderer>().enabled = false;
             SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
