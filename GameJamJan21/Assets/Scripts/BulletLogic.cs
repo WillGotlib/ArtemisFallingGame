@@ -9,7 +9,7 @@ public class BulletLogic : MonoBehaviour
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
     private int maxBounces;
-    private float _bulletSpeed = 5f;
+    [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
 
