@@ -14,7 +14,7 @@ public class Controller : MonoBehaviour
     public float sensitivity = 1;
     public GameObject weaponType;
     private GameObject weapon;
-    private float playerHealth = GlobalStats.baseHealth;
+    public float playerHealth { get; private set; } = GlobalStats.baseHealth;
 
     float turnSmoothVelocity;
     Vector3 moveDirection;
@@ -200,9 +200,4 @@ public class Controller : MonoBehaviour
         playerHealth = GlobalStats.baseHealth;
         currentCooldown = GlobalStats.dashCooldown;
     }
-
-    public float getHealth() {
-        return playerHealth;
-    }
-
 }
