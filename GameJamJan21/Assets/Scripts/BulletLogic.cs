@@ -6,6 +6,8 @@ using UnityEngine.InputSystem.Controls;
 
 public class BulletLogic : MonoBehaviour
 {
+    private GlobalStats stats;
+
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
     private int maxBounces;
@@ -25,7 +27,7 @@ public class BulletLogic : MonoBehaviour
     void Update()
     {
         // TODO: Look at this. Wasteful making this run every frame...
-        _rb.velocity = vel;
+        _rb.velocity = vel.normalized * _bulletSpeed;
     }
 
     public void Fire(Vector3 direction, bool ghost)
@@ -38,7 +40,7 @@ public class BulletLogic : MonoBehaviour
         if (isGhost == false) {
             _audioBullet = GetComponent<AudioSource>();
             _audioBullet.Play(0);
-            maxBounces = 4;
+            maxBounces = GlobalStats.bulletMaxBounces;
         }
         else {
             maxBounces = 3;
@@ -48,6 +50,11 @@ public class BulletLogic : MonoBehaviour
     void PreShotOrienting() {
         transform.Rotate(0, lookDirection.x * rotationSpeed, 0);
         //transform.Rotate(Input.GetAxisRaw("Vertical") * rotationSpeed, 0, 0);
+    }
+
+    float GetBulletDamage() {
+        print(GlobalStats.bulletMaxBounces - maxBounces);
+        return GlobalStats.bulletSplashDamage * (GlobalStats.bulletMaxBounces - maxBounces);
     }
 
 
@@ -67,7 +74,7 @@ public class BulletLogic : MonoBehaviour
         } else if (isGhost == false && collision.gameObject.tag == "Player") {
             print("Encountered player");
             Controller player = collision.gameObject.GetComponent<Controller>();
-            player.hitByShot();
+            player.InflictDamage(GetBulletDamage());
             finishShot();
         } else  {
             // Ricochet
@@ -99,9 +106,12 @@ public class BulletLogic : MonoBehaviour
     void finishShot() {
         _rb.velocity = new Vector3(0,0,0);
         bullet.GetComponent<MeshRenderer>().enabled = false;
-        if (isGhost == false) {
+        if (!isGhost) {
             print("Bullet terminating");
             GameObject splash = UnityEngine.Object.Instantiate(splashZone);
+            SplashZone splashManager = splash.GetComponent<SplashZone>();
+            splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
+            splashManager.splashDamage = GlobalStats.bulletSplashDamage;
             splash.transform.position = this.transform.position;
         }
         Destroy(gameObject);
