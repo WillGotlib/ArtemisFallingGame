@@ -119,6 +119,7 @@ public class Controller : MonoBehaviour
                 deathCooldown = GlobalStats.deathCooldown;
                 currentlyDead = false;
                 Vector3 newPos = playerController.RespawnPlayer(playerNumber);
+                ResetAttributes();
                 print("Respawn Position: " + newPos);
                 this.transform.position = newPos;
             }
