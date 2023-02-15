@@ -21,7 +21,7 @@ public class Controller : MonoBehaviour
     Vector3 lookDirection;
     new Camera camera;
     bool followingCamera = true;
-    GameObject cameraController;
+    CameraSwitch cameraController;
     // public float gravity = 0.000001f; // TODO: OK to delete this?
     public float dashIntensity = 50;
     float currentCooldown;
@@ -36,14 +36,13 @@ public class Controller : MonoBehaviour
     private float deathCooldown;
     private float invincibilityCooldown; 
 
-    private StartGame playerController;
+    [SerializeField] private StartGame playerController;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerController = GameObject.Find("PlayerManager").GetComponent<StartGame>();
         camera = GetComponentInChildren<Camera>();
-        cameraController = GameObject.Find("CameraControl");
+        cameraController = FindObjectOfType<CameraSwitch>();
         if (camera == null) {
             camera = backupCamera.GetComponentInChildren<Camera>();
             followingCamera = false;
@@ -73,7 +72,7 @@ public class Controller : MonoBehaviour
 
     public void OnSwitchCamera() {
         if (cameraController != null) {
-            cameraController.GetComponent<CameraSwitch>().SwitchCamera();
+            cameraController.SwitchCamera();
         }
     }
 
