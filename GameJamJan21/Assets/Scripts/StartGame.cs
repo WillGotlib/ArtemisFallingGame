@@ -7,6 +7,7 @@ public class StartGame : MonoBehaviour
 {
     public GameObject playerPrefab;
     public LevelManager levelManager;
+    public static GameObject[] spawnPoints;
     private Scene _simulatorScene;
     private PhysicsScene _physicsScene;
     public string targetTag;
@@ -31,20 +32,27 @@ public class StartGame : MonoBehaviour
         foreach (Transform player in transform)
             Destroy(player.gameObject);
         
-        
-        var spawnPoints = levelManager.GetSpawnPoints();
+        spawnPoints = levelManager.GetSpawnPoints();
+        // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
+        int i = 0;
         CreatePhysicsScene();
         foreach (GameObject spawn in spawnPoints) {
             print("Spawning a player");
-            Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation, transform);
-            // if 
-            Destroy(spawn);
+            Vector3 playerPos = spawnPoints[i].transform.position;
+            playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
+            GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation);
+            player.GetComponent<Controller>().playerNumber = i;
+            i++;
         }
     }
 
-    public void RespawnPlayer()
+    public Vector3 RespawnPlayer(int playerNumber)
     {
-        print("RESPAWNED!");
+        print("PLAYER " + spawnPoints[playerNumber] + " RESPAWNED!");
+        // TODO: Make sure the player spawns at an open spawn point.
+        Vector3 playerPos = spawnPoints[playerNumber].transform.position;
+        playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
+        return playerPos;
     }
 
     void CreatePhysicsScene()

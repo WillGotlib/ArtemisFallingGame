@@ -8,6 +8,8 @@ using UnityEngine.InputSystem.Controls;
 
 public class Controller : MonoBehaviour
 {   
+    public int playerNumber;
+
     public CharacterController controller;
     public float speed = 6f;
     public float sensitivity = 1;
@@ -35,12 +37,11 @@ public class Controller : MonoBehaviour
     private float deathCooldown;
     private float invincibilityCooldown; 
 
-    private StartGame playerController;
+    [SerializeField] private GameObject playerController;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerController = GameObject.Find("PlayerManager").GetComponent<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = GameObject.Find("CameraControl");
         if (camera == null) {
@@ -132,8 +133,11 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0) {
                 deathCooldown = GlobalStats.deathCooldown;
+                playerHealth = GlobalStats.baseHealth;
                 currentlyDead = false;
-                playerController.RespawnPlayer();
+                Vector3 newPos = playerController.GetComponent<StartGame>().RespawnPlayer(playerNumber);
+                print("Respawn Position: " + newPos);
+                this.transform.position = newPos;
             }
         }
         if (currentCooldown > 0)
@@ -202,7 +206,9 @@ public class Controller : MonoBehaviour
 
     private void PlayerDeath() {
         currentlyDead = true;
-        this.transform.position -= Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+        // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+        print("PLAYER DIED");
+        transform.position = transform.position + new Vector3(0, 10, 0);
         // SetActive(false);
     }
 
