@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     public int levelsAmount { get; private set; }
 
     private GameObject instantiated;
+    private Level _level;
     
     public void MakeLevel()
     {
@@ -21,11 +22,15 @@ public class LevelManager : MonoBehaviour
 
         var level = levels[selectedLevel];
         instantiated = Instantiate(level, transform);
+        _level = null;
     }
 
     private Level GetLevel()
     {
-        return instantiated.GetComponent<Level>();
+        if (_level)
+            return _level;
+        _level = instantiated.GetComponent<Level>();
+        return _level;
     }
 
     public GameObject[] GetSpawnPoints()

@@ -1,26 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;           
 using UnityEngine.InputSystem.Controls;
+using Object = UnityEngine.Object;
 
 
 public class Controller : MonoBehaviour
 {   
+    [NonSerialized] public int playerNumber;
+
     public CharacterController controller;
     public float speed = 6f;
     public float sensitivity = 1;
     public GameObject weaponType;
     private GameObject weapon;
-    private float playerHealth = GlobalStats.baseHealth;
+    public float playerHealth { get; private set; } = GlobalStats.baseHealth;
 
     float turnSmoothVelocity;
     Vector3 moveDirection;
     Vector3 lookDirection;
     new Camera camera;
     bool followingCamera = true;
-    GameObject cameraController;
+    CameraSwitch cameraController;
     // public float gravity = 0.000001f; // TODO: OK to delete this?
     public float dashIntensity = 50;
     float currentCooldown;
@@ -35,14 +39,13 @@ public class Controller : MonoBehaviour
     private float deathCooldown;
     private float invincibilityCooldown; 
 
-    private StartGame playerController;
+    [SerializeField] private StartGame playerController;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerController = GameObject.Find("PlayerManager").GetComponent<StartGame>();
         camera = GetComponentInChildren<Camera>();
-        cameraController = GameObject.Find("CameraControl");
+        cameraController = FindObjectOfType<CameraSwitch>();
         if (camera == null) {
             camera = backupCamera.GetComponentInChildren<Camera>();
             followingCamera = false;
@@ -72,7 +75,7 @@ public class Controller : MonoBehaviour
 
     public void OnSwitchCamera() {
         if (cameraController != null) {
-            cameraController.GetComponent<CameraSwitch>().SwitchCamera();
+            cameraController.SwitchCamera();
         }
     }
 
@@ -133,7 +136,10 @@ public class Controller : MonoBehaviour
             if (deathCooldown <= 0) {
                 deathCooldown = GlobalStats.deathCooldown;
                 currentlyDead = false;
-                playerController.RespawnPlayer();
+                Vector3 newPos = playerController.RespawnPlayer(playerNumber);
+                ResetAttributes();
+                print("Respawn Position: " + newPos);
+                this.transform.position = newPos;
             }
         }
         if (currentCooldown > 0)
@@ -194,7 +200,7 @@ public class Controller : MonoBehaviour
         // Uncomment/fix the next stuff when health is in
         playerHealth = Mathf.Max(0, playerHealth - damageAmount);
         if (playerHealth <= 0) {
-            print("PLAYED DIED");
+            print("PLAYER DIED");
             PlayerDeath();
         }
         return true;
@@ -202,7 +208,9 @@ public class Controller : MonoBehaviour
 
     private void PlayerDeath() {
         currentlyDead = true;
-        this.transform.position -= Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+        // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+        // print("NEW PLAYER POSITION: " + newPos);
+        this.transform.position = new Vector3(0, 10, 0);
         // SetActive(false);
     }
 
@@ -210,9 +218,4 @@ public class Controller : MonoBehaviour
         playerHealth = GlobalStats.baseHealth;
         currentCooldown = GlobalStats.dashCooldown;
     }
-
-    public float getHealth() {
-        return playerHealth;
-    }
-
 }
