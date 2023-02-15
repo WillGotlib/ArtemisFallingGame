@@ -364,7 +364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052f58a485e15ca44ac2f467414f9c06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
   controller: {fileID: 3349455145992540266}
   speed: 4
   sensitivity: 4

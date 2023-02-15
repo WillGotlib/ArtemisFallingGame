@@ -31,8 +31,8 @@ public class StartGame : MonoBehaviour
         foreach (Transform player in transform)
             Destroy(player.gameObject);
         
-        
         var spawnPoints = levelManager.GetSpawnPoints();
+        // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
         CreatePhysicsScene();
         var i=0;
         foreach (GameObject spawn in spawnPoints) {
@@ -41,16 +41,16 @@ public class StartGame : MonoBehaviour
             playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
             player.GetComponent<Controller>().playerNumber = i;
-            // Destroy(spawnPoints[i]);
             i++;
         }
     }
 
     public Vector3 RespawnPlayer(int playerNumber)
     {
-        print("RESPAWNED!");
+        var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
+        print("PLAYER " + spawnpoint + " RESPAWNED!");
         // TODO: Make sure the player spawns at an open spawn point.
-        Vector3 playerPos = levelManager.GetSpawnPoints()[playerNumber].transform.position;
+        Vector3 playerPos = spawnpoint.transform.position;
         playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
         return playerPos;
     }

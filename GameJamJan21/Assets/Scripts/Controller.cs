@@ -10,6 +10,7 @@ using Object = UnityEngine.Object;
 
 public class Controller : MonoBehaviour
 {   
+    
     [NonSerialized] public int playerNumber;
 
     public CharacterController controller;
@@ -135,6 +136,7 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0) {
                 deathCooldown = GlobalStats.deathCooldown;
+                playerHealth = GlobalStats.baseHealth;
                 currentlyDead = false;
                 Vector3 newPos = playerController.RespawnPlayer(playerNumber);
                 ResetAttributes();
@@ -209,8 +211,8 @@ public class Controller : MonoBehaviour
     private void PlayerDeath() {
         currentlyDead = true;
         // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
-        // print("NEW PLAYER POSITION: " + newPos);
-        this.transform.position = new Vector3(0, 10, 0);
+        print("PLAYER DIED");
+        transform.position = transform.position + new Vector3(0, 10, 0);
         // SetActive(false);
     }
 

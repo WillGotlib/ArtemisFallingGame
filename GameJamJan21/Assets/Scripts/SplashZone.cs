@@ -34,7 +34,7 @@ public class SplashZone : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider collider) {
-        print("splash zone trigger was set off");
+        // print("splash zone trigger was set off");
         if (collider.gameObject.tag == "Player") {
             Controller playerEntered = collider.gameObject.GetComponent<Controller>();
             playerEntered.InflictDamage(splashDamage);
