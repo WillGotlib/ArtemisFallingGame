@@ -44,14 +44,17 @@ public class StartGame : MonoBehaviour
         }
     }
 
-    public Vector3 RespawnPlayer(int playerNumber)
+    public void RespawnPlayer(Transform playerTransform, int playerNumber)
     {
         var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
         print("PLAYER " + spawnpoint + " RESPAWNED!");
         // TODO: Make sure the player spawns at an open spawn point.
         Vector3 playerPos = spawnpoint.transform.position;
         playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
-        return playerPos;
+        
+        print("Respawn Position: " + playerPos);
+        playerTransform.position = playerPos;
+        playerTransform.rotation = spawnpoint.transform.rotation;
     }
 
     void CreatePhysicsScene()
