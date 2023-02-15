@@ -6,20 +6,18 @@ using UnityEngine.SceneManagement;
 public class StartGame : MonoBehaviour
 {
     public GameObject playerPrefab;
-    GameObject[] spawnPoints;
+    public LevelManager levelManager;
     private Scene _simulatorScene;
     private PhysicsScene _physicsScene;
-    public string targetTag;
-    [SerializeField] private Transform _objects;
     // Start is called before the first frame update
     void Start()
     {
-        spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
+        var spawnPoints = levelManager.GetSpawnPoints();
         int i = 0;
         CreatePhysicsScene();
         foreach (GameObject spawn in spawnPoints) {
             print("Spawning a player");
-            Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation);
+            Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation, transform);
             // if 
             Destroy(spawn);
         }
@@ -30,7 +28,7 @@ public class StartGame : MonoBehaviour
         CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
         _simulatorScene = SceneManager.CreateScene("Trajectory", parameters);
         _physicsScene = _simulatorScene.GetPhysicsScene();
-        foreach (Transform obj in _objects) {
+        foreach (Transform obj in levelManager.GetObstacles()) {
             var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
             // ghostObj.GetComponent<Renderer>().enabled = false;
             SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
