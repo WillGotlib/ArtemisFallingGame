@@ -51,7 +51,7 @@ public class Controller : MonoBehaviour
         Debug.Log("Spawning in Weapon");
         weapon = Object.Instantiate(weaponType, gameObject.transform, false);
         Vector3 cur_pos = this.transform.position;
-        weapon.transform.position = new Vector3(cur_pos[0] + 0.25f, cur_pos[1] + 0.2f, cur_pos[2] + 0.2f);
+        weapon.transform.position = new Vector3(cur_pos[0] + (this.transform.forward[0] * 0.2f), cur_pos[1], cur_pos[2] + (this.transform.forward[2] * 0.2f));
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
     }
