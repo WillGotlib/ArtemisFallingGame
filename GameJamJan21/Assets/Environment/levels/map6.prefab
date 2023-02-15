@@ -50,7 +50,7 @@ MonoBehaviour:
   playerSpawnPoints:
   - {fileID: 5999579814976697236}
   - {fileID: 2937143769649363410}
-  obstacles: {fileID: 0}
+  obstacles: {fileID: 3617230064282137439}
 --- !u!1001 &1283749766750456099
 PrefabInstance:
   m_ObjectHideFlags: 0
