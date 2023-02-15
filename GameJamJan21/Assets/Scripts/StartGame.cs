@@ -33,9 +33,8 @@ public class StartGame : MonoBehaviour
         
         
         var spawnPoints = levelManager.GetSpawnPoints();
-        int i = 0;
         CreatePhysicsScene();
-        while (i < playerCount && i < spawnPoints.Length) {
+        foreach (GameObject spawn in spawnPoints) {
             print("Spawning a player");
             Instantiate(playerPrefab, spawn.transform.position, spawn.transform.rotation, transform);
             // if 

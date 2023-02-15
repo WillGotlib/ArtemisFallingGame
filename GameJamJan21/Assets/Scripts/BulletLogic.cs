@@ -40,7 +40,7 @@ public class BulletLogic : MonoBehaviour
         if (isGhost == false) {
             _audioBullet = GetComponent<AudioSource>();
             _audioBullet.Play(0);
-            maxBounces = 4;
+            maxBounces = GlobalStats.bulletMaxBounces;
         }
         else {
             maxBounces = 3;
@@ -50,6 +50,11 @@ public class BulletLogic : MonoBehaviour
     void PreShotOrienting() {
         transform.Rotate(0, lookDirection.x * rotationSpeed, 0);
         //transform.Rotate(Input.GetAxisRaw("Vertical") * rotationSpeed, 0, 0);
+    }
+
+    float GetBulletDamage() {
+        print(GlobalStats.bulletMaxBounces - maxBounces);
+        return GlobalStats.bulletSplashDamage * (GlobalStats.bulletMaxBounces - maxBounces);
     }
 
 
@@ -69,7 +74,7 @@ public class BulletLogic : MonoBehaviour
         } else if (isGhost == false && collision.gameObject.tag == "Player") {
             print("Encountered player");
             Controller player = collision.gameObject.GetComponent<Controller>();
-            player.InflictDamage(0.5f);
+            player.InflictDamage(GetBulletDamage());
             finishShot();
         } else  {
             // Ricochet

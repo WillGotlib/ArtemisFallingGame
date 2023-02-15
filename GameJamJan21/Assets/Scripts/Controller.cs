@@ -100,7 +100,7 @@ public class Controller : MonoBehaviour
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
         //            Storing the InputValue references somewhere and calling Get<T>()
         //            later does not work correctly.
-    }
+    
 
     public void OnFire() {
         if (!currentlyDead) {
@@ -110,8 +110,9 @@ public class Controller : MonoBehaviour
     }
 
     public void OnDash() {
-        print("Dashed");
+        
         if (currentCooldown <= 0) {
+            print("Dashed");
             var abs_x = Mathf.Abs(moveDirection.x);
             var abs_z = Mathf.Abs(moveDirection.z);
             if (abs_x == 0 && abs_z == 0) {
@@ -119,6 +120,8 @@ public class Controller : MonoBehaviour
             }
             currentCooldown = GlobalStats.dashCooldown;
             controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity);
+        } else {
+            print("Dash on cooldown!");
         }
     }
 
