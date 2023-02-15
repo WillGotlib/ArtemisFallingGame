@@ -7,6 +7,8 @@ using UnityEngine.InputSystem.Controls;
 
 public class Controller : MonoBehaviour
 {   
+    public int playerNumber;
+
     public CharacterController controller;
     public float speed = 6f;
     public float sensitivity = 1;
@@ -117,7 +119,9 @@ public class Controller : MonoBehaviour
             if (deathCooldown <= 0) {
                 deathCooldown = GlobalStats.deathCooldown;
                 currentlyDead = false;
-                playerController.RespawnPlayer();
+                Vector3 newPos = playerController.RespawnPlayer(playerNumber);
+                print("Respawn Position: " + newPos);
+                this.transform.position = newPos;
             }
         }
         if (currentCooldown > 0)
@@ -178,7 +182,7 @@ public class Controller : MonoBehaviour
         // Uncomment/fix the next stuff when health is in
         playerHealth = Mathf.Max(0, playerHealth - damageAmount);
         if (playerHealth <= 0) {
-            print("PLAYED DIED");
+            print("PLAYER DIED");
             PlayerDeath();
         }
         return true;
@@ -186,7 +190,9 @@ public class Controller : MonoBehaviour
 
     private void PlayerDeath() {
         currentlyDead = true;
-        this.transform.position -= Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+        // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+        // print("NEW PLAYER POSITION: " + newPos);
+        this.transform.position = new Vector3(0, 10, 0);
         // SetActive(false);
     }
 

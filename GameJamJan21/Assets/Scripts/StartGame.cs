@@ -31,15 +31,20 @@ public class StartGame : MonoBehaviour
             print("Spawning a player");
             Vector3 playerPos = spawnPoints[i].transform.position;
             playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
-            Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation);
+            GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation);
+            player.GetComponent<Controller>().playerNumber = i;
             // Destroy(spawnPoints[i]);
             i++;
         }
     }
 
-    public void RespawnPlayer()
+    public Vector3 RespawnPlayer(int playerNumber)
     {
         print("RESPAWNED!");
+        // TODO: Make sure the player spawns at an open spawn point.
+        Vector3 playerPos = spawnPoints[playerNumber].transform.position;
+        playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
+        return playerPos;
     }
 
     void CreatePhysicsScene()
