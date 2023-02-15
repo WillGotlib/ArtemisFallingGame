@@ -581,6 +581,8 @@ MonoBehaviour:
   bulletType: {fileID: 9165814152039018566, guid: 46b405b11a4104e4d94c322cc2ca5117, type: 3}
   maxAmmo: 12
   maxBouncers: 1
+  primaryCooldown: 0.3
+  secondaryCooldown: 1
   _trajectory: {fileID: -4194139606902899362}
   animationController: {fileID: 2263409211759763732}
 --- !u!114 &-4194139606902899362

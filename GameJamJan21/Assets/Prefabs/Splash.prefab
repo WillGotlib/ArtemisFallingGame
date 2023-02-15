@@ -49,6 +49,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeRemaining: 5
+  splashRadius: 0
+  splashDamage: 0
 --- !u!23 &-718981201349760569
 MeshRenderer:
   m_ObjectHideFlags: 0
