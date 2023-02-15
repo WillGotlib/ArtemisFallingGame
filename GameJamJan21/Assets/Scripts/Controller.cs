@@ -94,7 +94,7 @@ public class Controller : MonoBehaviour
             Debug.Log(lookDirection);
             Debug.Log(rotation);
         }
-        else
+        else 
             lookDirection = direction * sensitivity;
     }
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
@@ -152,7 +152,7 @@ public class Controller : MonoBehaviour
         if (lookDirection.magnitude >= 0.5f) {
             Quaternion newAngle = Quaternion.LookRotation(lookDirection, Vector3.up);
             //print("LOOK VALUE: " + lookDirection + " ADJUSTED ANGLE: " + newAngle);
-            this.transform.rotation = newAngle;
+            this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, newAngle, sensitivity * Time.deltaTime);
             // this.transform.Rotate(lookDirection);
         }
         if (moveDirection.magnitude >= 0.1f) {
