@@ -40,11 +40,12 @@ public class Controller : MonoBehaviour
     private float deathCooldown;
     private float invincibilityCooldown; 
 
-    [SerializeField] private StartGame playerController;
+    private StartGame playerController;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
         if (camera == null) {

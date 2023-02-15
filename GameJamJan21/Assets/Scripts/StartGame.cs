@@ -6,11 +6,9 @@ using UnityEngine.SceneManagement;
 public class StartGame : MonoBehaviour
 {
     public GameObject playerPrefab;
-    public LevelManager levelManager;
+    private LevelManager levelManager;
     private Scene _simulatorScene;
     private PhysicsScene _physicsScene;
-    public string targetTag;
-    [SerializeField] private Transform _objects;
 
     public int playerCount; 
     // Number of players participating in this game
@@ -24,6 +22,7 @@ public class StartGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        levelManager = FindObjectOfType<LevelManager>();
         StartMatch();
     }
     public void StartMatch()
