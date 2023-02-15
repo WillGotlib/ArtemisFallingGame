@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;           
 using UnityEngine.InputSystem.Controls;
@@ -74,8 +75,19 @@ public class Controller : MonoBehaviour
         if (value.Get<Vector3>() != lookDirection) {
             print("LOOK ANGLE: " + value.Get<Vector3>());
         }
-        lookDirection = value.Get<Vector3>() * sensitivity;
-            // lookDirection = lookDirection * sensitivity * -1;
+
+        var direction = value.Get<Vector3>();
+        if (direction.y != 0)
+        {
+            Debug.Log(lookDirection);
+            var rotation = Quaternion.AngleAxis(direction.y * sensitivity, Vector3.up);
+            lookDirection = rotation * transform.rotation * Vector3.forward;
+            lookDirection.Normalize();
+            Debug.Log(lookDirection);
+            Debug.Log(rotation);
+        }
+        else
+            lookDirection = direction * sensitivity;
     }
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
         //            Storing the InputValue references somewhere and calling Get<T>()
