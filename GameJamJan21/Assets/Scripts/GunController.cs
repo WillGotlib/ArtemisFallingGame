@@ -61,7 +61,7 @@ public class GunController : MonoBehaviour
         } else {
             Debug.Log("bullet animation");
             GameObject bullet = UnityEngine.Object.Instantiate(bulletType);
-            Vector3 cur_pos = this.transform.position + this.transform.forward;
+            Vector3 cur_pos = this.transform.position + (this.transform.forward / 3);
             bullet.transform.position = cur_pos;
             bullet.transform.rotation = this.transform.rotation;
             bullet.GetComponent<BulletLogic>().setShooter(owner);
