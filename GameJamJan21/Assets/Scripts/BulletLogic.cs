@@ -53,8 +53,13 @@ public class BulletLogic : MonoBehaviour
     }
 
     float GetBulletDamage() {
-        print(GlobalStats.bulletMaxBounces - maxBounces);
-        return GlobalStats.bulletSplashDamage * (GlobalStats.bulletMaxBounces - maxBounces);
+        // The main function that is used to find bullet damage
+        return GlobalStats.bulletSplashDamage * BulletDamageMultiplier();
+    }
+
+    int BulletDamageMultiplier() {
+        // The multiplier for the base splash damage. Separate for checking purposes
+        return GlobalStats.bulletMaxBounces - maxBounces;
     }
 
 
@@ -74,8 +79,9 @@ public class BulletLogic : MonoBehaviour
         } else if (isGhost == false && collision.gameObject.tag == "Player") {
             print("Encountered player");
             Controller player = collision.gameObject.GetComponent<Controller>();
-            player.InflictDamage(GetBulletDamage());
-            finishShot();
+            float damage = GetBulletDamage();
+            player.InflictDamage(damage);
+            finishShot(BulletDamageMultiplier()!=0);
         } else  {
             // Ricochet
             ricochetBullet(collision);
@@ -99,14 +105,14 @@ public class BulletLogic : MonoBehaviour
             // Subtract bounces and maybe destroy
             maxBounces -= 1;
             if (maxBounces < 1) {
-                finishShot();
+                finishShot(true);
             }
     }
 
-    void finishShot() {
+    void finishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
         bullet.GetComponent<MeshRenderer>().enabled = false;
-        if (!isGhost) {
+        if (!isGhost && explode) {
             print("Bullet terminating");
             GameObject splash = UnityEngine.Object.Instantiate(splashZone);
             SplashZone splashManager = splash.GetComponent<SplashZone>();
