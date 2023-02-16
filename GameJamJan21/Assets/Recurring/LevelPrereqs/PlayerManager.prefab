@@ -90,4 +90,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6668230694903963034, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
-  spawnPoints: []
+  levelManager: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
+  _objects: {fileID: 0}

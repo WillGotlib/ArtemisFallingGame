@@ -5,10 +5,12 @@ using Online;
 
 public class BulletLogic : MonoBehaviour
 {
+    private GlobalStats stats;
+
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
     private int maxBounces;
-    private float _bulletSpeed = 5f;
+    [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
 
@@ -23,11 +25,12 @@ public class BulletLogic : MonoBehaviour
     private NetworkManager _networkedManager;
     private NetworkedBulletController _networkedBullet;
 
-    // // Update is called once per frame
-    // void Update()
-    // {
-    //     vel = rb.velocity;
-    // }
+    // Update is called once per frame
+    void Update()
+    {
+        // TODO: Look at this. Wasteful making this run every frame...
+        _rb.velocity = vel.normalized * _bulletSpeed;
+    }
 
     public void Fire(Vector3 direction, bool ghost)
     {
@@ -43,7 +46,7 @@ public class BulletLogic : MonoBehaviour
 
             _audioBullet = GetComponent<AudioSource>();
             _audioBullet.Play(0);
-            maxBounces = 4;
+            maxBounces = GlobalStats.bulletMaxBounces;
         }
         else {
             maxBounces = 3;
@@ -53,6 +56,16 @@ public class BulletLogic : MonoBehaviour
     void PreShotOrienting() {
         transform.Rotate(0, lookDirection.x * rotationSpeed, 0);
         //transform.Rotate(Input.GetAxisRaw("Vertical") * rotationSpeed, 0, 0);
+    }
+
+    float GetBulletDamage() {
+        // The main function that is used to find bullet damage
+        return GlobalStats.bulletSplashDamage * BulletDamageMultiplier();
+    }
+
+    int BulletDamageMultiplier() {
+        // The multiplier for the base splash damage. Separate for checking purposes
+        return GlobalStats.bulletMaxBounces - maxBounces;
     }
 
 
@@ -72,8 +85,9 @@ public class BulletLogic : MonoBehaviour
         } else if (isGhost == false && collision.gameObject.tag == "Player") {
             print("Encountered player");
             Controller player = collision.gameObject.GetComponent<Controller>();
-            player.hitByShot();
-            finishShot();
+            float damage = GetBulletDamage();
+            player.InflictDamage(damage);
+            finishShot(BulletDamageMultiplier()!=0);
         } else  {
             // Ricochet
             ricochetBullet(collision);
@@ -85,29 +99,31 @@ public class BulletLogic : MonoBehaviour
             Vector3 oldvel = vel;
             float speed = oldvel.magnitude;
 
-            // print("CONTACT NORMAL = " + contact.normal.ToString());
-
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
             float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
             
             reflectedVelo.y = 0;
-            _rb.velocity = reflectedVelo.normalized * _bulletSpeed;
-            vel = _rb.velocity;
+            // print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
+            vel = reflectedVelo.normalized * _bulletSpeed;
+            // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
             // Subtract bounces and maybe destroy
             maxBounces -= 1;
             if (maxBounces < 1) {
-                finishShot();
+                finishShot(true);
             }
     }
 
-    void finishShot() {
+    void finishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
         bullet.GetComponent<MeshRenderer>().enabled = false;
-        if (isGhost == false) {
+        if (!isGhost && explode) {
             print("Bullet terminating");
             GameObject splash = UnityEngine.Object.Instantiate(splashZone);
+            SplashZone splashManager = splash.GetComponent<SplashZone>();
+            splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
+            splashManager.splashDamage = GlobalStats.bulletSplashDamage;
             splash.transform.position = this.transform.position;
         }
         Destroy(gameObject);
