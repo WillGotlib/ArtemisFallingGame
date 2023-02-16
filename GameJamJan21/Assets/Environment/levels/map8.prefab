@@ -50,6 +50,8 @@ MonoBehaviour:
   playerSpawnPoints:
   - {fileID: 5999579814976697236}
   - {fileID: 2937143769649363410}
+  powerupDropPoints:
+  - {fileID: 4796898277581454007, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
   obstacles: {fileID: 3497953815605450263}
 --- !u!1001 &1283749766750456099
 PrefabInstance:
