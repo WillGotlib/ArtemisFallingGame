@@ -42,7 +42,7 @@ public class PowerupManager : MonoBehaviour
             GameObject target = validSpawns[rand.Next(validSpawns.Count)];
             GameObject chosenPowerup = ChoosePowerup(rand);
             GameObject newPowerup = Instantiate(chosenPowerup, target.transform.position, target.transform.rotation, target.transform);
-            newPowerup.GetComponent<PowerupDrop>().relatedPoint = target.GetComponent<PowerupPoint>();
+            newPowerup.GetComponent<PowerupDrop>().SetRelatedPoint(target.GetComponent<PowerupPoint>());
             target.GetComponent<PowerupPoint>().setOccupied(true);
             curPowerups += 1;
         }

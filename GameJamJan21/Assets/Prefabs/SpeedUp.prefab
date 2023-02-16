@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -718981201349760569}
   - component: {fileID: 4076820225474474666}
   - component: {fileID: -1848706326924120752}
-  - component: {fileID: 5747680788535353802}
+  - component: {fileID: 3252770583403618107}
   m_Layer: 0
   m_Name: SpeedUp
   m_TagString: Powerup
@@ -108,7 +108,7 @@ CapsuleCollider:
   m_Height: 0.9284522
   m_Direction: 1
   m_Center: {x: 0, y: -0.035774473, z: 0}
---- !u!114 &5747680788535353802
+--- !u!114 &3252770583403618107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,10 +117,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 210597942409183111}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c27b23a71c83f0042a7d96f8af0cc784, type: 3}
+  m_Script: {fileID: 11500000, guid: 1b3f8674d4786d84a93c96c1ed34d084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  relatedPoint: {fileID: 0}
+  damageBonus: 1
+  speedBonus: 2
+  dashBonus: 1
 --- !u!1 &8600734089010388788
 GameObject:
   m_ObjectHideFlags: 0
