@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
 
     private GameObject instantiated;
     private Level _level;
+    private PowerupManager powerUpManager;
     
     public void MakeLevel()
     {
@@ -22,6 +23,7 @@ public class LevelManager : MonoBehaviour
 
         var level = levels[selectedLevel];
         instantiated = Instantiate(level, transform);
+        powerUpManager.SetLevel(GetLevel());
         _level = null;
     }
 
@@ -45,6 +47,7 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        powerUpManager = FindObjectOfType<PowerupManager>();
         levelsAmount = levels.Length;
         MakeLevel();
     }

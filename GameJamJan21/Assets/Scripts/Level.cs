@@ -5,5 +5,6 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     public GameObject[] playerSpawnPoints;
+    public GameObject[] powerupDropPoints;
     public Transform obstacles;
 }
