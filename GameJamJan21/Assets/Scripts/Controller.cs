@@ -41,6 +41,7 @@ public class Controller : MonoBehaviour
     private float invincibilityCooldown; 
 
     private StartGame playerController;
+    private List<Effect> effects = new List<Effect>();
 
     // Start is called before the first frame update
     void Start()
@@ -60,10 +61,6 @@ public class Controller : MonoBehaviour
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
     }
-
-    // public void HitByShot() {
-    //     Destroy(gameObject);
-    // }
 
     public void OnMovement(InputValue value)
     {
@@ -124,7 +121,7 @@ public class Controller : MonoBehaviour
                 return;
             }
             currentCooldown = GlobalStats.dashCooldown;
-            controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity);
+            controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity * GetDashBonus());
         } else {
             print("Dash on cooldown!");
         }
@@ -163,32 +160,50 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
         if (moveDirection.magnitude >= 0.1f) {
-
-            // Camera relative stuff
-            /*
-            Vector3 forward = camera.transform.forward;
-            Vector3 right = camera.transform.right;
-            Vector3 forwardRelative = moveDirection.z * forward;
-            Vector3 rightRelative = moveDirection.x * right;
-            Vector3 relativeMove = forwardRelative + rightRelative;
-            */
+            // Handle the actual movement
             moveDirection.y = 0;
 
-            // float playerAngle = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up) + 90;
-            // Quaternion rotation = Quaternion.AngleAxis(playerAngle, Vector3.up);
-            // print("INITIAL DIRECTION: " + moveDirection + " ANGLE: " + playerAngle + " TRANSFORM DIR: " + rotation * moveDirection);
-            // float turnSmoothTime = 2f;
-            // float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-            // float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            // transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), turnSmoothTime * Time.deltaTime);
-
-            controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum);
+            controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum * GetSpeedBonus());
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         } else {
             momentum = startMomentum;
         }
-        // }
+        
+        // Tick down all effects
+        TickDownEffects();
+    }
+
+    void TickDownEffects() {
+        foreach(Effect e in new List<Effect>(effects)) {
+            e.TickDown();
+            if (e.CheckTimer())
+                effects.Remove(e);
+        }
+    }
+
+    float GetSpeedBonus() {
+        float totalBonus = 1;
+        foreach(Effect e in effects) {
+            totalBonus += e.speedBonus;
+        }
+        return totalBonus;
+    }
+
+    float GetDamageBonus() { // Not implemented, will require effects to be added to bullets
+        float totalBonus = 1;
+        foreach(Effect e in effects) {
+            totalBonus += e.damageBonus;
+        }
+        return totalBonus;
+    }
+
+    float GetDashBonus() {
+        float totalBonus = 1;
+        foreach(Effect e in effects) {
+            totalBonus += e.dashBonus;
+        }
+        return totalBonus;
     }
 
     public bool InflictDamage(float damageAmount) {
@@ -218,5 +233,15 @@ public class Controller : MonoBehaviour
     public void ResetAttributes() {
         playerHealth = GlobalStats.baseHealth;
         currentCooldown = GlobalStats.dashCooldown;
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Powerup") {
+            PowerupDrop powerup = collider.gameObject.GetComponent<PowerupDrop>();
+            effects.Add(powerup.GiveEffect());
+            powerup.removePowerup();
+            Destroy(collider.gameObject);
+        }
     }
 }
