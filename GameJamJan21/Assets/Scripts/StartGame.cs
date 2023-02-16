@@ -33,6 +33,7 @@ public class StartGame : MonoBehaviour
         var spawnPoints = levelManager.GetSpawnPoints();
         // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
         CreatePhysicsScene();
+        playerStocks = new int[Mathf.Min(playerCount, spawnPoints.Length)];
         var i=0;
         foreach (GameObject spawn in spawnPoints) {
             print("Spawning a player");
@@ -40,18 +41,25 @@ public class StartGame : MonoBehaviour
             playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
             player.GetComponent<Controller>().playerNumber = i;
+            playerStocks[i] = GlobalStats.defaultStockCount;
             i++;
         }
     }
 
-    public Vector3 RespawnPlayer(Transform playerTransform, int playerNumber)
+    public void RespawnPlayer(Transform playerTransform, int playerNumber)
     {
-        var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
-        // TODO: For the future...Make sure the player spawns at an open spawn point.
-        print("PLAYER " + playerNumber + " RESPAWNED at " + spawnpoint);
-        playerTransform.position = spawnpoint.transform.position;
-        playerTransform.rotation = spawnpoint.transform.rotation;
-        return spawnpoint.transform.position;
+        playerStocks[playerNumber]--;
+        print("STOCKS: " + playerStocks[0] + "/" + playerStocks[1]);
+        if (playerStocks[playerNumber] > 0) {
+            var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
+            // TODO: For the future...Make sure the player spawns at an open spawn point.
+            print("PLAYER " + playerNumber + " RESPAWNED at " + spawnpoint);
+            playerTransform.position = spawnpoint.transform.position;
+            playerTransform.rotation = spawnpoint.transform.rotation;
+        }
+        else {
+            print("PLAYER " + playerNumber + " IS OUT!");
+        }
     }
 
     void CreatePhysicsScene()
