@@ -21,11 +21,11 @@ public class Effect
     }
 
     public void TickDown() {
-        // Returns true if Effect has used up its duration
         remainingDuration -= Time.deltaTime;
     }
 
     public bool CheckTimer() {
+        // Returns true if Effect has used up its duration
         if (remainingDuration <= 0) 
             return true;
         return false;

@@ -11,8 +11,6 @@ public class SplashZone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print("Spawning splash damage");
-        print("Splash Radius: " + splashRadius); // Assignment in BulletLogic seems to work.
         this.transform.localScale = new Vector3(splashRadius, 1, splashRadius);
     }
 

@@ -37,7 +37,7 @@ public class Controller : MonoBehaviour
 
     private bool currentlyDead;
     // These decrease as time goes on
-    private float deathCooldown;
+    private float deathCooldown = GlobalStats.deathCooldown;
     private float invincibilityCooldown; 
 
     private StartGame playerController;
@@ -54,7 +54,6 @@ public class Controller : MonoBehaviour
             followingCamera = false;
         }
         currentCooldown = 0;
-        Debug.Log("Spawning in Weapon");
         weapon = Object.Instantiate(weaponType, gameObject.transform, false);
         Vector3 cur_pos = this.transform.position;
         weapon.transform.position = new Vector3(cur_pos[0] + (this.transform.forward[0] * 0.2f), cur_pos[1], cur_pos[2] + (this.transform.forward[2] * 0.2f));
@@ -64,8 +63,6 @@ public class Controller : MonoBehaviour
 
     public void OnMovement(InputValue value)
     {
-        // Read value from control. The type depends on what type of controls.
-        // the action is bound to.
         moveDirection = value.Get<Vector3>();
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
         //            Storing the InputValue references somewhere and calling Get<T>()
@@ -89,12 +86,10 @@ public class Controller : MonoBehaviour
         var direction = value.Get<Vector3>();
         if (direction.y != 0)
         {
-            Debug.Log(lookDirection);
+            // Debug.Log(lookDirection);
             var rotation = Quaternion.AngleAxis(direction.y * sensitivity, Vector3.up);
             lookDirection = rotation * transform.rotation * Vector3.forward;
             lookDirection.Normalize();
-            Debug.Log(lookDirection);
-            Debug.Log(rotation);
         }
         else
             lookDirection = direction * sensitivity;
@@ -106,7 +101,6 @@ public class Controller : MonoBehaviour
 
     public void OnFire() {
         if (!currentlyDead) {
-            print("Fired");
             weapon.GetComponent<GunController>().PrimaryFire();
         }
     }
@@ -123,23 +117,32 @@ public class Controller : MonoBehaviour
             currentCooldown = GlobalStats.dashCooldown;
             controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity * GetDashBonus());
         } else {
-            print("Dash on cooldown!");
+            // print("Dash on cooldown!");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Tick down all effects
+        TickDownEffects();
+
         if (currentlyDead) {
+            if (transform.position.y != -4) { // TODO: Un-hard-code this value. Each map should have a "floor" coord?
+                print("Not on the right plane:: on life plane");
+                transform.position = new Vector3(0, -4, 0);
+            }
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0) {
-                deathCooldown = GlobalStats.deathCooldown;
-                playerHealth = GlobalStats.baseHealth;
-                currentlyDead = false;
                 playerController.RespawnPlayer(transform, playerNumber);
+                // transform.position = pos;
+                // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
+                return;
             }
         }
+        // ASSERTION: If player gets to this point they are not dead.
+
         if (currentCooldown > 0)
             currentCooldown -= Time.deltaTime;
 
@@ -159,7 +162,7 @@ public class Controller : MonoBehaviour
             this.transform.rotation = newAngle;
             // this.transform.Rotate(lookDirection);
         }
-        if (moveDirection.magnitude >= 0.1f) {
+        if (!currentlyDead && moveDirection.magnitude >= 0.1f) {
             // Handle the actual movement
             moveDirection.y = 0;
 
@@ -169,9 +172,6 @@ public class Controller : MonoBehaviour
         } else {
             momentum = startMomentum;
         }
-        
-        // Tick down all effects
-        TickDownEffects();
     }
 
     void TickDownEffects() {
@@ -211,12 +211,11 @@ public class Controller : MonoBehaviour
             print("PLAYER TOOK NO DAMAGE.");
             return false;
         }
-        print("PLAYER TOOK " + damageAmount + " DAMAGE || HEALTH = " + playerHealth);
+        print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
         /* TODO: ADD PLAYER HEALTH STUFF */
         // Uncomment/fix the next stuff when health is in
         playerHealth = Mathf.Max(0, playerHealth - damageAmount);
         if (playerHealth <= 0) {
-            print("PLAYER DIED");
             PlayerDeath();
         }
         return true;
@@ -226,13 +225,15 @@ public class Controller : MonoBehaviour
         currentlyDead = true;
         // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
         print("PLAYER DIED");
-        transform.position = transform.position + new Vector3(0, 10, 0);
+        // transform.position = transform.position + new Vector3(0, 10, 0);
         // SetActive(false);
     }
 
     public void ResetAttributes() {
         playerHealth = GlobalStats.baseHealth;
         currentCooldown = GlobalStats.dashCooldown;
+        deathCooldown = GlobalStats.deathCooldown;
+        currentlyDead = false;
     }
 
     void OnTriggerEnter(Collider collider)

@@ -37,7 +37,7 @@ public class GunController : MonoBehaviour
         if (primaryOnCooldown) {
             primaryCooldownTimer -= Time.deltaTime;
             if (primaryCooldownTimer <= 0) {
-                Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
+                // Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;
                 primaryCooldownTimer = primaryCooldown;
             }
@@ -55,11 +55,10 @@ public class GunController : MonoBehaviour
     // returns true if fired
     public bool PrimaryFire()
     {
-        Debug.Log("PRIMARY COOLDOWN: " + primaryCooldownTimer);
+        // Debug.Log("PRIMARY COOLDOWN: " + primaryCooldownTimer);
         if (primaryOnCooldown) {
             Debug.Log("Tried to primary fire, but cooldown has not completed yet.");
         } else {
-            Debug.Log("bullet animation");
             GameObject bullet = UnityEngine.Object.Instantiate(bulletType);
             Vector3 cur_pos = this.transform.position + (this.transform.forward / 3);
             bullet.transform.position = cur_pos;

@@ -115,7 +115,6 @@ public class BulletLogic : MonoBehaviour
         _rb.velocity = new Vector3(0,0,0);
         bullet.GetComponent<MeshRenderer>().enabled = false;
         if (!isGhost && explode) {
-            print("Bullet terminating");
             GameObject splash = UnityEngine.Object.Instantiate(splashZone);
             SplashZone splashManager = splash.GetComponent<SplashZone>();
             splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
