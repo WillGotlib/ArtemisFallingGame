@@ -14,7 +14,7 @@ public class PowerupManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        curCooldown = (float)scndsBetweenSpawns;   
+        curCooldown = scndsBetweenSpawns;   
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class PowerupManager : MonoBehaviour
     void SpawnPowerup() {
         List<GameObject> validSpawns = new List<GameObject>();
         foreach (GameObject dropPoint in _level.powerupDropPoints) {
-            if (!dropPoint.GetComponent<PowerupPoint>().getOccupied()) {
+            if (!dropPoint.GetComponent<PowerupPoint>().Occupied) {
                 validSpawns.Add(dropPoint);
             }
         }
@@ -43,7 +43,7 @@ public class PowerupManager : MonoBehaviour
             GameObject chosenPowerup = ChoosePowerup(rand);
             GameObject newPowerup = Instantiate(chosenPowerup, target.transform.position, target.transform.rotation, target.transform);
             newPowerup.GetComponent<PowerupDrop>().SetRelatedPoint(target.GetComponent<PowerupPoint>());
-            target.GetComponent<PowerupPoint>().setOccupied(true);
+            target.GetComponent<PowerupPoint>().Occupied= true;
             curPowerups += 1;
         }
     }
@@ -57,7 +57,7 @@ public class PowerupManager : MonoBehaviour
     public void SetLevel(Level level) {
         _level = level;
         foreach (GameObject dropPoint in _level.powerupDropPoints) {
-            dropPoint.GetComponent<PowerupPoint>().setOccupied(false);
+            dropPoint.GetComponent<PowerupPoint>().Occupied = false;
         }
     }
 }

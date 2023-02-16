@@ -19,6 +19,6 @@ public abstract class PowerupDrop : MonoBehaviour
     }
 
     public void removePowerup() {
-        relatedPoint.setOccupied(false);
+        relatedPoint.Occupied = false;
     }
 }
