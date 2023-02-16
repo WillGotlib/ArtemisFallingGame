@@ -1674,6 +1674,8 @@ MonoBehaviour:
   playerSpawnPoints:
   - {fileID: 5824767717864826423}
   - {fileID: 6322117993305127749}
+  powerupDropPoints:
+  - {fileID: 4796898277581454007, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
   obstacles: {fileID: 7868435818347353403}
 --- !u!1 &7604614608915383863
 GameObject:

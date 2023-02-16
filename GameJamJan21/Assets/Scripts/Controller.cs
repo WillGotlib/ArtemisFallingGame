@@ -61,10 +61,6 @@ public class Controller : MonoBehaviour
         startMomentum = momentum;
     }
 
-    // public void HitByShot() {
-    //     Destroy(gameObject);
-    // }
-
     public void OnMovement(InputValue value)
     {
         // Read value from control. The type depends on what type of controls.
@@ -163,24 +159,8 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
         if (moveDirection.magnitude >= 0.1f) {
-
-            // Camera relative stuff
-            /*
-            Vector3 forward = camera.transform.forward;
-            Vector3 right = camera.transform.right;
-            Vector3 forwardRelative = moveDirection.z * forward;
-            Vector3 rightRelative = moveDirection.x * right;
-            Vector3 relativeMove = forwardRelative + rightRelative;
-            */
+            // Handle the actual movement
             moveDirection.y = 0;
-
-            // float playerAngle = Vector3.SignedAngle(Vector3.forward, transform.forward, Vector3.up) + 90;
-            // Quaternion rotation = Quaternion.AngleAxis(playerAngle, Vector3.up);
-            // print("INITIAL DIRECTION: " + moveDirection + " ANGLE: " + playerAngle + " TRANSFORM DIR: " + rotation * moveDirection);
-            // float turnSmoothTime = 2f;
-            // float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-            // float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            // transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(moveDirection), turnSmoothTime * Time.deltaTime);
 
             controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum);
             if (momentum < maxMomentum)
@@ -218,5 +198,14 @@ public class Controller : MonoBehaviour
     public void ResetAttributes() {
         playerHealth = GlobalStats.baseHealth;
         currentCooldown = GlobalStats.dashCooldown;
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.tag == "Powerup") {
+            PowerupDrop powerup = collider.gameObject.GetComponent<PowerupDrop>();
+            powerup.removePowerup();
+            Destroy(collider.gameObject);
+        }
     }
 }

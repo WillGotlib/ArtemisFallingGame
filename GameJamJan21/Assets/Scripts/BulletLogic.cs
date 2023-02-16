@@ -82,6 +82,8 @@ public class BulletLogic : MonoBehaviour
             float damage = GetBulletDamage();
             player.InflictDamage(damage);
             finishShot(BulletDamageMultiplier()!=0);
+        } else if (collision.gameObject.tag == "Powerup") {
+            // Do nothing lol
         } else  {
             // Ricochet
             ricochetBullet(collision);
