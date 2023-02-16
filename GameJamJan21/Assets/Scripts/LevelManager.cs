@@ -45,8 +45,8 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        MakeLevel();
         levelsAmount = levels.Length;
+        MakeLevel();
     }
     
     /* TEMPORARY */
