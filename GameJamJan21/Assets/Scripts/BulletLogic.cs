@@ -101,7 +101,8 @@ public class BulletLogic : MonoBehaviour
             
             reflectedVelo.y = 0;
             // print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
-            vel = reflectedVelo.normalized * _bulletSpeed;
+            _rb.velocity = reflectedVelo.normalized * _bulletSpeed;
+            vel = _rb.velocity;
             // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
             // Subtract bounces and maybe destroy
@@ -113,15 +114,18 @@ public class BulletLogic : MonoBehaviour
 
     void finishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
-        bullet.GetComponent<MeshRenderer>().enabled = false;
-        if (!isGhost && explode) {
-            GameObject splash = UnityEngine.Object.Instantiate(splashZone);
-            SplashZone splashManager = splash.GetComponent<SplashZone>();
-            splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
-            splashManager.splashDamage = GlobalStats.bulletSplashDamage;
-            splash.transform.position = this.transform.position;
+
+        if (!isGhost) {
+            bullet.GetComponent<MeshRenderer>().enabled = false;
+            if (explode) {
+                GameObject splash = UnityEngine.Object.Instantiate(splashZone);
+                SplashZone splashManager = splash.GetComponent<SplashZone>();
+                splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
+                splashManager.splashDamage = GlobalStats.bulletSplashDamage;
+                splash.transform.position = this.transform.position;
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 
     public void setShooter(Controller player) {
