@@ -99,9 +99,15 @@ public class Controller : MonoBehaviour
         //            later does not work correctly.
     
 
-    public void OnFire() {
+    public void OnPrimaryFire() {
         if (!currentlyDead) {
             weapon.GetComponent<GunController>().PrimaryFire();
+        }
+    }
+
+    public void OnSecondaryFire() {
+        if (!currentlyDead) {
+            weapon.GetComponent<GunController>().SecondaryFire();
         }
     }
 

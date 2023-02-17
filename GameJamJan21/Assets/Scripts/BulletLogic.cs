@@ -10,10 +10,12 @@ public class BulletLogic : MonoBehaviour
 
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
-    private int maxBounces;
+    public int maxBounces;
     [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
+    [SerializeField] private float splashRadius;
+    [SerializeField] private float splashDuration;
 
     private Vector3 vel;
     private Vector3 lookDirection;
@@ -40,9 +42,8 @@ public class BulletLogic : MonoBehaviour
         if (isGhost == false) {
             _audioBullet = GetComponent<AudioSource>();
             _audioBullet.Play(0);
-            maxBounces = GlobalStats.bulletMaxBounces;
-        }
-        else {
+            // maxBounces = GlobalStats.bulletMaxBounces;
+        } else {
             maxBounces = 3;
         }
     }
@@ -117,8 +118,13 @@ public class BulletLogic : MonoBehaviour
         if (!isGhost && explode) {
             GameObject splash = UnityEngine.Object.Instantiate(splashZone);
             SplashZone splashManager = splash.GetComponent<SplashZone>();
-            splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
+            if (splashRadius == 0) {
+                splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
+            } else {
+                splashManager.splashRadius = splashRadius;
+            }
             splashManager.splashDamage = GlobalStats.bulletSplashDamage;
+            splashManager.timeRemaining = splashDuration;
             splash.transform.position = this.transform.position;
         }
         Destroy(gameObject);

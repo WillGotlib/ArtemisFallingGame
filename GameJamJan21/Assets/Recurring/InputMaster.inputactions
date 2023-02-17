@@ -42,9 +42,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Fire",
+                    "name": "PrimaryFire",
                     "type": "Button",
                     "id": "4665af22-391b-42ae-8aa8-2c5b25efb779",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SecondaryFire",
+                    "type": "Button",
+                    "id": "4fcaf0c2-66f2-4dbd-8e15-f7d15c8ca959",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -411,7 +420,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad2;NintendoControlScheme",
-                    "action": "Fire",
+                    "action": "PrimaryFire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -422,7 +431,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardControls",
-                    "action": "Fire",
+                    "action": "PrimaryFire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70e82d75-4a0f-4886-9fa5-668f1c7e7b4b",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardControls",
+                    "action": "SecondaryFire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9432e443-e778-4b83-8473-26e5b116fa26",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "NintendoControlScheme;Gamepad2",
+                    "action": "SecondaryFire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
