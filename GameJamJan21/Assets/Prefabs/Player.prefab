@@ -366,10 +366,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3349455145992540266}
   speed: 4
-  sensitivity: 4
+  sensitivity: 5
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   dashIntensity: 10
   momentum: 0.85
   maxMomentum: 1.15
   backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
-  playerController: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}

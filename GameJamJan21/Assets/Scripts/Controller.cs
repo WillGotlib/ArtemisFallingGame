@@ -15,7 +15,7 @@ public class Controller : MonoBehaviour
 
     public CharacterController controller;
     public float speed = 6f;
-    public float sensitivity = 1;
+    public float sensitivity = 5;
     public GameObject weaponType;
     private GameObject weapon;
     public float playerHealth { get; private set; } = GlobalStats.baseHealth;
@@ -92,7 +92,7 @@ public class Controller : MonoBehaviour
             lookDirection.Normalize();
         }
         else
-            lookDirection = direction * sensitivity;
+            lookDirection = direction.normalized;
     }
         // IMPORTANT: The given InputValue is only valid for the duration of the callback.
         //            Storing the InputValue references somewhere and calling Get<T>()
