@@ -76,8 +76,10 @@ public class StartGame : MonoBehaviour
 
         foreach (Transform obj in levelManager.GetObstacles()) {
             var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
+            ghostObj.GetComponent<Renderer>().enabled = false;
+            var obj_scale = obj.gameObject.transform.lossyScale;
+            ghostObj.transform.localScale = obj_scale;
             ghostObj.tag = "SIMULATION";
-            // ghostObj.GetComponent<Renderer>().enabled = false;
             SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
         }
     }
