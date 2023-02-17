@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3711969974758792037}
   - component: {fileID: 4465862857271666977}
   - component: {fileID: 2949105067546056676}
-  - component: {fileID: 7393976852292060118}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7393976852292060118
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 124373284088079007}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3669124079538576252
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +178,6 @@ GameObject:
   - component: {fileID: 1403498211974229698}
   - component: {fileID: 2183946792979613707}
   - component: {fileID: 4687765614106511264}
-  - component: {fileID: 5961488767706843966}
   m_Layer: 0
   m_Name: Cube (3)
   m_TagString: Untagged
@@ -265,19 +250,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5961488767706843966
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3797852417665445700}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3994722268773708076
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +318,6 @@ GameObject:
   - component: {fileID: 4571156384410838390}
   - component: {fileID: 6394891221196149491}
   - component: {fileID: 2302017257162163298}
-  - component: {fileID: 1034451864320321999}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -419,19 +390,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1034451864320321999
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4024760874805630987}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4630623510718261515
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +401,6 @@ GameObject:
   - component: {fileID: 1410523186867798550}
   - component: {fileID: 2742785817772201875}
   - component: {fileID: 5884430515768438769}
-  - component: {fileID: 2397334938060646104}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -516,20 +473,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2397334938060646104
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4630623510718261515}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &7493655363811869585
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,7 +651,6 @@ GameObject:
   - component: {fileID: 1674997982099762830}
   - component: {fileID: 8939154117664532575}
   - component: {fileID: 1030371000230116014}
-  - component: {fileID: 2386426369514230223}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -781,16 +723,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2386426369514230223
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9090801182086252134}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
