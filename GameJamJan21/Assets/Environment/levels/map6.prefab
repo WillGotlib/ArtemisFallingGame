@@ -53,7 +53,8 @@ MonoBehaviour:
   - {fileID: 5999579814976697236}
   - {fileID: 2937143769649363410}
   powerupDropPoints:
-  - {fileID: 4796898277581454007, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
+  - {fileID: 587761572749451170}
+  - {fileID: 3591665501796774891}
   obstacles: {fileID: 3617230064282137439}
 --- !u!1001 &1283749766750456099
 PrefabInstance:
@@ -573,6 +574,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
+--- !u!1 &587761572749451170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4796898277581454007, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
+  m_PrefabInstance: {fileID: 5384659841731519765}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3929686359238761991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8949544664678546194, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
@@ -721,5 +727,10 @@ PrefabInstance:
 --- !u!4 &1114924975835050574 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8949544664678546194, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
+  m_PrefabInstance: {fileID: 8307497744754526556}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3591665501796774891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4796898277581454007, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
   m_PrefabInstance: {fileID: 8307497744754526556}
   m_PrefabAsset: {fileID: 0}
