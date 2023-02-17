@@ -62,6 +62,9 @@ public class Controller : MonoBehaviour
         weapon.transform.position = new Vector3(cur_pos[0] + (this.transform.forward[0] * 0.2f), cur_pos[1], cur_pos[2] + (this.transform.forward[2] * 0.2f));
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
+
+        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
 
     public void OnMovement(InputValue value)
@@ -232,9 +235,9 @@ public class Controller : MonoBehaviour
             return false;
         }
         print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
-        /* TODO: ADD PLAYER HEALTH STUFF */
-        // Uncomment/fix the next stuff when health is in
         playerHealth = Mathf.Max(0, playerHealth - damageAmount);
+
+        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         if (playerHealth <= 0) {
             PlayerDeath();
         }
