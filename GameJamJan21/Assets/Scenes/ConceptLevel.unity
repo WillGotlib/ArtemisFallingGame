@@ -3284,6 +3284,18 @@ PrefabInstance:
       propertyPath: m_SplitScreen
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
+      propertyPath: m_AllowJoining
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
+      propertyPath: m_JoinBehavior
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
+      propertyPath: m_MaxPlayerCount
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
 --- !u!1 &2079351829
@@ -3574,7 +3586,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
       propertyPath: selectedLevel
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7725062174501813653, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
       propertyPath: m_RootOrder
