@@ -15,7 +15,7 @@ public class Controller : MonoBehaviour
 
     public CharacterController controller;
     public float speed = 6f;
-    public float sensitivity = 1;
+    public float sensitivity = 5;
     public GameObject weaponType;
     private GameObject weapon;
     public float playerHealth { get; private set; } = GlobalStats.baseHealth;
@@ -42,6 +42,9 @@ public class Controller : MonoBehaviour
 
     private StartGame playerController;
     private List<Effect> effects = new List<Effect>();
+
+    private Vector3 direction;
+    private bool kbdHeld;
 
     // Start is called before the first frame update
     void Start()
@@ -79,11 +82,17 @@ public class Controller : MonoBehaviour
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
-        if (value.Get<Vector3>() != lookDirection) {
-            // print("LOOK ANGLE: " + value.Get<Vector3>());
-        }
 
-        var direction = value.Get<Vector3>();
+        kbdHeld = !kbdHeld;
+        direction = value.Get<Vector3>();
+
+
+    }
+
+    private void UpdateLookDirection()
+    {
+        if (!kbdHeld) return;
+
         if (direction.y != 0)
         {
             // Debug.Log(lookDirection);
@@ -92,12 +101,17 @@ public class Controller : MonoBehaviour
             lookDirection.Normalize();
         }
         else
-            lookDirection = direction * sensitivity;
+            lookDirection = direction.normalized;
     }
-        // IMPORTANT: The given InputValue is only valid for the duration of the callback.
-        //            Storing the InputValue references somewhere and calling Get<T>()
-        //            later does not work correctly.
-    
+    // IMPORTANT: The given InputValue is only valid for the duration of the callback.
+    //            Storing the InputValue references somewhere and calling Get<T>()
+    //            later does not work correctly.
+
+
+    private void FixedUpdate()
+    {
+        UpdateLookDirection();
+    }
 
     public void OnPrimaryFire() {
         if (!currentlyDead) {
