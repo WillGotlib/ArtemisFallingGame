@@ -37,6 +37,11 @@ namespace Analytics
         {
             _eventQueue.Enqueue(new Event { Map = new MapEvent { MapName = mapName } });
         }
+        
+        public void CustomEvent(string type, ByteString data)
+        {
+            _eventQueue.Enqueue(new Event { Custom = new CustomEvent {Type = type, Value = data} });
+        }
 
         private void Start()
         {
