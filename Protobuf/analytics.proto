@@ -25,7 +25,7 @@ message AnalyticsEvent {
   }
   
   optional int64 eventTine = 1;
-  repeated Event event = 2;
+  repeated Event events = 2;
 }
 
 // append this when a new id appears so that a dict can be kept of what id is what object
@@ -47,8 +47,8 @@ message CustomEvent { // for stuff like player deaths
 // for object movements
 message ObjectEvent {
   int32 id = 1;
-  Position position = 2;
-  Rotation rotation = 3;
+  optional Position position = 2;
+  optional Rotation rotation = 3;
   repeated ObjectScript scripts = 4;
 }
 

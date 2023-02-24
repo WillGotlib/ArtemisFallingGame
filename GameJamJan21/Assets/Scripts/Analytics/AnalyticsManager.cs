@@ -27,14 +27,15 @@ namespace Analytics
         private readonly Dictionary<string, int> _idMap = new();
         private int _currId = 0;
 
-        private readonly Dictionary<int, Event> _prevEvents = new(); //todo save bandwidth by only saving changed events
+        private readonly Dictionary<int, ObjectEvent> _prevEvents = new();
+
         private readonly Queue<Event> _eventQueue = new();
 
         //[RuntimeInitializeOnLoadMethod]
 
         public void ChangeMap(string mapName)
         {
-            _eventQueue.Enqueue(new Event{Map = new MapEvent{MapName = mapName}});
+            _eventQueue.Enqueue(new Event { Map = new MapEvent { MapName = mapName } });
         }
 
         private void Start()
@@ -60,6 +61,8 @@ namespace Analytics
                 Array.Reverse(length);
             _loggingFile.Write(length);
             _loggingFile.Write(data);
+            
+            _loggingFile.Flush(); // maybe dont flush after every write
         }
 
         private void NewLogFile(DateTimeOffset time)
@@ -90,10 +93,17 @@ namespace Analytics
             while (true)
             {
                 GatherEvents();
-                while (_eventQueue.Count>0)
+                var analyticsEvent = new AnalyticsEvent
                 {
-                    WriteLog(_eventQueue.Dequeue().ToByteArray());
+                    EventTine = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeMilliseconds()
+                };
+                while (_eventQueue.Count > 0)
+                {
+                    analyticsEvent.Events.Add(_eventQueue.Dequeue());
                 }
+                
+                if (analyticsEvent.Events.Count>0)
+                    WriteLog(analyticsEvent.ToByteArray());
 
                 yield return new WaitForSeconds(1f / loggingFPS);
             }
@@ -109,48 +119,84 @@ namespace Analytics
             var loggableObjects = FindObjectsOfType<Loggable>();
             foreach (var loggableObject in loggableObjects)
             {
-                var scripts = new RepeatedField<ObjectScript>();
-                foreach (var trackableScript in loggableObject.gameObject.GetComponents<ITrackableScript>())
-                {
-                    scripts.Add(
-                        new ObjectScript
-                        {
-                          Id  = GetId(trackableScript.GetName()),
-                          Data = trackableScript.GetFields()
-                        });
-                }
+                var setRot = false;
+                var setPos = false;
+                var setScripts = false;
 
                 var loggablePosition = loggableObject.transform.position;
                 var loggableRotation = loggableObject.transform.rotation;
-                _eventQueue.Enqueue(new Event
-                    {
-                        Object = new ObjectEvent
+                var objectEvent = new ObjectEvent
+                {
+                    Id = GetId(loggableObject.Name()),
+                };
+
+                if (!_prevEvents.ContainsKey(objectEvent.Id))
+                    _prevEvents.Add(objectEvent.Id,objectEvent);
+                var old = _prevEvents[objectEvent.Id];
+
+                var pos = new Position
+                {
+                    X = loggablePosition.x,
+                    Y = loggablePosition.y,
+                    Z = loggablePosition.z,
+                };
+                if (!pos.Equals(old.Position))
+                {
+                    setPos = true;
+                    objectEvent.Position = pos;
+                }
+
+                var rot = new Rotation
+                {
+                    W = loggableRotation.w,
+                    X = loggableRotation.x,
+                    Y = loggableRotation.y,
+                    Z = loggableRotation.z,
+                };
+                if (!rot.Equals(old.Rotation))
+                {
+                    setRot = true;
+                    objectEvent.Rotation = rot;
+                }
+
+                foreach (var trackableScript in loggableObject.gameObject.GetComponents<ITrackableScript>())
+                {
+                    setScripts = true; // todo only update needed scripts
+                    objectEvent.Scripts.Add(
+                        new ObjectScript
                         {
-                            Id = GetId(loggableObject.Name()),
-                            Position = new Position
-                            {
-                                X=loggablePosition.x,
-                                Y=loggablePosition.y,
-                                Z=loggablePosition.z,
-                            },
-                            Rotation = new Rotation
-                            {
-                                W=loggableRotation.w,
-                                X=loggableRotation.x,
-                                Y=loggableRotation.y,
-                                Z=loggableRotation.z,
-                            },
-                            Scripts = {scripts}
+                            Id = GetId(trackableScript.GetName()),
+                            Data = trackableScript.GetFields()
+                        });
+                }
+
+                if (setRot || setPos || setScripts)
+                {
+                    _eventQueue.Enqueue(new Event
+                        {
+                            Object = objectEvent.Clone()
                         }
-                    }
-                );
+                    );
+
+                    if (!setRot)
+                        objectEvent.Rotation = old.Rotation;
+                    if (!setPos)
+                        objectEvent.Position = old.Position;
+                    if (!setScripts)
+                        foreach (var oldScript in old.Scripts)
+                        {
+                            objectEvent.Scripts.Add(oldScript);
+                        }
+                    
+                    _prevEvents[objectEvent.Id] = objectEvent;
+                }
             }
         }
 
         private int GetId(string objName)
         {
             if (_idMap.ContainsKey(objName))
-               return _idMap[objName];
+                return _idMap[objName];
 
             _idMap.Add(objName, _currId);
 

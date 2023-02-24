@@ -26,34 +26,35 @@ namespace Analytics {
           string.Concat(
             "ChhQcm90b2J1Zi9hbmFseXRpY3MucHJvdG8iWQoER2FtZRIYChBhbmFseXRp",
             "Y3NWZXJzaW9uGAEgASgJEhMKC2dhbWVWZXJzaW9uGAIgASgJEhAKCGdhbWVU",
-            "aW1lGAMgASgDEhAKCG1ldGFkYXRhGAUgASgJIogCCg5BbmFseXRpY3NFdmVu",
-            "dBIWCglldmVudFRpbmUYASABKANIAIgBARIkCgVldmVudBgCIAMoCzIVLkFu",
-            "YWx5dGljc0V2ZW50LkV2ZW50GqkBCgVFdmVudBIYCgNtYXAYASABKAsyCS5N",
-            "YXBFdmVudEgAEh4KBmN1c3RvbRgCIAEoCzIMLkN1c3RvbUV2ZW50SAASHgoG",
-            "b2JqZWN0GAMgASgLMgwuT2JqZWN0RXZlbnRIABIeCgZkZXZpY2UYBCABKAsy",
-            "DC5EZXZpY2VFdmVudEgAEh0KBGl0ZW0YBSABKAsyDS5OZXdJdGVtRXZlbnRI",
-            "AEIHCgVldmVudEIMCgpfZXZlbnRUaW5lIigKDE5ld0l0ZW1FdmVudBIMCgRu",
-            "YW1lGAIgASgJEgoKAmlkGAEgASgFIhsKCE1hcEV2ZW50Eg8KB21hcE5hbWUY",
-            "ASABKAkiKgoLQ3VzdG9tRXZlbnQSDAoEdHlwZRgBIAEoCRINCgV2YWx1ZRgC",
-            "IAEoDCJzCgtPYmplY3RFdmVudBIKCgJpZBgBIAEoBRIbCghwb3NpdGlvbhgC",
-            "IAEoCzIJLlBvc2l0aW9uEhsKCHJvdGF0aW9uGAMgASgLMgkuUm90YXRpb24S",
-            "HgoHc2NyaXB0cxgEIAMoCzINLk9iamVjdFNjcmlwdCIoCgxPYmplY3RTY3Jp",
-            "cHQSCgoCaWQYASABKAUSDAoEZGF0YRgCIAEoDCIZCgtSZW1vdmVFdmVudBIK",
-            "CgJpZBgBIAEoBSJ2CgtEZXZpY2VFdmVudBIhCgVldmVudBgBIAEoDjISLkRl",
-            "dmljZUV2ZW50LlN0YXRlEgwKBG5hbWUYAiABKAkiNgoFU3RhdGUSFAoQZGV2",
-            "aWNlX2Nvbm5lY3RlZBAAEhcKE2RldmljZV9kaXNjb25uZWN0ZWQQASIrCghQ",
-            "b3NpdGlvbhIJCgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEoAiI2CghS",
-            "b3RhdGlvbhIJCgF3GAEgASgCEgkKAXgYAiABKAISCQoBeRgDIAEoAhIJCgF6",
-            "GAQgASgCQgyqAglBbmFseXRpY3NiBnByb3RvMw=="));
+            "aW1lGAMgASgDEhAKCG1ldGFkYXRhGAUgASgJIokCCg5BbmFseXRpY3NFdmVu",
+            "dBIWCglldmVudFRpbmUYASABKANIAIgBARIlCgZldmVudHMYAiADKAsyFS5B",
+            "bmFseXRpY3NFdmVudC5FdmVudBqpAQoFRXZlbnQSGAoDbWFwGAEgASgLMgku",
+            "TWFwRXZlbnRIABIeCgZjdXN0b20YAiABKAsyDC5DdXN0b21FdmVudEgAEh4K",
+            "Bm9iamVjdBgDIAEoCzIMLk9iamVjdEV2ZW50SAASHgoGZGV2aWNlGAQgASgL",
+            "MgwuRGV2aWNlRXZlbnRIABIdCgRpdGVtGAUgASgLMg0uTmV3SXRlbUV2ZW50",
+            "SABCBwoFZXZlbnRCDAoKX2V2ZW50VGluZSIoCgxOZXdJdGVtRXZlbnQSDAoE",
+            "bmFtZRgCIAEoCRIKCgJpZBgBIAEoBSIbCghNYXBFdmVudBIPCgdtYXBOYW1l",
+            "GAEgASgJIioKC0N1c3RvbUV2ZW50EgwKBHR5cGUYASABKAkSDQoFdmFsdWUY",
+            "AiABKAwilwEKC09iamVjdEV2ZW50EgoKAmlkGAEgASgFEiAKCHBvc2l0aW9u",
+            "GAIgASgLMgkuUG9zaXRpb25IAIgBARIgCghyb3RhdGlvbhgDIAEoCzIJLlJv",
+            "dGF0aW9uSAGIAQESHgoHc2NyaXB0cxgEIAMoCzINLk9iamVjdFNjcmlwdEIL",
+            "CglfcG9zaXRpb25CCwoJX3JvdGF0aW9uIigKDE9iamVjdFNjcmlwdBIKCgJp",
+            "ZBgBIAEoBRIMCgRkYXRhGAIgASgMIhkKC1JlbW92ZUV2ZW50EgoKAmlkGAEg",
+            "ASgFInYKC0RldmljZUV2ZW50EiEKBWV2ZW50GAEgASgOMhIuRGV2aWNlRXZl",
+            "bnQuU3RhdGUSDAoEbmFtZRgCIAEoCSI2CgVTdGF0ZRIUChBkZXZpY2VfY29u",
+            "bmVjdGVkEAASFwoTZGV2aWNlX2Rpc2Nvbm5lY3RlZBABIisKCFBvc2l0aW9u",
+            "EgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMgASgCIjYKCFJvdGF0aW9u",
+            "EgkKAXcYASABKAISCQoBeBgCIAEoAhIJCgF5GAMgASgCEgkKAXoYBCABKAJC",
+            "DKoCCUFuYWx5dGljc2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Game), global::Analytics.Game.Parser, new[]{ "AnalyticsVersion", "GameVersion", "GameTime", "Metadata" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.AnalyticsEvent), global::Analytics.AnalyticsEvent.Parser, new[]{ "EventTine", "Event" }, new[]{ "EventTine" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.AnalyticsEvent.Types.Event), global::Analytics.AnalyticsEvent.Types.Event.Parser, new[]{ "Map", "Custom", "Object", "Device", "Item" }, new[]{ "Event" }, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.AnalyticsEvent), global::Analytics.AnalyticsEvent.Parser, new[]{ "EventTine", "Events" }, new[]{ "EventTine" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.AnalyticsEvent.Types.Event), global::Analytics.AnalyticsEvent.Types.Event.Parser, new[]{ "Map", "Custom", "Object", "Device", "Item" }, new[]{ "Event" }, null, null, null)}),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.NewItemEvent), global::Analytics.NewItemEvent.Parser, new[]{ "Name", "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.MapEvent), global::Analytics.MapEvent.Parser, new[]{ "MapName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.CustomEvent), global::Analytics.CustomEvent.Parser, new[]{ "Type", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.ObjectEvent), global::Analytics.ObjectEvent.Parser, new[]{ "Id", "Position", "Rotation", "Scripts" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.ObjectEvent), global::Analytics.ObjectEvent.Parser, new[]{ "Id", "Position", "Rotation", "Scripts" }, new[]{ "Position", "Rotation" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.ObjectScript), global::Analytics.ObjectScript.Parser, new[]{ "Id", "Data" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.RemoveEvent), global::Analytics.RemoveEvent.Parser, new[]{ "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.DeviceEvent), global::Analytics.DeviceEvent.Parser, new[]{ "Event", "Name" }, null, new[]{ typeof(global::Analytics.DeviceEvent.Types.State) }, null, null),
@@ -411,7 +412,7 @@ namespace Analytics {
     public AnalyticsEvent(AnalyticsEvent other) : this() {
       _hasBits0 = other._hasBits0;
       eventTine_ = other.eventTine_;
-      event_ = other.event_.Clone();
+      events_ = other.events_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -446,15 +447,15 @@ namespace Analytics {
       _hasBits0 &= ~1;
     }
 
-    /// <summary>Field number for the "event" field.</summary>
-    public const int EventFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Analytics.AnalyticsEvent.Types.Event> _repeated_event_codec
+    /// <summary>Field number for the "events" field.</summary>
+    public const int EventsFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::Analytics.AnalyticsEvent.Types.Event> _repeated_events_codec
         = pb::FieldCodec.ForMessage(18, global::Analytics.AnalyticsEvent.Types.Event.Parser);
-    private readonly pbc::RepeatedField<global::Analytics.AnalyticsEvent.Types.Event> event_ = new pbc::RepeatedField<global::Analytics.AnalyticsEvent.Types.Event>();
+    private readonly pbc::RepeatedField<global::Analytics.AnalyticsEvent.Types.Event> events_ = new pbc::RepeatedField<global::Analytics.AnalyticsEvent.Types.Event>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Analytics.AnalyticsEvent.Types.Event> Event {
-      get { return event_; }
+    public pbc::RepeatedField<global::Analytics.AnalyticsEvent.Types.Event> Events {
+      get { return events_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -473,7 +474,7 @@ namespace Analytics {
         return true;
       }
       if (EventTine != other.EventTine) return false;
-      if(!event_.Equals(other.event_)) return false;
+      if(!events_.Equals(other.events_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -482,7 +483,7 @@ namespace Analytics {
     public override int GetHashCode() {
       int hash = 1;
       if (HasEventTine) hash ^= EventTine.GetHashCode();
-      hash ^= event_.GetHashCode();
+      hash ^= events_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -505,7 +506,7 @@ namespace Analytics {
         output.WriteRawTag(8);
         output.WriteInt64(EventTine);
       }
-      event_.WriteTo(output, _repeated_event_codec);
+      events_.WriteTo(output, _repeated_events_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -520,7 +521,7 @@ namespace Analytics {
         output.WriteRawTag(8);
         output.WriteInt64(EventTine);
       }
-      event_.WriteTo(ref output, _repeated_event_codec);
+      events_.WriteTo(ref output, _repeated_events_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -534,7 +535,7 @@ namespace Analytics {
       if (HasEventTine) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(EventTine);
       }
-      size += event_.CalculateSize(_repeated_event_codec);
+      size += events_.CalculateSize(_repeated_events_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -550,7 +551,7 @@ namespace Analytics {
       if (other.HasEventTine) {
         EventTine = other.EventTine;
       }
-      event_.Add(other.event_);
+      events_.Add(other.events_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -571,7 +572,7 @@ namespace Analytics {
             break;
           }
           case 18: {
-            event_.AddEntriesFrom(input, _repeated_event_codec);
+            events_.AddEntriesFrom(input, _repeated_events_codec);
             break;
           }
         }
@@ -594,7 +595,7 @@ namespace Analytics {
             break;
           }
           case 18: {
-            event_.AddEntriesFrom(ref input, _repeated_event_codec);
+            events_.AddEntriesFrom(ref input, _repeated_events_codec);
             break;
           }
         }
