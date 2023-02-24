@@ -15,6 +15,7 @@ namespace Analytics
     public class AnalyticsManager : MonoBehaviour
     {
         private string _loggingVersion = "0.0.1";
+        private byte[] _magic = { 0x89, 0x41, 0x52, 0x54 }; // identifiable byte sequence 
 
         [SerializeField] private int loggingFPS = 30;
         [SerializeField] private string gameVersion;
@@ -77,6 +78,8 @@ namespace Analytics
             Directory.CreateDirectory(logPath);
             _loggingStream = new FileStream(Path.Combine(logPath, logFile), FileMode.Append);
             _loggingFile = new BinaryWriter(_loggingStream, Encoding.UTF8);
+            _loggingFile.Write(_magic);
+            _loggingFile.Flush();
         }
 
         private void CloseLogFile()
