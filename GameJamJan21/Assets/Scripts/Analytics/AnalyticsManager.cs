@@ -163,19 +163,25 @@ namespace Analytics
                 {
                     var newScript = new ObjectScript
                     {
-                        Id = GetId(trackableScript.GetName()),
-                        Data = trackableScript.GetFields()
+                        Id = GetId(trackableScript.GetAnalyticsName()),
+                        Data = trackableScript.GetAnalyticsFields()
                     };
+
+                    var changed = true;
                     foreach (var oldScript in old.Scripts)
                     {
                         if (oldScript.Id!=newScript.Id) continue;
-                        if (oldScript.Data == newScript.Data) break;
-                        
-                        
-                        objectEvent.Scripts.Add(newScript);
-                        oldScript.Data = newScript.Data;
+                        if (oldScript.Data != newScript.Data)
+                        {
+                            oldScript.Data = newScript.Data;
+                            break;
+                        }
+
+                        changed = false;
                         break;
                     }
+                    if (!changed) continue;
+                    objectEvent.Scripts.Add(newScript);
                 }
 
                 if (unique)

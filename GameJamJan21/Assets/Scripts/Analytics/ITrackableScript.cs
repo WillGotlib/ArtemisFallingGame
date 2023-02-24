@@ -4,7 +4,7 @@ namespace Analytics
 {
     public interface ITrackableScript
     {
-        public ByteString GetFields();
-        public string GetName();
+        public ByteString GetAnalyticsFields();
+        public string GetAnalyticsName();
     }
 }

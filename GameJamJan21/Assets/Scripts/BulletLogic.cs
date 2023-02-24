@@ -1,10 +1,12 @@
 using System;
+using Analytics;
+using Google.Protobuf;
 using UnityEngine;
 using UnityEngine.InputSystem;           
 using UnityEngine.InputSystem.Controls;
 
 
-public class BulletLogic : MonoBehaviour
+public class BulletLogic : MonoBehaviour, ITrackableScript
 {
     private GlobalStats stats;
 
@@ -25,6 +27,8 @@ public class BulletLogic : MonoBehaviour
     private Controller shooter;
     private bool isGhost;
 
+    private bool _ricocheted=false;
+    
     // Update is called once per frame
     void Update()
     {
@@ -111,6 +115,9 @@ public class BulletLogic : MonoBehaviour
             if (maxBounces < 1) {
                 finishShot(true);
             }
+            
+            // store that it ricocheted for analytics
+            _ricocheted = true;
     }
 
     void finishShot(bool explode) {
@@ -136,5 +143,20 @@ public class BulletLogic : MonoBehaviour
 
     public void setShooter(Controller player) {
         shooter = player;
+    }
+
+    public ByteString GetAnalyticsFields()
+    {
+        var data = "";
+
+        data += _ricocheted ? "r" : "f"; // store an r if a ricochet happened else it was f for flying
+        _ricocheted = false;
+        
+        return ByteString.CopyFromUtf8(data);
+    }
+
+    public string GetAnalyticsName()
+    {
+        return "Bullet-Controller";
     }
 }
