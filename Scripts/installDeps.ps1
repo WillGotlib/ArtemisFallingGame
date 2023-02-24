@@ -10,9 +10,9 @@ Invoke-WebRequest -URI $LIB_URL -OutFile "protobuf-package.zip"
 Expand-Archive "protobuf-package.zip" -DestinationPath "./Assets/Plugins/$folder"
 rm "protobuf-package.zip" -force
 cd Assets/Plugins
-mv $folder/lib/netstandard2.0 .
+mv $folder/lib/net45 .
 rm $folder -Recurse
 mkdir $folder/lib -ea 0 > $null
-mv netstandard2.0 $folder/lib/
+mv net45 $folder/lib/
 cd ../..
 echo "installed protobuf"

@@ -15,9 +15,9 @@ download (){
 folder="Google.Protobuf"
 download "https://www.nuget.org/api/v2/package/Google.Protobuf/3.22.0" "Plugins/$folder"
 cd Assets/Plugins
-mv $folder/lib/netstandard2.0 .
+mv $folder/lib/netstandard45 .
 rm -rf $folder
 mkdir -p $folder/lib
-mv netstandard2.0 $folder/lib/
+mv net45 $folder/lib/
 cd ../..
 echo "installed protobuf"

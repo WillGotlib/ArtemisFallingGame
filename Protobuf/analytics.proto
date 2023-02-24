@@ -1,3 +1,4 @@
+// ./Grpc-Tools/protoc.exe  --csharp_out=GameJamJan21/Assets/Scripts/Analytics ./Protobuf/analytics.proto
 syntax = "proto3";
 
 option csharp_namespace = "Analytics";
@@ -55,7 +56,11 @@ message ObjectEvent {
 message ObjectScript {
   int32 id = 1;
   bytes data = 2; // to compact the send filesize data this data will have to be saved and parsed as raw bytes
-  // map<string, bytes>
+}
+
+// for when an object gets removed
+message RemoveEvent{
+  int32 id = 1;
 }
 
 // for controller connects and disconnects
