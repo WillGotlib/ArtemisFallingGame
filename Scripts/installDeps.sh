@@ -12,5 +12,12 @@ download (){
   rm -f "package.zip"
 }
 
-download "https://packages.grpc.io/archive/2022/04/67538122780f8a081c774b66884289335c290cbe-f15a2c1c-582b-4c51-acf2-ab6d711d2c59/csharp/grpc_unity_package.2.47.0-dev202204190851.zip"
-echo "installed grpc packages"
+folder="Google.Protobuf"
+download "https://www.nuget.org/api/v2/package/Google.Protobuf/3.22.0" "Plugins/$folder"
+cd Assets/Plugins
+mv $folder/lib/netstandard2.0 .
+rm -rf $folder
+mkdir -p $folder/lib
+mv netstandard2.0 $folder/lib/
+cd ../..
+echo "installed protobuf"
