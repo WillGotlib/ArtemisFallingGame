@@ -114,19 +114,12 @@ namespace Analytics
             }
         }
 
-        private IEnumerable<ITrackableScript> GetTrackedFields(GameObject obj)
-        {
-            return obj.GetComponents<ITrackableScript>();
-        }
-
         private void GatherEvents()
         {
             var loggableObjects = FindObjectsOfType<Loggable>();
             foreach (var loggableObject in loggableObjects)
             {
-                var setRot = false;
-                var setPos = false;
-                var setScripts = false;
+                var unique = false;
 
                 var loggablePosition = loggableObject.transform.position;
                 var loggableRotation = loggableObject.transform.rotation;
@@ -147,8 +140,9 @@ namespace Analytics
                 };
                 if (!pos.Equals(old.Position))
                 {
-                    setPos = true;
+                    unique = true;
                     objectEvent.Position = pos;
+                    old.Position = pos;
                 }
 
                 var rot = new Rotation
@@ -160,41 +154,32 @@ namespace Analytics
                 };
                 if (!rot.Equals(old.Rotation))
                 {
-                    setRot = true;
+                    unique = true;
                     objectEvent.Rotation = rot;
+                    old.Rotation = rot;
                 }
-
+                
                 foreach (var trackableScript in loggableObject.gameObject.GetComponents<ITrackableScript>())
                 {
-                    setScripts = true; // todo only update needed scripts
-                    objectEvent.Scripts.Add(
-                        new ObjectScript
-                        {
-                            Id = GetId(trackableScript.GetName()),
-                            Data = trackableScript.GetFields()
-                        });
+                    var newScript = new ObjectScript
+                    {
+                        Id = GetId(trackableScript.GetName()),
+                        Data = trackableScript.GetFields()
+                    };
+                    foreach (var oldScript in old.Scripts)
+                    {
+                        if (oldScript.Id!=newScript.Id) continue;
+                        if (oldScript.Data == newScript.Data) break;
+                        
+                        
+                        objectEvent.Scripts.Add(newScript);
+                        oldScript.Data = newScript.Data;
+                        break;
+                    }
                 }
 
-                if (setRot || setPos || setScripts)
-                {
-                    _eventQueue.Enqueue(new Event
-                        {
-                            Object = objectEvent.Clone()
-                        }
-                    );
-
-                    if (!setRot)
-                        objectEvent.Rotation = old.Rotation;
-                    if (!setPos)
-                        objectEvent.Position = old.Position;
-                    if (!setScripts)
-                        foreach (var oldScript in old.Scripts)
-                        {
-                            objectEvent.Scripts.Add(oldScript);
-                        }
-                    
-                    _prevEvents[objectEvent.Id] = objectEvent;
-                }
+                if (unique)
+                    _eventQueue.Enqueue(new Event { Object = objectEvent });
             }
         }
 
