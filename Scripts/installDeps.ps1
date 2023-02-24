@@ -3,16 +3,28 @@ if (Test-Path -Path "./Assets/Plugins") {
     exit
 }
 
-$LIB_URL = "https://www.nuget.org/api/v2/package/Google.Protobuf/3.22.0"
+function Download-NuGet{
+    param (
+        $Package,
+        $PackageVersion,
+        $CVersion
+    )
 
-$folder="Google.Protobuf"
-Invoke-WebRequest -URI $LIB_URL -OutFile "protobuf-package.zip"
-Expand-Archive "protobuf-package.zip" -DestinationPath "./Assets/Plugins/$folder"
-rm "protobuf-package.zip" -force
-cd Assets/Plugins
-mv $folder/lib/net45 .
-rm $folder -Recurse
-mkdir $folder/lib -ea 0 > $null
-mv net45 $folder/lib/
-cd ../..
+    $LIB_URL = "https://www.nuget.org/api/v2/package/$Package/$PackageVersion"
+
+    Invoke-WebRequest -URI $LIB_URL -OutFile "nuget-package.zip"
+    Expand-Archive "nuget-package.zip" -DestinationPath "./Assets/Plugins/$Package"
+    rm "nuget-package.zip" -force
+    cd Assets/Plugins
+    mv $Package/lib/$CVersion .
+    rm $Package -Recurse
+    mkdir $Package/lib -ea 0 > $null
+    mv $CVersion $Package/lib/
+    cd ../..
+}
+
+Download-NuGet Google.Protobuf 3.22.0 net45
 echo "installed protobuf"
+
+Download-NuGet System.Runtime.CompilerServices.Unsafe 4.5.2 netstandard2.0
+echo "installed system.unsafe"
