@@ -1,8 +1,10 @@
-﻿namespace Analytics
+﻿using Google.Protobuf;
+
+namespace Analytics
 {
     public interface ITrackableScript
     {
-        public void GetFields(); //todo change type
+        public ByteString GetFields();
         public string GetName();
     }
 }
