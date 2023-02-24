@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+option csharp_namespace = "Analytics";
+
+// one of these will be created at the top of a file to log meta data about the game
+message Game {
+  string analyticsVersion = 1;
+  string gameVersion = 2;
+  int64 gameTime = 3;
+  //map<int32, string> typeId = 4; // for mapping IDs used in this logfile to the objects actual name 
+  string metadata = 5;
+}
+
+// this will be appended to the file as events come in so that even if the game crashes the data will be preserved
+message AnalyticsEvent {
+  message Event {
+    oneof event {
+      MapEvent map = 1;
+      CustomEvent custom = 2;
+      ObjectEvent object = 3;
+      DeviceEvent device = 4;
+      NewItemEvent item = 5;
+    }
+  }
+  
+  optional int64 eventTine = 1;
+  repeated Event event = 2;
+}
+
+// append this when a new id appears so that a dict can be kept of what id is what object
+message NewItemEvent {
+  string name = 2;
+  int32 id = 1 ;
+}
+
+// event for when map changes
+message MapEvent {
+  string mapName = 1;
+}
+
+message CustomEvent { // for stuff like player deaths
+  string type = 1;
+  bytes value = 2;
+}
+
+// for object movements
+message ObjectEvent {
+  int32 id = 1;
+  Position position = 2;
+  Rotation rotation = 3;
+  repeated ObjectScript scripts = 4;
+}
+
+// for scripts and their custom data
+message ObjectScript {
+  int32 id = 1;
+  bytes data = 2; // to compact the send filesize data this data will have to be saved and parsed as raw bytes
+  // map<string, bytes>
+}
+
+// for controller connects and disconnects
+message DeviceEvent {
+  enum State {
+    device_connected = 0;
+    device_disconnected = 1;
+  }
+  State event = 1;
+  string name = 2;
+}
+
+message Position {
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+message Rotation {
+  float w = 1;
+  float x = 2;
+  float y = 3;
+  float z = 4;
+}
