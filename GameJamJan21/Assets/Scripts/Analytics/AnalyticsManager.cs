@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Google.Protobuf;
-using Google.Protobuf.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using Event = Analytics.AnalyticsEvent.Types.Event;
 
@@ -46,6 +44,18 @@ namespace Analytics
 
         private void Start()
         {
+            // kill self if other instances of object exist
+            var others = FindObjectsOfType<AnalyticsManager>();
+            foreach (var other in others)
+            {
+                if (other.gameObject == gameObject) continue;
+                return;
+            }
+
+            StartLogging();
+        }
+
+        public void StartLogging() { 
             var time = DateTimeOffset.Now;
             NewLogFile(time);
 
