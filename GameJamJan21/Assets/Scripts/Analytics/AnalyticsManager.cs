@@ -52,6 +52,9 @@ namespace Analytics
                 return;
             }
 
+            if (gameVersion == "")
+                gameVersion = Application.version;
+
             StartLogging();
         }
 
