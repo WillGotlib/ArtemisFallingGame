@@ -5,7 +5,7 @@ using UnityEngine;
 public class MakeWallTransparent : MonoBehaviour
 {
     public Vector3 offest;
-    private float fadingSpeed = 0.1f;
+    private float fadingSpeed = 0.5f;
     [SerializeField] private Material transparentMaterial;
     [SerializeField] private List<Transform> ObjectToHide = new List<Transform>();
     private List<Transform> ObjectToShow = new List<Transform>();
@@ -43,6 +43,7 @@ public class MakeWallTransparent : MonoBehaviour
     void ManageBlockingView(Transform player)
     {
         Vector3 playerPosition = player.transform.position + offest;
+        Debug.Log(playerPosition);
         float characterDistance = Vector3.Distance(transform.position, playerPosition);
         int layerNumber = LayerMask.NameToLayer("Temp");
         int layerMask = 1 << layerNumber;
