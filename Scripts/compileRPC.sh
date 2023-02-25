@@ -19,7 +19,7 @@ then
     tempDir="$GRPC_PATH/tmp"
     mkdir -p $tempDir
     cd $tempDir
-    curl -o tmp.zip -L $GRPC_URL
+    curl -L -o tmp.zip $GRPC_URL
     unzip tmp.zip > /dev/null
 
     ls tools
