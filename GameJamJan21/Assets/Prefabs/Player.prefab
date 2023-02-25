@@ -348,7 +348,7 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b031336f-603d-43c4-8d4e-13d21ce98de5
     m_ActionName: Player/Movement[/SwitchProControllerHID/leftStick/up,/SwitchProControllerHID/leftStick/down,/SwitchProControllerHID/leftStick/left,/SwitchProControllerHID/leftStick/right]
-  m_NeverAutoSwitchControlSchemes: 1
+  m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
