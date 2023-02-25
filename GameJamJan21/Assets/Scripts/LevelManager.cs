@@ -1,4 +1,5 @@
 using System;
+using Analytics;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -25,6 +26,8 @@ public class LevelManager : MonoBehaviour
         instantiated = Instantiate(level, transform);
         powerUpManager.SetLevel(GetLevel());
         _level = null;
+        
+        FindObjectOfType<AnalyticsManager>()?.ChangeMap(level.name);
     }
 
     private Level GetLevel()
