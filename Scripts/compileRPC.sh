@@ -1,6 +1,6 @@
 #!/bin/sh
 
-OperatingSystem="linux" # linux macosx windows
+OperatingSystem="macosx" # linux macosx windows
 Version="x64" # arm64 (only on linux) x64 x86
 OS="${OperatingSystem}_${Version}"
 echo installing tools for $OS
@@ -24,4 +24,4 @@ then
 fi
 
 protoc="${GRPC_PATH}/protoc"
-eval $protoc --csharp_out=Client/Assets/Scripts/Analytics Protobuf/*.proto && echo "built unity protos"
+eval $protoc --csharp_out=GameJamJan21/Assets/Scripts/Analytics Protobuf/*.proto && echo "built unity protos"
