@@ -6,7 +6,7 @@ namespace Analytics
     {
         public string Name()
         {
-            return gameObject.name +" - "+ GetInstanceID();
+            return Utils.NameObject(gameObject);
         }
     }
 }

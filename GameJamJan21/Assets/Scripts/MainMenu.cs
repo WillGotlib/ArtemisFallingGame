@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-        public TMP_Text version;
+    public TMP_Text version;
     public void Start()
     {
         version.text = Application.version;

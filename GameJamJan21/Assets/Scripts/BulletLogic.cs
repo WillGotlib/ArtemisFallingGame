@@ -115,9 +115,11 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             if (maxBounces < 1) {
                 finishShot(true);
             }
-            
-            // store that it ricocheted for analytics
-            _ricocheted = true;
+            else
+            {
+                // store that it ricocheted for analytics
+                _ricocheted = true;
+            }
     }
 
     void finishShot(bool explode) {

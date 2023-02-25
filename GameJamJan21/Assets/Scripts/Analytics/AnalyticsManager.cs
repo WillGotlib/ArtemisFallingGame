@@ -36,10 +36,20 @@ namespace Analytics
         {
             _eventQueue.Enqueue(new Event { Map = new MapEvent { MapName = mapName } });
         }
-        
+
         public void CustomEvent(string type, ByteString data)
         {
-            _eventQueue.Enqueue(new Event { Custom = new CustomEvent {Type = type, Value = data} });
+            _eventQueue.Enqueue(new Event { Custom = new CustomEvent { Type = type, Value = data } });
+        }
+
+        public void CustomEvent(string type, string data)
+        {
+            CustomEvent(type, ByteString.CopyFromUtf8(data));
+        }
+
+        public void CustomEvent(string type, byte[] data)
+        {
+            CustomEvent(type, ByteString.CopyFrom(data));
         }
 
         private void Start()
@@ -58,7 +68,8 @@ namespace Analytics
             StartLogging();
         }
 
-        public void StartLogging() { 
+        public void StartLogging()
+        {
             var time = DateTimeOffset.Now;
             NewLogFile(time);
 
@@ -80,7 +91,7 @@ namespace Analytics
                 Array.Reverse(length);
             _loggingFile.Write(length);
             _loggingFile.Write(data);
-            
+
             _loggingFile.Flush(); // maybe dont flush after every write
         }
 
@@ -122,8 +133,8 @@ namespace Analytics
                 {
                     analyticsEvent.Events.Add(_eventQueue.Dequeue());
                 }
-                
-                if (analyticsEvent.Events.Count>0)
+
+                if (analyticsEvent.Events.Count > 0)
                     WriteLog(analyticsEvent.ToByteArray());
 
                 yield return new WaitForSeconds(1f / loggingFPS);
@@ -145,7 +156,7 @@ namespace Analytics
                 };
 
                 if (!_prevEvents.ContainsKey(objectEvent.Id))
-                    _prevEvents.Add(objectEvent.Id,objectEvent);
+                    _prevEvents.Add(objectEvent.Id, objectEvent);
                 var old = _prevEvents[objectEvent.Id];
 
                 var pos = new Position
@@ -174,7 +185,7 @@ namespace Analytics
                     objectEvent.Rotation = rot;
                     old.Rotation = rot;
                 }
-                
+
                 foreach (var trackableScript in loggableObject.gameObject.GetComponents<ITrackableScript>())
                 {
                     var newScript = new ObjectScript
@@ -186,7 +197,7 @@ namespace Analytics
                     var changed = true;
                     foreach (var oldScript in old.Scripts)
                     {
-                        if (oldScript.Id!=newScript.Id) continue;
+                        if (oldScript.Id != newScript.Id) continue;
                         if (oldScript.Data != newScript.Data)
                         {
                             oldScript.Data = newScript.Data;
@@ -196,6 +207,7 @@ namespace Analytics
                         changed = false;
                         break;
                     }
+
                     if (!changed) continue;
                     objectEvent.Scripts.Add(newScript);
                 }
