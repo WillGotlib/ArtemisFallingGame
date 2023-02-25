@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 7769586475236240067}
   - component: {fileID: 3251894738368888167}
   - component: {fileID: 5761309379727644029}
+  - component: {fileID: 5381165715268956920}
   m_Layer: 0
   m_Name: Molotov
   m_TagString: Reflector
@@ -339,6 +340,18 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &5381165715268956920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165814152039018566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad99cc572e824c818b1bf655396fbd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5079768813246392647
 PrefabInstance:
   m_ObjectHideFlags: 0

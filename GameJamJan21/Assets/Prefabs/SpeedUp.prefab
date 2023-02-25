@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -718981201349760569}
   - component: {fileID: -1848706326924120752}
   - component: {fileID: 3252770583403618107}
+  - component: {fileID: 3969214465323797172}
   m_Layer: 0
   m_Name: SpeedUp
   m_TagString: Powerup
@@ -107,6 +108,18 @@ MonoBehaviour:
   speedBonus: 2
   dashBonus: 1
   maxDuration: 5
+--- !u!114 &3969214465323797172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210597942409183111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad99cc572e824c818b1bf655396fbd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8600734089010388788
 GameObject:
   m_ObjectHideFlags: 0
