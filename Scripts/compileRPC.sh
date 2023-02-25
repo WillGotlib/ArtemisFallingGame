@@ -24,4 +24,4 @@ then
 fi
 
 protoc="${GRPC_PATH}/protoc"
-eval $protoc --csharp_out=Client/Assets/Scripts/Analytics Protobuf/*.proto && echo "built unity protos"
+eval $protoc --csharp_out=GameJamJan21/Assets/Scripts/Analytics Protobuf/*.proto && echo "built unity protos"
