@@ -12,5 +12,20 @@ download (){
   rm -f "package.zip"
 }
 
-download "https://packages.grpc.io/archive/2022/04/67538122780f8a081c774b66884289335c290cbe-f15a2c1c-582b-4c51-acf2-ab6d711d2c59/csharp/grpc_unity_package.2.47.0-dev202204190851.zip"
-echo "installed grpc packages"
+downloadNuget (){
+  download "https://www.nuget.org/api/v2/package/$1/$2" "Plugins/$1
+"
+  cd Assets/Plugins
+  mv "$1/lib/net462" .
+  rm -rf "$1"
+  mkdir -p "$1/lib"
+  mv "$3" "$1/lib/"
+  cd ../..
+  echo "installed channels"
+}
+
+downloadNuget Google.Protobuf 3.22.0 net45
+echo "installed protobuf"
+
+downloadNuget System.Runtime.CompilerServices.Unsafe 4.5.2 netstandard2.0
+echo "installed system.unsafe"
