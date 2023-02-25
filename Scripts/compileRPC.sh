@@ -1,6 +1,6 @@
 #!/bin/sh
 
-OperatingSystem="linux" # linux macosx windows
+OperatingSystem="macosx" # linux macosx windows
 Version="x64" # arm64 (only on linux) x64 x86
 OS="${OperatingSystem}_${Version}"
 echo installing tools for $OS
