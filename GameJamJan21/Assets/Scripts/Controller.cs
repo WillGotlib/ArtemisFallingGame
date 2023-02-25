@@ -25,6 +25,7 @@ public class Controller : MonoBehaviour
     Vector3 lookDirection;
     new Camera camera;
     bool followingCamera = true;
+    PausedMenu menu;
 
     CameraSwitch cameraController;
 
@@ -58,6 +59,7 @@ public class Controller : MonoBehaviour
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
+        menu = FindObjectOfType<PausedMenu>();
         if (camera == null)
         {
             camera = backupCamera.GetComponentInChildren<Camera>();
@@ -139,6 +141,10 @@ public class Controller : MonoBehaviour
         {
             weapon.GetComponent<GunController>().SecondaryFire();
         }
+    }
+
+    public void OnEnterMenu() {
+        menu.SwitchMenuState();
     }
 
     public void OnDash()
