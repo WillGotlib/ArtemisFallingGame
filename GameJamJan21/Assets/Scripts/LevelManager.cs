@@ -1,4 +1,5 @@
 using System;
+using Analytics;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -8,6 +9,8 @@ public class LevelManager : MonoBehaviour
     public int levelsAmount { get; private set; }
 
     private GameObject instantiated;
+    private Level _level;
+    private PowerupManager powerUpManager;
     
     public void MakeLevel()
     {
@@ -21,11 +24,18 @@ public class LevelManager : MonoBehaviour
 
         var level = levels[selectedLevel];
         instantiated = Instantiate(level, transform);
+        powerUpManager.SetLevel(GetLevel());
+        _level = null;
+        
+        FindObjectOfType<AnalyticsManager>()?.ChangeMap(level.name);
     }
 
     private Level GetLevel()
     {
-        return instantiated.GetComponent<Level>();
+        if (_level)
+            return _level;
+        _level = instantiated.GetComponent<Level>();
+        return _level;
     }
 
     public GameObject[] GetSpawnPoints()
@@ -40,8 +50,9 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        MakeLevel();
+        powerUpManager = FindObjectOfType<PowerupManager>();
         levelsAmount = levels.Length;
+        MakeLevel();
     }
     
     /* TEMPORARY */

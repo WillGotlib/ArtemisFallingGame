@@ -8,6 +8,7 @@ TagManager:
   - Transient
   - Spawnpoint
   - SIMULATION
+  - Powerup
   layers:
   - Default
   - TransparentFX
