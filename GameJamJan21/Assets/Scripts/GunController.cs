@@ -66,7 +66,7 @@ public class GunController : MonoBehaviour
         bullet.transform.position = cur_pos;
         bullet.transform.rotation = this.transform.rotation;
         bullet.GetComponent<BulletLogic>().setShooter(owner);
-        bullet.GetComponent<BulletLogic>().Fire(this.transform.forward, false);
+        bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
         primaryOnCooldown = true;
         return true;
     }
