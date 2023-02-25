@@ -1,7 +1,14 @@
 #!/bin/sh
 
-OperatingSystem="macosx" # linux macosx windows
+# linux macosx windows
+if [ "$(uname)" = "Darwin" ]; then
+  OperatingSystem="macosx"
+else
+  OperatingSystem="linux"
+fi 
+
 Version="x64" # arm64 (only on linux) x64 x86
+
 OS="${OperatingSystem}_${Version}"
 echo installing tools for $OS
 

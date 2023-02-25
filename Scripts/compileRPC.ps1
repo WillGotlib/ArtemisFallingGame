@@ -1,5 +1,6 @@
 $OperatingSystem = "windows"
 $Version = "x64"
+
 $OS = $OperatingSystem +"_"+$Version
 $GRPC_PATH ="./Grpc-Tools"
 $GRPC_URL = "https://www.nuget.org/api/v2/package/Grpc.Tools/"
