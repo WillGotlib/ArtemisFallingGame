@@ -8,7 +8,7 @@ public class Trajectory : MonoBehaviour
     private Scene _simulatorScene;
     private PhysicsScene _physicsScene;
     [SerializeField] private LineRenderer _line;
-    [SerializeField] private int _maxIterations = 70;
+    [SerializeField] private int _maxIterations = 100;
     public GameObject bulletType;
     private GameObject ghostBullet;
     private bool isBulletGenerated = false;
@@ -42,7 +42,7 @@ public class Trajectory : MonoBehaviour
         _line.positionCount = _maxIterations;
 
         for (int i = 0; i < _maxIterations; i++) {
-             _physicsScene.Simulate(Time.fixedDeltaTime);
+             _physicsScene.Simulate(Time.fixedDeltaTime * 0.7f);
              _line.SetPosition(i, ghostBullet.transform.position);
         }
         // Destroy(ghostBullet.gameObject);

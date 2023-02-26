@@ -11,17 +11,13 @@ public class PausedMenu : MonoBehaviour
     public GameObject settingUI;
     // Update is called once per frame
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            settingUI.SetActive(false);
-            if (isPaused == true) {
-                Resume();
-            }
-            else {
-                Pause();
-            }
+    public void SwitchMenuState() {
+        settingUI.SetActive(false);
+        if (isPaused == true) {
+            Resume();
+        }
+        else {
+            Pause();
         }
     }
 

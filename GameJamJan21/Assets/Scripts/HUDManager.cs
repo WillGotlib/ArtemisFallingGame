@@ -8,15 +8,8 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField] private TMP_Text[] playerTexts = {};
     private int playerCount = 2;
-    private int[] playerStocks;
-    private float[] playerHealths;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        playerStocks = new int[2];
-        playerHealths = new float[2];
-    }
+    private int[] playerStocks = new int[2];
+    private float[] playerHealths = new float[2];
 
     // Update is called once per frame
     void Update()
