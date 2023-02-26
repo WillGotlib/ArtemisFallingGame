@@ -80,6 +80,15 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnterMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""0c4706f0-bbaa-4d56-91e1-9899b63d7add"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -533,6 +542,17 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""action"": ""Fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88209512-8004-4826-a488-7223bb727000"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""NintendoControlScheme;Gamepad2"",
+                    ""action"": ""EnterMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -570,6 +590,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_PrimaryFire = m_Player.FindAction("PrimaryFire", throwIfNotFound: true);
         m_Player_SecondaryFire = m_Player.FindAction("SecondaryFire", throwIfNotFound: true);
+        m_Player_EnterMenu = m_Player.FindAction("EnterMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -635,6 +656,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_PrimaryFire;
     private readonly InputAction m_Player_SecondaryFire;
+    private readonly InputAction m_Player_EnterMenu;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -645,6 +667,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @PrimaryFire => m_Wrapper.m_Player_PrimaryFire;
         public InputAction @SecondaryFire => m_Wrapper.m_Player_SecondaryFire;
+        public InputAction @EnterMenu => m_Wrapper.m_Player_EnterMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -672,6 +695,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @SecondaryFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
                 @SecondaryFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
                 @SecondaryFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
+                @EnterMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterMenu;
+                @EnterMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterMenu;
+                @EnterMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -694,6 +720,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @SecondaryFire.started += instance.OnSecondaryFire;
                 @SecondaryFire.performed += instance.OnSecondaryFire;
                 @SecondaryFire.canceled += instance.OnSecondaryFire;
+                @EnterMenu.started += instance.OnEnterMenu;
+                @EnterMenu.performed += instance.OnEnterMenu;
+                @EnterMenu.canceled += instance.OnEnterMenu;
             }
         }
     }
@@ -724,5 +753,6 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
         void OnPrimaryFire(InputAction.CallbackContext context);
         void OnSecondaryFire(InputAction.CallbackContext context);
+        void OnEnterMenu(InputAction.CallbackContext context);
     }
 }

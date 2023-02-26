@@ -25,6 +25,7 @@ public class Controller : MonoBehaviour
     Vector3 lookDirection;
     new Camera camera;
     bool followingCamera = true;
+    PausedMenu menu;
 
     CameraSwitch cameraController;
 
@@ -58,6 +59,7 @@ public class Controller : MonoBehaviour
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
+        menu = FindObjectOfType<PausedMenu>();
         if (camera == null)
         {
             camera = backupCamera.GetComponentInChildren<Camera>();
@@ -112,8 +114,8 @@ public class Controller : MonoBehaviour
             lookDirection = rotation * transform.rotation * Vector3.forward;
             lookDirection.Normalize();
         }
-        else
-            lookDirection = direction.normalized;
+        else 
+            lookDirection = direction.normalized * sensitivity;
     }
     // IMPORTANT: The given InputValue is only valid for the duration of the callback.
     //            Storing the InputValue references somewhere and calling Get<T>()
@@ -139,6 +141,10 @@ public class Controller : MonoBehaviour
         {
             weapon.GetComponent<GunController>().SecondaryFire();
         }
+    }
+
+    public void OnEnterMenu() {
+        menu.SwitchMenuState();
     }
 
     public void OnDash()
@@ -208,7 +214,7 @@ public class Controller : MonoBehaviour
         {
             Quaternion newAngle = Quaternion.LookRotation(lookDirection, Vector3.up);
             //print("LOOK VALUE: " + lookDirection + " ADJUSTED ANGLE: " + newAngle);
-            this.transform.rotation = newAngle;
+            this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, newAngle, sensitivity * Time.deltaTime);
             // this.transform.Rotate(lookDirection);
         }
 

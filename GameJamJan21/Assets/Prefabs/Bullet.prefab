@@ -186,7 +186,7 @@ MonoBehaviour:
   _rb: {fileID: 7560826534295098678}
   bullet: {fileID: 4972240987904475784}
   maxBounces: 4
-  _bulletSpeed: 8
+  _bulletSpeed: 10
   splashZone: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
   splashRadius: 0
   splashDuration: 1
@@ -216,15 +216,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4.81
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 4.81
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 4.81
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1381bbe3d5b3d415a9fe6f1b3b537f9d, type: 3}
       propertyPath: m_LocalPosition.x

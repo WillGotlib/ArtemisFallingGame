@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "EnterMenu",
+                    "type": "Button",
+                    "id": "0c4706f0-bbaa-4d56-91e1-9899b63d7add",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -509,6 +518,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88209512-8004-4826-a488-7223bb727000",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "NintendoControlScheme;Gamepad2",
+                    "action": "EnterMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
