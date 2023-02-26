@@ -367,7 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3349455145992540266}
   speed: 4
-  sensitivity: 2.5
+  sensitivity: 2000
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   dashIntensity: 25
   momentum: 0.85
