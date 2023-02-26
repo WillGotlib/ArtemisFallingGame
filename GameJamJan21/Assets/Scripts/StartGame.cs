@@ -9,6 +9,7 @@ public class StartGame : MonoBehaviour
     private LevelManager levelManager;
     private Scene _simulatorScene;
     private PhysicsScene _physicsScene;
+    [SerializeField] private HUDManager _hudManager;
 
     public int playerCount; 
     // Number of players participating in this game
@@ -42,14 +43,27 @@ public class StartGame : MonoBehaviour
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
             player.GetComponent<Controller>().playerNumber = i;
             playerStocks[i] = GlobalStats.defaultStockCount;
+            PlayerStockUpdate(i, playerStocks[i]);
             i++;
         }
+    }
+
+    // Currently this is just to support the UI.
+    public void PlayerHealthUpdate(int playerNumber, float playerHealth) {
+        _hudManager.ChangeHealth(playerNumber, playerHealth);
+    }
+    
+    public void PlayerStockUpdate(int playerNumber, int playerStock) {
+        _hudManager.ChangeStock(playerNumber, playerStock);
     }
 
     public void RespawnPlayer(Transform playerTransform, int playerNumber)
     {
         playerStocks[playerNumber]--;
+        PlayerStockUpdate(playerNumber, playerStocks[playerNumber]);
+        PlayerHealthUpdate(playerNumber, GlobalStats.baseHealth);
         print("STOCKS: " + playerStocks[0] + "/" + playerStocks[1]);
+
         if (playerStocks[playerNumber] > 0) {
             var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
             // TODO: For the future...Make sure the player spawns at an open spawn point.
@@ -76,8 +90,10 @@ public class StartGame : MonoBehaviour
 
         foreach (Transform obj in levelManager.GetObstacles()) {
             var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
+            ghostObj.GetComponent<Renderer>().enabled = false;
+            var obj_scale = obj.gameObject.transform.lossyScale;
+            ghostObj.transform.localScale = obj_scale;
             ghostObj.tag = "SIMULATION";
-            // ghostObj.GetComponent<Renderer>().enabled = false;
             SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
         }
     }

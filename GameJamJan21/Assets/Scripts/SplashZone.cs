@@ -7,6 +7,7 @@ public class SplashZone : MonoBehaviour
     public float timeRemaining = 5;
     public float splashRadius;
     public float splashDamage;
+    public bool damageOverTime;
 
     // Start is called before the first frame update
     void Start()

@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 3349455145992540266}
   - component: {fileID: 3349455145992540270}
   - component: {fileID: 2111890155133846231}
+  - component: {fileID: 1574579996388501985}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -366,10 +367,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3349455145992540266}
   speed: 4
-  sensitivity: 4
+  sensitivity: 2000
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
-  dashIntensity: 10
+  dashIntensity: 25
   momentum: 0.85
   maxMomentum: 1.15
   backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
-  playerController: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
+--- !u!114 &1574579996388501985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad99cc572e824c818b1bf655396fbd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
