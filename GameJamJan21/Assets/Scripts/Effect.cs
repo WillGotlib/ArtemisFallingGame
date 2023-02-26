@@ -15,9 +15,9 @@ public class Effect
     public void SetupEffect(float dmg = 1, float spd = 1, float dsh = 1, float dur = 5) {
         maxDuration = dur;
         remainingDuration = maxDuration;
-        damageBonus = 1;
-        speedBonus = 1;
-        dashBonus = 1;
+        damageBonus = dmg;
+        speedBonus = spd;
+        dashBonus = dsh;
     }
 
     public void TickDown() {

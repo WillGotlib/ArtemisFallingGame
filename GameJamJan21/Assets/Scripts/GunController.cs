@@ -40,7 +40,7 @@ public class GunController : MonoBehaviour
             if (primaryCooldownTimer <= 0) {
                 // Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;
-                primaryCooldownTimer = primaryCooldown;
+                primaryCooldownTimer = primaryCooldown * owner.GetSpeedBonus();
             }
         }
         if (secondaryOnCooldown) {
@@ -51,6 +51,11 @@ public class GunController : MonoBehaviour
             }
         }
 
+    }
+
+    public void ClearPrimaryCooldown() {
+        primaryOnCooldown = false;
+        primaryCooldownTimer = primaryCooldown * owner.GetSpeedBonus();
     }
 
     // returns true if fired

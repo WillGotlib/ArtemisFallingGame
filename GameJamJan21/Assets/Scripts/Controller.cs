@@ -223,7 +223,7 @@ public class Controller : MonoBehaviour
             // Handle the actual movement
             moveDirection.y = 0;
 
-            controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum * GetSpeedBonus());
+            controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum);
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -243,12 +243,13 @@ public class Controller : MonoBehaviour
         }
     }
 
-    float GetSpeedBonus()
+    public float GetSpeedBonus()
     {
         float totalBonus = 1;
+        
         foreach (Effect e in effects)
         {
-            totalBonus += e.speedBonus;
+            totalBonus *= e.speedBonus;
         }
 
         return totalBonus;
@@ -322,6 +323,7 @@ public class Controller : MonoBehaviour
         {
             PowerupDrop powerup = collider.gameObject.GetComponent<PowerupDrop>();
             effects.Add(powerup.GiveEffect());
+            weapon.GetComponent<GunController>().ClearPrimaryCooldown();
             powerup.removePowerup(); //todo make this script trackable and keep trac of powerups
             Destroy(collider.gameObject);
         }
