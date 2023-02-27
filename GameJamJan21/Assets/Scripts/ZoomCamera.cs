@@ -14,6 +14,7 @@ public class ZoomCamera : MonoBehaviour
     private Vector3 pos;
     [SerializeField] private float camera_x_offset = 4.0f;
     [SerializeField] private Camera main_camera;
+    [SerializeField] private float trigger_movement = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +42,7 @@ public class ZoomCamera : MonoBehaviour
 
     private void AdjustCamera(Transform player_one, Transform player_two) {
         float new_dist = Vector3.Distance(player_one.transform.position, player_two.transform.position);
-        if (orig_camera_size * (new_dist/orig_dist) < 0.5 * orig_camera_size) {
+        if (orig_camera_size * (new_dist/orig_dist) < trigger_movement * orig_camera_size) {
             main_camera.orthographicSize = Mathf.Max(orig_camera_size * (new_dist/orig_dist), main_camera.orthographicSize - fadingSpeed * Time.deltaTime);
             Vector3 mid_pos = Vector3.Lerp(player_one.transform.position, player_two.transform.position, 0.5f);
             pos.x = mid_pos.x + camera_x_offset;
