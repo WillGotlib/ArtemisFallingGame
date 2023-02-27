@@ -12,14 +12,6 @@ public class MainMenu : MonoBehaviour
         version.text = Application.version;
     }
 
-    public void PlayGame() {
-        if (PausedMenu.isPaused == true) {
-            Time.timeScale = 1f;
-            PausedMenu.isPaused = false;
-        }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
     public void QuitGame() {
         Debug.Log("Good Bye");
         Application.Quit();

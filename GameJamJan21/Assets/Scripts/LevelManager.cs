@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     
     public void MakeLevel()
     {
+        print("Starting MAKE LEVEL");
         if (levels.Length == 0 || selectedLevel < 0 || selectedLevel > levelsAmount)
             throw new Exception("select valid level");
 
@@ -51,8 +52,10 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        powerUpManager = FindObjectOfType<PowerupManager>();
         levelsAmount = levels.Length;
+        selectedLevel = Statics.selectedLevel % levelsAmount;
+        print("STATIC LEVEL = " + Statics.selectedLevel);
+        powerUpManager = FindObjectOfType<PowerupManager>();
         MakeLevel();
     }
     
@@ -60,5 +63,10 @@ public class LevelManager : MonoBehaviour
     public void IncrementLevel()
     {
         selectedLevel = (selectedLevel + 1) % levels.Length;
+    }
+
+    public void SetLevel(int levelNumber)
+    {
+        selectedLevel = levelNumber;
     }
 }
