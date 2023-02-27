@@ -98,6 +98,7 @@ MonoBehaviour:
   - {fileID: 492352494406868718}
   - {fileID: 2808689715915986980}
   obstacles: {fileID: 7468159893838172443}
+  nid: Firing Lane
 --- !u!1001 &26583885338451295
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    
     public int selectedLevel = 0;
-    [SerializeField] private GameObject[] levels = {};
     public int levelsAmount { get; private set; }
 
     private GameObject instantiated;
     private Level _level;
     private PowerupManager powerUpManager;
 
+    [Header("If you were expecting to see a list of levels here,\ncheck Recurring/MatchData\n")]
     [SerializeField] private MatchDataScriptable matchDataScriptable;
+    private GameObject[] levels = {};
     
     public void MakeLevel()
     {
@@ -53,6 +55,7 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        levels = matchDataScriptable.levels;
         powerUpManager = FindObjectOfType<PowerupManager>();
         levelsAmount = levels.Length;
         selectedLevel = matchDataScriptable.levelIdx;

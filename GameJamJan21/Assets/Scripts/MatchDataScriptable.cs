@@ -7,4 +7,5 @@ public class MatchDataScriptable : ScriptableObject
 {
     public int levelIdx;
     public int numGames;
+    [SerializeField] public GameObject[] levels = {};
 }

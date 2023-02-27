@@ -7,6 +7,7 @@ public class Level : MonoBehaviour
     public GameObject[] playerSpawnPoints;
     public GameObject[] powerupDropPoints;
     public Transform obstacles;
+    public string nid; // NIDs must be unique per level
 
     public void SortSpawnPoints()
     {
