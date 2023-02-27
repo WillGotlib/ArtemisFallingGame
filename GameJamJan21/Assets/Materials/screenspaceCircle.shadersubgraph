@@ -319,6 +319,20 @@
             },
             "m_InputSlot": {
                 "m_Node": {
+                    "m_Id": "56ebb9bc631d4ca98f7abc58103e312e"
+                },
+                "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "9a45fca3f20d4454b03479f918a4accc"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
                     "m_Id": "8f145ec5dac949a591758d0511b25a95"
                 },
                 "m_SlotId": 1
@@ -909,7 +923,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 10.0,
+    "m_Value": 6.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -1310,6 +1324,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "4131bb584fbd4a04b9b1e9b877e512b7",
+    "m_Id": 1,
+    "m_DisplayName": "Mask",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Mask",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "42ed07013d0e448b9461bcb41a1dec14",
     "m_Id": 1,
@@ -1426,7 +1455,10 @@
     },
     "m_Slots": [
         {
-            "m_Id": "c441a895038348fab993aaab4c27a21b"
+            "m_Id": "4131bb584fbd4a04b9b1e9b877e512b7"
+        },
+        {
+            "m_Id": "5c58ff5400094e56b07dfd54c3767b00"
         }
     ],
     "synonyms": [],
@@ -1509,6 +1541,21 @@
         "e32": 0.0,
         "e33": 1.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "5c58ff5400094e56b07dfd54c3767b00",
+    "m_Id": 2,
+    "m_DisplayName": "MaskSolid",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "MaskSolid",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -2380,7 +2427,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "b8b287665a1d4656bee566dd32594ae2",
     "m_Id": 0,
-    "m_DisplayName": "Falloff size",
+    "m_DisplayName": "Falloff amount",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -2561,21 +2608,6 @@
 }
 
 {
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "c441a895038348fab993aaab4c27a21b",
-    "m_Id": 1,
-    "m_DisplayName": "Out_Vector1",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "OutVector1",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": []
-}
-
-{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "cdce4ac66c0b4a069d563cc96d1099f3",
@@ -2633,10 +2665,10 @@
     "m_Guid": {
         "m_GuidSerialized": "999f946b-8998-492c-a713-9099816cbefb"
     },
-    "m_Name": "Falloff size",
+    "m_Name": "Falloff amount",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Falloff size",
-    "m_DefaultReferenceName": "_Falloff_size",
+    "m_RefNameGeneratedByDisplayName": "Falloff amount",
+    "m_DefaultReferenceName": "_Falloff_amount",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -2645,7 +2677,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
-    "m_Value": 6.0,
+    "m_Value": 10.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -3001,10 +3033,10 @@
             "m_Id": "9e5f1355d1c24b209628ad4c373bb788"
         },
         {
-            "m_Id": "d293b52ebc06473c83b93499c3a27023"
+            "m_Id": "1c18bd318efb4ea58699dd11a22707bf"
         },
         {
-            "m_Id": "1c18bd318efb4ea58699dd11a22707bf"
+            "m_Id": "d293b52ebc06473c83b93499c3a27023"
         }
     ]
 }

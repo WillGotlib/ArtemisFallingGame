@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: floor
-  m_Shader: {fileID: -6465566751694194690, guid: 0b0b5415e9e59ed439c4b11aeb7328df, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: a3a2d6336f984df4caae9a268d997989, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 1

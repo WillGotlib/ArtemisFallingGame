@@ -292,10 +292,10 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "05d0c18b48724bc7909cb714ec85a951",
     "m_Id": 1,
-    "m_DisplayName": "Out_Vector1",
+    "m_DisplayName": "Mask",
     "m_SlotType": 1,
     "m_Hidden": false,
-    "m_ShaderOutputName": "OutVector1",
+    "m_ShaderOutputName": "Mask",
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
@@ -437,10 +437,10 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "14e534240aaa4134831fa540817ed007",
     "m_Id": -1298308395,
-    "m_DisplayName": "Falloff size",
+    "m_DisplayName": "Falloff amount",
     "m_SlotType": 0,
     "m_Hidden": false,
-    "m_ShaderOutputName": "_Falloff_size",
+    "m_ShaderOutputName": "_Falloff_amount",
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
@@ -1434,13 +1434,16 @@
             "m_Id": "250a22f5e3f84f04bfe5b2cd9604ced5"
         },
         {
-            "m_Id": "14e534240aaa4134831fa540817ed007"
-        },
-        {
             "m_Id": "727da6037b554a008b580b941c8cd587"
         },
         {
+            "m_Id": "14e534240aaa4134831fa540817ed007"
+        },
+        {
             "m_Id": "05d0c18b48724bc7909cb714ec85a951"
+        },
+        {
+            "m_Id": "feaa6b0c224c469c9ca04f6aff9a5c2a"
         }
     ],
     "synonyms": [],
@@ -1884,5 +1887,20 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "feaa6b0c224c469c9ca04f6aff9a5c2a",
+    "m_Id": 2,
+    "m_DisplayName": "MaskSolid",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "MaskSolid",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
