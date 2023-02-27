@@ -16,8 +16,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
-    [SerializeField] private float splashRadius;
-    [SerializeField] private float splashDuration;
 
     private Vector3 vel;
     private Vector3 lookDirection;
@@ -128,15 +126,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             bullet.GetComponent<MeshRenderer>().enabled = false;
             if (explode) {
                 GameObject splash = UnityEngine.Object.Instantiate(splashZone);
-                SplashZone splashManager = splash.GetComponent<SplashZone>();
-                splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
-                if (splashRadius == 0) {
-                splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
-                } else {
-                    splashManager.splashRadius = splashRadius;
-                }
-                splashManager.splashDamage = GlobalStats.bulletSplashDamage;
-                splashManager.timeRemaining = splashDuration;
                 splash.transform.position = this.transform.position;
             }
             Destroy(gameObject);

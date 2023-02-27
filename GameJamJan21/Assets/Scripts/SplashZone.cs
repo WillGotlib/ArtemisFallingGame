@@ -6,8 +6,16 @@ public class SplashZone : MonoBehaviour
 {
     public float timeRemaining = 5;
     public float splashRadius;
-    public float splashDamage;
+    public float explosionDamage;
+
     public bool damageOverTime;
+    public bool explodesOnImpact;
+
+    // Note: These fields only matter if damageOverTime == true.
+    public float damageOverTimeDamage = 0.1f;
+    private bool damageOverTimeActive = false;
+    public float damageOverTimeCooldown = 0.2f;
+    private float damageOverTimeRemaining = 0.2f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +25,10 @@ public class SplashZone : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if (damageOverTimeActive) {
+            damageOverTimeRemaining -= Time.deltaTime;
+        }
         if (timeRemaining > 0)
         {
             Color objectColour = this.GetComponent<MeshRenderer>().material.color;
@@ -34,9 +45,22 @@ public class SplashZone : MonoBehaviour
 
     void OnTriggerEnter(Collider collider) {
         // print("splash zone trigger was set off");
-        if (collider.gameObject.tag == "Player") {
+        if (explodesOnImpact && collider.gameObject.tag == "Player") {
             Controller playerEntered = collider.gameObject.GetComponent<Controller>();
-            playerEntered.InflictDamage(splashDamage);
+            playerEntered.InflictDamage(explosionDamage);
+        }
+    }
+
+    void OnTriggerStay(Collider collider) {
+        if (damageOverTime && collider.gameObject.tag == "Player") {
+            if (damageOverTimeRemaining <= 0) { // The countdown has expired. Inflict the damage
+                Controller playerInside = collider.gameObject.GetComponent<Controller>();
+                playerInside.InflictDamage(damageOverTimeDamage);
+                damageOverTimeActive = false;
+                damageOverTimeRemaining = damageOverTimeCooldown;
+            } else if (damageOverTimeRemaining == damageOverTimeCooldown) {  // We need to start the countdown.
+                damageOverTimeActive = true;
+            }
         }
     }
 }

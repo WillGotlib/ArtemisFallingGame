@@ -9,10 +9,12 @@ public class GlobalStats : MonoBehaviour
     public static float bulletSplashDamage = 0.5f;
     public static int bulletMaxBounces = 4;
 
-    public static int defaultStockCount = 1;
+    public static int defaultStockCount = 4;
 
     public static float baseHealth = 12f;
     public static float dashCooldown = 5f;
     public static float deathCooldown = 3f;
-    public static float invincibilityCooldown = 2f;
+    public static float invincibilityCooldown = 4f;
+
+    
 }
