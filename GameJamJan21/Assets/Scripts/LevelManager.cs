@@ -1,6 +1,7 @@
 using System;
 using Analytics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -65,5 +66,27 @@ public class LevelManager : MonoBehaviour
     public void IncrementLevel()
     {
         selectedLevel = (selectedLevel + 1) % levels.Length;
+    }
+
+    public void EndLevel(int playerNumber) {
+        if (playerNumber == 0) {
+            matchDataScriptable.p1Wins += 1;
+        } else {
+            matchDataScriptable.p2Wins += 1;
+        }
+        if (matchDataScriptable.p1Wins < matchDataScriptable.numGames / 2 + 1 &&
+                matchDataScriptable.p2Wins < matchDataScriptable.numGames / 2 + 1)
+        {
+            SceneManager.LoadScene("MidMatchMenu");
+        } else {
+            ResetData();
+            SceneManager.LoadScene("Menu2");
+        }
+    }
+
+    private void ResetData() {
+        matchDataScriptable.p1Wins = 0;
+        matchDataScriptable.p2Wins = 0;
+        matchDataScriptable.levelIdx = 0;
     }
 }

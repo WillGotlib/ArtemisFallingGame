@@ -4,14 +4,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class MidMatchMenu : MonoBehaviour
 {
-    public TMP_Text version;
+    public TMP_Text p1WinText;
+    public TMP_Text p2WinText;
     public MatchDataScriptable matchDataScriptable;
 
-    public void Start()
-    {
-        version.text = Application.version;
+    public void Start() {
+        p1WinText.text = ""+matchDataScriptable.p1Wins;
+        p2WinText.text = ""+matchDataScriptable.p2Wins;
     }
 
     public void PlayGame() {
@@ -21,10 +22,5 @@ public class MainMenu : MonoBehaviour
         }
 
         SceneManager.LoadScene("Gameplay");
-    }
-
-    public void QuitGame() {
-        Debug.Log("Good Bye");
-        Application.Quit();
     }
 }

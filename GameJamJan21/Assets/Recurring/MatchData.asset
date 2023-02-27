@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d317405217159f94a9131f4d5474b95f, type: 3}
   m_Name: MatchData
   m_EditorClassIdentifier: 
-  levelIdx: 5
+  levelIdx: 0
   numGames: 1
   levels:
   - {fileID: 7482749052067393992, guid: 2fdce5eadafba9845929c7bb7f6d47a9, type: 3}
@@ -22,3 +22,5 @@ MonoBehaviour:
   - {fileID: 8804078544648102232, guid: 857ae5ce289abbf4c852cf8339bedf0e, type: 3}
   - {fileID: 8804078544648102232, guid: 35a4f7632c9bed64d99221373770fffc, type: 3}
   - {fileID: 6651167689577441558, guid: 36eef7fe00ef6c642bea7c25459f6de6, type: 3}
+  p1Wins: 0
+  p2Wins: 0
