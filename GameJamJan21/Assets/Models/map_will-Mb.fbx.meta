@@ -12,7 +12,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: floor.004
+    second: {fileID: 2100000, guid: b7a0e0d31a523da439a260af47ad8abf, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: obsticle
+    second: {fileID: 2100000, guid: 2bfd9004b621cde479bd0d751ff649db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: obsticle.004
     second: {fileID: 2100000, guid: 2bfd9004b621cde479bd0d751ff649db, type: 2}
   - first:
       type: UnityEngine:Material
@@ -22,7 +32,17 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: spawn.004
+    second: {fileID: 2100000, guid: 915f5993ade1a374fb7663e56348a7a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: wall
+    second: {fileID: 2100000, guid: c78df4a133718e04c9d153bc9f60f738, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wall.004
     second: {fileID: 2100000, guid: c78df4a133718e04c9d153bc9f60f738, type: 2}
   materials:
     materialImportMode: 2
