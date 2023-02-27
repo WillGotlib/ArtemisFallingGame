@@ -195,6 +195,9 @@ public class Controller : MonoBehaviour
             }
         }
         // ASSERTION: If player gets to this point they are not dead.
+        if (invincibilityCooldown > 0) {
+            invincibilityCooldown -= Time.deltaTime;
+        }
 
         if (currentCooldown > 0)
             currentCooldown -= Time.deltaTime;
@@ -286,8 +289,8 @@ public class Controller : MonoBehaviour
             return false;
         }
 
-        print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
-        playerHealth = Mathf.Max(0, playerHealth - damageAmount);
+        // print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
+        playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
 
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         if (playerHealth <= 0)
@@ -314,6 +317,7 @@ public class Controller : MonoBehaviour
         playerHealth = GlobalStats.baseHealth;
         currentCooldown = GlobalStats.dashCooldown;
         deathCooldown = GlobalStats.deathCooldown;
+        invincibilityCooldown = GlobalStats.invincibilityCooldown;
         currentlyDead = false;
     }
 
