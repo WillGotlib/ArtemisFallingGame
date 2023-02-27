@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MakeWallTransparent : MonoBehaviour
 {
-    [SerializeField] private Vector3 offest;
+    [SerializeField] private Vector3 offset;
     [SerializeField] private float fadingSpeed = 0.8f;
     [SerializeField] private Material transparentMaterial;
     [SerializeField] private List<Transform> ObjectToHide = new List<Transform>();
@@ -21,6 +21,7 @@ public class MakeWallTransparent : MonoBehaviour
  
     private void LateUpdate()
     {
+        // Keep up the position of players
         foreach (Transform player in startGame.transform) {
             if (player_one == null) {
                 player_one = player;
@@ -29,13 +30,17 @@ public class MakeWallTransparent : MonoBehaviour
                 player_two = player;
             }
         }
+
+        // update objects that are blocking and showing
         ManageBlockingView(player_one, player_two);
- 
+        
+        // hide the obstacles
         foreach (var obstruction in ObjectToHide)
         {
             HideObstruction(obstruction);
         }
- 
+
+        // show obstacles
         foreach (var obstruction in ObjectToShow)
         {   
             if (obstruction != null) {
@@ -44,15 +49,11 @@ public class MakeWallTransparent : MonoBehaviour
         }
     }
  
-    void Update()
-    {
-     
-    }
    
     void ManageBlockingView(Transform player_one, Transform player_two)
     {
-        Vector3 playerOnePosition = player_one.transform.position + offest;
-        Vector3 playerTwoPosition = player_two.transform.position + offest;
+        Vector3 playerOnePosition = player_one.transform.position + offset;
+        Vector3 playerTwoPosition = player_two.transform.position + offset;
         float characterDistanceOne = Vector3.Distance(transform.position, playerOnePosition);
         float characterDistanceTwo = Vector3.Distance(transform.position, playerTwoPosition);
         int layerNumber = LayerMask.NameToLayer("Obstacle");
@@ -70,16 +71,16 @@ public class MakeWallTransparent : MonoBehaviour
             ObjectToHide.Clear();
  
             // Hide the current obstructions
-            foreach (var hit in hitsOne)
+            foreach (var hitOne in hitsOne)
             {
-                Transform obstruction = hit.transform;
+                Transform obstruction = hitOne.transform;
                 ObjectToHide.Add(obstruction);
                 ObjectToShow.Remove(obstruction);
                 SetModeTransparent(obstruction);
             }
-            foreach (var hit in hitsTwo) 
+            foreach (var hitTwo in hitsTwo) 
             {
-                Transform obstruction = hit.transform;
+                Transform obstruction = hitTwo.transform;
                 ObjectToHide.Add(obstruction);
                 ObjectToShow.Remove(obstruction);
                 SetModeTransparent(obstruction);
