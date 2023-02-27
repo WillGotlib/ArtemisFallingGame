@@ -11,6 +11,8 @@ public class LevelManager : MonoBehaviour
     private GameObject instantiated;
     private Level _level;
     private PowerupManager powerUpManager;
+
+    [SerializeField] private MatchDataScriptable matchDataScriptable;
     
     public void MakeLevel()
     {
@@ -53,6 +55,7 @@ public class LevelManager : MonoBehaviour
     {
         powerUpManager = FindObjectOfType<PowerupManager>();
         levelsAmount = levels.Length;
+        selectedLevel = matchDataScriptable.levelIdx;
         MakeLevel();
     }
     
