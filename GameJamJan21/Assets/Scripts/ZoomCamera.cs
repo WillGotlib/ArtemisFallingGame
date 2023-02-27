@@ -16,8 +16,8 @@ public class ZoomCamera : MonoBehaviour
     public bool is_zoomed = false;
     [SerializeField] private float camera_x_offset = 4.0f;
     [SerializeField] private Camera main_camera;
-    [SerializeField] private float trigger_movement = 0.5f;
-    [SerializeField] private float max_zoom = 0.3f;
+    [SerializeField] private float trigger_movement = 0.85f;
+    [SerializeField] private float max_zoom = 0.7f;
     // Start is called before the first frame update
     void Start()
     {
