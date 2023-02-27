@@ -182,7 +182,7 @@
     },
     "m_Path": "Sub Graphs",
     "m_GraphPrecision": 1,
-    "m_PreviewMode": 2,
+    "m_PreviewMode": 1,
     "m_OutputNode": {
         "m_Id": "38a76ab20317418b86fccd86a719205c"
     },
@@ -272,10 +272,10 @@
     },
     "m_Slots": [
         {
-            "m_Id": "e7cf2482294a4e59ba20083f1b4a528a"
+            "m_Id": "e73e92b9a6b040f0a4a66c62702c881c"
         },
         {
-            "m_Id": "49f32bf64c78468e9b3e0b5b58ff5fc5"
+            "m_Id": "dbe1c4b7b8ae463ca154d4f20ea1b91e"
         }
     ],
     "synonyms": [],
@@ -343,21 +343,6 @@
             "m_Id": "de81bcf0f0f148b1aa4586f394a8544e"
         }
     ]
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "49f32bf64c78468e9b3e0b5b58ff5fc5",
-    "m_Id": 2,
-    "m_DisplayName": "Out_Vector4_1",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out_Vector4_1",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": []
 }
 
 {
@@ -831,6 +816,21 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "dbe1c4b7b8ae463ca154d4f20ea1b91e",
+    "m_Id": 2,
+    "m_DisplayName": "More_then",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "More_then",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "de81bcf0f0f148b1aa4586f394a8544e",
@@ -884,12 +884,12 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "e7cf2482294a4e59ba20083f1b4a528a",
+    "m_ObjectId": "e73e92b9a6b040f0a4a66c62702c881c",
     "m_Id": 1,
-    "m_DisplayName": "Out_Vector4",
+    "m_DisplayName": "Less_Then",
     "m_SlotType": 0,
     "m_Hidden": false,
-    "m_ShaderOutputName": "Out_Vector4",
+    "m_ShaderOutputName": "Less_Then",
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
