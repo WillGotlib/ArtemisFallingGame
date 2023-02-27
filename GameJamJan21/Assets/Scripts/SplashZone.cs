@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class SplashZone : MonoBehaviour
     void Start()
     {
         transform.localScale = new Vector3(splashRadius, 1, splashRadius);
+        explosion.transform.localScale *= Mathf.Max(splashRadius / 2f, 1);
 
         var dur = explosion.main.duration;
         explosion.Play();
