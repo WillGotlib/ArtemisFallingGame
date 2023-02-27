@@ -8,6 +8,7 @@ public class MakeWallTransparent : MonoBehaviour
     [SerializeField] private float fadingSpeed = 0.8f;
     [SerializeField] private Material transparentMaterial;
     [SerializeField] private List<Transform> ObjectToHide = new List<Transform>();
+    private ZoomCamera zoomCamera;
     private List<Transform> ObjectToShow = new List<Transform>();
     private Dictionary<Transform, Material> originalMaterials = new Dictionary<Transform, Material>();
     private StartGame startGame;
@@ -17,11 +18,13 @@ public class MakeWallTransparent : MonoBehaviour
     void Start()
     {
         startGame = FindObjectOfType<StartGame>();
+        zoomCamera = FindObjectOfType<ZoomCamera>();
     }
  
     private void LateUpdate()
     {
         // Keep up the position of players
+
         foreach (Transform player in startGame.transform) {
             if (player_one == null) {
                 player_one = player;
@@ -32,7 +35,14 @@ public class MakeWallTransparent : MonoBehaviour
         }
 
         // update objects that are blocking and showing
-        ManageBlockingView(player_one, player_two);
+        if (zoomCamera.is_zoomed == true) {
+            Vector3 new_offset = offset;
+            new_offset.x = offset.x - 0.5f;
+            ManageBlockingView(player_one, player_two, new_offset);
+        }
+        else {
+            ManageBlockingView(player_one, player_two, offset);
+        }
         
         // hide the obstacles
         foreach (var obstruction in ObjectToHide)
@@ -50,7 +60,7 @@ public class MakeWallTransparent : MonoBehaviour
     }
  
    
-    void ManageBlockingView(Transform player_one, Transform player_two)
+    void ManageBlockingView(Transform player_one, Transform player_two, Vector3 offset)
     {
         Vector3 playerOnePosition = player_one.transform.position + offset;
         Vector3 playerTwoPosition = player_two.transform.position + offset;

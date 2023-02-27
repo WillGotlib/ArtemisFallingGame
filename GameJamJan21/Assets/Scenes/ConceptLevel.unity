@@ -2925,9 +2925,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f1f1c097fe08eb4d927cb6ea02d2f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadingSpeed: 2
+  transitionSpeed: 3
+  is_zoomed: 0
   camera_x_offset: 4
   main_camera: {fileID: 1649076592}
   trigger_movement: 0.5
+  max_zoom: 0.3
 --- !u!20 &1649076592 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 3728489329499391201, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}

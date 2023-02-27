@@ -9,9 +9,11 @@ public class ZoomCamera : MonoBehaviour
     private Transform player_two;
     private float orig_dist = 0f;
     private float orig_camera_size = 0f;
-    private float fadingSpeed = 0.5f;
+    [SerializeField] private float fadingSpeed = 2.0f;
+    [SerializeField] private float transitionSpeed = 3.0f;
     private Vector3 orig_pos;
     private Vector3 pos;
+    public bool is_zoomed = false;
     [SerializeField] private float camera_x_offset = 4.0f;
     [SerializeField] private Camera main_camera;
     [SerializeField] private float trigger_movement = 0.5f;
@@ -44,15 +46,60 @@ public class ZoomCamera : MonoBehaviour
     private void AdjustCamera(Transform player_one, Transform player_two) {
         float new_dist = Vector3.Distance(player_one.transform.position, player_two.transform.position);
         if (orig_camera_size * (new_dist/orig_dist) < trigger_movement * orig_camera_size) {
-            main_camera.orthographicSize = Mathf.Max(max_zoom * orig_camera_size, orig_camera_size * (new_dist/orig_dist), main_camera.orthographicSize - fadingSpeed * Time.deltaTime);
             Vector3 mid_pos = Vector3.Lerp(player_one.transform.position, player_two.transform.position, 0.5f);
-            pos.x = mid_pos.x + camera_x_offset;
-            pos.z = mid_pos.z;
-            transform.position = pos;
+            if (mid_pos.x + camera_x_offset > pos.x) {
+                pos.x = Mathf.Min(mid_pos.x + camera_x_offset, pos.x + transitionSpeed * Time.deltaTime);
+                if (mid_pos.z > pos.z) {
+                    pos.z = Mathf.Min(mid_pos.z, pos.z + transitionSpeed * Time.deltaTime);
+                    transform.position = pos;
+                }
+                else {
+                    pos.z = Mathf.Max(mid_pos.z, pos.z - transitionSpeed * Time.deltaTime);
+                    transform.position = pos;
+                }
+            }
+            else {
+                pos.x = Mathf.Max(mid_pos.x + camera_x_offset, pos.x - transitionSpeed * Time.deltaTime);
+                if (mid_pos.z > pos.z) {
+                    pos.z = Mathf.Min(mid_pos.z, pos.z + transitionSpeed * Time.deltaTime);
+                    transform.position = pos;
+                }
+                else {
+                    pos.z = Mathf.Max(mid_pos.z, pos.z - transitionSpeed * Time.deltaTime);
+                    transform.position = pos;
+                }
+            }
+            main_camera.orthographicSize = Mathf.Max(max_zoom * orig_camera_size, orig_camera_size * (new_dist/orig_dist), main_camera.orthographicSize - fadingSpeed * Time.deltaTime);
+            is_zoomed = true;
+            // pos.x = mid_pos.x + camera_x_offset;
+            // pos.z = mid_pos.z;
+            // transform.position = pos;
         }
         else {
+            if (orig_pos.x > pos.x) {
+                pos.x = Mathf.Min(orig_pos.x, pos.x + transitionSpeed * Time.deltaTime);
+                if (orig_pos.z > pos.z) {
+                    pos.z = Mathf.Min(orig_pos.z, pos.z + transitionSpeed * Time.deltaTime);
+                    transform.position = pos;
+                }
+                else {
+                    pos.z = Mathf.Max(orig_pos.z, pos.z - transitionSpeed * Time.deltaTime);
+                    transform.position = pos;
+                }
+            }
+            else {
+                pos.x = Mathf.Max(orig_pos.x, pos.x - transitionSpeed * Time.deltaTime);
+                if (orig_pos.z > pos.z) {
+                    pos.z = Mathf.Min(orig_pos.z, pos.z + transitionSpeed * Time.deltaTime);
+                    transform.position = pos;
+                }
+                else {
+                    pos.z = Mathf.Max(orig_pos.z, pos.z - transitionSpeed * Time.deltaTime);
+                    transform.position = pos;
+                }
+            }
             main_camera.orthographicSize = Mathf.Min(orig_camera_size, main_camera.orthographicSize + fadingSpeed * Time.deltaTime);
-            transform.position = orig_pos;
+            is_zoomed = false;
         }
     }
 }
