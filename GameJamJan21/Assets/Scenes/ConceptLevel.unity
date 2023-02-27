@@ -2926,8 +2926,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera_x_offset: 4
-  main_camera: {fileID: 0}
+  main_camera: {fileID: 1649076592}
   trigger_movement: 0.5
+--- !u!20 &1649076592 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3728489329499391201, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
+  m_PrefabInstance: {fileID: 3728489329111702384}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1655394657
 GameObject:
   m_ObjectHideFlags: 0
