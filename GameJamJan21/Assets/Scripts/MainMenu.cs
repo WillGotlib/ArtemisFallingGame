@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

@@ -25,7 +25,6 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(instantiated);
         }
-
         var level = levels[selectedLevel];
         instantiated = Instantiate(level, transform);
         powerUpManager.SetLevel(GetLevel());
