@@ -19,9 +19,17 @@ PrefabInstance:
       propertyPath: damageOverTime
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1848706326924120752, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+      propertyPath: m_Height
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: -1848706326924120752, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+      propertyPath: m_Center.y
+      value: 0.21
+      objectReference: {fileID: 0}
     - target: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: m_Name
-      value: MolotovSplash 1
+      value: MolotovSplash
       objectReference: {fileID: 0}
     - target: {fileID: 4193775538900655151, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: m_RootOrder
@@ -67,5 +75,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 392166303206611285, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}

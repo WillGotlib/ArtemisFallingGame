@@ -14,8 +14,7 @@ public class SplashZone : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.transform.localScale = new Vector3(splashRadius, 1, splashRadius);
-
+        transform.localScale = new Vector3(splashRadius, 1, splashRadius);
 
         var dur = explosion.main.duration;
         explosion.Play();

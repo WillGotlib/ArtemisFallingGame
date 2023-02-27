@@ -132,17 +132,18 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         if (!isGhost) {
             bullet.GetComponent<MeshRenderer>().enabled = false;
             if (explode) {
-                GameObject splash = UnityEngine.Object.Instantiate(splashZone);
+                GameObject splash = Instantiate(splashZone);
                 SplashZone splashManager = splash.GetComponent<SplashZone>();
-                splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
                 if (splashRadius == 0) {
-                splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
+                    splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
                 } else {
                     splashManager.splashRadius = splashRadius;
                 }
                 splashManager.splashDamage = GlobalStats.bulletSplashDamage;
                 splashManager.timeRemaining = splashDuration;
-                splash.transform.position = this.transform.position;
+                var pos = transform.position+Vector3.zero;
+                pos.y = 0;
+                splash.transform.position = pos;
             }
             Destroy(gameObject);
         }
