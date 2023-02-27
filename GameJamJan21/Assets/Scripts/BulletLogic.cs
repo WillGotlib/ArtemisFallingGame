@@ -28,7 +28,9 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     private bool isGhost;
 
     private bool _ricocheted=false;
-    
+
+    public TrailRenderer trail;
+
     // Update is called once per frame
     void Update()
     {
@@ -43,7 +45,10 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         isGhost = ghost;
         
         // Play sound
-        if (isGhost == false) {
+        if (isGhost == false)
+        {
+            trail.enabled = true;
+            
             _audioBullet = GetComponent<AudioSource>();
             _audioBullet.Play(0);
             // maxBounces = GlobalStats.bulletMaxBounces;
