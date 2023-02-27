@@ -686,7 +686,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
   m_PrefabInstance: {fileID: 7725062174086436404}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 7725062174086436405}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bb7e6721cbe0ec4a9f100616fd81784, type: 3}
@@ -3971,7 +3971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
       propertyPath: levels.Array.size
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
       propertyPath: matchDataScriptable
@@ -3988,15 +3988,15 @@ PrefabInstance:
     - target: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
       propertyPath: levels.Array.data[2]
       value: 
-      objectReference: {fileID: 8804078544648102232, guid: 0a792fe37963f9b45b34aecd003c47ba, type: 3}
+      objectReference: {fileID: 8804078544648102232, guid: 857ae5ce289abbf4c852cf8339bedf0e, type: 3}
     - target: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
       propertyPath: levels.Array.data[3]
       value: 
-      objectReference: {fileID: 8804078544648102232, guid: 857ae5ce289abbf4c852cf8339bedf0e, type: 3}
+      objectReference: {fileID: 8804078544648102232, guid: 99c6196679b427c45bad8afe7696ece7, type: 3}
     - target: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
       propertyPath: levels.Array.data[4]
       value: 
-      objectReference: {fileID: 8804078544648102232, guid: 35a4f7632c9bed64d99221373770fffc, type: 3}
+      objectReference: {fileID: 8804078544648102232, guid: 99c6196679b427c45bad8afe7696ece7, type: 3}
     - target: {fileID: 7725062174501813652, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
       propertyPath: levels.Array.data[5]
       value: 
@@ -4055,3 +4055,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
+--- !u!1 &7725062174086436405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7725062174501813675, guid: 4cb7ffaaa58bb8443b8a7d1c489aa16a, type: 3}
+  m_PrefabInstance: {fileID: 7725062174086436404}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7725062174086436406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725062174086436405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea7747255d72497ba10b47c95d64bd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
