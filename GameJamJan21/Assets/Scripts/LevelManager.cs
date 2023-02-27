@@ -24,6 +24,11 @@ public class LevelManager : MonoBehaviour
 
         var level = levels[selectedLevel];
         instantiated = Instantiate(level, transform);
+        foreach (GameObject obstacle in GameObject.FindObjectsOfType<GameObject>()) {
+            if (obstacle.tag == "Untagged"){
+                obstacle.layer = LayerMask.NameToLayer("Obstacle");
+            }
+        }
         powerUpManager.SetLevel(GetLevel());
         _level = null;
         

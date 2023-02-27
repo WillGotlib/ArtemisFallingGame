@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class MakeWallTransparent : MonoBehaviour
 {
-    public Vector3 offest;
-    private float fadingSpeed = 0.5f;
+    [SerializeField] private Vector3 offest;
+    [SerializeField] private float fadingSpeed = 0.8f;
     [SerializeField] private Material transparentMaterial;
     [SerializeField] private List<Transform> ObjectToHide = new List<Transform>();
     private List<Transform> ObjectToShow = new List<Transform>();
     private Dictionary<Transform, Material> originalMaterials = new Dictionary<Transform, Material>();
     private StartGame startGame;
+    private Transform player_one;
+    private Transform player_two;
  
     void Start()
     {
@@ -20,9 +22,14 @@ public class MakeWallTransparent : MonoBehaviour
     private void LateUpdate()
     {
         foreach (Transform player in startGame.transform) {
-            ManageBlockingView(player);
-            ManageBlockingView(player);
+            if (player_one == null) {
+                player_one = player;
+            }
+            else {
+                player_two = player;
+            }
         }
+        ManageBlockingView(player_one, player_two);
  
         foreach (var obstruction in ObjectToHide)
         {
@@ -30,8 +37,10 @@ public class MakeWallTransparent : MonoBehaviour
         }
  
         foreach (var obstruction in ObjectToShow)
-        {
-            ShowObstruction(obstruction);
+        {   
+            if (obstruction != null) {
+                ShowObstruction(obstruction);
+            }
         }
     }
  
@@ -40,15 +49,17 @@ public class MakeWallTransparent : MonoBehaviour
      
     }
    
-    void ManageBlockingView(Transform player)
+    void ManageBlockingView(Transform player_one, Transform player_two)
     {
-        Vector3 playerPosition = player.transform.position + offest;
-        Debug.Log(playerPosition);
-        float characterDistance = Vector3.Distance(transform.position, playerPosition);
-        int layerNumber = LayerMask.NameToLayer("Temp");
+        Vector3 playerOnePosition = player_one.transform.position + offest;
+        Vector3 playerTwoPosition = player_two.transform.position + offest;
+        float characterDistanceOne = Vector3.Distance(transform.position, playerOnePosition);
+        float characterDistanceTwo = Vector3.Distance(transform.position, playerTwoPosition);
+        int layerNumber = LayerMask.NameToLayer("Obstacle");
         int layerMask = 1 << layerNumber;
-        RaycastHit[] hits = Physics.RaycastAll(transform.position, playerPosition - transform.position, characterDistance, layerMask);
-        if (hits.Length > 0)
+        RaycastHit[] hitsOne = Physics.RaycastAll(transform.position, playerOnePosition - transform.position, characterDistanceOne, layerMask);
+        RaycastHit[] hitsTwo = Physics.RaycastAll(transform.position, playerTwoPosition - transform.position, characterDistanceTwo, layerMask);
+        if (hitsOne.Length > 0 || hitsTwo.Length > 0)
         {
             // Repaint all the previous obstructions. Because some of the stuff might be not blocking anymore
             foreach (var obstruction in ObjectToHide)
@@ -59,7 +70,14 @@ public class MakeWallTransparent : MonoBehaviour
             ObjectToHide.Clear();
  
             // Hide the current obstructions
-            foreach (var hit in hits)
+            foreach (var hit in hitsOne)
+            {
+                Transform obstruction = hit.transform;
+                ObjectToHide.Add(obstruction);
+                ObjectToShow.Remove(obstruction);
+                SetModeTransparent(obstruction);
+            }
+            foreach (var hit in hitsTwo) 
             {
                 Transform obstruction = hit.transform;
                 ObjectToHide.Add(obstruction);
@@ -85,7 +103,7 @@ public class MakeWallTransparent : MonoBehaviour
     {
         //obj.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
         var color = obj.GetComponent<Renderer>().material.color;
-        color.a = Mathf.Max(0, color.a - fadingSpeed * Time.deltaTime);
+        color.a = Mathf.Max(0.3f, color.a - fadingSpeed * Time.deltaTime);
         obj.GetComponent<Renderer>().material.color = color;
  
     }
@@ -103,7 +121,7 @@ public class MakeWallTransparent : MonoBehaviour
             return;
         }
         Material materialTrans = new Material(transparentMaterial);
-        //materialTrans.CopyPropertiesFromMaterial(originalMat);
+        // materialTrans.CopyPropertiesFromMaterial(originalMat);
         renderer.material = materialTrans;
         renderer.material.mainTexture = originalMat.mainTexture;
     }
