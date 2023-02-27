@@ -18,11 +18,7 @@ public class SplashZone : MonoBehaviour
 
 
         var dur = explosion.main.duration;
-        var em = explosion.emission;
-
-        em.enabled = true;
         explosion.Play();
-
         Invoke(nameof(DestroyParticleSystem),dur);
     }
 
