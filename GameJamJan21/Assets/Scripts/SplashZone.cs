@@ -9,10 +9,21 @@ public class SplashZone : MonoBehaviour
     public float splashDamage;
     public bool damageOverTime;
 
+    public ParticleSystem explosion;
+
     // Start is called before the first frame update
     void Start()
     {
         this.transform.localScale = new Vector3(splashRadius, 1, splashRadius);
+
+
+        var dur = explosion.main.duration;
+        var em = explosion.emission;
+
+        em.enabled = true;
+        explosion.Play();
+
+        Invoke(nameof(DestroyParticleSystem),dur);
     }
 
     // Update is called once per frame
@@ -38,5 +49,10 @@ public class SplashZone : MonoBehaviour
             Controller playerEntered = collider.gameObject.GetComponent<Controller>();
             playerEntered.InflictDamage(splashDamage);
         }
+    }
+
+    private void DestroyParticleSystem()
+    {
+        Destroy(explosion.gameObject);
     }
 }
