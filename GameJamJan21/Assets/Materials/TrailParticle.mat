@@ -141,6 +141,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     - _falloff: 0.5
+    - _scale: 1
+    - _spin_speed: 4
+    - _translation: 0
+    - _wave_length: 12
     - _width: 0.3
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
