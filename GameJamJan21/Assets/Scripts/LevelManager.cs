@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour
         if (_level)
             return _level;
         _level = instantiated.GetComponent<Level>();
+        _level.SortSpawnPoints();
         return _level;
     }
 
