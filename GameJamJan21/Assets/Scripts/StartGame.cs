@@ -9,6 +9,7 @@ public class StartGame : MonoBehaviour
     private LevelManager levelManager;
     private Scene _simulatorScene;
     private PhysicsScene _physicsScene;
+    [SerializeField] private HUDManager _hudManager;
 
     public int playerCount; 
     // Number of players participating in this game
@@ -33,28 +34,49 @@ public class StartGame : MonoBehaviour
         var spawnPoints = levelManager.GetSpawnPoints();
         // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
         CreatePhysicsScene();
+        playerStocks = new int[Mathf.Min(playerCount, spawnPoints.Length)];
         var i=0;
         foreach (GameObject spawn in spawnPoints) {
+            if (i >= playerStocks.Length) { break; }
             print("Spawning a player");
             Vector3 playerPos = spawnPoints[i].transform.position;
             playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
+            player.name = "Player " + i;
             player.GetComponent<Controller>().playerNumber = i;
+            playerStocks[i] = GlobalStats.defaultStockCount;
+            PlayerStockUpdate(i, playerStocks[i]);
             i++;
         }
     }
 
+    // Currently this is just to support the UI.
+    public void PlayerHealthUpdate(int playerNumber, float playerHealth) {
+        _hudManager.ChangeHealth(playerNumber, playerHealth);
+    }
+    
+    public void PlayerStockUpdate(int playerNumber, int playerStock) {
+        _hudManager.ChangeStock(playerNumber, playerStock);
+    }
+
     public void RespawnPlayer(Transform playerTransform, int playerNumber)
     {
-        var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
-        print("PLAYER " + spawnpoint + " RESPAWNED!");
-        // TODO: Make sure the player spawns at an open spawn point.
-        Vector3 playerPos = spawnpoint.transform.position;
-        playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
-        
-        print("Respawn Position: " + playerPos);
-        playerTransform.position = playerPos;
-        playerTransform.rotation = spawnpoint.transform.rotation;
+        playerStocks[playerNumber]--;
+        PlayerStockUpdate(playerNumber, playerStocks[playerNumber]);
+        PlayerHealthUpdate(playerNumber, GlobalStats.baseHealth);
+        print("STOCKS: " + playerStocks[0] + "/" + playerStocks[1]);
+
+        if (playerStocks[playerNumber] > 0) {
+            var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
+            // TODO: For the future...Make sure the player spawns at an open spawn point.
+            print("PLAYER " + playerNumber + " RESPAWNED at " + spawnpoint);
+            playerTransform.position = spawnpoint.transform.position;
+            playerTransform.rotation = spawnpoint.transform.rotation;
+        }
+        else {
+            print("PLAYER " + playerNumber + " IS OUT!");
+            levelManager.EndLevel(playerNumber);
+        }
     }
 
     void CreatePhysicsScene()
@@ -71,8 +93,10 @@ public class StartGame : MonoBehaviour
 
         foreach (Transform obj in levelManager.GetObstacles()) {
             var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
+            ghostObj.GetComponent<Renderer>().enabled = false;
+            var obj_scale = obj.gameObject.transform.lossyScale;
+            ghostObj.transform.localScale = obj_scale;
             ghostObj.tag = "SIMULATION";
-            // ghostObj.GetComponent<Renderer>().enabled = false;
             SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
         }
     }

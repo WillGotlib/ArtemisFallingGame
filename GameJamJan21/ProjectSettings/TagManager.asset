@@ -8,11 +8,12 @@ TagManager:
   - Transient
   - Spawnpoint
   - SIMULATION
+  - Powerup
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Obstacle
   - Water
   - UI
   - 
