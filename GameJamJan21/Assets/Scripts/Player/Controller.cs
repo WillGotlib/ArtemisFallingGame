@@ -63,6 +63,9 @@ public class Controller : MonoBehaviour
         cameraController = FindObjectOfType<CameraSwitch>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
+
+        // controller = GetComponent<CharacterController>();
+        // controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
         if (camera == null)
         {
             camera = backupCamera.GetComponentInChildren<Camera>();
@@ -76,7 +79,7 @@ public class Controller : MonoBehaviour
             cur_pos[2] + (this.transform.forward[2] * 0.2f));
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
-
+        
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
@@ -84,9 +87,6 @@ public class Controller : MonoBehaviour
     public void OnMovement(InputValue value)
     {
         moveDirection = value.Get<Vector3>();
-        // IMPORTANT: The given InputValue is only valid for the duration of the callback.
-        //            Storing the InputValue references somewhere and calling Get<T>()
-        //            later does not work correctly.
     }
 
     public void OnSwitchCamera()
@@ -120,9 +120,6 @@ public class Controller : MonoBehaviour
         else 
             lookDirection = direction.normalized * sensitivity;
     }
-    // IMPORTANT: The given InputValue is only valid for the duration of the callback.
-    //            Storing the InputValue references somewhere and calling Get<T>()
-    //            later does not work correctly.
 
 
     private void FixedUpdate()
@@ -147,6 +144,7 @@ public class Controller : MonoBehaviour
     }
 
     public void OnEnterMenu() {
+        print(menu);
         menu.SwitchMenuState();
     }
 
@@ -209,7 +207,6 @@ public class Controller : MonoBehaviour
         if (followingCamera == true)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
-        CharacterController controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
         if (!controller.isGrounded)
         {
             Vector3 fall = new Vector3(0, -(1), 0);
