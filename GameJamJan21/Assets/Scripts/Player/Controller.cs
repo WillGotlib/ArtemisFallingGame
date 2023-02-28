@@ -28,6 +28,7 @@ public class Controller : MonoBehaviour
     PausedMenu menu;
 
     CameraSwitch cameraController;
+    private CharacterFlash flashManager;
 
     // public float gravity = 0.000001f; // TODO: OK to delete this?
     public float dashIntensity = 50;
@@ -59,6 +60,7 @@ public class Controller : MonoBehaviour
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
+        flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         if (camera == null)
         {
@@ -182,7 +184,7 @@ public class Controller : MonoBehaviour
                 print("Not on the right plane:: on life plane");
                 transform.position = new Vector3(0, -4, 0);
             }
-
+            
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0)
             {
@@ -196,6 +198,7 @@ public class Controller : MonoBehaviour
         }
         // ASSERTION: If player gets to this point they are not dead.
         if (invincibilityCooldown > 0) {
+            flashManager.InvincibilityFlash();
             invincibilityCooldown -= Time.deltaTime;
         }
 
@@ -291,6 +294,7 @@ public class Controller : MonoBehaviour
 
         // print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
+        flashManager.DamageFlash();
 
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         if (playerHealth <= 0)

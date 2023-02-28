@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 3349455145992540270}
   - component: {fileID: 2111890155133846231}
   - component: {fileID: 1574579996388501985}
+  - component: {fileID: 2073565223626383832}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -249,7 +250,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3eda94eb6e363421795fe3286c0ae5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -369,6 +370,7 @@ MonoBehaviour:
   speed: 4
   sensitivity: 2000
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
+  flashManager: {fileID: 2073565223626383832}
   dashIntensity: 25
   momentum: 0.85
   maxMomentum: 1.15
@@ -385,3 +387,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad99cc572e824c818b1bf655396fbd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2073565223626383832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6304a83abe9c4f7ebe697ba95167a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 3eda94eb6e363421795fe3286c0ae5ec, type: 2}
+  damageMaterial: {fileID: 2100000, guid: 3b40a00ffb1da474b94351cd90b8eb19, type: 2}
+  invincibleMaterial: {fileID: 2100000, guid: 4c3963f94f19f4ef88575a5203bfb296, type: 2}
+  damageDuration: 0.1
+  invincibleDuration: 0.2
