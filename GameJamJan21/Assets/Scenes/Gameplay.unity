@@ -401,7 +401,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 196065155}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -813,6 +813,17 @@ MonoBehaviour:
   scndsBetweenSpawns: 5
   powerups:
   - {fileID: 210597942409183111, guid: 9c4fceec75119614c99b45b31b9b138b, type: 3}
+--- !u!114 &541731795 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
+  m_PrefabInstance: {fileID: 2059657279}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541731786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621567455fd1c4ceb811cc8a00b6a1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &549310996
 GameObject:
   m_ObjectHideFlags: 0
@@ -3652,7 +3663,7 @@ PrefabInstance:
       objectReference: {fileID: 541731790}
     - target: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
       propertyPath: playerCount
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
       propertyPath: levelManager
@@ -3666,6 +3677,10 @@ PrefabInstance:
       propertyPath: deathCooldown
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
+      propertyPath: playerInputManager
+      value: 
+      objectReference: {fileID: 541731795}
     - target: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
       propertyPath: invincibilityCooldown
       value: 3
@@ -3715,6 +3730,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
       propertyPath: m_SplitScreen
       value: 0
       objectReference: {fileID: 0}
@@ -3724,11 +3743,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
       propertyPath: m_JoinBehavior
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
       propertyPath: m_MaxPlayerCount
-      value: -1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}

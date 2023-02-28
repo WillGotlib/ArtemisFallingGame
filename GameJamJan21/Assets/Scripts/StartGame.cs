@@ -42,6 +42,7 @@ public class StartGame : MonoBehaviour
             Vector3 playerPos = spawnPoints[i].transform.position;
             playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
+            player.name = "Player " + i;
             player.GetComponent<Controller>().playerNumber = i;
             playerStocks[i] = GlobalStats.defaultStockCount;
             PlayerStockUpdate(i, playerStocks[i]);
