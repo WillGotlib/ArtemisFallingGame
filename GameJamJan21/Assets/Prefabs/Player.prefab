@@ -180,7 +180,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f8f9bce8fcba2dd4aa357122f82c25f5, type: 2}
+  - {fileID: 2100000, guid: 3eda94eb6e363421795fe3286c0ae5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -228,9 +228,10 @@ GameObject:
   - component: {fileID: 6668230694903963032}
   - component: {fileID: 6668230694903963035}
   - component: {fileID: 3349455145992540266}
-  - component: {fileID: 3349455145992540270}
   - component: {fileID: 2111890155133846231}
+  - component: {fileID: 3349455145992540270}
   - component: {fileID: 1574579996388501985}
+  - component: {fileID: 2073565223626383832}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -283,7 +284,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f8f9bce8fcba2dd4aa357122f82c25f5, type: 2}
+  - {fileID: 2100000, guid: 3eda94eb6e363421795fe3286c0ae5ec, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -337,6 +338,26 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2111890155133846231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052f58a485e15ca44ac2f467414f9c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 3349455145992540266}
+  speed: 4
+  sensitivity: 2000
+  weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
+  dashIntensity: 25
+  momentum: 0.85
+  maxMomentum: 1.15
+  backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,15 +384,11 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 69370eef-4b71-4293-9558-02914e221421
-    m_ActionName: Player/Aim[/SwitchProControllerHID/rightTrigger]
-  - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: 25bf2869b2515aa43bd3be871833493f, type: 3}
-        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
-        m_MethodName: set_name
-        m_Mode: 5
+      - m_Target: {fileID: 2111890155133846231}
+        m_TargetAssemblyTypeName: Controller, Assembly-CSharp
+        m_MethodName: OnMovement
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -382,31 +399,47 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b031336f-603d-43c4-8d4e-13d21ce98de5
     m_ActionName: Player/Movement[/SwitchProControllerHID/leftStick/up,/SwitchProControllerHID/leftStick/down,/SwitchProControllerHID/leftStick/left,/SwitchProControllerHID/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e78f9ebe-126a-4c4f-8454-058ddd98f4c5
+    m_ActionName: Player/Look[/DualShock4GamepadHID/rightStick/left,/DualShock4GamepadHID/rightStick/right,/DualShock4GamepadHID/rightStick/up,/DualShock4GamepadHID/rightStick/down]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b43816c3-833f-463f-9baf-cead8331356c
+    m_ActionName: Player/SwitchCamera[/DualShock4GamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c8c9df9e-28b5-44a6-a5e3-4c22acfe3560
+    m_ActionName: Player/Dash[/DualShock4GamepadHID/leftShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4665af22-391b-42ae-8aa8-2c5b25efb779
+    m_ActionName: Player/PrimaryFire[/DualShock4GamepadHID/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4fcaf0c2-66f2-4dbd-8e15-f7d15c8ca959
+    m_ActionName: Player/SecondaryFire[/DualShock4GamepadHID/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0c4706f0-bbaa-4d56-91e1-9899b63d7add
+    m_ActionName: Player/EnterMenu[/DualShock4GamepadHID/start]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 03796bce-d31c-4da9-b86c-6f843bcbf81f
+    m_ActionName: UI/Enter[/DualShock4GamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e018d7ad-b05b-4605-89c4-787cc81054b6
+    m_ActionName: UI/Navigate[/DualShock4GamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/right,/DualShock4GamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/down]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca47009f-82e3-4653-b62a-fdd470f85ad9
+    m_ActionName: UI/Pause[/DualShock4GamepadHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &2111890155133846231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6668230694903963034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 052f58a485e15ca44ac2f467414f9c06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controller: {fileID: 3349455145992540266}
-  speed: 4
-  sensitivity: 2000
-  weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
-  dashIntensity: 25
-  momentum: 0.85
-  maxMomentum: 1.15
-  backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
 --- !u!114 &1574579996388501985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,3 +452,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad99cc572e824c818b1bf655396fbd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2073565223626383832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6304a83abe9c4f7ebe697ba95167a48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalMaterial: {fileID: 2100000, guid: 3eda94eb6e363421795fe3286c0ae5ec, type: 2}
+  damageMaterial: {fileID: 2100000, guid: 3b40a00ffb1da474b94351cd90b8eb19, type: 2}
+  invincibleMaterial: {fileID: 2100000, guid: 4c3963f94f19f4ef88575a5203bfb296, type: 2}
+  damageDuration: 0.1
+  invincibleDuration: 0.2

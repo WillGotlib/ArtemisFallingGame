@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections;
 using Analytics;
 using Google.Protobuf;
 using UnityEngine;
@@ -16,8 +18,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
-    [SerializeField] private float splashRadius;
-    [SerializeField] private float splashDuration;
 
     private Vector3 vel;
     private Vector3 lookDirection;
@@ -28,6 +28,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     private bool isGhost;
 
     private bool _ricocheted=false;
+
+    private Coroutine expiration;
     
     // Update is called once per frame
     void Update()
@@ -42,6 +44,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         vel = _rb.velocity;
         isGhost = ghost;
         
+        expiration = StartCoroutine(ExpirationTimer());
+
         // Play sound
         if (isGhost == false) {
             _audioBullet = GetComponent<AudioSource>();
@@ -50,6 +54,11 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         } else {
             maxBounces = 3;
         }
+    }
+
+    private IEnumerator ExpirationTimer() {
+        yield return new WaitForSeconds(10f); // TODO: Un-hard-code this
+        finishShot(false);
     }
 
     void PreShotOrienting() {
@@ -128,17 +137,9 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             bullet.GetComponent<MeshRenderer>().enabled = false;
             if (explode) {
                 GameObject splash = UnityEngine.Object.Instantiate(splashZone);
-                SplashZone splashManager = splash.GetComponent<SplashZone>();
-                splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
-                if (splashRadius == 0) {
-                splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
-                } else {
-                    splashManager.splashRadius = splashRadius;
-                }
-                splashManager.splashDamage = GlobalStats.bulletSplashDamage;
-                splashManager.timeRemaining = splashDuration;
                 splash.transform.position = this.transform.position;
             }
+            StopCoroutine(expiration);
             Destroy(gameObject);
         }
     }

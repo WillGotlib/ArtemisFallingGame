@@ -226,61 +226,6 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Gamepad"",
-                    ""id"": ""16d0416e-0daa-43ed-8ce4-493cba4faa73"",
-                    ""path"": ""3DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""d6830ea6-e678-4a39-8ebe-4647053bac8f"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""706cf2dc-2519-4785-b29e-0b7ae94a0942"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""backward"",
-                    ""id"": ""81f89b47-595f-49c0-801c-8d993ba40de3"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""NintendoControlScheme"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""forward"",
-                    ""id"": ""36899d3f-5b68-4c7d-9fd7-d4cca6b66791"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""NintendoControlScheme;Gamepad2"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Gamepad 2"",
                     ""id"": ""558a310c-e568-41b1-a6c2-416df88a2f41"",
                     ""path"": ""3DVector"",
                     ""interactions"": """",
@@ -351,7 +296,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme;Gamepad2"",
+                    ""groups"": ""Gamepad2"",
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -384,7 +329,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad2"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -395,7 +340,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad2"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -406,7 +351,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad2"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -417,7 +362,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Gamepad2"",
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -494,7 +439,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""Gamepad2;NintendoControlScheme"",
+                    ""groups"": ""Gamepad2"",
                     ""action"": ""PrimaryFire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -527,7 +472,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme;Gamepad2"",
+                    ""groups"": ""Gamepad2"",
                     ""action"": ""SecondaryFire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -549,8 +494,131 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""NintendoControlScheme;Gamepad2"",
+                    ""groups"": ""Gamepad2"",
                     ""action"": ""EnterMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""7b2ebfc9-4c11-4836-b33b-7b01c86a3f1f"",
+            ""actions"": [
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""03796bce-d31c-4da9-b86c-6f843bcbf81f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Navigate"",
+                    ""type"": ""Button"",
+                    ""id"": ""e018d7ad-b05b-4605-89c4-787cc81054b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca47009f-82e3-4653-b62a-fdd470f85ad9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2d35bb15-2a17-45c6-b059-2add177817a6"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad2"",
+                    ""action"": ""Enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""685eea30-7d14-451f-89ca-451915d67ac2"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad2"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""98d997f8-9f47-49eb-89d7-efcdc7afaca3"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ffea586a-b5e3-4226-9941-8d40d3afe43c"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad2"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""4b543da1-011b-45e6-85c5-98ebe03c3d21"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad2"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""480b9232-c976-4852-9ed0-5b42ff95773b"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad2"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""641eb5f3-b780-417d-be54-cc921bc166ce"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad2"",
+                    ""action"": ""Navigate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93dfa9ac-e14c-4957-a0f6-711450b2b41b"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad2"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -558,17 +626,6 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         }
     ],
     ""controlSchemes"": [
-        {
-            ""name"": ""NintendoControlScheme"",
-            ""bindingGroup"": ""NintendoControlScheme"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<SwitchProControllerHID>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
-        },
         {
             ""name"": ""Gamepad2"",
             ""bindingGroup"": ""Gamepad2"",
@@ -591,6 +648,11 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player_PrimaryFire = m_Player.FindAction("PrimaryFire", throwIfNotFound: true);
         m_Player_SecondaryFire = m_Player.FindAction("SecondaryFire", throwIfNotFound: true);
         m_Player_EnterMenu = m_Player.FindAction("EnterMenu", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Enter = m_UI.FindAction("Enter", throwIfNotFound: true);
+        m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -727,15 +789,55 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
-    private int m_NintendoControlSchemeSchemeIndex = -1;
-    public InputControlScheme NintendoControlSchemeScheme
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_Enter;
+    private readonly InputAction m_UI_Navigate;
+    private readonly InputAction m_UI_Pause;
+    public struct UIActions
     {
-        get
+        private @InputMaster m_Wrapper;
+        public UIActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Enter => m_Wrapper.m_UI_Enter;
+        public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
         {
-            if (m_NintendoControlSchemeSchemeIndex == -1) m_NintendoControlSchemeSchemeIndex = asset.FindControlSchemeIndex("NintendoControlScheme");
-            return asset.controlSchemes[m_NintendoControlSchemeSchemeIndex];
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @Enter.started -= m_Wrapper.m_UIActionsCallbackInterface.OnEnter;
+                @Enter.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnEnter;
+                @Enter.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnEnter;
+                @Navigate.started -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
+                @Navigate.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
+                @Navigate.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnNavigate;
+                @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Enter.started += instance.OnEnter;
+                @Enter.performed += instance.OnEnter;
+                @Enter.canceled += instance.OnEnter;
+                @Navigate.started += instance.OnNavigate;
+                @Navigate.performed += instance.OnNavigate;
+                @Navigate.canceled += instance.OnNavigate;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+            }
         }
     }
+    public UIActions @UI => new UIActions(this);
     private int m_Gamepad2SchemeIndex = -1;
     public InputControlScheme Gamepad2Scheme
     {
@@ -754,5 +856,11 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         void OnPrimaryFire(InputAction.CallbackContext context);
         void OnSecondaryFire(InputAction.CallbackContext context);
         void OnEnterMenu(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnEnter(InputAction.CallbackContext context);
+        void OnNavigate(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

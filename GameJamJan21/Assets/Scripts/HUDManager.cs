@@ -15,7 +15,7 @@ public class HUDManager : MonoBehaviour
     void Update()
     {
         for (int i = 0; i < playerCount; i++) {
-            playerTexts[i].text = $"P{i}: {playerHealths[i]}/{GlobalStats.baseHealth} [{playerStocks[i]}]";
+            playerTexts[i].text = $"P{i+1}: {playerHealths[i]}/{GlobalStats.baseHealth} [{playerStocks[i]}]";
         }
     }
 

@@ -28,6 +28,7 @@ public class Controller : MonoBehaviour
     PausedMenu menu;
 
     CameraSwitch cameraController;
+    private CharacterFlash flashManager;
 
     // public float gravity = 0.000001f; // TODO: OK to delete this?
     public float dashIntensity = 50;
@@ -59,7 +60,11 @@ public class Controller : MonoBehaviour
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
+        flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
+
+        // controller = GetComponent<CharacterController>();
+        // controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
         if (camera == null)
         {
             camera = backupCamera.GetComponentInChildren<Camera>();
@@ -73,7 +78,7 @@ public class Controller : MonoBehaviour
             cur_pos[2] + (this.transform.forward[2] * 0.2f));
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
-
+        
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
@@ -81,9 +86,6 @@ public class Controller : MonoBehaviour
     public void OnMovement(InputValue value)
     {
         moveDirection = value.Get<Vector3>();
-        // IMPORTANT: The given InputValue is only valid for the duration of the callback.
-        //            Storing the InputValue references somewhere and calling Get<T>()
-        //            later does not work correctly.
     }
 
     public void OnSwitchCamera()
@@ -117,9 +119,6 @@ public class Controller : MonoBehaviour
         else 
             lookDirection = direction.normalized * sensitivity;
     }
-    // IMPORTANT: The given InputValue is only valid for the duration of the callback.
-    //            Storing the InputValue references somewhere and calling Get<T>()
-    //            later does not work correctly.
 
 
     private void FixedUpdate()
@@ -144,6 +143,7 @@ public class Controller : MonoBehaviour
     }
 
     public void OnEnterMenu() {
+        print(menu);
         menu.SwitchMenuState();
     }
 
@@ -182,7 +182,7 @@ public class Controller : MonoBehaviour
                 print("Not on the right plane:: on life plane");
                 transform.position = new Vector3(0, -4, 0);
             }
-
+            
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0)
             {
@@ -195,6 +195,10 @@ public class Controller : MonoBehaviour
             }
         }
         // ASSERTION: If player gets to this point they are not dead.
+        if (invincibilityCooldown > 0) {
+            flashManager.InvincibilityFlash();
+            invincibilityCooldown -= Time.deltaTime;
+        }
 
         if (currentCooldown > 0)
             currentCooldown -= Time.deltaTime;
@@ -202,7 +206,6 @@ public class Controller : MonoBehaviour
         if (followingCamera == true)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
-        CharacterController controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
         if (!controller.isGrounded)
         {
             Vector3 fall = new Vector3(0, -(1), 0);
@@ -223,7 +226,7 @@ public class Controller : MonoBehaviour
             // Handle the actual movement
             moveDirection.y = 0;
 
-            controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum * GetSpeedBonus());
+            controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum);
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -243,12 +246,13 @@ public class Controller : MonoBehaviour
         }
     }
 
-    float GetSpeedBonus()
+    public float GetSpeedBonus()
     {
         float totalBonus = 1;
+        
         foreach (Effect e in effects)
         {
-            totalBonus += e.speedBonus;
+            totalBonus *= e.speedBonus;
         }
 
         return totalBonus;
@@ -285,8 +289,9 @@ public class Controller : MonoBehaviour
             return false;
         }
 
-        print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
-        playerHealth = Mathf.Max(0, playerHealth - damageAmount);
+        // print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
+        playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
+        flashManager.DamageFlash();
 
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         if (playerHealth <= 0)
@@ -313,6 +318,7 @@ public class Controller : MonoBehaviour
         playerHealth = GlobalStats.baseHealth;
         currentCooldown = GlobalStats.dashCooldown;
         deathCooldown = GlobalStats.deathCooldown;
+        invincibilityCooldown = GlobalStats.invincibilityCooldown;
         currentlyDead = false;
     }
 
@@ -322,6 +328,7 @@ public class Controller : MonoBehaviour
         {
             PowerupDrop powerup = collider.gameObject.GetComponent<PowerupDrop>();
             effects.Add(powerup.GiveEffect());
+            weapon.GetComponent<GunController>().ClearPrimaryCooldown();
             powerup.removePowerup(); //todo make this script trackable and keep trac of powerups
             Destroy(collider.gameObject);
         }

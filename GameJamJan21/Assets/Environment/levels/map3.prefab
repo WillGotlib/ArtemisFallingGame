@@ -60,6 +60,8 @@ MonoBehaviour:
   - {fileID: 589570670774191968}
   - {fileID: 9193980831746266955}
   obstacles: {fileID: 3140440346062844428}
+  nid: Eyesight
+  thumbnail: {fileID: 21300000, guid: db6487a2ecad4437ca38aebbab2ded0a, type: 3}
 --- !u!1001 &1283749766750456099
 PrefabInstance:
   m_ObjectHideFlags: 0

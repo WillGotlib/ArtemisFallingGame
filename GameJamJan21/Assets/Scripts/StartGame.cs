@@ -37,10 +37,12 @@ public class StartGame : MonoBehaviour
         playerStocks = new int[Mathf.Min(playerCount, spawnPoints.Length)];
         var i=0;
         foreach (GameObject spawn in spawnPoints) {
+            if (i >= playerStocks.Length) { break; }
             print("Spawning a player");
             Vector3 playerPos = spawnPoints[i].transform.position;
             playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
+            player.name = "Player " + i;
             player.GetComponent<Controller>().playerNumber = i;
             playerStocks[i] = GlobalStats.defaultStockCount;
             PlayerStockUpdate(i, playerStocks[i]);
@@ -73,6 +75,7 @@ public class StartGame : MonoBehaviour
         }
         else {
             print("PLAYER " + playerNumber + " IS OUT!");
+            levelManager.EndLevel(playerNumber);
         }
     }
 

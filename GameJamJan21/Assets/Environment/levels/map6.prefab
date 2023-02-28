@@ -56,6 +56,8 @@ MonoBehaviour:
   - {fileID: 587761572749451170}
   - {fileID: 3591665501796774891}
   obstacles: {fileID: 3617230064282137439}
+  nid: Eruption
+  thumbnail: {fileID: 21300000, guid: eb69a586d58dc4891b84df2bd721cd43, type: 3}
 --- !u!1001 &1283749766750456099
 PrefabInstance:
   m_ObjectHideFlags: 0
