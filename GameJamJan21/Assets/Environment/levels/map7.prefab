@@ -56,6 +56,7 @@ MonoBehaviour:
   - {fileID: 4601458490403962387}
   - {fileID: 3738940550942382428}
   obstacles: {fileID: 6401778809592765031}
+  nid: Boxed In
 --- !u!1001 &1283749766750456099
 PrefabInstance:
   m_ObjectHideFlags: 0

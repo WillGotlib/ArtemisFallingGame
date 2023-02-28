@@ -16,8 +16,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
-    [SerializeField] private float splashRadius;
-    [SerializeField] private float splashDuration;
 
     private Vector3 vel;
     private Vector3 lookDirection;
@@ -45,8 +43,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         isGhost = ghost;
         
         // Play sound
-        if (isGhost == false)
-        {
+        if (isGhost == false) {
             trail.enabled = true;
             
             _audioBullet = GetComponent<AudioSource>();
@@ -133,14 +130,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             bullet.GetComponent<MeshRenderer>().enabled = false;
             if (explode) {
                 GameObject splash = Instantiate(splashZone);
-                SplashZone splashManager = splash.GetComponent<SplashZone>();
-                if (splashRadius == 0) {
-                    splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
-                } else {
-                    splashManager.splashRadius = splashRadius;
-                }
-                splashManager.splashDamage = GlobalStats.bulletSplashDamage;
-                splashManager.timeRemaining = splashDuration;
                 var pos = transform.position+Vector3.zero;
                 pos.y = 0;
                 splash.transform.position = pos;

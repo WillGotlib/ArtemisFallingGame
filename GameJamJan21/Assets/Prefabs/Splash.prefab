@@ -51,9 +51,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeRemaining: 5
-  splashRadius: 0
-  splashDamage: 0
+  splashRadius: 1
+  explosionDamage: 0.5
   damageOverTime: 0
+  explodesOnImpact: 1
+  damageOverTimeDamage: 0.1
+  damageOverTimeCooldown: 0.2
   explosion: {fileID: 6866381843520880831}
 --- !u!23 &-718981201349760569
 MeshRenderer:

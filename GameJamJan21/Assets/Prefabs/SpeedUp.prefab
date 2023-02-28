@@ -105,9 +105,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageBonus: 1
-  speedBonus: 2
+  speedBonus: 0.25
   dashBonus: 1
-  maxDuration: 5
+  maxDuration: 10
 --- !u!114 &3969214465323797172
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -45,12 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedLevel: 0
-  levels:
-  - {fileID: 6651167689577441558, guid: 36eef7fe00ef6c642bea7c25459f6de6, type: 3}
-  - {fileID: 7482749052067393992, guid: 2fdce5eadafba9845929c7bb7f6d47a9, type: 3}
-  - {fileID: 8804078544648102232, guid: d12e17ee50f58ef4db46cbba110a777e, type: 3}
-  - {fileID: 8804078544648102232, guid: 0230432c8b38873458457f0083a9002c, type: 3}
-  - {fileID: 8804078544648102232, guid: 0a792fe37963f9b45b34aecd003c47ba, type: 3}
-  - {fileID: 8804078544648102232, guid: 857ae5ce289abbf4c852cf8339bedf0e, type: 3}
-  - {fileID: 8804078544648102232, guid: 35a4f7632c9bed64d99221373770fffc, type: 3}
-  - {fileID: 8804078544648102232, guid: 99c6196679b427c45bad8afe7696ece7, type: 3}
+  matchDataScriptable: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}

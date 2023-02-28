@@ -56,6 +56,7 @@ MonoBehaviour:
   - {fileID: 8070079474303283283}
   - {fileID: 2151342312127259046}
   obstacles: {fileID: 3497953815605450263}
+  nid: Compactor
 --- !u!1001 &1283749766750456099
 PrefabInstance:
   m_ObjectHideFlags: 0

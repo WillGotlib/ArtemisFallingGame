@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public TMP_Text version;
+    public MatchDataScriptable matchDataScriptable;
+
     public void Start()
     {
         version.text = Application.version;
@@ -17,7 +19,8 @@ public class MainMenu : MonoBehaviour
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        SceneManager.LoadScene("Gameplay");
     }
 
     public void QuitGame() {

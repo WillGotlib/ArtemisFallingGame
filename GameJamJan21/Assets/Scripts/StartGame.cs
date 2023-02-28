@@ -73,6 +73,7 @@ public class StartGame : MonoBehaviour
         }
         else {
             print("PLAYER " + playerNumber + " IS OUT!");
+            levelManager.EndLevel(playerNumber);
         }
     }
 

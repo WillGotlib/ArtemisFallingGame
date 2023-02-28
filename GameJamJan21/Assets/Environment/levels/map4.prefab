@@ -56,6 +56,7 @@ MonoBehaviour:
   - {fileID: 2557997755431145074}
   - {fileID: 357641230696397844}
   obstacles: {fileID: 5430008317158653184}
+  nid: Central
 --- !u!1001 &1283749766750456099
 PrefabInstance:
   m_ObjectHideFlags: 0
