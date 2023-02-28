@@ -37,6 +37,7 @@ public class StartGame : MonoBehaviour
         playerStocks = new int[Mathf.Min(playerCount, spawnPoints.Length)];
         var i=0;
         foreach (GameObject spawn in spawnPoints) {
+            if (i >= playerStocks.Length) { break; }
             print("Spawning a player");
             Vector3 playerPos = spawnPoints[i].transform.position;
             playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);

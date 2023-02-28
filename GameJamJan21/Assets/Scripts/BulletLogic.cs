@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections;
 using Analytics;
 using Google.Protobuf;
 using UnityEngine;
@@ -26,6 +28,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     private bool isGhost;
 
     private bool _ricocheted=false;
+
+    private Coroutine expiration;
     
     // Update is called once per frame
     void Update()
@@ -40,6 +44,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         vel = _rb.velocity;
         isGhost = ghost;
         
+        expiration = StartCoroutine(ExpirationTimer());
+
         // Play sound
         if (isGhost == false) {
             _audioBullet = GetComponent<AudioSource>();
@@ -48,6 +54,11 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         } else {
             maxBounces = 3;
         }
+    }
+
+    private IEnumerator ExpirationTimer() {
+        yield return new WaitForSeconds(10f); // TODO: Un-hard-code this
+        finishShot(false);
     }
 
     void PreShotOrienting() {
@@ -128,6 +139,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
                 GameObject splash = UnityEngine.Object.Instantiate(splashZone);
                 splash.transform.position = this.transform.position;
             }
+            StopCoroutine(expiration);
             Destroy(gameObject);
         }
     }

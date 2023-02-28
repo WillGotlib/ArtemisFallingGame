@@ -146,6 +146,8 @@ public class Controller : MonoBehaviour
     }
 
     public void OnEnterMenu() {
+        print("Tried to access menu");
+        print(menu);
         menu.SwitchMenuState();
     }
 
