@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b975734319a64d0ca6eb2c203100598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeRemaining: 5
+  timeRemaining: 0.4
   splashRadius: 1
   explosionDamage: 0.5
   damageOverTime: 0

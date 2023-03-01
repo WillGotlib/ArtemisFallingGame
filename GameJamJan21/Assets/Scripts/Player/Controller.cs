@@ -26,7 +26,7 @@ public class Controller : MonoBehaviour
     Vector3 lookDirection;
     new Camera camera;
     bool followingCamera = true;
-    PausedMenu menu;
+    private PausedMenu menu;
 
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
@@ -66,6 +66,7 @@ public class Controller : MonoBehaviour
         _hudManager = FindObjectOfType<HUDManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
+        print(menu);
 
         // controller = GetComponent<CharacterController>();
         // controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
