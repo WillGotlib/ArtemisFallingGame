@@ -54,6 +54,8 @@ public class Controller : MonoBehaviour
 
     private AnalyticsManager _analyticsManager;
 
+    private HUDManager _hudManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +63,7 @@ public class Controller : MonoBehaviour
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
+        _hudManager = FindObjectOfType<HUDManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
 
@@ -191,6 +194,7 @@ public class Controller : MonoBehaviour
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
+                _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
                 _analyticsManager.CustomEvent("respawn", Utils.NameObject(gameObject));
                 return;
             }
@@ -294,7 +298,8 @@ public class Controller : MonoBehaviour
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
 
-        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        // playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        _hudManager.ChangeHealth(playerNumber, playerHealth);
         if (playerHealth <= 0)
         {
             PlayerDeath();
