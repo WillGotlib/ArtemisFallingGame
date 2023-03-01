@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
 
-    [SerializeField] private TMP_Text[] playerTexts = {};
-    private int playerCount = 2;
+//    private int playerCount = 2;
+    [SerializeField] private Slider playerOneSlider;
+    [SerializeField] private Slider playerTwoSlider;
     private int[] playerStocks = new int[2];
     private float[] playerHealths = new float[2];
 
-    // Update is called once per frame
-    void Update()
+    void Start() {
+        playerHealths[0] = GlobalStats.baseHealth;
+        playerHealths[1] = GlobalStats.baseHealth;
+        playerOneSlider.value = GlobalStats.baseHealth;
+        playerTwoSlider.value = GlobalStats.baseHealth;
+    }
+
+    public void LateUpdate()
     {
-        for (int i = 0; i < playerCount; i++) {
-            playerTexts[i].text = $"P{i+1}: {playerHealths[i]}/{GlobalStats.baseHealth} [{playerStocks[i]}]";
-        }
+        playerOneSlider.value = Mathf.RoundToInt(playerHealths[0]);
+        playerTwoSlider.value = Mathf.RoundToInt(playerHealths[1]);
     }
 
     public void ChangeHealth(int playerNumber, float newHealth) {

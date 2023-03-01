@@ -16,6 +16,7 @@ public class Controller : MonoBehaviour
     public CharacterController controller;
     public float speed = 6f;
     public float sensitivity = 5;
+    public float kbdSensitivity = 4;
     public GameObject weaponType;
     private GameObject weapon;
     public float playerHealth { get; private set; } = GlobalStats.baseHealth;
@@ -25,7 +26,7 @@ public class Controller : MonoBehaviour
     Vector3 lookDirection;
     new Camera camera;
     bool followingCamera = true;
-    PausedMenu menu;
+    private PausedMenu menu;
 
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
@@ -53,6 +54,8 @@ public class Controller : MonoBehaviour
 
     private AnalyticsManager _analyticsManager;
 
+    private HUDManager _hudManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,8 +63,10 @@ public class Controller : MonoBehaviour
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
+        _hudManager = FindObjectOfType<HUDManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
+        print(menu);
 
         // controller = GetComponent<CharacterController>();
         // controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
@@ -112,7 +117,7 @@ public class Controller : MonoBehaviour
         if (direction.y != 0)
         {
             // Debug.Log(lookDirection);
-            var rotation = Quaternion.AngleAxis(direction.y * sensitivity, Vector3.up);
+            var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
             lookDirection = rotation * transform.rotation * Vector3.forward;
             lookDirection.Normalize();
         }
@@ -176,11 +181,11 @@ public class Controller : MonoBehaviour
 
         if (currentlyDead)
         {
-            if (transform.position.y != -4)
+            if (transform.position.y != 100)
             {
                 // TODO: Un-hard-code this value. Each map should have a "floor" coord?
                 print("Not on the right plane:: on life plane");
-                transform.position = new Vector3(0, -4, 0);
+                transform.position = new Vector3(0, 100, 0);
             }
             
             deathCooldown -= Time.deltaTime;
@@ -190,6 +195,7 @@ public class Controller : MonoBehaviour
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
+                _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
                 _analyticsManager.CustomEvent("respawn", Utils.NameObject(gameObject));
                 return;
             }
@@ -293,7 +299,8 @@ public class Controller : MonoBehaviour
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
 
-        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        // playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        _hudManager.ChangeHealth(playerNumber, playerHealth);
         if (playerHealth <= 0)
         {
             PlayerDeath();
