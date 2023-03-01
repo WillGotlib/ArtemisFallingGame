@@ -32,12 +32,13 @@ public class Controller : MonoBehaviour
     private CharacterFlash flashManager;
 
     // public float gravity = 0.000001f; // TODO: OK to delete this?
-    public float dashIntensity = 50;
+    public float dashIntensity;
     float currentCooldown;
 
     public float momentum = 0.85f;
     private float startMomentum;
     public float maxMomentum = 1.5f;
+    public float dashDuration;
     public GameObject backupCamera;
 
     private bool currentlyDead;
@@ -56,14 +57,22 @@ public class Controller : MonoBehaviour
 
     private HUDManager _hudManager;
 
+    private TempLivesManager _tempLivesManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        dashDuration = 0.1f;
+        dashIntensity = 10f;
+        var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
+        lookDirection = rotation * transform.rotation * Vector3.forward;
+
         _analyticsManager = FindObjectOfType<AnalyticsManager>();
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
         _hudManager = FindObjectOfType<HUDManager>();
+        _tempLivesManager = FindObjectOfType<TempLivesManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         print(menu);
@@ -157,19 +166,34 @@ public class Controller : MonoBehaviour
         if (currentCooldown <= 0)
         {
             print("Dashed");
-            var abs_x = Mathf.Abs(moveDirection.x);
-            var abs_z = Mathf.Abs(moveDirection.z);
-            if (abs_x == 0 && abs_z == 0)
-            {
-                return;
-            }
+            // var abs_x = Mathf.Abs(moveDirection.x);
+            // var abs_z = Mathf.Abs(moveDirection.z);
+            // if (abs_x == 0 && abs_z == 0)
+            // {
+            //     return;
+            // }
 
             currentCooldown = GlobalStats.dashCooldown;
-            controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity * GetDashBonus());
+            _hudManager.UseStamina(playerNumber);
+            StartCoroutine(Dash());
         }
         else
         {
             // print("Dash on cooldown!");
+        }
+    }
+
+    IEnumerator Dash() {
+        float startTime = Time.time;
+
+        while (Time.time < startTime + dashDuration) {
+            if (moveDirection.magnitude > 0) {
+                controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
+            }
+            else {
+                controller.Move(lookDirection * Time.deltaTime * dashIntensity * GetDashBonus());
+            }
+            yield return null;
         }
     }
 
@@ -303,6 +327,7 @@ public class Controller : MonoBehaviour
         _hudManager.ChangeHealth(playerNumber, playerHealth);
         if (playerHealth <= 0)
         {
+            Debug.Log(playerNumber);
             PlayerDeath();
         }
 
@@ -311,13 +336,16 @@ public class Controller : MonoBehaviour
 
     private void PlayerDeath()
     {
-        currentlyDead = true;
-        // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
-        print("PLAYER DIED");
-        // transform.position = transform.position + new Vector3(0, 10, 0);
-        // SetActive(false);
-
-        _analyticsManager.CustomEvent("death", Utils.NameObject(gameObject));
+        if (!currentlyDead) {
+            currentlyDead = true;
+            // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+            print("PLAYER DIED");
+            // transform.position = transform.position + new Vector3(0, 10, 0);
+            // SetActive(false);
+            
+            _tempLivesManager.ApplyDeath(playerNumber);
+            _analyticsManager.CustomEvent("death", Utils.NameObject(gameObject));
+        }
     }
 
     public void ResetAttributes()
