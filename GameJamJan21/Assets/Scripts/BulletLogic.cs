@@ -29,8 +29,11 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     private bool _ricocheted=false;
 
+    public TrailRenderer trail;
+
     private Coroutine expiration;
     
+
     // Update is called once per frame
     void Update()
     {
@@ -48,6 +51,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
         // Play sound
         if (isGhost == false) {
+            trail.enabled = true;
+            
             _audioBullet = GetComponent<AudioSource>();
             _audioBullet.Play(0);
             // maxBounces = GlobalStats.bulletMaxBounces;
@@ -136,8 +141,10 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         if (!isGhost) {
             bullet.GetComponent<MeshRenderer>().enabled = false;
             if (explode) {
-                GameObject splash = UnityEngine.Object.Instantiate(splashZone);
-                splash.transform.position = this.transform.position;
+                GameObject splash = Instantiate(splashZone);
+                var pos = transform.position+Vector3.zero;
+                pos.y = 0;
+                splash.transform.position = pos;
             }
             StopCoroutine(expiration);
             Destroy(gameObject);

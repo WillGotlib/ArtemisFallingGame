@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,12 +18,20 @@ public class SplashZone : MonoBehaviour
     public float damageOverTimeCooldown = 0.2f;
     private float damageOverTimeRemaining = 0.2f;
 
+    public ParticleSystem explosion;
+
     private List<Collider> damageablesInside = new List<Collider>();
+
 
     // Start is called before the first frame update
     void Start()
     {
-        this.transform.localScale = new Vector3(splashRadius, 1, splashRadius);
+        transform.localScale = new Vector3(splashRadius, 1, splashRadius);
+        explosion.transform.localScale *= Mathf.Max(splashRadius / 2f, 1);
+
+        var dur = explosion.main.duration;
+        explosion.Play();
+        Invoke(nameof(DestroyParticleSystem),dur);
     }
 
     // Update is called once per frame
@@ -72,8 +81,13 @@ public class SplashZone : MonoBehaviour
         }
     }
 
+
+    private void DestroyParticleSystem()
+    {
+        Destroy(explosion.gameObject);
+    }
+
     void OnTriggerExit(Collider collider) {
-        
         if (damageablesInside.Contains(collider)) {
             damageablesInside.Remove(collider);
         }

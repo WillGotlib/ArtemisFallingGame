@@ -16,6 +16,7 @@ public class Controller : MonoBehaviour
     public CharacterController controller;
     public float speed = 6f;
     public float sensitivity = 5;
+    public float kbdSensitivity = 4;
     public GameObject weaponType;
     private GameObject weapon;
     public float playerHealth { get; private set; } = GlobalStats.baseHealth;
@@ -115,7 +116,7 @@ public class Controller : MonoBehaviour
         if (direction.y != 0)
         {
             // Debug.Log(lookDirection);
-            var rotation = Quaternion.AngleAxis(direction.y * sensitivity, Vector3.up);
+            var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
             lookDirection = rotation * transform.rotation * Vector3.forward;
             lookDirection.Normalize();
         }
@@ -179,11 +180,11 @@ public class Controller : MonoBehaviour
 
         if (currentlyDead)
         {
-            if (transform.position.y != -4)
+            if (transform.position.y != 100)
             {
                 // TODO: Un-hard-code this value. Each map should have a "floor" coord?
                 print("Not on the right plane:: on life plane");
-                transform.position = new Vector3(0, -4, 0);
+                transform.position = new Vector3(0, 100, 0);
             }
             
             deathCooldown -= Time.deltaTime;
