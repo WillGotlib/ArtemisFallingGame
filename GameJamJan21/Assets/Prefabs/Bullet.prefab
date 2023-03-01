@@ -85,16 +85,16 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 301eacdb194d91541bf4030e2a11451e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 55155d3fb323e402fb21540cece2845c, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.733
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
+  Priority: 142
+  DopplerLevel: 2.78
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
@@ -131,7 +131,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.608
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -161,7 +161,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.388
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -188,8 +188,6 @@ MonoBehaviour:
   maxBounces: 4
   _bulletSpeed: 10
   splashZone: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
-  splashRadius: 0
-  splashDuration: 1
   rotationSpeed: 0.3
 --- !u!114 &2301455758190603568
 MonoBehaviour:
