@@ -17,6 +17,8 @@ public class SplashZone : MonoBehaviour
     public float damageOverTimeCooldown = 0.2f;
     private float damageOverTimeRemaining = 0.2f;
 
+    private List<Collider> damageablesInside = new List<Collider>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,20 @@ public class SplashZone : MonoBehaviour
         if (damageOverTimeActive) {
             damageOverTimeRemaining -= Time.deltaTime;
         }
+        if (damageOverTime) {
+            if (damageOverTimeRemaining <= 0) { // The countdown has expired. Inflict the damage
+                foreach (Collider target in damageablesInside) {
+                // TODO: Make it a different timer for each target. Use Coroutines.
+                    Controller playerInside = target.gameObject.GetComponent<Controller>();
+                    playerInside.InflictDamage(damageOverTimeDamage);
+                    damageOverTimeActive = false;
+                    damageOverTimeRemaining = damageOverTimeCooldown;
+                }
+            } else if (damageOverTimeRemaining == damageOverTimeCooldown) {  // We need to start the countdown.
+                damageOverTimeActive = true;
+            }
+        }
+
         if (timeRemaining > 0)
         {
             Color objectColour = this.GetComponent<MeshRenderer>().material.color;
@@ -49,18 +65,17 @@ public class SplashZone : MonoBehaviour
             Controller playerEntered = collider.gameObject.GetComponent<Controller>();
             playerEntered.InflictDamage(explosionDamage);
         }
+        if (damageOverTime && collider.gameObject.tag == "Player") {
+            if (!damageablesInside.Contains(collider)) {
+                damageablesInside.Add(collider);
+            }
+        }
     }
 
-    void OnTriggerStay(Collider collider) {
-        if (damageOverTime && collider.gameObject.tag == "Player") {
-            if (damageOverTimeRemaining <= 0) { // The countdown has expired. Inflict the damage
-                Controller playerInside = collider.gameObject.GetComponent<Controller>();
-                playerInside.InflictDamage(damageOverTimeDamage);
-                damageOverTimeActive = false;
-                damageOverTimeRemaining = damageOverTimeCooldown;
-            } else if (damageOverTimeRemaining == damageOverTimeCooldown) {  // We need to start the countdown.
-                damageOverTimeActive = true;
-            }
+    void OnTriggerExit(Collider collider) {
+        
+        if (damageablesInside.Contains(collider)) {
+            damageablesInside.Remove(collider);
         }
     }
 }
