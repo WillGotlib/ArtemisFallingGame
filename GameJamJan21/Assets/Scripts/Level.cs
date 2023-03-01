@@ -9,6 +9,8 @@ public class Level : MonoBehaviour
     public Transform obstacles;
     public string nid; // NIDs must be unique per level
 
+    public Sprite thumbnail;
+
     public void SortSpawnPoints()
     {
         var sorted = false;

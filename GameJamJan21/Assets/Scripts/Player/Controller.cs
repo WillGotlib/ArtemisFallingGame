@@ -54,6 +54,8 @@ public class Controller : MonoBehaviour
 
     private AnalyticsManager _analyticsManager;
 
+    private HUDManager _hudManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,8 +63,12 @@ public class Controller : MonoBehaviour
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
+        _hudManager = FindObjectOfType<HUDManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
+
+        // controller = GetComponent<CharacterController>();
+        // controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
         if (camera == null)
         {
             camera = backupCamera.GetComponentInChildren<Camera>();
@@ -76,7 +82,7 @@ public class Controller : MonoBehaviour
             cur_pos[2] + (this.transform.forward[2] * 0.2f));
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
-
+        
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
@@ -84,9 +90,6 @@ public class Controller : MonoBehaviour
     public void OnMovement(InputValue value)
     {
         moveDirection = value.Get<Vector3>();
-        // IMPORTANT: The given InputValue is only valid for the duration of the callback.
-        //            Storing the InputValue references somewhere and calling Get<T>()
-        //            later does not work correctly.
     }
 
     public void OnSwitchCamera()
@@ -120,9 +123,6 @@ public class Controller : MonoBehaviour
         else 
             lookDirection = direction.normalized * sensitivity;
     }
-    // IMPORTANT: The given InputValue is only valid for the duration of the callback.
-    //            Storing the InputValue references somewhere and calling Get<T>()
-    //            later does not work correctly.
 
 
     private void FixedUpdate()
@@ -147,6 +147,7 @@ public class Controller : MonoBehaviour
     }
 
     public void OnEnterMenu() {
+        print(menu);
         menu.SwitchMenuState();
     }
 
@@ -179,11 +180,11 @@ public class Controller : MonoBehaviour
 
         if (currentlyDead)
         {
-            if (transform.position.y != -4)
+            if (transform.position.y != 100)
             {
                 // TODO: Un-hard-code this value. Each map should have a "floor" coord?
                 print("Not on the right plane:: on life plane");
-                transform.position = new Vector3(0, -4, 0);
+                transform.position = new Vector3(0, 100, 0);
             }
             
             deathCooldown -= Time.deltaTime;
@@ -193,6 +194,7 @@ public class Controller : MonoBehaviour
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
+                _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
                 _analyticsManager.CustomEvent("respawn", Utils.NameObject(gameObject));
                 return;
             }
@@ -209,7 +211,6 @@ public class Controller : MonoBehaviour
         if (followingCamera == true)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
-        CharacterController controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
         if (!controller.isGrounded)
         {
             Vector3 fall = new Vector3(0, -(1), 0);
@@ -297,7 +298,8 @@ public class Controller : MonoBehaviour
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
 
-        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        // playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        _hudManager.ChangeHealth(playerNumber, playerHealth);
         if (playerHealth <= 0)
         {
             PlayerDeath();

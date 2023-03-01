@@ -13,6 +13,7 @@ public class PausedMenu : MonoBehaviour
 
     public void SwitchMenuState() {
         settingUI.SetActive(false);
+        print("is paused: " + isPaused);
         if (isPaused == true) {
             Resume();
         }

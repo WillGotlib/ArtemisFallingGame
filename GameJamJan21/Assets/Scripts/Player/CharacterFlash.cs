@@ -52,7 +52,6 @@ public class CharacterFlash : MonoBehaviour
             flashRoutine = null;
         }
         if (flashRoutine == null) {
-            print("Flash");
             flashRoutine = StartCoroutine(FlashRoutine(mat, duration));
         }
     }

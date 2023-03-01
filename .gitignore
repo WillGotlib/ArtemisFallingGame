@@ -66,3 +66,4 @@ GameJamJan21/mono_crash.0.0.json
 # downloaded files
 Grpc-Tools/
 GameLogs/log-*
+Assets/Plugins/*.meta
