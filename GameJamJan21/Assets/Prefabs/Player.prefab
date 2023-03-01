@@ -248,8 +248,8 @@ Transform:
   m_GameObject: {fileID: 6668230694903963034}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.4872, y: 0.47, z: -4.012}
-  m_LocalScale: {x: 0.36011863, y: 0.40012738, z: 0.292129}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.55554944, z: 0.4056011}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3349455145908773224}
   - {fileID: 1143763494175053371}
@@ -353,6 +353,7 @@ MonoBehaviour:
   controller: {fileID: 3349455145992540266}
   speed: 4
   sensitivity: 2000
+  kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   dashIntensity: 25
   momentum: 0.85

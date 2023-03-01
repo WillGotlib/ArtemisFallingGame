@@ -28,7 +28,7 @@ public class SplashZone : MonoBehaviour
     void Start()
     {
         transform.localScale = new Vector3(splashRadius, 1, splashRadius);
-        explosion.transform.localScale *= Mathf.Max(splashRadius / 2f, 1);
+        explosion.transform.localScale *= Mathf.Max(splashRadius / 4f, 1);
         explosion.transform.parent = null;
 
         _audioBullet = GetComponent<AudioSource>();
