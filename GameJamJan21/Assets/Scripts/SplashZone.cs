@@ -23,17 +23,13 @@ public class SplashZone : MonoBehaviour
     private List<Collider> damageablesInside = new List<Collider>();
 
     private AudioSource _audioBullet;
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
         transform.localScale = new Vector3(splashRadius, 1, splashRadius);
-        explosion.transform.localScale *= Mathf.Max(splashRadius / 2f, 1);
-
-        var dur = explosion.main.duration;
-        explosion.Play();
-        Invoke(nameof(DestroyParticleSystem),dur);
+        explosion.transform.localScale *= Mathf.Max(splashRadius / 4f, 1);
+        explosion.transform.parent = null;
 
         _audioBullet = GetComponent<AudioSource>();
         _audioBullet.Play(0);
@@ -84,12 +80,6 @@ public class SplashZone : MonoBehaviour
                 damageablesInside.Add(collider);
             }
         }
-    }
-
-
-    private void DestroyParticleSystem()
-    {
-        Destroy(explosion.gameObject);
     }
 
     void OnTriggerExit(Collider collider) {
