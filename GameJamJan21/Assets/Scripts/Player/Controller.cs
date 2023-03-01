@@ -64,6 +64,8 @@ public class Controller : MonoBehaviour
     {
         dashDuration = 0.1f;
         dashIntensity = 10f;
+        var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
+        lookDirection = rotation * transform.rotation * Vector3.forward;
 
         _analyticsManager = FindObjectOfType<AnalyticsManager>();
         playerController = FindObjectOfType<StartGame>();
