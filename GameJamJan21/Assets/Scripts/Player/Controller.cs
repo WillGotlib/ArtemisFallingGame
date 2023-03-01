@@ -323,7 +323,6 @@ public class Controller : MonoBehaviour
         if (playerHealth <= 0)
         {
             Debug.Log(playerNumber);
-            _tempLivesManager.ApplyDeath(playerNumber);
             PlayerDeath();
         }
 
@@ -332,13 +331,16 @@ public class Controller : MonoBehaviour
 
     private void PlayerDeath()
     {
-        currentlyDead = true;
-        // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
-        print("PLAYER DIED");
-        // transform.position = transform.position + new Vector3(0, 10, 0);
-        // SetActive(false);
-
-        _analyticsManager.CustomEvent("death", Utils.NameObject(gameObject));
+        if (!currentlyDead) {
+            currentlyDead = true;
+            // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+            print("PLAYER DIED");
+            // transform.position = transform.position + new Vector3(0, 10, 0);
+            // SetActive(false);
+            
+            _tempLivesManager.ApplyDeath(playerNumber);
+            _analyticsManager.CustomEvent("death", Utils.NameObject(gameObject));
+        }
     }
 
     public void ResetAttributes()
