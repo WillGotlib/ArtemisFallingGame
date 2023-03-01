@@ -187,7 +187,12 @@ public class Controller : MonoBehaviour
         float startTime = Time.time;
 
         while (Time.time < startTime + dashDuration) {
-            controller.Move(lookDirection * Time.deltaTime * dashIntensity * GetDashBonus());
+            if (moveDirection.magnitude > 0) {
+                controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
+            }
+            else {
+                controller.Move(lookDirection * Time.deltaTime * dashIntensity * GetDashBonus());
+            }
             yield return null;
         }
     }
