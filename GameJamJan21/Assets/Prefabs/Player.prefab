@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6304a83abe9c4f7ebe697ba95167a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalMaterial: {fileID: 2100000, guid: f8f9bce8fcba2dd4aa357122f82c25f5, type: 2}
+  model: {fileID: 9007030689590978157}
   damageMaterial: {fileID: 2100000, guid: 3b40a00ffb1da474b94351cd90b8eb19, type: 2}
   invincibleMaterial: {fileID: 2100000, guid: 4c3963f94f19f4ef88575a5203bfb296, type: 2}
   damageDuration: 0.1
