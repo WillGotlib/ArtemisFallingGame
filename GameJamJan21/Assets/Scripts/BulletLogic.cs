@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections;
 using Analytics;
 using Google.Protobuf;
 using UnityEngine;
@@ -29,6 +31,9 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     public TrailRenderer trail;
 
+    private Coroutine expiration;
+    
+
     // Update is called once per frame
     void Update()
     {
@@ -42,6 +47,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         vel = _rb.velocity;
         isGhost = ghost;
         
+        expiration = StartCoroutine(ExpirationTimer());
+
         // Play sound
         if (isGhost == false) {
             trail.enabled = true;
@@ -52,6 +59,11 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         } else {
             maxBounces = 3;
         }
+    }
+
+    private IEnumerator ExpirationTimer() {
+        yield return new WaitForSeconds(10f); // TODO: Un-hard-code this
+        finishShot(false);
     }
 
     void PreShotOrienting() {
@@ -134,6 +146,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
                 pos.y = 0;
                 splash.transform.position = pos;
             }
+            StopCoroutine(expiration);
             Destroy(gameObject);
         }
     }

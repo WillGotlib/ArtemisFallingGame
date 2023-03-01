@@ -406,8 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MatchMenu: {fileID: 1838412987}
-  thisButton: {fileID: 182526821}
-  levelNumber: 2
+  buttonOptionNumber: 0
 --- !u!1 &229776190
 GameObject:
   m_ObjectHideFlags: 0
@@ -2395,8 +2394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MatchMenu: {fileID: 1838412987}
-  thisButton: {fileID: 1395570916}
-  levelNumber: 3
+  buttonOptionNumber: 0
 --- !u!1 &1419148658
 GameObject:
   m_ObjectHideFlags: 0
@@ -4052,8 +4050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MatchMenu: {fileID: 1838412987}
-  thisButton: {fileID: 1918449324}
-  levelNumber: 1
+  buttonOptionNumber: 0
 --- !u!1 &1973448636
 GameObject:
   m_ObjectHideFlags: 0
@@ -4071,7 +4068,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1973448637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4220,6 +4217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: {fileID: 1902504653}
+  matchDataScriptable: {fileID: 0}
 --- !u!1 &2115168917
 GameObject:
   m_ObjectHideFlags: 0
