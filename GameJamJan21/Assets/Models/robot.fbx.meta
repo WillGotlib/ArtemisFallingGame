@@ -3,7 +3,32 @@ guid: bf5ae868eae33af4da436cda8f909a31
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Example Sheet green
+    second: {fileID: 2100000, guid: ce24e19d37e75614881b594949e06375, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Example Sheet purple
+    second: {fileID: 2100000, guid: 4f37c11313d2c0b4db2896b153937045, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TODO
+    second: {fileID: 2100000, guid: 7fce31c484e9e48468f272de11eb6e78, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: green
+    second: {fileID: 2100000, guid: 69cc6a48dd7b53149a47b8e4554a3369, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: purple
+    second: {fileID: 2100000, guid: c4793cabbd8103f4e819008a2d5dcd87, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
