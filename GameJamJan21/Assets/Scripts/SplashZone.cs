@@ -22,6 +22,8 @@ public class SplashZone : MonoBehaviour
 
     private List<Collider> damageablesInside = new List<Collider>();
 
+    private AudioSource _audioBullet;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,9 @@ public class SplashZone : MonoBehaviour
         var dur = explosion.main.duration;
         explosion.Play();
         Invoke(nameof(DestroyParticleSystem),dur);
+
+        _audioBullet = GetComponent<AudioSource>();
+        _audioBullet.Play(0);
     }
 
     // Update is called once per frame
