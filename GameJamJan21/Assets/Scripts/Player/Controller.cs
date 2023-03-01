@@ -56,6 +56,8 @@ public class Controller : MonoBehaviour
 
     private HUDManager _hudManager;
 
+    private TempLivesManager _tempLivesManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +66,7 @@ public class Controller : MonoBehaviour
         camera = GetComponentInChildren<Camera>();
         cameraController = FindObjectOfType<CameraSwitch>();
         _hudManager = FindObjectOfType<HUDManager>();
+        _tempLivesManager = FindObjectOfType<TempLivesManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         print(menu);
@@ -303,6 +306,8 @@ public class Controller : MonoBehaviour
         _hudManager.ChangeHealth(playerNumber, playerHealth);
         if (playerHealth <= 0)
         {
+            Debug.Log(playerNumber);
+            _tempLivesManager.ApplyDeath(playerNumber);
             PlayerDeath();
         }
 
