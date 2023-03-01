@@ -168,6 +168,7 @@ public class Controller : MonoBehaviour
             }
 
             currentCooldown = GlobalStats.dashCooldown;
+            _hudManager.UseStamina(playerNumber);
             controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity * GetDashBonus());
         }
         else
