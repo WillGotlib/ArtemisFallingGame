@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1190407533784283271}
+  - component: {fileID: 1931172875997447737}
   - component: {fileID: 1190407533784283270}
   - component: {fileID: 1190407533784283265}
   - component: {fileID: -5109536274244787356}
@@ -34,6 +35,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1931172875997447737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1190407533784283264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 986a4ed487ac60f4a92732405882ca2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particles: {fileID: 1190407533784283270}
+  audioSource: {fileID: -5109536274244787356}
 --- !u!198 &1190407533784283270
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4882,7 +4897,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2d871ac335655443e9cad0241bc4e4dd, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.85
   m_Pitch: 1
   Loop: 0
