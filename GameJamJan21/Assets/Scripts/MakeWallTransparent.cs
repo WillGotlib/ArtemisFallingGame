@@ -114,7 +114,7 @@ public class MakeWallTransparent : MonoBehaviour
     {
         //obj.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
         var color = obj.GetComponent<Renderer>().material.color;
-        color.a = Mathf.Max(0.3f, color.a - fadingSpeed * Time.deltaTime);
+        color.a = Mathf.Max(0.5f, color.a - fadingSpeed * Time.deltaTime);
         obj.GetComponent<Renderer>().material.color = color;
  
     }
