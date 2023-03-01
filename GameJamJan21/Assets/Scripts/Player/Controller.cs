@@ -32,12 +32,13 @@ public class Controller : MonoBehaviour
     private CharacterFlash flashManager;
 
     // public float gravity = 0.000001f; // TODO: OK to delete this?
-    public float dashIntensity = 50;
+    public float dashIntensity;
     float currentCooldown;
 
     public float momentum = 0.85f;
     private float startMomentum;
     public float maxMomentum = 1.5f;
+    public float dashDuration;
     public GameObject backupCamera;
 
     private bool currentlyDead;
@@ -61,6 +62,9 @@ public class Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dashDuration = 0.1f;
+        dashIntensity = 10f;
+
         _analyticsManager = FindObjectOfType<AnalyticsManager>();
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
@@ -160,20 +164,29 @@ public class Controller : MonoBehaviour
         if (currentCooldown <= 0)
         {
             print("Dashed");
-            var abs_x = Mathf.Abs(moveDirection.x);
-            var abs_z = Mathf.Abs(moveDirection.z);
-            if (abs_x == 0 && abs_z == 0)
-            {
-                return;
-            }
+            // var abs_x = Mathf.Abs(moveDirection.x);
+            // var abs_z = Mathf.Abs(moveDirection.z);
+            // if (abs_x == 0 && abs_z == 0)
+            // {
+            //     return;
+            // }
 
             currentCooldown = GlobalStats.dashCooldown;
             _hudManager.UseStamina(playerNumber);
-            controller.Move(moveDirection * speed * Time.deltaTime * dashIntensity * GetDashBonus());
+            StartCoroutine(Dash());
         }
         else
         {
             // print("Dash on cooldown!");
+        }
+    }
+
+    IEnumerator Dash() {
+        float startTime = Time.time;
+
+        while (Time.time < startTime + dashDuration) {
+            controller.Move(lookDirection * Time.deltaTime * dashIntensity * GetDashBonus());
+            yield return null;
         }
     }
 
