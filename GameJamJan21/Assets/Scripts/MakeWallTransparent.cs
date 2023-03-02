@@ -9,7 +9,7 @@ public class MakeWallTransparent : MonoBehaviour
     [SerializeField] private Material transparentMaterial;
     [SerializeField] private List<Transform> ObjectToHide = new List<Transform>();
     private ZoomCamera zoomCamera;
-    private List<Transform> ObjectToShow = new List<Transform>();
+    private HashSet<Transform> ObjectToShow = new ();
     private Dictionary<Transform, Material> originalMaterials = new Dictionary<Transform, Material>();
     private StartGame startGame;
     private Transform player_one;
@@ -51,7 +51,7 @@ public class MakeWallTransparent : MonoBehaviour
         }
 
         // show obstacles
-        foreach (var obstruction in ObjectToShow)
+        foreach (var obstruction in new List<Transform>(ObjectToShow))
         {   
             if (obstruction != null) {
                 ShowObstruction(obstruction);
@@ -116,7 +116,6 @@ public class MakeWallTransparent : MonoBehaviour
         var color = obj.GetComponent<Renderer>().material.color;
         color.a = Mathf.Max(0.5f, color.a - fadingSpeed * Time.deltaTime);
         obj.GetComponent<Renderer>().material.color = color;
- 
     }
  
     private void SetModeTransparent(Transform tr)
@@ -143,6 +142,7 @@ public class MakeWallTransparent : MonoBehaviour
         {
             tr.GetComponent<MeshRenderer>().material = originalMaterials[tr];
             originalMaterials.Remove(tr);
+            ObjectToShow.Remove(tr);
         }
  
     }
