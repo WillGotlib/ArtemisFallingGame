@@ -11,10 +11,15 @@ using UnityEngine.InputSystem.Controls;
 public class BulletLogic : MonoBehaviour, ITrackableScript
 {
     private GlobalStats stats;
+    
+    public static int splashRadius = 1;
+    public static float splashDamage = 0.5f;
 
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
-    public int maxBounces;
+    public int maxBounces = 4;
+    private int _defaultMaxBounces;
+    public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
@@ -32,7 +37,11 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public TrailRenderer trail;
 
     private Coroutine expiration;
-    
+
+    private void Start()
+    {
+        _defaultMaxBounces = maxBounces;
+    }
 
     // Update is called once per frame
     void Update()
@@ -50,15 +59,15 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         expiration = StartCoroutine(ExpirationTimer());
 
         // Play sound
-        if (isGhost == false) {
-            trail.enabled = true;
-            
-            _audioBullet = GetComponent<AudioSource>();
-            _audioBullet.Play(0);
-            // maxBounces = GlobalStats.bulletMaxBounces;
-        } else {
-            maxBounces = 3;
+        if (isGhost)
+        {
+            maxBounces = _defaultMaxBounces - 1;
+            return;
         }
+
+        trail.enabled = true;
+        _audioBullet = GetComponent<AudioSource>();
+        _audioBullet.Play(0);
     }
 
     private IEnumerator ExpirationTimer() {
@@ -73,12 +82,12 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     float GetBulletDamage() {
         // The main function that is used to find bullet damage
-        return GlobalStats.bulletSplashDamage * BulletDamageMultiplier();
+        return splashDamage * BulletDamageMultiplier();
     }
 
     int BulletDamageMultiplier() {
         // The multiplier for the base splash damage. Separate for checking purposes
-        return GlobalStats.bulletMaxBounces - maxBounces;
+        return Mathf.Min(maxBounces, bounced);
     }
 
 
@@ -124,9 +133,9 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             vel = _rb.velocity;
             // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
-            // Subtract bounces and maybe destroy
-            maxBounces -= 1;
-            if (maxBounces < 1) {
+            // add to bounces tally and maybe destroy
+            bounced++;
+            if (bounced > maxBounces) {
                 finishShot(true);
             }
             else
@@ -138,17 +147,20 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     void finishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
-        if (!isGhost) {
-            bullet.GetComponent<MeshRenderer>().enabled = false;
-            if (explode) {
-                GameObject splash = Instantiate(splashZone);
-                var pos = transform.position+Vector3.zero;
-                pos.y = 0;
-                splash.transform.position = pos;
-            }
-            StopCoroutine(expiration);
-            Destroy(gameObject);
+        if (isGhost)
+        {
+            return;
         }
+
+        bullet.GetComponent<MeshRenderer>().enabled = false;
+        if (explode) {
+            GameObject splash = Instantiate(splashZone);
+            var pos = transform.position+Vector3.zero;
+            pos.y = 0;
+            splash.transform.position = pos;
+        }
+        StopCoroutine(expiration);
+        Destroy(gameObject);
     }
 
     public void setShooter(Controller player) {

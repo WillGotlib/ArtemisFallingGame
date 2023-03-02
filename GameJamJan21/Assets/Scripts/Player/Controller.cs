@@ -319,6 +319,12 @@ public class Controller : MonoBehaviour
             return false;
         }
 
+        if (damageAmount == 0)
+        {
+            Debug.Log("Direct shot invalidated");
+            return false;
+        }
+
         // print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
