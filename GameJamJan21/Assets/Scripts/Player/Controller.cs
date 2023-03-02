@@ -220,7 +220,7 @@ public class Controller : MonoBehaviour
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
                 _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
-                _analyticsManager.CustomEvent("respawn", Utils.NameObject(gameObject));
+                _analyticsManager.RespawnEvent(gameObject);
                 return;
             }
         }
@@ -331,6 +331,7 @@ public class Controller : MonoBehaviour
 
         // playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         _hudManager.ChangeHealth(playerNumber, playerHealth);
+        _analyticsManager.HealthEvent(gameObject, playerHealth);
         if (playerHealth <= 0)
         {
             Debug.Log(playerNumber);
@@ -350,7 +351,7 @@ public class Controller : MonoBehaviour
             // SetActive(false);
             
             _tempLivesManager.ApplyDeath(playerNumber);
-            _analyticsManager.CustomEvent("death", Utils.NameObject(gameObject));
+            _analyticsManager.DeathEvent(gameObject);
         }
     }
 
