@@ -54,15 +54,16 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         vel = _rb.velocity;
         isGhost = ghost;
         
-        // Play sound
         if (isGhost)
         {
+            bounced = 0;
             maxBounces = ghostBounces;
             return;
         }
         expiration = StartCoroutine(ExpirationTimer());
 
         trail.enabled = true;
+        // Play sound
         _audioBullet = GetComponent<AudioSource>();
         _audioBullet.Play(0);
     }
