@@ -18,7 +18,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
     public int maxBounces = 3;
-    private int _defaultMaxBounces;
     [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
 
@@ -39,10 +38,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public float maxFlightTimeSeconds = 10;
     private Coroutine expiration;
 
-    private void Start()
-    {
-        _defaultMaxBounces = maxBounces;
-    }
+    public int ghostBounces = 3;
+    
 
     // Update is called once per frame
     void Update()
@@ -60,7 +57,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         // Play sound
         if (isGhost)
         {
-            maxBounces = _defaultMaxBounces - 1;
+            maxBounces = ghostBounces;
             return;
         }
         expiration = StartCoroutine(ExpirationTimer());
@@ -94,29 +91,34 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     void OnCollisionEnter(Collision collision)
     {
-        // print("collided with something");
         // Check tag for Transient or Reflector
         // Reflect if applicable
         if (collision.gameObject.tag == "Transient")
         {
-            print("Encountered transient object");
-            // Do nothing and pass through
-            Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
-            // Destroy but keep velocity!
-            Destroy(collision.gameObject);
-            _rb.velocity = vel;
+            EncounterTransient(collision);
         } else if (isGhost == false && collision.gameObject.tag == "Player") {
-            print("Encountered player");
-            Controller player = collision.gameObject.GetComponent<Controller>();
-            float damage = GetBulletDamage();
-            player.InflictDamage(damage);
-            finishShot(BulletDamageMultiplier()!=0);
+            EncounterPlayer(collision);
         } else if (collision.gameObject.tag == "Powerup") {
             // Do nothing lol
         } else  {
             // Ricochet
             ricochetBullet(collision);
         }
+    }
+
+    void EncounterTransient(Collision collision) {
+            // Do nothing and pass through
+            Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
+            // Destroy but keep velocity!
+            Destroy(collision.gameObject);
+            _rb.velocity = vel;
+    }
+
+    void EncounterPlayer(Collision collision) {
+            Controller player = collision.gameObject.GetComponent<Controller>();
+            float damage = GetBulletDamage();
+            player.InflictDamage(damage);
+            finishShot(BulletDamageMultiplier()!=0);
     }
 
     void ricochetBullet(Collision collision) {
