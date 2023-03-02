@@ -84,28 +84,37 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     void OnCollisionEnter(Collision collision)
     {
-        // print("collided with something");
+        if (!isGhost) {
+            print(shooter.playerNumber);
+            print(this.transform.position);
+        }
         // Check tag for Transient or Reflector
         // Reflect if applicable
         if (collision.gameObject.tag == "Transient")
         {
-            print("Encountered transient object");
+            if (!isGhost)
+                print("Encountered transient object");
             // Do nothing and pass through
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
             // Destroy but keep velocity!
             Destroy(collision.gameObject);
             _rb.velocity = vel;
         } else if (isGhost == false && collision.gameObject.tag == "Player") {
-            print("Encountered player");
+            if (!isGhost)
+                print("Encountered player");
             Controller player = collision.gameObject.GetComponent<Controller>();
             float damage = GetBulletDamage();
             player.InflictDamage(damage);
             finishShot(BulletDamageMultiplier()!=0);
         } else if (collision.gameObject.tag == "Powerup") {
             // Do nothing lol
+            if (!isGhost)
+                print("powerup");
         } else  {
             // Ricochet
             ricochetBullet(collision);
+            if (!isGhost)
+                print("ricochet");
         }
     }
 
