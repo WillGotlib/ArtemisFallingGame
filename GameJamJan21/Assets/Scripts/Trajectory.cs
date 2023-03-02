@@ -22,6 +22,7 @@ public class Trajectory : MonoBehaviour
     public void SimulateTrajectory(GunController weapon) {
         if (isBulletGenerated == false) {
             ghostBullet = UnityEngine.Object.Instantiate(bulletType);
+            ghostBullet.name = "Trajectory bullet";
             Vector3 cur_pos = weapon.transform.position + weapon.transform.forward * 0.1f;
             ghostBullet.transform.position = cur_pos;
             ghostBullet.transform.rotation = weapon.transform.rotation;
