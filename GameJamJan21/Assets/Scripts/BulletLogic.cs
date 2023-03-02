@@ -19,7 +19,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public GameObject bullet;
     public int maxBounces = 4;
     private int _defaultMaxBounces;
-    public int bounced;
+    [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
@@ -57,14 +57,13 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         vel = _rb.velocity;
         isGhost = ghost;
         
-        expiration = StartCoroutine(ExpirationTimer());
-
         // Play sound
         if (isGhost)
         {
             maxBounces = _defaultMaxBounces - 1;
             return;
         }
+        expiration = StartCoroutine(ExpirationTimer());
 
         trail.enabled = true;
         _audioBullet = GetComponent<AudioSource>();
@@ -126,7 +125,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             float speed = oldvel.magnitude;
 
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
-            float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
+            float rot = Mathf.Atan2(reflectedVelo.x, reflectedVelo.z) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
             
             reflectedVelo.y = 0;
