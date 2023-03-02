@@ -10,7 +10,8 @@ public class PowerupManager : MonoBehaviour
     private int curPowerups = 0;
     private Level _level;
     public GameObject[] powerups;
-
+    //todo powerup log events
+    
     // Start is called before the first frame update
     void Start()
     {
