@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Google.Protobuf;
 using UnityEngine;
@@ -99,8 +98,14 @@ namespace Analytics
         {
             CloseLogFile();
             var logFile = "log-" + time.ToString("yyyy-MM-dd\\THH.mm.ss") + ".artemis";
+            
+            if (Application.isEditor) logPath = Path.Combine(Directory.GetCurrentDirectory(), logPath);
+            else logPath = Path.Combine(Application.dataPath, logPath);
+            
+            logFile = Path.Combine(logPath, logFile);
+            
             Directory.CreateDirectory(logPath);
-            _loggingStream = new FileStream(Path.Combine(logPath, logFile), FileMode.Append);
+            _loggingStream = new FileStream(logFile, FileMode.Append);
             _loggingFile = new BinaryWriter(_loggingStream, Encoding.UTF8);
             _loggingFile.Write(_magic);
             _loggingFile.Flush();
