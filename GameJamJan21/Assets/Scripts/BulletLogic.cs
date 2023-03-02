@@ -32,6 +32,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public TrailRenderer trail;
 
     private Coroutine expiration;
+
+    public int ghostBounces = 3;
     
 
     // Update is called once per frame
@@ -57,7 +59,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             _audioBullet.Play(0);
             // maxBounces = GlobalStats.bulletMaxBounces;
         } else {
-            maxBounces = 3;
+            maxBounces = ghostBounces;
         }
     }
 
@@ -84,38 +86,34 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     void OnCollisionEnter(Collision collision)
     {
-        if (!isGhost) {
-            print(shooter.playerNumber);
-            print(this.transform.position);
-        }
         // Check tag for Transient or Reflector
         // Reflect if applicable
         if (collision.gameObject.tag == "Transient")
         {
-            if (!isGhost)
-                print("Encountered transient object");
+            EncounterTransient(collision);
+        } else if (isGhost == false && collision.gameObject.tag == "Player") {
+            EncounterPlayer(collision);
+        } else if (collision.gameObject.tag == "Powerup") {
+            // Do nothing lol
+        } else  {
+            // Ricochet
+            ricochetBullet(collision);
+        }
+    }
+
+    void EncounterTransient(Collision collision) {
             // Do nothing and pass through
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
             // Destroy but keep velocity!
             Destroy(collision.gameObject);
             _rb.velocity = vel;
-        } else if (isGhost == false && collision.gameObject.tag == "Player") {
-            if (!isGhost)
-                print("Encountered player");
+    }
+
+    void EncounterPlayer(Collision collision) {
             Controller player = collision.gameObject.GetComponent<Controller>();
             float damage = GetBulletDamage();
             player.InflictDamage(damage);
             finishShot(BulletDamageMultiplier()!=0);
-        } else if (collision.gameObject.tag == "Powerup") {
-            // Do nothing lol
-            if (!isGhost)
-                print("powerup");
-        } else  {
-            // Ricochet
-            ricochetBullet(collision);
-            if (!isGhost)
-                print("ricochet");
-        }
     }
 
     void ricochetBullet(Collision collision) {
