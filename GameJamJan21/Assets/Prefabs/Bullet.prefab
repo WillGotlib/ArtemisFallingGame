@@ -340,6 +340,7 @@ MonoBehaviour:
   splashZone: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
   rotationSpeed: 0.3
   trail: {fileID: 1364202883547966758}
+  maxFlightTimeSeconds: 10
 --- !u!114 &2301455758190603568
 MonoBehaviour:
   m_ObjectHideFlags: 0

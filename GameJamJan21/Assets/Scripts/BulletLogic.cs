@@ -36,6 +36,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     public TrailRenderer trail;
 
+    public float maxFlightTimeSeconds = 10;
     private Coroutine expiration;
 
     private void Start()
@@ -71,7 +72,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     }
 
     private IEnumerator ExpirationTimer() {
-        yield return new WaitForSeconds(10f); // TODO: Un-hard-code this
+        yield return new WaitForSeconds(maxFlightTimeSeconds);
+        Debug.Log("bullet expired");
         finishShot(false);
     }
 
