@@ -207,9 +207,11 @@ MonoBehaviour:
   sensitivity: 2000
   kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
+  menu: {fileID: 0}
   dashIntensity: 25
   momentum: 0.85
   maxMomentum: 1.15
+  dashDuration: 0
   backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
 --- !u!114 &3349455145992540270
 MonoBehaviour:
@@ -337,8 +339,7 @@ MonoBehaviour:
   model: {fileID: 9007030689590978157}
   primary: {fileID: 2100000, guid: 4f37c11313d2c0b4db2896b153937045, type: 2}
   secondary: {fileID: 2100000, guid: ce24e19d37e75614881b594949e06375, type: 2}
-  primaryColour: {r: 0, g: 0, b: 0, a: 0}
-  secondaryColour: {r: 0, g: 0, b: 0, a: 0}
+  colourAttribute: _Colour
 --- !u!1001 &8896262713196528006
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,6 +7,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Core
+    second: {fileID: 2100000, guid: e4ef7463801a5794982a78ff0845d622, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Emblem sheild
+    second: {fileID: 2100000, guid: 81ce55fa5eac3b1479a2db40cd50b5e0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Example Sheet green
     second: {fileID: 2100000, guid: ce24e19d37e75614881b594949e06375, type: 2}
   - first:
@@ -22,8 +32,33 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Transit
+    second: {fileID: 2100000, guid: b03494c722d77ba4aa6ad99a7fd4bab4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _Example Panels_008.001
+    second: {fileID: 2100000, guid: 1d998bc1c5fa13741b73afd52f1b304e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _Example Sheet_043.001
+    second: {fileID: 2100000, guid: cacd8c4b5315c1c45a56a4037985059d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: accent
+    second: {fileID: 2100000, guid: ce24e19d37e75614881b594949e06375, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: green
     second: {fileID: 2100000, guid: ce24e19d37e75614881b594949e06375, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: primary
+    second: {fileID: 2100000, guid: 4f37c11313d2c0b4db2896b153937045, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
