@@ -38,7 +38,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Dash_Number: 10
+    - _Dash_Number: 2
     - _Speed: 4
     m_Colors: []
   m_BuildTextureStacks: []
