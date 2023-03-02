@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 3349455145992540270}
   - component: {fileID: 1574579996388501985}
   - component: {fileID: 2073565223626383832}
+  - component: {fileID: 1067523678096033842}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -321,6 +322,23 @@ MonoBehaviour:
   invincibleMaterial: {fileID: 2100000, guid: 4c3963f94f19f4ef88575a5203bfb296, type: 2}
   damageDuration: 0.1
   invincibleDuration: 0.2
+--- !u!114 &1067523678096033842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ddd942f35b583e428a9ffca64f8f98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 9007030689590978157}
+  primary: {fileID: 2100000, guid: 4f37c11313d2c0b4db2896b153937045, type: 2}
+  secondary: {fileID: 2100000, guid: ce24e19d37e75614881b594949e06375, type: 2}
+  primaryColour: {r: 0, g: 0, b: 0, a: 0}
+  secondaryColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &8896262713196528006
 PrefabInstance:
   m_ObjectHideFlags: 0

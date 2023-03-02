@@ -46,6 +46,14 @@ public class StartGame : MonoBehaviour
             player.GetComponent<Controller>().playerNumber = i;
             playerStocks[i] = GlobalStats.defaultStockCount;
             PlayerStockUpdate(i, playerStocks[i]);
+
+            if (i != 0)
+            {
+                var colourizer = player.GetComponent<PlayerColourizer>();
+                colourizer.PrimaryColour = new Color(1, .64f, 0);
+                colourizer.SecondaryColour = Color.magenta;
+            }
+            
             i++;
         }
     }
