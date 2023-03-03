@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerColourizer : MonoBehaviour
@@ -11,8 +8,9 @@ public class PlayerColourizer : MonoBehaviour
     [SerializeField] private Material secondary;
     [SerializeField] private string colourAttribute = "_Colour";
 
-    private Color _primaryColour =Color.clear;
-    private Color _secondaryColour=Color.clear;
+    private Color _primaryColour = Color.clear;
+    private Color _secondaryColour = Color.clear;
+
     public Color PrimaryColour
     {
         get => _primaryColour;
@@ -23,7 +21,8 @@ public class PlayerColourizer : MonoBehaviour
         }
     }
 
-    public Color SecondaryColour {
+    public Color SecondaryColour
+    {
         get => _secondaryColour;
         set
         {
@@ -39,18 +38,23 @@ public class PlayerColourizer : MonoBehaviour
     {
         foreach (var renderer in model.GetComponentsInChildren<MeshRenderer>())
         {
-            var material = renderer.material;
-            var name = material.name.Substring(0,
-                material.name.Length - " (Instance)".Length); // probably not the best way to do this
-
-            if (name == primary.name)
+            foreach (var material in renderer.materials)
             {
-                _primaryMats.Add(material);
-            }
+                var mattName = material.name.Substring(0,
+                    material.name.Length - " (Instance)".Length); // probably not the best way to do this
 
-            if (name == secondary.name)
-            {
-                _secondaryMats.Add(material);
+                if (mattName == primary.name)
+                {
+                    _primaryMats.Add(material);
+                }
+                else if (mattName == secondary.name)
+                {
+                    _secondaryMats.Add(material);
+                }
+                else
+                {
+                    Debug.Log($"material not matched: {material.name}");
+                }
             }
         }
 
@@ -70,7 +74,7 @@ public class PlayerColourizer : MonoBehaviour
         var colourId = Shader.PropertyToID(colourAttribute);
         foreach (var material in materials)
         {
-            material.SetColor(colourId,colour);
+            material.SetColor(colourId, colour);
         }
     }
 }
