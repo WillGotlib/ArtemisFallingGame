@@ -88,7 +88,7 @@ public class Controller : MonoBehaviour
         currentCooldown = 0;
         weapon = Object.Instantiate(weaponType, gameObject.transform, false);
         Vector3 cur_pos = this.transform.position;
-        weapon.transform.position = new Vector3(cur_pos[0] + (this.transform.forward[0] * 0.2f), cur_pos[1],
+        weapon.transform.position = new Vector3(cur_pos[0] + (this.transform.forward[0] * 0.2f), cur_pos[1] + 1f,
             cur_pos[2] + (this.transform.forward[2] * 0.2f));
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
