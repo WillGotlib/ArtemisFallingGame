@@ -50,7 +50,7 @@ public class StartGame : MonoBehaviour
             if (i != 0)
             {
                 var colourizer = player.GetComponent<PlayerColourizer>();
-                colourizer.PrimaryColour = new Color(1, .64f, 0);
+                colourizer.PrimaryColour = new Color(.22f,.11f,.055f);
                 colourizer.SecondaryColour = Color.magenta;
             }
             

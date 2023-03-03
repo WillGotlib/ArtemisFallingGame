@@ -16,7 +16,7 @@ public class PlayerColourizer : MonoBehaviour
         get => _primaryColour;
         set
         {
-            UpdateColour(_primaryMats, value);
+            _primaryMat?.SetColor(_colourAttributeId, value);
             _primaryColour = value;
         }
     }
@@ -26,36 +26,45 @@ public class PlayerColourizer : MonoBehaviour
         get => _secondaryColour;
         set
         {
-            UpdateColour(_secondaryMats, value);
+            _secondaryMat?.SetColor(_colourAttributeId, value);
             _secondaryColour = value;
         }
     }
 
-    private readonly List<Material> _primaryMats = new();
-    private readonly List<Material> _secondaryMats = new();
+    private Material _primaryMat;
+    private Material _secondaryMat;
+    private int _colourAttributeId;
 
     public void Start()
     {
+        _colourAttributeId = Shader.PropertyToID(colourAttribute);
+        _primaryMat = Instantiate(primary);
+        _secondaryMat = Instantiate(secondary);
+        
         foreach (var renderer in model.GetComponentsInChildren<MeshRenderer>())
         {
-            foreach (var material in renderer.materials)
+            var materials = renderer.materials;
+            for (var i = 0; i < materials.Length; i++)
             {
+                var material = materials[i];
                 var mattName = material.name.Substring(0,
                     material.name.Length - " (Instance)".Length); // probably not the best way to do this
 
                 if (mattName == primary.name)
                 {
-                    _primaryMats.Add(material);
+                    materials[i] = _primaryMat;
                 }
                 else if (mattName == secondary.name)
                 {
-                    _secondaryMats.Add(material);
+                    materials[i] = _secondaryMat;
                 }
                 else
                 {
                     Debug.Log($"material not matched: {material.name}");
                 }
             }
+
+            renderer.materials = materials;
         }
 
         if (_primaryColour != Color.clear)
@@ -66,15 +75,6 @@ public class PlayerColourizer : MonoBehaviour
         if (_secondaryColour != Color.clear)
         {
             SecondaryColour = _secondaryColour;
-        }
-    }
-
-    private void UpdateColour(List<Material> materials, Color colour)
-    {
-        var colourId = Shader.PropertyToID(colourAttribute);
-        foreach (var material in materials)
-        {
-            material.SetColor(colourId, colour);
         }
     }
 }
