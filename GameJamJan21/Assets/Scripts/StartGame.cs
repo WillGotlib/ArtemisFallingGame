@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,9 +21,17 @@ public class StartGame : MonoBehaviour
     [SerializeField] private float deathCooldown; // Amount of time before a player respawns
     [SerializeField] private float invincibilityCooldown; // Amount of time after respawning that the player cannot die
 
+    [Header("Colours")]
+    [Tooltip("Lists have to be the same length")]
+    public Color[] primaryColours;
+    public Color[] accentColours;
+    //public Color player2PrimaryColour=new Color(.22f,.11f,.055f);
+    //public Color player2AccentColour= Color.magenta;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (primaryColours.Length != accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
         StartMatch();
     }
@@ -47,11 +56,11 @@ public class StartGame : MonoBehaviour
             playerStocks[i] = GlobalStats.defaultStockCount;
             PlayerStockUpdate(i, playerStocks[i]);
 
-            if (i != 0)
+            if (i < primaryColours.Length)
             {
                 var colourizer = player.GetComponent<PlayerColourizer>();
-                colourizer.PrimaryColour = new Color(.22f,.11f,.055f);
-                colourizer.SecondaryColour = Color.magenta;
+                colourizer.PrimaryColour = primaryColours[i];
+                colourizer.SecondaryColour = accentColours[i];
             }
             
             i++;
