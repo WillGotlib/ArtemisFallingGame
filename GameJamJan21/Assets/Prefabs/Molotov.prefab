@@ -423,11 +423,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rb: {fileID: 7560826534295098678}
   bullet: {fileID: 4972240987904475784}
-  maxBounces: 2
+  maxBounces: 1
   _bulletSpeed: 5
   splashZone: {fileID: 6234232466112906086, guid: da5c5bc93ddf0ad4792869db5085d860, type: 3}
   rotationSpeed: 0.3
   trail: {fileID: 7718076483670826406}
+  maxFlightTimeSeconds: 10
 --- !u!108 &5761309379727644029
 Light:
   m_ObjectHideFlags: 0

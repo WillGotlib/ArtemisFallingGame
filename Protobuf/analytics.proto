@@ -16,11 +16,14 @@ message Game {
 message AnalyticsEvent {
   message Event {
     oneof event {
-      MapEvent map = 1;
-      CustomEvent custom = 2;
+      MapEvent map = 1; 
+      // leaving this spot blank for old parsers
       ObjectEvent object = 3;
       DeviceEvent device = 4;
       NewItemEvent item = 5;
+      RespawnEvent respawn = 6;
+      DeathEvent death = 7;
+      PlayerHealth health = 8;
     }
   }
   
@@ -39,9 +42,17 @@ message MapEvent {
   string mapName = 1;
 }
 
-message CustomEvent { // for stuff like player deaths
-  string type = 1;
-  bytes value = 2;
+message DeathEvent {
+  int32 id = 1;
+}
+
+message RespawnEvent {
+  int32 id = 1;
+}
+
+message PlayerHealth {
+  int32 id = 1;
+  float amount = 2;
 }
 
 // for object movements
