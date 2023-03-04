@@ -50,11 +50,11 @@ public class PlayerColourizer : MonoBehaviour
                 var mattName = material.name.Substring(0,
                     material.name.Length - " (Instance)".Length); // probably not the best way to do this
 
-                if (mattName == primary.name)
+                if (mattName == primary.name || material.name == primary.name)
                 {
                     materials[i] = _primaryMat;
                 }
-                else if (mattName == secondary.name)
+                else if (mattName == secondary.name || material.name == secondary.name)
                 {
                     materials[i] = _secondaryMat;
                 }
