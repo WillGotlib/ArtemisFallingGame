@@ -13,7 +13,11 @@ public class Controller : MonoBehaviour
 {
     [NonSerialized] public int playerNumber;
 
+    [Header("Nodes")]
     public CharacterController controller;
+    public Animator animator;
+    
+    [Header("Values")]
     public float speed = 6f;
     public float sensitivity = 5;
     public float kbdSensitivity = 4;
@@ -27,6 +31,8 @@ public class Controller : MonoBehaviour
     new Camera camera;
     bool followingCamera = true;
     public PausedMenu menu;
+
+    public string animationSpeedAttrName = "speed";
 
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
@@ -251,6 +257,7 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
 
+        animator.SetFloat(animationSpeedAttrName,moveDirection.magnitude);
         if (!currentlyDead && moveDirection.magnitude >= 0.1f)
         {
             // Handle the actual movement

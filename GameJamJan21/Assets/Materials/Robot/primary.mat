@@ -80,6 +80,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: b885f00e9eed79042af49ec545d09ba6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _height:
+        m_Texture: {fileID: 2800000, guid: 2971642baf06c71439e224c130c691ef, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _normal_map:
         m_Texture: {fileID: 2800000, guid: 1135873a19dcac64584915b4a7bd78c0, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -130,6 +134,7 @@ Material:
     - _ao_amount: 1
     - _curviture_amount: 0.5
     - _emmision_strength: 40
+    - _paralax: 7
     - _roughness: 0.54
     - _subset_roughness: 0.25
     m_Colors:
