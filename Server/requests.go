@@ -3,7 +3,6 @@ package main
 import (
 	"artemisFallingServer/backend"
 	pb "artemisFallingServer/proto"
-	"log"
 )
 
 func (s *GameServer) handleRequests(request *backend.Action) {
@@ -17,7 +16,7 @@ func (s *GameServer) handleRequests(request *backend.Action) {
 	case *pb.StreamAction_UpdateEntity:
 		s.handleUpdateRequest(request)
 	default:
-		log.Println("unknown request", request)
+		multiLogger.Println("unknown request", request)
 	}
 }
 
@@ -25,7 +24,7 @@ func (s *GameServer) handleMoveRequest(req *backend.Action) {
 	request := req.Request.GetMoveEntity()
 	id, ok := ParseID(request.GetId())
 	if !ok {
-		log.Println("can't parse id to move")
+		multiLogger.Println("can't parse id to move")
 		return
 	}
 	req.Game().MoveEntity(id, req,
@@ -36,7 +35,7 @@ func (s *GameServer) handleRemoveRequest(req *backend.Action) {
 	request := req.Request.GetRemoveEntity()
 	id, ok := ParseID(request.GetId())
 	if !ok {
-		log.Println("can't parse id to remove")
+		multiLogger.Println("can't parse id to remove")
 		return
 	}
 	req.Game().RemoveEntity(id, req)
@@ -46,7 +45,7 @@ func (s *GameServer) handleAddRequest(req *backend.Action) {
 	request := req.Request.GetAddEntity()
 	ent, err := backend.EntityFromProto(request.GetEntity())
 	if err != nil {
-		log.Println("can't parse entity to add")
+		multiLogger.Println("can't parse entity to add")
 		return
 	}
 
@@ -57,7 +56,7 @@ func (s *GameServer) handleUpdateRequest(req *backend.Action) {
 	request := req.Request.GetUpdateEntity()
 	ent, err := backend.EntityFromProto(request.GetEntity())
 	if err != nil {
-		log.Println("can't parse entity to update")
+		multiLogger.Println("can't parse entity to update")
 		return
 	}
 

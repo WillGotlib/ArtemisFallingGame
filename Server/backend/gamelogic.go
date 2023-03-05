@@ -100,7 +100,7 @@ func (g *Game) RemoveClientsEntities(client *Client) {
 	}
 	group := NewActonGroup(g, NilClient(client), len(entities))
 	for i, eid := range entities {
-		g.RemoveEntity(eid, NewAction(i, nil, group))
+		g.RemoveEntity(eid, NewAction(i, nil, group, true))
 	}
 	g.Mu.Lock()
 	delete(g.ownedEntities, client.Id)

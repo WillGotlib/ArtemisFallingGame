@@ -26,16 +26,15 @@ if (Get-Command "go" -errorAction SilentlyContinue){
     if (-not(Get-Command "protoc-gen-go-grpc" -errorAction SilentlyContinue)){
         go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
     }
-    & $protoc --go-grpc_out=Server/ --go_out=Server/ Protobuf/Online/*.proto
+    & $protoc --go_out=Server/ Protobuf/Online/*.proto
     if ($?) {
         echo "built go protos"
     }
 }
 
-$csharpPlugin = $GRPC_PATH+"/grpc_csharp_plugin.exe"
 $location = "GameJamJan21/Assets/Scripts/Online/Generated"
 mkdir $location -ea 0 > $null
-& $protoc --csharp_out=$location --grpc_out=$location --plugin=protoc-gen-grpc=$csharpPlugin Protobuf/Online/*.proto
+& $protoc --csharp_out=$location Protobuf/Online/*.proto
 if ($?) {
     echo "built unity protos"
 }

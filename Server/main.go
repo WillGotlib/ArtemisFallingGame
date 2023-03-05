@@ -1,19 +1,24 @@
 package main
 
 import (
-	pb "artemisFallingServer/proto"
 	"context"
 	"flag"
 	"fmt"
-	"log"
+	"github.com/labstack/echo/v4/middleware"
 	"math/rand"
-	"net"
+	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
-	"google.golang.org/grpc"
+	"github.com/labstack/echo/v4"
+	"github.com/sirupsen/logrus"
+)
+
+var (
+	log         *logrus.Logger
+	multiLogger *logrus.Entry
 )
 
 var (
@@ -28,47 +33,60 @@ func init() {
 	flag.Parse()
 	addr = fmt.Sprintf(":%d", *port)
 	maxClients = *mClients
+
+	log = logrus.New()
+	multiLogger = log.WithField("mode", "multi server")
+	//log.Level = logrus.DebugLevel
 }
 
 func main() {
-	lis, err := net.Listen("tcp", addr)
-	if err != nil {
-		log.Fatalf("Failed to listen to port [%s]: %v", addr, err)
+	e := echo.New()
+	e.HideBanner = true
+	echo.NotFoundHandler = func(c echo.Context) error {
+		return c.String(http.StatusNotFound, "")
 	}
+
+	e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
+		LogURI:    true,
+		LogStatus: true,
+		LogValuesFunc: func(c echo.Context, values middleware.RequestLoggerValues) error {
+			log.WithFields(logrus.Fields{
+				"URI":    values.URI,
+				"status": values.Status,
+			}).Info("request")
+
+			return nil
+		},
+	}))
+	e.Use(middleware.Recover())
+
+	ConnectEndpoints(e)
+
 	rand.Seed(time.Now().Unix())
 	server := NewGameServer()
 
-	//enforcement := keepalive.EnforcementPolicy{
-	//	MinTime:             5 * time.Second,
-	//	PermitWithoutStream: true,
-	//}
-
-	s := grpc.NewServer()
-	//grpc.KeepaliveEnforcementPolicy(enforcement),
-	//grpc.KeepaliveParams(keepalive.ServerParameters{
-	//	MaxConnectionAge:      10 * time.Second,
-	//	MaxConnectionAgeGrace: 30 * time.Second,
-	//}))
-	pb.RegisterGameServer(s, server)
-
-	ctx := context.Background()
-	ctx, cancel := context.WithCancel(ctx)
-	signalChan := make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-
 	go func() {
-		log.Println("Starting server")
-		if err = s.Serve(lis); err != nil {
-			log.Fatalln("Failed to start the server:", err)
+		if err := e.Start(addr); err != nil && err != http.ErrServerClosed {
+			e.Logger.Fatal("shutting down the server")
 		}
-		cancel()
 	}()
 
-	select {
-	case <-signalChan:
-	case <-ctx.Done():
-	}
-	server.Stop()
+	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	<-signalChan
 	log.Println("Shutting down")
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	server.Stop()
+	if err := e.Shutdown(ctx); err != nil {
+		e.Logger.Fatal(err)
+	}
+
 	time.Sleep(500 * time.Millisecond)
+}
+
+func mainPage(e echo.Context) error {
+	return e.String(http.StatusTeapot, "idk how you got here, this is a game server")
 }

@@ -35,13 +35,15 @@ type Action struct {
 	Request  *pb.StreamAction
 	Response *pb.StreamAction
 	Group    *ActionGroup
+	Priority bool
 }
 
-func NewAction(index int, request *pb.StreamAction, group *ActionGroup) *Action {
+func NewAction(index int, request *pb.StreamAction, group *ActionGroup, priority bool) *Action {
 	return &Action{
-		index:   index,
-		Request: request,
-		Group:   group,
+		index:    index,
+		Request:  request,
+		Group:    group,
+		Priority: priority,
 	}
 }
 

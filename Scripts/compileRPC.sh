@@ -37,14 +37,9 @@ then
     then
         go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
     fi
-    if ! command -v protoc-gen-go-grpc &> /dev/null
-    then
-        go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
-    fi
 
-    eval $protoc --go-grpc_out=Server/ --go_out=Server/ Protobuf/Online/*.proto && echo "built go protos"
+    eval $protoc --go_out=Server/ Protobuf/Online/*.proto && echo "built go protos"
 fi
 
-csharpPlugin="${GRPC_PATH}/grpc_csharp_plugin"
-eval $protoc --csharp_out=Client/Assets/Scripts/Online/Generated --grpc_out=Client/Assets/Scripts/Online/Generated --plugin=protoc-gen-grpc=$csharpPlugin Protobuf/Online/*.proto && echo "built unity protos"
+eval $protoc --csharp_out=Client/Assets/Scripts/Online/Generated Protobuf/Online/*.proto && echo "built unity protos"
 eval $protoc --csharp_out=GameJamJan21/Assets/Scripts/Analytics Protobuf/Analytics/*.proto && echo "built analytics protos"

@@ -1,21 +1,17 @@
 package main
 
-//todo
-// empty sersions get deleted
-// have server ping everyone to find disconnects // keepalive
-
 import (
 	"artemisFallingServer/backend"
 	pb "artemisFallingServer/proto"
 	"context"
-	"errors"
+	"fmt"
 	"github.com/google/uuid"
-	"io"
-	"log"
+	"github.com/labstack/echo/v4"
+	"github.com/pion/webrtc/v3"
+	"google.golang.org/protobuf/proto"
+	"net/http"
 	"sync"
 	"time"
-
-	"google.golang.org/grpc/metadata"
 )
 
 const (
@@ -23,9 +19,10 @@ const (
 	clientTimeout       = 2 * time.Minute
 )
 
+var server *GameServer
+
 // GameServer is used to stream game information with clients.
 type GameServer struct {
-	pb.UnimplementedGameServer
 	ChangeChannel chan backend.Change
 	games         map[string]*backend.Game
 	gameTimeouts  map[string]context.CancelFunc
@@ -36,7 +33,11 @@ type GameServer struct {
 
 // NewGameServer constructs a new game server struct.
 func NewGameServer() *GameServer {
-	server := &GameServer{
+	if server != nil {
+		server.Stop()
+	}
+
+	server = &GameServer{
 		games:         make(map[string]*backend.Game),
 		gameTimeouts:  make(map[string]context.CancelFunc),
 		clients:       make(map[backend.Token]*backend.Client),
@@ -50,9 +51,10 @@ func NewGameServer() *GameServer {
 
 func (s *GameServer) Stop() {
 	for id := range s.games {
-		log.Printf("Stopping \"%s\"\n", id)
+		multiLogger.Printf("Stopping \"%s\"\n", id)
 		s.removeSession(id, true)
 	}
+	server = nil
 }
 
 func (s *GameServer) addClient(c *backend.Client) {
@@ -62,10 +64,11 @@ func (s *GameServer) addClient(c *backend.Client) {
 	s.mu.Unlock()
 }
 
-func (s *GameServer) removeClient(id backend.Token) {
-	log.Printf("%s - removing client", id)
+func (s *GameServer) removeClient(id backend.Token, message string) {
+	multiLogger.Printf("%s - removing client", id)
 
 	c := s.clients[id]
+	c.Done(message) // close connection if it's still open
 	session := c.Session
 	session.RemoveClientsEntities(c)
 	s.mu.Lock()
@@ -99,7 +102,7 @@ func (s *GameServer) makeSession(id string) bool {
 		s.games[id] = backend.NewGame(s.ChangeChannel, id)
 		s.sessionUsers[id] = make([]*backend.Client, 0, maxClients)
 		s.games[id].Start()
-		log.Println("starting new session", id)
+		multiLogger.Println("starting new session", id)
 	}
 	s.mu.Unlock()
 	return !ok
@@ -120,11 +123,11 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 		}
 	}
 
-	for _, c := range s.sessionUsers[id] {
-		c.Done <- errors.New("session has shut down")
-	}
-
 	s.mu.Lock()
+	for _, c := range s.sessionUsers[id] {
+		c.Done("session has shut down")
+		delete(s.clients, c.Id)
+	}
 	session := s.games[id]
 	delete(s.gameTimeouts, id)
 	delete(s.games, id)
@@ -132,136 +135,50 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 	s.mu.Unlock()
 
 	session.Stop()
-	log.Println("closing session", id)
+	multiLogger.Println("closing session", id)
 }
 
-func (s *GameServer) getClientFromContext(ctx context.Context) (*backend.Client, error) {
-	headers, ok := metadata.FromIncomingContext(ctx)
-	tokenRaw := headers["authorization"]
+func (s *GameServer) getClientFromContext(c echo.Context) (*backend.Client, error) {
+	tokenRaw := c.Request().Header.Get("Token")
 	if len(tokenRaw) == 0 {
-		return nil, errors.New("no token provided")
+		return nil, echo.NewHTTPError(http.StatusBadRequest, "no token provided")
 	}
-	uid, err := uuid.Parse(tokenRaw[0])
+	uid, err := uuid.Parse(tokenRaw)
 	if err != nil {
-		return nil, errors.New("cannot parse token")
+		return nil, echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("cant parse token \"%s\"", tokenRaw))
 	}
 	s.mu.RLock()
 	currentClient, ok := s.clients[backend.Token(uid)]
 	s.mu.RUnlock()
 	if !ok {
-		return nil, errors.New("token not recognized")
+		return nil, echo.NewHTTPError(http.StatusUnauthorized, "token not recognized")
 	}
 	return currentClient, nil
 }
 
-// Stream is the main loop for dealing with individual players.
-func (s *GameServer) Stream(srv pb.Game_StreamServer) error {
-	ctx := srv.Context()
-
-	currentClient, err := s.getClientFromContext(ctx)
-	if err != nil {
-		return err
-	}
-	if currentClient.StreamServer != nil {
-		return errors.New("stream already active")
-	}
-	currentClient.StreamServer = srv
-	game := currentClient.Session
-	if cancelTimeout, ok := s.gameTimeouts[game.GameId]; ok {
-		cancelTimeout() // don't turn off the session someone is joining
-	}
-
-	defer s.removeClient(currentClient.Id)
-	// Wait for stream requests.
-	var doneError error
-
-	go func() {
-		var req *pb.Request
-		for {
-			req, err = srv.Recv()
-			if err == io.EOF {
-				currentClient.Done <- nil
-				return
-			}
-			if err != nil {
-				log.Printf("receive error %v", err)
-				currentClient.Done <- errors.New("failed to receive request")
-				return
-			}
-			//log.Printf("got message %+v", req)
-			currentClient.LastMessage = time.Now()
-			requests := req.GetRequests()
-			group := backend.NewActonGroup(game, currentClient, len(requests))
-			for i, request := range requests { //todo
-				s.handleRequests(backend.NewAction(i, request, group))
-			}
+func (s *GameServer) parseMessage(dcLabel string, client *backend.Client) func(msg webrtc.DataChannelMessage) {
+	if dcLabel != "priority" && dcLabel != "fast" {
+		return func(msg webrtc.DataChannelMessage) {
 		}
-	}()
-	select {
-	case doneError = <-currentClient.Done:
-	case <-ctx.Done():
-		doneError = ctx.Err()
 	}
 
-	if doneError != nil {
-		log.Printf(`stream done with error "%v"`, doneError)
-	}
+	priority := dcLabel == "priority"
 
-	return doneError
-}
+	return func(msg webrtc.DataChannelMessage) {
+		client.LastMessage = time.Now()
 
-func (s *GameServer) List(ctx context.Context, req *pb.SessionRequest) (*pb.SessionList, error) {
-	servers := make([]*pb.Server, 0, len(s.games))
-	for u := range s.games {
-		servers = append(servers, &pb.Server{
-			Id:     u,
-			Online: uint32(len(s.sessionUsers[u])),
-			Max:    uint32(maxClients),
-		})
-	}
-	return &pb.SessionList{
-		Servers: servers,
-	}, nil
-}
-
-func (s *GameServer) Connect(ctx context.Context, req *pb.ConnectRequest) (*pb.ConnectResponse, error) {
-	sessionId := req.GetSession()
-	if len(sessionId) < 3 || len(sessionId) > 25 {
-		return nil, errors.New("invalid sessionId Provided")
-	}
-	log.Println("Incoming connection to", req.Session)
-
-	if s.makeSession(sessionId) {
-		go s.removeSession(sessionId, false) // remove after timeout if new session
-	}
-	sessionUsers := s.sessionUsers[sessionId]
-	if len(sessionUsers) >= maxClients {
-		return nil, errors.New("the server is full")
-	}
-
-	game := s.games[sessionId]
-	entities := game.GetProtoEntities()
-
-	taken := make([]bool, maxClients)
-	for _, p := range sessionUsers {
-		taken[p.Index] = true
-	}
-	var index int
-	for index = 0; index < maxClients; index++ {
-		if taken[index] {
-			continue
+		req := new(pb.Request)
+		err := proto.Unmarshal(msg.Data, req)
+		if err != nil {
+			multiLogger.Debug("cant parse ", msg)
 		}
-		break
+
+		requests := req.GetRequests()
+		group := backend.NewActonGroup(client.Session, client, len(requests))
+		for i, request := range requests {
+			s.handleRequests(backend.NewAction(i, request, group, priority))
+		}
 	}
-
-	client := backend.NewClient(game, index)
-	s.addClient(client)
-
-	return &pb.ConnectResponse{
-		Token:    client.Id.String(),
-		Entities: entities,
-		Index:    uint32(index),
-	}, nil
 }
 
 func (s *GameServer) watchTimeout() {
@@ -270,7 +187,7 @@ func (s *GameServer) watchTimeout() {
 		for {
 			for _, client := range s.clients {
 				if time.Since(client.LastMessage) > clientTimeout {
-					client.Done <- errors.New("you have been timed out")
+					s.removeClient(client.Id, "you have been timed out")
 					return
 				}
 			}
@@ -285,9 +202,16 @@ func (s *GameServer) broadcast(resp *backend.Action) {
 		return // not all messages collected yet
 	}
 
+	m := &pb.Response{Responses: group.GetActions()}
+	message, err := proto.Marshal(m)
+	if err != nil {
+		multiLogger.Errorf("send failed: %s", err.Error())
+		return
+	}
+
 	s.mu.Lock()
 	for id, currentClient := range s.clients {
-		if currentClient.StreamServer == nil {
+		if currentClient.FastChannel == nil || currentClient.PriorityChannel == nil {
 			continue
 		}
 		if group.Sender != nil && (currentClient.Session.GameId != group.Sender.Session.GameId || // if client is nil then the message will be sent to all users in all sessions
@@ -295,9 +219,16 @@ func (s *GameServer) broadcast(resp *backend.Action) {
 			continue
 		}
 
-		if err := currentClient.StreamServer.Send(&pb.Response{Responses: group.GetActions()}); err != nil {
-			log.Printf("%s - broadcast error %v", id, err)
-			currentClient.Done <- errors.New("failed to broadcast message")
+		var channel *webrtc.DataChannel
+		if resp.Priority {
+			channel = currentClient.PriorityChannel
+		} else {
+			channel = currentClient.FastChannel
+		}
+
+		if err := channel.Send(message); err != nil {
+			multiLogger.Printf("%s - broadcast error %v", id, err)
+			s.removeClient(currentClient.Id, "failed to broadcast message")
 			continue
 		}
 	}

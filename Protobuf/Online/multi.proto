@@ -3,15 +3,6 @@ syntax = "proto3";
 option go_package = "proto/";
 option csharp_namespace = "protoBuff";
 
-service Game {
-  rpc List (SessionRequest) returns (SessionList) {}
-  rpc Connect (ConnectRequest) returns (ConnectResponse) {}
-  rpc Stream (stream Request) returns (stream Response) {}
-}
-
-message SessionRequest{
-
-}
 
 message SessionList{
   repeated Server servers = 1;

@@ -3,7 +3,6 @@ package main
 import (
 	"artemisFallingServer/backend"
 	pb "artemisFallingServer/proto"
-	"log"
 )
 
 func (s *GameServer) watchChanges() {
@@ -20,7 +19,7 @@ func (s *GameServer) watchChanges() {
 			case *backend.MoveChange:
 				s.handleMoveChange(*c)
 			default:
-				log.Println("unknown type", c)
+				multiLogger.Println("unknown type", c)
 			}
 		}
 	}()
