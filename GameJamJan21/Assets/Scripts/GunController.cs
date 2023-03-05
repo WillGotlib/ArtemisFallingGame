@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GunController : MonoBehaviour
 {
-    public GameObject bulletType;
+    [SerializeField] private GameObject bulletType;
+    [SerializeField] private GameObject secondaryType;
 
 
     public int maxAmmo = 12;
@@ -37,44 +38,64 @@ public class GunController : MonoBehaviour
         if (primaryOnCooldown) {
             primaryCooldownTimer -= Time.deltaTime;
             if (primaryCooldownTimer <= 0) {
-                Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
+                // Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;
-                primaryCooldownTimer = primaryCooldown;
+                primaryCooldownTimer = primaryCooldown * owner.GetSpeedBonus();
             }
         }
-        // if (secondaryOnCooldown) {
-        //     secondaryCooldownTimer -= Time.deltaTime;
-        //     if (secondaryCooldownTimer <= 0) {
-        //         secondaryOnCooldown = false;
-        //         secondaryCooldownTimer = secondaryCooldown;
-        //     }
-        // }
+        if (secondaryOnCooldown) {
+            secondaryCooldownTimer -= Time.deltaTime;
+            if (secondaryCooldownTimer <= 0) {
+                secondaryOnCooldown = false;
+                secondaryCooldownTimer = secondaryCooldown;
+            }
+        }
 
     }
 
+    public void ClearPrimaryCooldown() {
+        primaryOnCooldown = false;
+        primaryCooldownTimer = primaryCooldown * owner.GetSpeedBonus();
+    }
+
+    public bool CheckShotValidity(Vector3 cur_pos) {
+        return !Physics.CheckBox(cur_pos, new Vector3(0.05f, 0.05f, 0.1f));
+    }
+
     // returns true if fired
-    public bool PrimaryFire()
+    public void PrimaryFire()
     {
-        Debug.Log("PRIMARY COOLDOWN: " + primaryCooldownTimer);
+        // Debug.Log("PRIMARY COOLDOWN: " + primaryCooldownTimer);
         if (primaryOnCooldown) {
             Debug.Log("Tried to primary fire, but cooldown has not completed yet.");
-        } else {
-            Debug.Log("bullet animation");
+            return;
+        } 
+        Vector3 cur_pos = this.transform.position + (this.transform.forward / 3);
+
+        // Check to make sure we aren't colliding
+        if (CheckShotValidity(cur_pos)) {
             GameObject bullet = UnityEngine.Object.Instantiate(bulletType);
-            Vector3 cur_pos = this.transform.position + (this.transform.forward / 3);
             bullet.transform.position = cur_pos;
             bullet.transform.rotation = this.transform.rotation;
             bullet.GetComponent<BulletLogic>().setShooter(owner);
-            bullet.GetComponent<BulletLogic>().Fire(this.transform.forward, false);
+            bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
             primaryOnCooldown = true;
-            return true;
+        } else {
+            Debug.Log("Bullet would appear inside an object!");
         }
-        return false;
     }
     
     public bool SecondaryFire()
     {
-        Debug.Log("ricochet bullet animation");
+        Debug.Log("Secondary Fire");
+        if (secondaryOnCooldown) { return false; }
+        GameObject grenade = UnityEngine.Object.Instantiate(secondaryType);
+        Vector3 cur_pos = this.transform.position + (this.transform.forward / 3);
+        grenade.transform.position = cur_pos;
+        grenade.transform.rotation = this.transform.rotation;
+        grenade.GetComponent<BulletLogic>().setShooter(owner);
+        grenade.GetComponent<BulletLogic>().Fire(this.transform.forward, false);
+        secondaryOnCooldown = true;
         return true;
     }
 

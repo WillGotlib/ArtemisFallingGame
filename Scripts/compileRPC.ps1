@@ -1,5 +1,6 @@
 $OperatingSystem = "windows"
 $Version = "x64"
+
 $OS = $OperatingSystem +"_"+$Version
 $GRPC_PATH ="./Grpc-Tools"
 $GRPC_URL = "https://www.nuget.org/api/v2/package/Grpc.Tools/"
@@ -25,7 +26,7 @@ if (Get-Command "go" -errorAction SilentlyContinue){
     if (-not(Get-Command "protoc-gen-go-grpc" -errorAction SilentlyContinue)){
         go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
     }
-    & $protoc --go-grpc_out=Server/ --go_out=Server/ Protobuf/*.proto
+    & $protoc --go-grpc_out=Server/ --go_out=Server/ Protobuf/Online/*.proto
     if ($?) {
         echo "built go protos"
     }
@@ -34,7 +35,14 @@ if (Get-Command "go" -errorAction SilentlyContinue){
 $csharpPlugin = $GRPC_PATH+"/grpc_csharp_plugin.exe"
 $location = "GameJamJan21/Assets/Scripts/Online/Generated"
 mkdir $location -ea 0 > $null
-& $protoc --csharp_out=$location --grpc_out=$location --plugin=protoc-gen-grpc=$csharpPlugin Protobuf/*.proto
+& $protoc --csharp_out=$location --grpc_out=$location --plugin=protoc-gen-grpc=$csharpPlugin Protobuf/Online/*.proto
 if ($?) {
     echo "built unity protos"
+}
+
+$location = "GameJamJan21/Assets/Scripts/Analytics"
+mkdir $location -ea 0 > $null
+& $protoc --csharp_out=$location Protobuf/Analytics/*.proto
+if ($?) {
+    echo "built Analytics protos"
 }

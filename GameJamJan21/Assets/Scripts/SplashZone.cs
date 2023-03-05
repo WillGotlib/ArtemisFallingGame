@@ -1,24 +1,66 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Analytics;
 using UnityEngine;
 
 public class SplashZone : MonoBehaviour
 {
     public float timeRemaining = 5;
     public float splashRadius;
-    public float splashDamage;
+    public float explosionDamage;
+
+    public bool damageOverTime;
+    public bool explodesOnImpact;
+
+    // Note: These fields only matter if damageOverTime == true.
+    public float damageOverTimeDamage = 0.1f;
+    private bool damageOverTimeActive = false;
+    public float damageOverTimeCooldown = 0.2f;
+    private float damageOverTimeRemaining = 0.2f;
+
+    public ParticleSystem explosion;
+
+    private List<Collider> damageablesInside = new List<Collider>();
+
+    private AudioSource _audioBullet;
+    private AnalyticsManager _analytics;
 
     // Start is called before the first frame update
     void Start()
     {
-        print("Spawning splash damage");
-        print("Splash Radius: " + splashRadius); // Assignment in BulletLogic seems to work.
-        this.transform.localScale = new Vector3(splashRadius, 1, splashRadius);
+        transform.localScale = new Vector3(splashRadius, 1, splashRadius);
+        explosion.transform.localScale /= splashRadius;
+        explosion.transform.parent = null;
+
+        _audioBullet = GetComponent<AudioSource>();
+        _audioBullet.Play(0);
+        _analytics = FindObjectOfType<AnalyticsManager>();
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        if (damageOverTimeActive) {
+            damageOverTimeRemaining -= Time.deltaTime;
+        }
+        if (damageOverTime) {
+            if (damageOverTimeRemaining <= 0) { // The countdown has expired. Inflict the damage
+                foreach (Collider target in damageablesInside) {
+                // TODO: Make it a different timer for each target. Use Coroutines.
+                    Controller playerInside = target.gameObject.GetComponent<Controller>();
+                  
+                    playerInside.InflictDamage(damageOverTimeDamage);
+                    _analytics.DamageEvent(target.gameObject,gameObject);
+                    
+                    damageOverTimeActive = false;
+                    damageOverTimeRemaining = damageOverTimeCooldown;
+                }
+            } else if (damageOverTimeRemaining == damageOverTimeCooldown) {  // We need to start the countdown.
+                damageOverTimeActive = true;
+            }
+        }
+
         if (timeRemaining > 0)
         {
             Color objectColour = this.GetComponent<MeshRenderer>().material.color;
@@ -35,9 +77,22 @@ public class SplashZone : MonoBehaviour
 
     void OnTriggerEnter(Collider collider) {
         // print("splash zone trigger was set off");
-        if (collider.gameObject.tag == "Player") {
+        if (explodesOnImpact && collider.gameObject.tag == "Player") {
             Controller playerEntered = collider.gameObject.GetComponent<Controller>();
-            playerEntered.InflictDamage(splashDamage);
+
+            playerEntered.InflictDamage(explosionDamage);
+            _analytics.DamageEvent(collider.gameObject,gameObject);
+        }
+        if (damageOverTime && collider.gameObject.tag == "Player") {
+            if (!damageablesInside.Contains(collider)) {
+                damageablesInside.Add(collider);
+            }
+        }
+    }
+
+    void OnTriggerExit(Collider collider) {
+        if (damageablesInside.Contains(collider)) {
+            damageablesInside.Remove(collider);
         }
     }
 }

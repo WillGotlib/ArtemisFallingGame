@@ -1102,7 +1102,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5689279061511846317}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.71, y: 0, z: 0}
+  m_LocalPosition: {x: -0.71, y: -0.036, z: 0}
   m_LocalScale: {x: 72, y: 72, z: 72}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1674,7 +1674,10 @@ MonoBehaviour:
   playerSpawnPoints:
   - {fileID: 5824767717864826423}
   - {fileID: 6322117993305127749}
+  powerupDropPoints:
+  - {fileID: 4796898277581454007, guid: 4c6cf9e1c6f6cb841a1a78367a3cb0e1, type: 3}
   obstacles: {fileID: 7868435818347353403}
+  nid: Angles
 --- !u!1 &7604614608915383863
 GameObject:
   m_ObjectHideFlags: 0

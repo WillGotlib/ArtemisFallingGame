@@ -1,15 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections;
+using Analytics;
+using Google.Protobuf;
 using UnityEngine;
 using Online;
 
 
-public class BulletLogic : MonoBehaviour
+public class BulletLogic : MonoBehaviour, ITrackableScript
 {
     private GlobalStats stats;
+    
+    public static int splashRadius = 1;
+    public static float splashDamage = 0.5f;
 
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
-    private int maxBounces;
+    public int maxBounces = 3;
+    [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
@@ -25,6 +33,21 @@ public class BulletLogic : MonoBehaviour
     private NetworkManager _networkedManager;
     private NetworkedBulletController _networkedBullet;
 
+    private bool _ricocheted=false;
+
+    public TrailRenderer trail;
+
+    public float maxFlightTimeSeconds = 10;
+    private Coroutine expiration;
+
+    public int ghostBounces = 3;
+    private AnalyticsManager _analytics;
+
+    private void Start()
+    {
+        _analytics = FindObjectOfType<AnalyticsManager>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -38,19 +61,29 @@ public class BulletLogic : MonoBehaviour
         vel = _rb.velocity;
         isGhost = ghost;
         
-        if (isGhost == false) {
-            _networkedBullet = GetComponent<NetworkedBulletController>();
-            _networkedManager = FindObjectOfType<NetworkManager>();
-            if (_networkedManager != null && _networkedBullet.controlled)
-                _networkedManager.RegisterObject(_networkedBullet);
+        if (isGhost)
+        {
+            bounced = 0;
+            maxBounces = ghostBounces;
+            return;
+        }
+        expiration = StartCoroutine(ExpirationTimer());
 
-            _audioBullet = GetComponent<AudioSource>();
-            _audioBullet.Play(0);
-            maxBounces = GlobalStats.bulletMaxBounces;
-        }
-        else {
-            maxBounces = 3;
-        }
+        trail.enabled = true;
+        // Play sound
+        _audioBullet = GetComponent<AudioSource>();
+        _audioBullet.Play(0);
+        
+        _networkedBullet = GetComponent<NetworkedBulletController>();
+        _networkedManager = FindObjectOfType<NetworkManager>();
+        if (_networkedManager != null && _networkedBullet.controlled)
+            _networkedManager.RegisterObject(_networkedBullet);
+    }
+
+    private IEnumerator ExpirationTimer() {
+        yield return new WaitForSeconds(maxFlightTimeSeconds);
+        Debug.Log("bullet expired");
+        finishShot(false);
     }
 
     void PreShotOrienting() {
@@ -60,38 +93,46 @@ public class BulletLogic : MonoBehaviour
 
     float GetBulletDamage() {
         // The main function that is used to find bullet damage
-        return GlobalStats.bulletSplashDamage * BulletDamageMultiplier();
+        return splashDamage * BulletDamageMultiplier();
     }
 
     int BulletDamageMultiplier() {
         // The multiplier for the base splash damage. Separate for checking purposes
-        return GlobalStats.bulletMaxBounces - maxBounces;
+        return Mathf.Min(maxBounces, bounced);
     }
 
 
     void OnCollisionEnter(Collision collision)
     {
-        // print("collided with something");
         // Check tag for Transient or Reflector
         // Reflect if applicable
         if (collision.gameObject.tag == "Transient")
         {
-            print("Encountered transient object");
+            EncounterTransient(collision);
+        } else if (isGhost == false && collision.gameObject.tag == "Player") {
+            EncounterPlayer(collision);
+        } else if (collision.gameObject.tag == "Powerup") {
+            // Do nothing lol
+        } else  {
+            // Ricochet
+            ricochetBullet(collision);
+        }
+    }
+
+    void EncounterTransient(Collision collision) {
             // Do nothing and pass through
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
             // Destroy but keep velocity!
             Destroy(collision.gameObject);
             _rb.velocity = vel;
-        } else if (isGhost == false && collision.gameObject.tag == "Player") {
-            print("Encountered player");
+    }
+
+    void EncounterPlayer(Collision collision) {
             Controller player = collision.gameObject.GetComponent<Controller>();
             float damage = GetBulletDamage();
+            _analytics.DamageEvent(collision.gameObject,gameObject);
             player.InflictDamage(damage);
             finishShot(BulletDamageMultiplier()!=0);
-        } else  {
-            // Ricochet
-            ricochetBullet(collision);
-        }
     }
 
     void ricochetBullet(Collision collision) {
@@ -100,32 +141,42 @@ public class BulletLogic : MonoBehaviour
             float speed = oldvel.magnitude;
 
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
-            float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
+            float rot = Mathf.Atan2(reflectedVelo.x, reflectedVelo.z) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
             
             reflectedVelo.y = 0;
             // print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
-            vel = reflectedVelo.normalized * _bulletSpeed;
+            _rb.velocity = reflectedVelo.normalized * _bulletSpeed;
+            vel = _rb.velocity;
             // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
-            // Subtract bounces and maybe destroy
-            maxBounces -= 1;
-            if (maxBounces < 1) {
+            // add to bounces tally and maybe destroy
+            bounced++;
+            if (bounced > maxBounces) {
                 finishShot(true);
+            }
+            else
+            {
+                // store that it ricocheted for analytics
+                _ricocheted = true;
             }
     }
 
     void finishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
-        bullet.GetComponent<MeshRenderer>().enabled = false;
-        if (!isGhost && explode) {
-            print("Bullet terminating");
-            GameObject splash = UnityEngine.Object.Instantiate(splashZone);
-            SplashZone splashManager = splash.GetComponent<SplashZone>();
-            splashManager.splashRadius = GlobalStats.bulletSplashRadius; 
-            splashManager.splashDamage = GlobalStats.bulletSplashDamage;
-            splash.transform.position = this.transform.position;
+        if (isGhost)
+        {
+            return;
         }
+
+        bullet.GetComponent<MeshRenderer>().enabled = false;
+        if (explode) {
+            GameObject splash = Instantiate(splashZone);
+            var pos = transform.position+Vector3.zero;
+            pos.y = 0;
+            splash.transform.position = pos;
+        }
+        StopCoroutine(expiration);
         Destroy(gameObject);
     }
 
@@ -138,4 +189,19 @@ public class BulletLogic : MonoBehaviour
          if (_networkedManager != null)
              _networkedManager.UnregisterObject(_networkedBullet); //todo find what is registering the bullets
      }
+
+    public ByteString GetAnalyticsFields()
+    {
+        var data = "";
+
+        data += _ricocheted ? "r" : "f"; // store an r if a ricochet happened else it was f for flying
+        _ricocheted = false;
+        
+        return ByteString.CopyFromUtf8(data);
+    }
+
+    public string GetAnalyticsName()
+    {
+        return "Bullet-Controller";
+    }
 }

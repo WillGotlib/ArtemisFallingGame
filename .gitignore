@@ -10,3 +10,5 @@ GameJamJan21/Assets/Plugins/
 # generated files
 Server/proto
 GameJamJan21/Assets/Scripts/Online/Generated
+
+**/.DS_Store
