@@ -26,39 +26,44 @@ namespace Analytics {
           string.Concat(
             "ChhQcm90b2J1Zi9hbmFseXRpY3MucHJvdG8iWQoER2FtZRIYChBhbmFseXRp",
             "Y3NWZXJzaW9uGAEgASgJEhMKC2dhbWVWZXJzaW9uGAIgASgJEhAKCGdhbWVU",
-            "aW1lGAMgASgDEhAKCG1ldGFkYXRhGAUgASgJIsoCCg5BbmFseXRpY3NFdmVu",
+            "aW1lGAMgASgDEhAKCG1ldGFkYXRhGAUgASgJIokDCg5BbmFseXRpY3NFdmVu",
             "dBIWCglldmVudFRpbmUYASABKANIAIgBARIlCgZldmVudHMYAiADKAsyFS5B",
-            "bmFseXRpY3NFdmVudC5FdmVudBrqAQoFRXZlbnQSGAoDbWFwGAEgASgLMgku",
+            "bmFseXRpY3NFdmVudC5FdmVudBqpAgoFRXZlbnQSGAoDbWFwGAEgASgLMgku",
             "TWFwRXZlbnRIABIeCgZvYmplY3QYAyABKAsyDC5PYmplY3RFdmVudEgAEh4K",
             "BmRldmljZRgEIAEoCzIMLkRldmljZUV2ZW50SAASHQoEaXRlbRgFIAEoCzIN",
             "Lk5ld0l0ZW1FdmVudEgAEiAKB3Jlc3Bhd24YBiABKAsyDS5SZXNwYXduRXZl",
             "bnRIABIcCgVkZWF0aBgHIAEoCzILLkRlYXRoRXZlbnRIABIfCgZoZWFsdGgY",
-            "CCABKAsyDS5QbGF5ZXJIZWFsdGhIAEIHCgVldmVudEIMCgpfZXZlbnRUaW5l",
-            "IigKDE5ld0l0ZW1FdmVudBIMCgRuYW1lGAIgASgJEgoKAmlkGAEgASgFIhsK",
-            "CE1hcEV2ZW50Eg8KB21hcE5hbWUYASABKAkiGAoKRGVhdGhFdmVudBIKCgJp",
-            "ZBgBIAEoBSIaCgxSZXNwYXduRXZlbnQSCgoCaWQYASABKAUiKgoMUGxheWVy",
-            "SGVhbHRoEgoKAmlkGAEgASgFEg4KBmFtb3VudBgCIAEoAiKXAQoLT2JqZWN0",
-            "RXZlbnQSCgoCaWQYASABKAUSIAoIcG9zaXRpb24YAiABKAsyCS5Qb3NpdGlv",
-            "bkgAiAEBEiAKCHJvdGF0aW9uGAMgASgLMgkuUm90YXRpb25IAYgBARIeCgdz",
-            "Y3JpcHRzGAQgAygLMg0uT2JqZWN0U2NyaXB0QgsKCV9wb3NpdGlvbkILCglf",
-            "cm90YXRpb24iKAoMT2JqZWN0U2NyaXB0EgoKAmlkGAEgASgFEgwKBGRhdGEY",
-            "AiABKAwiGQoLUmVtb3ZlRXZlbnQSCgoCaWQYASABKAUidgoLRGV2aWNlRXZl",
-            "bnQSIQoFZXZlbnQYASABKA4yEi5EZXZpY2VFdmVudC5TdGF0ZRIMCgRuYW1l",
-            "GAIgASgJIjYKBVN0YXRlEhQKEGRldmljZV9jb25uZWN0ZWQQABIXChNkZXZp",
-            "Y2VfZGlzY29ubmVjdGVkEAEiKwoIUG9zaXRpb24SCQoBeBgBIAEoAhIJCgF5",
-            "GAIgASgCEgkKAXoYAyABKAIiNgoIUm90YXRpb24SCQoBdxgBIAEoAhIJCgF4",
-            "GAIgASgCEgkKAXkYAyABKAISCQoBehgEIAEoAkIMqgIJQW5hbHl0aWNzYgZw",
-            "cm90bzM="));
+            "CCABKAsyDS5QbGF5ZXJIZWFsdGhIABIeCgZkYW1hZ2UYCSABKAsyDC5EYW1h",
+            "Z2VFdmVudEgAEh0KBXN0b2NrGAogASgLMgwuUGxheWVyU3RvY2tIAEIHCgVl",
+            "dmVudEIMCgpfZXZlbnRUaW5lIigKDE5ld0l0ZW1FdmVudBIMCgRuYW1lGAIg",
+            "ASgJEgoKAmlkGAEgASgFIhsKCE1hcEV2ZW50Eg8KB21hcE5hbWUYASABKAki",
+            "GAoKRGVhdGhFdmVudBIKCgJpZBgBIAEoBSIaCgxSZXNwYXduRXZlbnQSCgoC",
+            "aWQYASABKAUiKgoMUGxheWVySGVhbHRoEgoKAmlkGAEgASgFEg4KBmFtb3Vu",
+            "dBgCIAEoAiIqCgtEYW1hZ2VFdmVudBIKCgJpZBgBIAEoBRIPCgdkYW1hZ2Vy",
+            "GAIgASgFIigKC1BsYXllclN0b2NrEgoKAmlkGAEgASgFEg0KBXN0b2NrGAIg",
+            "ASgFIpcBCgtPYmplY3RFdmVudBIKCgJpZBgBIAEoBRIgCghwb3NpdGlvbhgC",
+            "IAEoCzIJLlBvc2l0aW9uSACIAQESIAoIcm90YXRpb24YAyABKAsyCS5Sb3Rh",
+            "dGlvbkgBiAEBEh4KB3NjcmlwdHMYBCADKAsyDS5PYmplY3RTY3JpcHRCCwoJ",
+            "X3Bvc2l0aW9uQgsKCV9yb3RhdGlvbiIoCgxPYmplY3RTY3JpcHQSCgoCaWQY",
+            "ASABKAUSDAoEZGF0YRgCIAEoDCIZCgtSZW1vdmVFdmVudBIKCgJpZBgBIAEo",
+            "BSJ2CgtEZXZpY2VFdmVudBIhCgVldmVudBgBIAEoDjISLkRldmljZUV2ZW50",
+            "LlN0YXRlEgwKBG5hbWUYAiABKAkiNgoFU3RhdGUSFAoQZGV2aWNlX2Nvbm5l",
+            "Y3RlZBAAEhcKE2RldmljZV9kaXNjb25uZWN0ZWQQASIrCghQb3NpdGlvbhIJ",
+            "CgF4GAEgASgCEgkKAXkYAiABKAISCQoBehgDIAEoAiI2CghSb3RhdGlvbhIJ",
+            "CgF3GAEgASgCEgkKAXgYAiABKAISCQoBeRgDIAEoAhIJCgF6GAQgASgCQgyq",
+            "AglBbmFseXRpY3NiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.Game), global::Analytics.Game.Parser, new[]{ "AnalyticsVersion", "GameVersion", "GameTime", "Metadata" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.AnalyticsEvent), global::Analytics.AnalyticsEvent.Parser, new[]{ "EventTine", "Events" }, new[]{ "EventTine" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.AnalyticsEvent.Types.Event), global::Analytics.AnalyticsEvent.Types.Event.Parser, new[]{ "Map", "Object", "Device", "Item", "Respawn", "Death", "Health" }, new[]{ "Event" }, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.AnalyticsEvent), global::Analytics.AnalyticsEvent.Parser, new[]{ "EventTine", "Events" }, new[]{ "EventTine" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.AnalyticsEvent.Types.Event), global::Analytics.AnalyticsEvent.Types.Event.Parser, new[]{ "Map", "Object", "Device", "Item", "Respawn", "Death", "Health", "Damage", "Stock" }, new[]{ "Event" }, null, null, null)}),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.NewItemEvent), global::Analytics.NewItemEvent.Parser, new[]{ "Name", "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.MapEvent), global::Analytics.MapEvent.Parser, new[]{ "MapName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.DeathEvent), global::Analytics.DeathEvent.Parser, new[]{ "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.RespawnEvent), global::Analytics.RespawnEvent.Parser, new[]{ "Id" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.PlayerHealth), global::Analytics.PlayerHealth.Parser, new[]{ "Id", "Amount" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.DamageEvent), global::Analytics.DamageEvent.Parser, new[]{ "Id", "Damager" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.PlayerStock), global::Analytics.PlayerStock.Parser, new[]{ "Id", "Stock" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.ObjectEvent), global::Analytics.ObjectEvent.Parser, new[]{ "Id", "Position", "Rotation", "Scripts" }, new[]{ "Position", "Rotation" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.ObjectScript), global::Analytics.ObjectScript.Parser, new[]{ "Id", "Data" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Analytics.RemoveEvent), global::Analytics.RemoveEvent.Parser, new[]{ "Id" }, null, null, null, null),
@@ -669,6 +674,12 @@ namespace Analytics {
             case EventOneofCase.Health:
               Health = other.Health.Clone();
               break;
+            case EventOneofCase.Damage:
+              Damage = other.Damage.Clone();
+              break;
+            case EventOneofCase.Stock:
+              Stock = other.Stock.Clone();
+              break;
           }
 
           _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -767,6 +778,30 @@ namespace Analytics {
           }
         }
 
+        /// <summary>Field number for the "damage" field.</summary>
+        public const int DamageFieldNumber = 9;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+        public global::Analytics.DamageEvent Damage {
+          get { return eventCase_ == EventOneofCase.Damage ? (global::Analytics.DamageEvent) event_ : null; }
+          set {
+            event_ = value;
+            eventCase_ = value == null ? EventOneofCase.None : EventOneofCase.Damage;
+          }
+        }
+
+        /// <summary>Field number for the "stock" field.</summary>
+        public const int StockFieldNumber = 10;
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+        public global::Analytics.PlayerStock Stock {
+          get { return eventCase_ == EventOneofCase.Stock ? (global::Analytics.PlayerStock) event_ : null; }
+          set {
+            event_ = value;
+            eventCase_ = value == null ? EventOneofCase.None : EventOneofCase.Stock;
+          }
+        }
+
         private object event_;
         /// <summary>Enum of possible cases for the "event" oneof.</summary>
         public enum EventOneofCase {
@@ -778,6 +813,8 @@ namespace Analytics {
           Respawn = 6,
           Death = 7,
           Health = 8,
+          Damage = 9,
+          Stock = 10,
         }
         private EventOneofCase eventCase_ = EventOneofCase.None;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -815,6 +852,8 @@ namespace Analytics {
           if (!object.Equals(Respawn, other.Respawn)) return false;
           if (!object.Equals(Death, other.Death)) return false;
           if (!object.Equals(Health, other.Health)) return false;
+          if (!object.Equals(Damage, other.Damage)) return false;
+          if (!object.Equals(Stock, other.Stock)) return false;
           if (EventCase != other.EventCase) return false;
           return Equals(_unknownFields, other._unknownFields);
         }
@@ -830,6 +869,8 @@ namespace Analytics {
           if (eventCase_ == EventOneofCase.Respawn) hash ^= Respawn.GetHashCode();
           if (eventCase_ == EventOneofCase.Death) hash ^= Death.GetHashCode();
           if (eventCase_ == EventOneofCase.Health) hash ^= Health.GetHashCode();
+          if (eventCase_ == EventOneofCase.Damage) hash ^= Damage.GetHashCode();
+          if (eventCase_ == EventOneofCase.Stock) hash ^= Stock.GetHashCode();
           hash ^= (int) eventCase_;
           if (_unknownFields != null) {
             hash ^= _unknownFields.GetHashCode();
@@ -877,6 +918,14 @@ namespace Analytics {
             output.WriteRawTag(66);
             output.WriteMessage(Health);
           }
+          if (eventCase_ == EventOneofCase.Damage) {
+            output.WriteRawTag(74);
+            output.WriteMessage(Damage);
+          }
+          if (eventCase_ == EventOneofCase.Stock) {
+            output.WriteRawTag(82);
+            output.WriteMessage(Stock);
+          }
           if (_unknownFields != null) {
             _unknownFields.WriteTo(output);
           }
@@ -915,6 +964,14 @@ namespace Analytics {
             output.WriteRawTag(66);
             output.WriteMessage(Health);
           }
+          if (eventCase_ == EventOneofCase.Damage) {
+            output.WriteRawTag(74);
+            output.WriteMessage(Damage);
+          }
+          if (eventCase_ == EventOneofCase.Stock) {
+            output.WriteRawTag(82);
+            output.WriteMessage(Stock);
+          }
           if (_unknownFields != null) {
             _unknownFields.WriteTo(ref output);
           }
@@ -945,6 +1002,12 @@ namespace Analytics {
           }
           if (eventCase_ == EventOneofCase.Health) {
             size += 1 + pb::CodedOutputStream.ComputeMessageSize(Health);
+          }
+          if (eventCase_ == EventOneofCase.Damage) {
+            size += 1 + pb::CodedOutputStream.ComputeMessageSize(Damage);
+          }
+          if (eventCase_ == EventOneofCase.Stock) {
+            size += 1 + pb::CodedOutputStream.ComputeMessageSize(Stock);
           }
           if (_unknownFields != null) {
             size += _unknownFields.CalculateSize();
@@ -1000,6 +1063,18 @@ namespace Analytics {
                 Health = new global::Analytics.PlayerHealth();
               }
               Health.MergeFrom(other.Health);
+              break;
+            case EventOneofCase.Damage:
+              if (Damage == null) {
+                Damage = new global::Analytics.DamageEvent();
+              }
+              Damage.MergeFrom(other.Damage);
+              break;
+            case EventOneofCase.Stock:
+              if (Stock == null) {
+                Stock = new global::Analytics.PlayerStock();
+              }
+              Stock.MergeFrom(other.Stock);
               break;
           }
 
@@ -1081,6 +1156,24 @@ namespace Analytics {
                 Health = subBuilder;
                 break;
               }
+              case 74: {
+                global::Analytics.DamageEvent subBuilder = new global::Analytics.DamageEvent();
+                if (eventCase_ == EventOneofCase.Damage) {
+                  subBuilder.MergeFrom(Damage);
+                }
+                input.ReadMessage(subBuilder);
+                Damage = subBuilder;
+                break;
+              }
+              case 82: {
+                global::Analytics.PlayerStock subBuilder = new global::Analytics.PlayerStock();
+                if (eventCase_ == EventOneofCase.Stock) {
+                  subBuilder.MergeFrom(Stock);
+                }
+                input.ReadMessage(subBuilder);
+                Stock = subBuilder;
+                break;
+              }
             }
           }
         #endif
@@ -1157,6 +1250,24 @@ namespace Analytics {
                 }
                 input.ReadMessage(subBuilder);
                 Health = subBuilder;
+                break;
+              }
+              case 74: {
+                global::Analytics.DamageEvent subBuilder = new global::Analytics.DamageEvent();
+                if (eventCase_ == EventOneofCase.Damage) {
+                  subBuilder.MergeFrom(Damage);
+                }
+                input.ReadMessage(subBuilder);
+                Damage = subBuilder;
+                break;
+              }
+              case 82: {
+                global::Analytics.PlayerStock subBuilder = new global::Analytics.PlayerStock();
+                if (eventCase_ == EventOneofCase.Stock) {
+                  subBuilder.MergeFrom(Stock);
+                }
+                input.ReadMessage(subBuilder);
+                Stock = subBuilder;
                 break;
               }
             }
@@ -2196,6 +2307,458 @@ namespace Analytics {
 
   }
 
+  public sealed partial class DamageEvent : pb::IMessage<DamageEvent>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<DamageEvent> _parser = new pb::MessageParser<DamageEvent>(() => new DamageEvent());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<DamageEvent> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[7]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DamageEvent() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DamageEvent(DamageEvent other) : this() {
+      id_ = other.id_;
+      damager_ = other.damager_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public DamageEvent Clone() {
+      return new DamageEvent(this);
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private int id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "damager" field.</summary>
+    public const int DamagerFieldNumber = 2;
+    private int damager_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Damager {
+      get { return damager_; }
+      set {
+        damager_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as DamageEvent);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(DamageEvent other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Id != other.Id) return false;
+      if (Damager != other.Damager) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Id != 0) hash ^= Id.GetHashCode();
+      if (Damager != 0) hash ^= Damager.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Id);
+      }
+      if (Damager != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Damager);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Id);
+      }
+      if (Damager != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Damager);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
+      }
+      if (Damager != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Damager);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(DamageEvent other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Id != 0) {
+        Id = other.Id;
+      }
+      if (other.Damager != 0) {
+        Damager = other.Damager;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Id = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            Damager = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Id = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            Damager = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class PlayerStock : pb::IMessage<PlayerStock>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<PlayerStock> _parser = new pb::MessageParser<PlayerStock>(() => new PlayerStock());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<PlayerStock> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[8]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PlayerStock() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PlayerStock(PlayerStock other) : this() {
+      id_ = other.id_;
+      stock_ = other.stock_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PlayerStock Clone() {
+      return new PlayerStock(this);
+    }
+
+    /// <summary>Field number for the "id" field.</summary>
+    public const int IdFieldNumber = 1;
+    private int id_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Id {
+      get { return id_; }
+      set {
+        id_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "stock" field.</summary>
+    public const int StockFieldNumber = 2;
+    private int stock_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int Stock {
+      get { return stock_; }
+      set {
+        stock_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as PlayerStock);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(PlayerStock other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Id != other.Id) return false;
+      if (Stock != other.Stock) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Id != 0) hash ^= Id.GetHashCode();
+      if (Stock != 0) hash ^= Stock.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Id);
+      }
+      if (Stock != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Stock);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Id != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(Id);
+      }
+      if (Stock != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Stock);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Id != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
+      }
+      if (Stock != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Stock);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(PlayerStock other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Id != 0) {
+        Id = other.Id;
+      }
+      if (other.Stock != 0) {
+        Stock = other.Stock;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Id = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            Stock = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Id = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            Stock = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   /// <summary>
   /// for object movements
   /// </summary>
@@ -2213,7 +2776,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2523,7 +3086,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2755,7 +3318,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2947,7 +3510,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3186,7 +3749,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3449,7 +4012,7 @@ namespace Analytics {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Analytics.AnalyticsReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

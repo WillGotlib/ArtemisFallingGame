@@ -39,7 +39,12 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     private Coroutine expiration;
 
     public int ghostBounces = 3;
-    
+    private AnalyticsManager _analytics;
+
+    private void Start()
+    {
+        _analytics = FindObjectOfType<AnalyticsManager>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -118,6 +123,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     void EncounterPlayer(Collision collision) {
             Controller player = collision.gameObject.GetComponent<Controller>();
             float damage = GetBulletDamage();
+            _analytics.DamageEvent(collision.gameObject,gameObject);
             player.InflictDamage(damage);
             finishShot(BulletDamageMultiplier()!=0);
     }

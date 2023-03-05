@@ -24,6 +24,8 @@ message AnalyticsEvent {
       RespawnEvent respawn = 6;
       DeathEvent death = 7;
       PlayerHealth health = 8;
+      DamageEvent damage = 9;
+      PlayerStock stock = 10;
     }
   }
   
@@ -53,6 +55,16 @@ message RespawnEvent {
 message PlayerHealth {
   int32 id = 1;
   float amount = 2;
+}
+
+message DamageEvent {
+  int32 id = 1;
+  int32 damager = 2;
+}
+
+message PlayerStock {
+  int32 id = 1;
+  int32 stock = 2;
 }
 
 // for object movements

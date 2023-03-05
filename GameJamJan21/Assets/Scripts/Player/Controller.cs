@@ -12,6 +12,8 @@ using Object = UnityEngine.Object;
 public class Controller : MonoBehaviour
 {
     [NonSerialized] public int playerNumber;
+    // Number of times a player can die before they are out of the game
+    [NonSerialized] public int Stock = GlobalStats.defaultStockCount;
 
     public CharacterController controller;
     public float speed = 6f;
@@ -94,6 +96,10 @@ public class Controller : MonoBehaviour
         startMomentum = momentum;
         
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        
+        _analyticsManager.HealthEvent(gameObject, playerHealth);
+        _analyticsManager.StockUpdate(gameObject, Stock);
+        
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
 
@@ -215,12 +221,15 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0)
             {
-                playerController.RespawnPlayer(transform, playerNumber);
+                playerController.RespawnPlayer(this);
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
                 _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
+                
                 _analyticsManager.RespawnEvent(gameObject);
+                _analyticsManager.StockUpdate(gameObject, Stock); // maybe put all these events in the game manager rather then in each player and bullet
+                    
                 return;
             }
         }

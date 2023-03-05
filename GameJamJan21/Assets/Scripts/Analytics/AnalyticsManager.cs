@@ -11,7 +11,7 @@ namespace Analytics
 {
     public class AnalyticsManager : MonoBehaviour
     {
-        private string _loggingVersion = "0.1.0";
+        private string _loggingVersion = "0.1.1";
         private byte[] _magic = { 0x89, 0x41, 0x52, 0x54 }; // identifiable byte sequence 
 
         [SerializeField] private int loggingFPS = 30;
@@ -28,8 +28,6 @@ namespace Analytics
         private readonly Dictionary<int, ObjectEvent> _prevEvents = new();
 
         private readonly Queue<Event> _eventQueue = new();
-
-        //[RuntimeInitializeOnLoadMethod]
 
         public void ChangeMap(string mapName)
         {
@@ -53,6 +51,24 @@ namespace Analytics
                 Id = GetId(Utils.NameObject(player)),
                 Amount = health
             } });
+        }
+        
+        public void DamageEvent(GameObject player, GameObject damager)
+        {
+            _eventQueue.Enqueue(new Event { Damage = new DamageEvent
+            {
+                Id = GetId(Utils.NameObject(player)),
+                Damager = GetId(Utils.NameObject(damager))
+            } });
+        }
+        
+        public void StockUpdate(GameObject player, int stock)
+        {
+            _eventQueue.Enqueue(new Event { Stock = new PlayerStock
+            {
+                Id = GetId(Utils.NameObject(player)),
+                Stock = stock
+            }});
         }
 
         private void Start()
