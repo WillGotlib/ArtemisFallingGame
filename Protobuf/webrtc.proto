@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option go_package = "proto/";
+option csharp_namespace = "protoBuff";
+
+message Trickle{
+  oneof Message {
+    SessionDescription description = 1;
+    ICECandidateInit candidate = 2;
+  }
+}
+
+message SessionDescription{
+  int32 type = 1;
+  string SDP = 2;
+}
+
+message ICECandidateInit{
+  string Candidate = 1;
+  optional string SDPMid = 2;
+  optional int32 SDPMLineIndex = 3;
+  optional string UsernameFragment = 4;
+}

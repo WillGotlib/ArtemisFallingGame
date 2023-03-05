@@ -48,7 +48,7 @@ namespace Online
         /// </summary>
         public static async void Disconnect()
         {
-            (await Grpc())._disconnect();
+            if(_active) (await Grpc())._disconnect();
         }
 
         /// <summary>
