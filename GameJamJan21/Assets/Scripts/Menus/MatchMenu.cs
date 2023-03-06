@@ -41,8 +41,6 @@ public class MatchMenu : MonoBehaviour
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
-        // Statics.setLevel(selectedLevel);
-        print("SELECTED: " + selectedLevel + " STATIC: " + Statics.selectedLevel);
         SceneManager.LoadScene("Gameplay");
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Online;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,9 +19,17 @@ public class StartGame : MonoBehaviour
     [SerializeField] private float deathCooldown; // Amount of time before a player respawns
     [SerializeField] private float invincibilityCooldown; // Amount of time after respawning that the player cannot die
 
+    [Header("Colours")]
+    [Tooltip("Lists have to be the same length")]
+    public Color[] primaryColours;
+    public Color[] accentColours;
+    //public Color player2PrimaryColour=new Color(.22f,.11f,.055f);
+    //public Color player2AccentColour= Color.magenta;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (primaryColours.Length != accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
         StartMatch();
     }
@@ -49,28 +58,39 @@ public class StartGame : MonoBehaviour
     }
 
     private void StartLocalGame()
-        {
+    {
         var spawnPoints = levelManager.GetSpawnPoints();
         // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
         CreatePhysicsScene();
         players = new Controller[Mathf.Min(playerCount, spawnPoints.Length)];
-        for (var i =0; i<players.Length;i++) {
+        for (var i = 0; i < players.Length; i++)
+        {
             var spawn = spawnPoints[i].transform;
             spawnPlayer(i, spawn);
         }
     }
 
-    private GameObject spawnPlayer(int index, Transform spawnPoint){
+    private GameObject spawnPlayer(int index, Transform spawnPoint)
+    {
         print("Spawning a player");
         var playerPos = spawnPoint.position + Vector3.zero;
         playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
         GameObject player = Instantiate(playerPrefab, playerPos, spawnPoint.rotation, transform);
         player.name = "Player " + index;
-        var controller = player.GetComponent<Controller>();
-        controller.playerNumber = index;
-        players[index] = controller;
-                
-        PlayerStockUpdate(index, controller.Stock);
+        player.GetComponent<Controller>().playerNumber = index;
+        players[index] = player.GetComponent<Controller>();
+        // playerStocks[i] = GlobalStats.defaultStockCount;
+        PlayerStockUpdate(index, GlobalStats.defaultStockCount);
+
+        if (index < primaryColours.Length)
+        {
+            var colourizer = player.GetComponent<PlayerColourizer>();
+            colourizer.PrimaryColour = primaryColours[index];
+            colourizer.SecondaryColour = accentColours[index];
+            colourizer.initialColourize();
+        }
+
+        player.GetComponent<CharacterFlash>().SetModel(player.transform.Find("robot"));
         return player;
     }
 

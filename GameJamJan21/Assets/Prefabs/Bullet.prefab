@@ -205,10 +205,12 @@ MonoBehaviour:
   bullet: {fileID: 4972240987904475784}
   maxBounces: 3
   _bulletSpeed: 10
+  cooldown: 1
   splashZone: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
   rotationSpeed: 0.3
   trail: {fileID: 1364202883547966758}
   maxFlightTimeSeconds: 10
+  ghostBounces: 3
 --- !u!114 &2301455758190603568
 MonoBehaviour:
   m_ObjectHideFlags: 0

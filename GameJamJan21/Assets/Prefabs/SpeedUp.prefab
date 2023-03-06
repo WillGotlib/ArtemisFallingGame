@@ -104,10 +104,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3f8674d4786d84a93c96c1ed34d084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageBonus: 1
-  speedBonus: 0.25
+  fireRateBonus: 1
+  speedBonus: 1.5
   dashBonus: 1
   maxDuration: 10
+  requiresWeapon: 0
 --- !u!114 &3969214465323797172
 MonoBehaviour:
   m_ObjectHideFlags: 0
