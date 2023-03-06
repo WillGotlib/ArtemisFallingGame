@@ -55,8 +55,6 @@ namespace Online
             }
         }
 
-        private WS_WRTC _wsWrtc;
-        
         private RTCPeerConnection _connection;
         private RTCDataChannel _priorityChannel;
         private RTCDataChannel _fastChannel;
@@ -79,7 +77,6 @@ namespace Online
                 iceServers = new[] { new RTCIceServer { urls = new[] { "stun:stun.l.google.com:19302" } } }
             };
             _connection = new RTCPeerConnection(ref config);
-            _wsWrtc = new WS_WRTC(_connection);
             
             var priorityConf = new RTCDataChannelInit();
             var fastConf = new RTCDataChannelInit
@@ -100,14 +97,16 @@ namespace Online
             });
         }
         
-        public Promise Connect(MonoBehaviour parent, string token)
+        public Promise Connect(string token)
         {
             var promise = new Promise();
-            _wsWrtc.Connect(parent, token).Then(() =>
+            var wsWrtc = new GameObject("ws rtc Connector").AddComponent<WS_WRTC>();
+            wsWrtc.SetPeer(_connection);
+            wsWrtc.Connect(token).Then(() =>
             {
                 Alive = true;
                 promise.Resolve();
-            }).Catch(promise.Reject);
+            }).Catch(promise.Reject).Finally(wsWrtc.Destroy);
             return promise;
         }
 

@@ -61,13 +61,13 @@ namespace Online
         /// <summary>
         /// Starts the stream to the server
         /// </summary>
-        public static Promise StartStream(MonoBehaviour parent)
+        public static Promise StartStream()
         {
             var conn = GetConnection();
             if (conn.RtcAlive() || conn._token == "") return null; // maybe will cause issues
 
             conn._rtcConnection = new WebRtc{callback = _callback};
-            return conn._rtcConnection.Connect(parent, conn._token);
+            return conn._rtcConnection.Connect(conn._token);
         }
 
         /// <summary>

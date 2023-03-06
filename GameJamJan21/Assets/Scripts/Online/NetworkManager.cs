@@ -128,7 +128,7 @@ namespace Online
                     AddEntity(entity);
                 }
                 
-                Connection.StartStream(this).Then(() =>
+                Connection.StartStream().Then(() =>
                 {
                     PostRegistrers();
 

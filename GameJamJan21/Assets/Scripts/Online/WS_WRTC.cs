@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Google.Protobuf;
 using protoBuff;
 using Unity.WebRTC;
@@ -11,9 +10,9 @@ using UnityEngine;
 
 namespace Online
 {
-    internal class WS_WRTC
+    internal class WS_WRTC : MonoBehaviour
     {
-        public Promise Connect(MonoBehaviour parent, string token)
+        public Promise Connect(string token)
         {
             _promise = new Promise();
 
@@ -24,16 +23,16 @@ namespace Online
 
             _webSocket.OnError += e =>
             {
-                    Debug.Log("ws Error! " + e);
+                Debug.Log("ws Error! " + e);
                 _promise.Reject(new Exception(e));
             };
             _webSocket.OnClose += e =>
             {
-                Debug.Log("ws Connection closed! " + e); 
-                if (e != WebSocketCloseCode.Normal) _promise.Reject(new Exception("close "+e));
+                Debug.Log("ws Connection closed! " + e);
+                if (e != WebSocketCloseCode.Normal) _promise.Reject(new Exception("close " + e));
             };
             _webSocket.OnMessage += WsICE;
-            _webSocket.OnOpen += () => parent.StartCoroutine(NegotiatePeer(parent));
+            _webSocket.OnOpen += () => StartCoroutine(NegotiatePeer());
 
             _webSocket.Connect();
             return _promise;
@@ -43,7 +42,7 @@ namespace Online
         private RTCPeerConnection _rtcPeer;
         private Promise _promise;
 
-        public WS_WRTC(RTCPeerConnection peer)
+        public void SetPeer(RTCPeerConnection peer)
         {
             _rtcPeer = peer;
             _rtcPeer.OnIceCandidate = OnIceCandidate;
@@ -80,6 +79,13 @@ namespace Online
             }
         }
 
+        void Update()
+        {
+#if !UNITY_WEBGL || UNITY_EDITOR
+            _webSocket?.DispatchMessageQueue();
+#endif
+        }
+
         public void OnIceCandidate(RTCIceCandidate ice)
         {
             if (ice.Candidate != "")
@@ -106,13 +112,13 @@ namespace Online
             if (state == RTCIceConnectionState.Connected || state == RTCIceConnectionState.Completed)
             {
                 Debug.Log("connected, closing websocket");
-                _webSocket.Close();
+                _webSocket?.Close();
                 _webSocket = null;
                 _promise.Resolve();
             }
         }
 
-        private IEnumerator NegotiatePeer(MonoBehaviour parent)
+        private IEnumerator NegotiatePeer()
         {
             var op = _rtcPeer.CreateOffer();
             yield return op;
@@ -120,7 +126,7 @@ namespace Online
             if (!op.IsError)
             {
                 // Debug.Log("creating offer");
-                yield return parent.StartCoroutine(OnCreateOfferSuccess(op.Desc));
+                yield return StartCoroutine(OnCreateOfferSuccess(op.Desc));
             }
             else
             {
@@ -151,6 +157,11 @@ namespace Online
                     Type = (int)desc.type
                 }
             }.ToByteArray());
+        }
+        
+        public void Destroy()
+        {
+            Destroy(this);
         }
     }
 }

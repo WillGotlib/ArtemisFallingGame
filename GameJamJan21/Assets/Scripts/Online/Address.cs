@@ -17,11 +17,13 @@ namespace Online
         /// <returns>Grpc.Core.Channel object</returns>
         public static void ChangeAddress(string address)
         {
-            var u = new UriBuilder($"{DefaultProtocol}://{address}");
+            var u = new UriBuilder($"tcp://{address}");
             if (u.Port == -1)
             {
                 u.Port = DefaultPort;
             }
+
+            u.Scheme = DefaultProtocol;
 
             if (u.Host == "")
             {
@@ -38,7 +40,7 @@ namespace Online
         /// <returns>address of server</returns>
         public static string GetAddress(bool alwaysIncludePort = false)
         {
-            if (alwaysIncludePort || _address.Port == DefaultPort) return _address.Host + ":" + _address.Port;
+            if (alwaysIncludePort || _address.Port != DefaultPort) return _address.Host + ":" + _address.Port;
             return _address.Host;
         }
 
