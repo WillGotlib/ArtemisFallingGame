@@ -2,8 +2,16 @@
 
 if [ -d "./Assets/Plugins" ] 
 then
-    echo "Plugins are already installed"
-    exit
+  while true  
+  do
+    read -p "Plugins are already installed, do you wish to reinstall? Yes/[N]o " yn
+        case $yn in
+            [Yy]* ) break;;
+            [Nn]* ) exit;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    echo 
+    done
 fi
 
 download (){
@@ -14,6 +22,8 @@ download (){
 }
 
 downloadNuget (){
+  rm -fr "Assets/Plugins/$1"
+  
   download "https://www.nuget.org/api/v2/package/$1/$2" "Plugins/$1"
   cd Assets/Plugins
   mv "$1/lib/$3" .
@@ -27,4 +37,6 @@ downloadNuget Google.Protobuf 3.22.0 net45 && echo "installed protobuf"
 
 downloadNuget System.Runtime.CompilerServices.Unsafe 4.5.2 netstandard2.0 && echo "installed system.unsafe"
 
-downloadNuget System.Threading.Channels 7.0.0 net462 && echo "installed channels"
+downloadNuget Proyecto26.RestClient 2.6.2 net35
+downloadNuget RSG.Promise 3.0.1 net35
+echo "installed promise based rest"
