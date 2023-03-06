@@ -15,8 +15,8 @@ import (
 )
 
 const (
-	EmptySessionTimeout = 10 * time.Second // 10 seconds should be plenty of time for someone to join
-	clientTimeout       = 2 * time.Minute
+	EmptySessionTimeout = 5 * time.Second // 5 seconds should be plenty of time for someone to join
+	clientTimeout       = 10 * time.Second
 )
 
 var server *GameServer
@@ -28,7 +28,11 @@ type GameServer struct {
 	gameTimeouts  map[string]context.CancelFunc
 	sessionUsers  map[string][]*backend.Client
 	clients       map[backend.Token]*backend.Client
-	mu            sync.RWMutex
+
+	gamesMu    sync.RWMutex
+	timeoutsMu sync.RWMutex
+	sessionsMu sync.RWMutex
+	clientsMu  sync.RWMutex
 }
 
 // NewGameServer constructs a new game server struct.
@@ -50,22 +54,32 @@ func NewGameServer() *GameServer {
 }
 
 func (s *GameServer) Stop() {
+	s.gamesMu.RLock()
 	for id := range s.games {
 		multiLogger.Printf("Stopping \"%s\"\n", id)
+		s.gamesMu.RUnlock()
 		s.removeSession(id, true)
+		s.gamesMu.RLock()
 	}
+	s.gamesMu.RUnlock()
 	server = nil
 }
 
 func (s *GameServer) addClient(c *backend.Client) {
-	s.mu.Lock()
+	s.clientsMu.Lock()
 	s.clients[c.Id] = c
+	s.clientsMu.Unlock()
+
+	s.sessionsMu.Lock()
 	s.sessionUsers[c.Session.GameId] = append(s.sessionUsers[c.Session.GameId], c)
-	s.mu.Unlock()
+	s.sessionsMu.Unlock()
 }
 
 func (s *GameServer) removeClient(id backend.Token, message string) {
+	s.clientsMu.RLock()
 	c := s.clients[id]
+	s.clientsMu.RUnlock()
+
 	if c == nil {
 		multiLogger.Debugf("atempting to remove an already deleted client %s", id)
 		return
@@ -75,13 +89,17 @@ func (s *GameServer) removeClient(id backend.Token, message string) {
 	c.Done(message) // close connection if it's still open
 	session := c.Session
 	session.RemoveClientsEntities(c)
-	s.mu.Lock()
+	s.clientsMu.Lock()
 	delete(s.clients, id)
+	s.clientsMu.Unlock()
+
+	s.sessionsMu.RLock()
 	users, ok := s.sessionUsers[session.GameId]
+	s.sessionsMu.RUnlock()
 	if !ok {
-		s.mu.Unlock()
 		return
 	}
+
 	serverUsers := make([]*backend.Client, len(users)-1, maxClients)
 	count := 0
 	for _, i := range users {
@@ -91,8 +109,10 @@ func (s *GameServer) removeClient(id backend.Token, message string) {
 		serverUsers[count] = i
 		count++
 	}
+
+	s.sessionsMu.Lock()
 	s.sessionUsers[session.GameId] = serverUsers
-	s.mu.Unlock()
+	s.sessionsMu.Unlock()
 	if len(serverUsers) == 0 {
 		s.removeSession(session.GameId, false)
 	}
@@ -100,15 +120,21 @@ func (s *GameServer) removeClient(id backend.Token, message string) {
 
 // makeSession takes a game id and returns true if it created a new session
 func (s *GameServer) makeSession(id string) bool {
-	s.mu.Lock()
+	s.gamesMu.RLock()
 	_, ok := s.games[id]
+	s.gamesMu.RUnlock()
 	if !ok {
+		s.gamesMu.Lock()
 		s.games[id] = backend.NewGame(s.ChangeChannel, id)
-		s.sessionUsers[id] = make([]*backend.Client, 0, maxClients)
 		s.games[id].Start()
+		s.gamesMu.Unlock()
+
+		s.sessionsMu.Lock()
+		s.sessionUsers[id] = make([]*backend.Client, 0, maxClients)
+		s.sessionsMu.Unlock()
+
 		multiLogger.Println("starting new session", id)
 	}
-	s.mu.Unlock()
 	return !ok
 }
 
@@ -117,7 +143,9 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 		ctx, cancel := context.WithCancel(context.Background())
 		timer := time.NewTimer(EmptySessionTimeout)
 
+		s.timeoutsMu.Lock()
 		s.gameTimeouts[id] = cancel
+		s.timeoutsMu.Unlock()
 
 		select {
 		case <-timer.C:
@@ -127,18 +155,25 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 		}
 	}
 
-	s.mu.Lock()
+	s.sessionsMu.Lock()
+	s.clientsMu.Lock()
 	for _, c := range s.sessionUsers[id] {
-		c.Done("session has shut down")
+		go c.Done("session has shut down")
 		delete(s.clients, c.Id)
 	}
-	session := s.games[id]
-	delete(s.gameTimeouts, id)
-	delete(s.games, id)
 	delete(s.sessionUsers, id)
-	s.mu.Unlock()
+	s.clientsMu.Unlock()
+	s.sessionsMu.Unlock()
 
-	session.Stop()
+	s.gamesMu.Lock()
+	s.games[id].Stop()
+	delete(s.games, id)
+	s.gamesMu.Lock()
+
+	s.timeoutsMu.Lock()
+	delete(s.gameTimeouts, id)
+	s.timeoutsMu.Unlock()
+
 	multiLogger.Println("closing session", id)
 }
 
@@ -151,9 +186,9 @@ func (s *GameServer) getClientFromContext(c echo.Context) (*backend.Client, erro
 	if err != nil {
 		return nil, echo.NewHTTPError(http.StatusInternalServerError, fmt.Sprintf("cant parse token \"%s\"", tokenRaw))
 	}
-	s.mu.RLock()
+	s.clientsMu.RLock()
 	currentClient, ok := s.clients[backend.Token(uid)]
-	s.mu.RUnlock()
+	s.clientsMu.RUnlock()
 	if !ok {
 		return nil, echo.NewHTTPError(http.StatusUnauthorized, "token not recognized")
 	}
@@ -189,12 +224,15 @@ func (s *GameServer) watchTimeout() {
 	timeoutTicker := time.NewTicker(1 * time.Minute)
 	go func() {
 		for {
+			s.clientsMu.RLock()
 			for _, client := range s.clients {
 				if time.Since(client.LastMessage) > clientTimeout {
 					s.removeClient(client.Id, "you have been timed out")
 					return
 				}
 			}
+			s.clientsMu.RUnlock()
+
 			<-timeoutTicker.C
 		}
 	}()
@@ -213,7 +251,7 @@ func (s *GameServer) broadcast(resp *backend.Action) {
 		return
 	}
 
-	s.mu.Lock()
+	s.clientsMu.RLock()
 	for id, currentClient := range s.clients {
 		if currentClient.FastChannel == nil || currentClient.PriorityChannel == nil {
 			continue
@@ -236,5 +274,5 @@ func (s *GameServer) broadcast(resp *backend.Action) {
 			continue
 		}
 	}
-	s.mu.Unlock()
+	s.clientsMu.RUnlock()
 }

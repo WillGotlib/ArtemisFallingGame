@@ -3,11 +3,9 @@ package backend
 import (
 	pb "artemisFallingServer/proto"
 	"encoding/hex"
+	"github.com/google/uuid"
 	"strings"
 	"sync"
-	"time"
-
-	"github.com/google/uuid"
 )
 
 type Game struct {
@@ -16,7 +14,6 @@ type Game struct {
 	ActionChannel chan GameAction
 	ChangeChannel chan Change
 	done          chan interface{}
-	lastAction    map[string]time.Time
 	GameId        string
 
 	ownedEntities map[Token][]uuid.UUID
@@ -28,7 +25,6 @@ func NewGame(ChangeChannel chan Change, sessionId string) *Game {
 		Entities:      make(map[uuid.UUID]*Entity),
 		ActionChannel: make(chan GameAction, 10),
 		ChangeChannel: ChangeChannel,
-		lastAction:    make(map[string]time.Time),
 		done:          make(chan interface{}),
 
 		ownedEntities: make(map[Token][]uuid.UUID),
@@ -49,9 +45,7 @@ func (g *Game) watchActions() {
 	for {
 		select {
 		case action := <-g.ActionChannel:
-			g.Mu.Lock()
 			g.ChangeChannel <- action.Perform(g)
-			g.Mu.Unlock()
 		case <-g.done:
 			return
 		}
@@ -94,7 +88,9 @@ func (g *Game) RemoveEntity(id uuid.UUID, action *Action) {
 
 // RemoveClientsEntities clears out all entities belonging to a user
 func (g *Game) RemoveClientsEntities(client *Client) {
+	g.Mu.RLock()
 	entities, ok := g.ownedEntities[client.Id]
+	g.Mu.RUnlock()
 	if !ok {
 		return
 	}

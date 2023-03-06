@@ -26,7 +26,9 @@ func (g *Game) getBaseAction(id uuid.UUID, action *Action) baseAction {
 }
 
 func (b *baseAction) ActionCode(g *Game) string {
+	g.Mu.RLock()
 	entity := g.Entities[b.EntityID()]
+	g.Mu.RUnlock()
 	if entity == nil {
 		return ""
 	}
@@ -40,7 +42,9 @@ type MoveAction struct {
 }
 
 func (m *MoveAction) Perform(game *Game) Change {
+	game.Mu.RLock()
 	entity := game.Entities[m.EntityID()]
+	game.Mu.RUnlock()
 	if entity == nil {
 		return nil
 	}
@@ -60,7 +64,9 @@ type RemoveAction struct {
 }
 
 func (r *RemoveAction) Perform(game *Game) Change {
+	game.Mu.Lock()
 	delete(game.Entities, r.EntityID())
+	game.Mu.Unlock()
 	change := &RemoveEntityChange{
 		baseEvent: r.baseEvent,
 	}
@@ -74,7 +80,9 @@ type AddAction struct {
 }
 
 func (a *AddAction) Perform(game *Game) Change {
+	game.Mu.Lock()
 	game.Entities[a.EntityID()] = a.Entity
+	game.Mu.Unlock()
 	if a.RemoveOnDisconnect {
 		game.ownedEntities[a.UserID()] = append(game.ownedEntities[a.UserID()], a.EntityID())
 	}
@@ -91,7 +99,9 @@ type UpdateAction struct {
 }
 
 func (u *UpdateAction) Perform(game *Game) Change {
+	game.Mu.Lock()
 	game.Entities[u.EntityID()] = u.Entity
+	game.Mu.Unlock()
 	change := &AddEntityChange{
 		baseEvent: u.baseEvent,
 		Entity:    u.Entity,
