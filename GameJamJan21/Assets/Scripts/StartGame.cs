@@ -52,8 +52,8 @@ public class StartGame : MonoBehaviour
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
             player.name = "Player " + i;
             player.GetComponent<Controller>().playerNumber = i;
-            playerStocks[i] = GlobalStats.defaultStockCount;
-            PlayerStockUpdate(i, playerStocks[i]);
+            // playerStocks[i] = GlobalStats.defaultStockCount;
+            PlayerStockUpdate(i, GlobalStats.defaultStockCount);
 
             if (i < primaryColours.Length)
             {
