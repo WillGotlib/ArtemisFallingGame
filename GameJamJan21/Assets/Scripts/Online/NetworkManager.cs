@@ -20,23 +20,37 @@ namespace Online
         public int updateFps = 60; // update at 60 fps
 
         private readonly Dictionary<ByteString, NetworkedElement> _objects;
-        private readonly Dictionary<ByteString, (Vector3, Quaternion)> _objectLastPos;
+        private readonly Dictionary<ByteString, (Vector3, Quaternion, float)> _objectLastPos;
+        private const float MaxSecondsNoUpdate = 3; // update every 3 seconds even if no movement 
 
         private delegate void RunOnMainthread();
 
         private readonly Queue<RunOnMainthread> _mainthreadQueue;
 
+        private GameObject networkParent;
+        private Coroutine positionUpdater;
+
         public NetworkManager()
 
         {
             _objects = new Dictionary<ByteString, NetworkedElement>();
-            _objectLastPos = new Dictionary<ByteString, (Vector3, Quaternion)>();
+            _objectLastPos = new Dictionary<ByteString, (Vector3, Quaternion, float)>();
             _mainthreadQueue = new Queue<RunOnMainthread>();
             Connection.RegisterMessageCallback(onMessage);
         }
 
-        // Start is called before the first frame update
-        public void Start()
+        public void PrepNewScene()
+        {
+            if (positionUpdater != null) StopCoroutine(positionUpdater);
+
+            networkParent = new GameObject("Networked Objects");
+            _objects.Clear();
+            _objectLastPos.Clear();
+
+            positionUpdater = StartCoroutine(UpdatePosition());
+        }
+
+        public void Awake()
         {
             // kill self if other instances of object exist
             var others = FindObjectsOfType<NetworkManager>();
@@ -125,13 +139,13 @@ namespace Online
                 {
                     AddEntity(entity);
                 }
-                
+
                 Connection.StartStream().Then(() =>
                 {
                     PostRegistrers();
 
-                    StartCoroutine(UpdatePosition());
-                    result.Resolve();                    
+                    positionUpdater = StartCoroutine(UpdatePosition());
+                    result.Resolve();
                 }).Catch(result.Reject);
             }).Catch(result.Reject);
             return result;
@@ -205,7 +219,7 @@ namespace Online
         {
             if (_objects.ContainsKey(entity.Id)) return;
             var factory = new GameObject().AddComponent<Factory>();
-            var script = factory.SpawnElement(entity, _spawnables[entity.Type]);
+            var script = factory.SpawnElement(entity, _spawnables[entity.Type], networkParent.transform);
             _objects[entity.Id] = script;
         }
 
@@ -300,18 +314,19 @@ namespace Online
                     if (element.GetControlType() == ElementType.Listener) continue;
                     // ideally projectiles should be controlled by the server but i am making them be controlled by the sender for simplicities sake
 
-                    (Vector3, Quaternion) pos;
+                    (Vector3, Quaternion, float) pos;
                     try
                     {
-                        pos = element.GetPosition();
+                        var p = element.GetPosition();
+                        pos = (p.Item1, p.Item2, Time.time);
                     }
                     catch
                     {
                         continue; // object was destroyed
                     }
 
-                    if (_objectLastPos.ContainsKey(id) &&
-                        _objectLastPos[id] == pos) continue;
+                    if (_objectLastPos.ContainsKey(id) && (Time.time - _objectLastPos[id].Item3) < MaxSecondsNoUpdate &&
+                        _objectLastPos[id].Item1 == pos.Item1 && _objectLastPos[id].Item2 == pos.Item2) continue;
                     _objectLastPos[id] = pos;
 
                     requests.Add(new StreamAction
@@ -326,7 +341,7 @@ namespace Online
                 }
 
                 if (requests.Count > 0)
-                    Connection.SendFast(new Request { Requests = { requests } }); 
+                    Connection.SendFast(new Request { Requests = { requests } });
                 // there is a change that if something moves in one frame and its packet gets lost but it doesnt move later that it just wont update
 
                 yield return new WaitForSeconds(1f / updateFps);

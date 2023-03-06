@@ -11,13 +11,13 @@ namespace Online
         private Vector3 _factoryPosition;
         private Quaternion _factoryRotation;
 
-        public NetworkedElement SpawnElement(Entity entity, GameObject obj)
+        public NetworkedElement SpawnElement(Entity entity, GameObject obj, Transform parent)
         {
             _factoryData = entity.Data;
             _factoryPosition = Helpers.ToVector3(entity.Position);
             _factoryRotation = Helpers.ToQuaternion(entity.Rotation);
 
-            var o = Instantiate(obj, _factoryPosition, _factoryRotation);
+            var o = Instantiate(obj, _factoryPosition, _factoryRotation, parent);
             _factoryObject = o.GetComponent<NetworkedElement>();
             return _factoryObject;
         }

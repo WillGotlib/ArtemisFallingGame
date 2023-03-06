@@ -26,7 +26,13 @@ public class NetworkedPlayerController : NetworkedObject, NetworkedElement
     private Vector3 startPos;
     private Vector3 targetPos;
     private float fraction;
-    public float lerpSpeed = 1/30f;
+    private float lerpSpeed;
+
+    private void Awake()
+    {
+        var n = FindObjectOfType<NetworkManager>();
+        lerpSpeed = n == null ? 1 : 1 / n.updateFps;
+    }
 
     public override void HandleUpdate(Vector3 position, Quaternion rotation, string data)
     {

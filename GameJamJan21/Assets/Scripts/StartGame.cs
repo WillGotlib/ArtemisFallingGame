@@ -38,31 +38,31 @@ public class StartGame : MonoBehaviour
         foreach (Transform player in transform)
             Destroy(player.gameObject);
         
+        var spawnPoints = levelManager.GetSpawnPoints();
         CreatePhysicsScene();
+        players = new Controller[Mathf.Min(playerCount, spawnPoints.Length)];
+        
         if (FindObjectOfType<NetworkManager>() != null)
-            StartOnlineGame();
+            StartOnlineGame(spawnPoints);
         else
-            StartLocalGame();
+            StartLocalGame(spawnPoints);
     }
 
-    private void StartOnlineGame()
+    private void StartOnlineGame(GameObject[] spawnPoints)
     {
-        var spawnPoints = levelManager.GetSpawnPoints();
         var spawnpoint = spawnPoints[Connection.GetIndex()];
         var player = spawnPlayer(Connection.GetIndex(),spawnpoint.transform);
         
         var o = player.GetComponent<NetworkedPlayerController>();
         o.controlled = true;
 
-        FindObjectOfType<NetworkManager>().RegisterObject(o);
+        var manager = FindObjectOfType<NetworkManager>();
+        manager.PrepNewScene();
+        manager.RegisterObject(o);
     }
 
-    private void StartLocalGame()
+    private void StartLocalGame(GameObject[] spawnPoints)
     {
-        var spawnPoints = levelManager.GetSpawnPoints();
-        // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
-        CreatePhysicsScene();
-        players = new Controller[Mathf.Min(playerCount, spawnPoints.Length)];
         for (var i = 0; i < players.Length; i++)
         {
             var spawn = spawnPoints[i].transform;
@@ -77,8 +77,10 @@ public class StartGame : MonoBehaviour
         playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
         GameObject player = Instantiate(playerPrefab, playerPos, spawnPoint.rotation, transform);
         player.name = "Player " + index;
-        player.GetComponent<Controller>().playerNumber = index;
-        players[index] = player.GetComponent<Controller>();
+
+        var controller = player.GetComponent<Controller>();
+        controller.playerNumber = index;
+        players[index] = controller;
         // playerStocks[i] = GlobalStats.defaultStockCount;
         PlayerStockUpdate(index, GlobalStats.defaultStockCount);
 

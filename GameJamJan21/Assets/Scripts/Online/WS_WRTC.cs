@@ -160,7 +160,7 @@ namespace Online
         
         public void Destroy()
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

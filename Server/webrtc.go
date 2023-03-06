@@ -23,13 +23,6 @@ func init() {
 }
 
 func connectServer(client *backend.Client, ws *websocket.Conn) error {
-	defer func(ws *websocket.Conn) {
-		err := ws.Close()
-		if err != nil {
-			log.Debug(err)
-		}
-	}(ws)
-
 	peerConnection, err := webrtc.NewPeerConnection(IceConfig)
 	if err != nil {
 		return err
