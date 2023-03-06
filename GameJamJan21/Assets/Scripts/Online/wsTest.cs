@@ -79,14 +79,24 @@ public class wsTest : MonoBehaviour
         pc.OnIceConnectionChange = OnIceConnectionChange;
         
         var conf = new RTCDataChannelInit();
-        dataChannel = pc.CreateDataChannel("data", conf);
+        dataChannel = pc.CreateDataChannel("priority", conf);
         dataChannel.OnOpen = () =>
         {
-            Debug.Log("dc open");
-            dataChannel.Send("shit");
-
-            websocket.Close();
-            websocket = null;
+            Debug.Log("stable channel open");
+        };
+        dataChannel.OnMessage = e => { Debug.Log("dc: " + System.Text.Encoding.UTF8.GetString(e)); };
+        
+        var fastConf = new RTCDataChannelInit
+        {
+            maxPacketLifeTime = 0,
+            maxRetransmits = 0,
+            ordered = false,
+        };
+        dataChannel = pc.CreateDataChannel("fast", fastConf);
+        dataChannel.OnOpen = () =>
+        {
+            Debug.Log("fast channel open");
+            dataChannel.Send("thing");
         };
         dataChannel.OnMessage = e => { Debug.Log("dc: " + System.Text.Encoding.UTF8.GetString(e)); };
         
@@ -136,7 +146,9 @@ public class wsTest : MonoBehaviour
 
         if (state == RTCIceConnectionState.Connected || state == RTCIceConnectionState.Completed)
         {
-            Debug.Log("locked and loaded");
+            Debug.Log("connected, closing websocket");
+            websocket.Close();
+            websocket = null;
         }
     }
 
