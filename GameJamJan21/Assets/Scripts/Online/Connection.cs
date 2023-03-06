@@ -17,7 +17,7 @@ namespace Online
         {
             var returnP = new Promise<bool>();
             RestClient.Get(Address.GetUri().ToString()).Then(r =>
-                returnP.Resolve(r.StatusCode == 418 && r.GetHeader("Game") == GameServerProof)
+                returnP.Resolve(r.StatusCode == 204 && r.GetHeader("Game") == GameServerProof)
             ).Catch(returnP.Reject);
             return returnP;
         }

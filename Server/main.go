@@ -89,5 +89,5 @@ func main() {
 
 func mainPage(e echo.Context) error {
 	e.Response().Header().Set("game", "artemis-falling-server")
-	return e.String(http.StatusTeapot, "idk how you got here, this is a game server")
+	return e.String(http.StatusNoContent, "idk how you got here, this is a game server")
 }
