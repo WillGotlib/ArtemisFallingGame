@@ -29,7 +29,8 @@ namespace Online
 
         private GameObject networkParent;
         private Coroutine positionUpdater;
-
+        private RepeatedField<Entity> onJoinEnteties;
+        
         public NetworkManager()
 
         {
@@ -46,6 +47,12 @@ namespace Online
             networkParent = new GameObject("Networked Objects");
             _objects.Clear();
             _objectLastPos.Clear();
+            foreach (var entity in onJoinEnteties)
+            {
+                AddEntity(entity);
+            }
+            
+            PostRegistrers();
 
             positionUpdater = StartCoroutine(UpdatePosition());
         }
@@ -134,19 +141,9 @@ namespace Online
             Connection.Connect(sessionID).Then(entities =>
             {
                 Debug.Log(entities);
+                onJoinEnteties = entities;
 
-                foreach (var entity in entities)
-                {
-                    AddEntity(entity);
-                }
-
-                Connection.StartStream().Then(() =>
-                {
-                    PostRegistrers();
-
-                    positionUpdater = StartCoroutine(UpdatePosition());
-                    result.Resolve();
-                }).Catch(result.Reject);
+                Connection.StartStream().Then(result.Resolve).Catch(result.Reject);
             }).Catch(result.Reject);
             return result;
         }

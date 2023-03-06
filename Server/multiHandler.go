@@ -168,7 +168,7 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 	s.gamesMu.Lock()
 	s.games[id].Stop()
 	delete(s.games, id)
-	s.gamesMu.Lock()
+	s.gamesMu.Unlock()
 
 	s.timeoutsMu.Lock()
 	delete(s.gameTimeouts, id)

@@ -43,7 +43,9 @@ func Connect(e echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnauthorized, "the session is full")
 	}
 
+	server.gamesMu.RLock()
 	game := server.games[sessionId]
+	server.gamesMu.RUnlock()
 	entities := game.GetProtoEntities()
 
 	taken := make([]bool, maxClients)

@@ -52,6 +52,8 @@ public class ServerPicker : MonoBehaviour
         joinButton.interactable = true;
     }
 
+    public static bool gameLoaded;
+
     public void ConnectToSession()
     {
         var sessionID = sessionName.text;
@@ -60,33 +62,33 @@ public class ServerPicker : MonoBehaviour
             Debug.Log("bad session ID"); //todo change colour or something
             return;
         }
+        joinButton.interactable = false;
 
-        SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single); //todo loading bar
+        gameLoaded = false;
 
-        SceneManager.sceneLoaded += GetLoadFunc(sessionID);
-    }
-
-    private static UnityAction<Scene, LoadSceneMode> _sceneChangeFunc;
-
-    private static UnityAction<Scene, LoadSceneMode> GetLoadFunc(string sessionID)
-    {
-        void Func(Scene scene, LoadSceneMode sceneMode)
-        {
-            Debug.Log("onSceneChange");
-            FindObjectOfType<NetworkManager>().Connect(sessionID)
-                .Finally(() => SceneManager.sceneLoaded -= _sceneChangeFunc)
-                .Catch(e =>
+        FindObjectOfType<NetworkManager>().Connect(sessionID)
+            .Then(() =>
+            {
+                SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single); //todo loading bar
+                
+                SceneManager.sceneLoaded += (scene, _) =>
                 {
-                    Debug.LogError(e);
-                    SceneManager.LoadScene("ServerSelector",
-                        LoadSceneMode.Single); // return to selector scene if load failed
-                });
-        }
-
-        _sceneChangeFunc = Func;
-        return Func;
+                    if (gameLoaded || scene.name != gameSceneName) return;
+                    gameLoaded = true;
+                    
+                    FindObjectOfType<StartGame>().StartMatch();
+                    FindObjectOfType<PausedMenu>().ResumeGame();
+                };
+            })
+            .Catch(e =>
+            {
+                Debug.LogError(e);
+                //joinButton.interactable = true;
+                SceneManager.LoadScene("ServerSelector",
+                    LoadSceneMode.Single); // return to selector scene if load failed
+            });
     }
-
+    
     public void UpdateServer()
     {
         serverChooser.SetActive(false);

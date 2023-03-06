@@ -31,7 +31,8 @@ public class StartGame : MonoBehaviour
     {
         if (primaryColours.Length != accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
-        StartMatch();
+        if (FindObjectOfType<NetworkManager>() == null) // have the network manager call this when the game starts
+            StartMatch();
     }
     public void StartMatch()
     {
@@ -41,14 +42,15 @@ public class StartGame : MonoBehaviour
         var spawnPoints = levelManager.GetSpawnPoints();
         CreatePhysicsScene();
         players = new Controller[Mathf.Min(playerCount, spawnPoints.Length)];
-        
-        if (FindObjectOfType<NetworkManager>() != null)
-            StartOnlineGame(spawnPoints);
+
+        var manager = FindObjectOfType<NetworkManager>();
+        if (manager != null)
+            StartOnlineGame(spawnPoints, manager);
         else
             StartLocalGame(spawnPoints);
     }
 
-    private void StartOnlineGame(GameObject[] spawnPoints)
+    private void StartOnlineGame(GameObject[] spawnPoints, NetworkManager networkManager)
     {
         var spawnpoint = spawnPoints[Connection.GetIndex()];
         var player = spawnPlayer(Connection.GetIndex(),spawnpoint.transform);
@@ -56,9 +58,8 @@ public class StartGame : MonoBehaviour
         var o = player.GetComponent<NetworkedPlayerController>();
         o.controlled = true;
 
-        var manager = FindObjectOfType<NetworkManager>();
-        manager.PrepNewScene();
-        manager.RegisterObject(o);
+        networkManager.PrepNewScene();
+        networkManager.RegisterObject(o);
     }
 
     private void StartLocalGame(GameObject[] spawnPoints)
