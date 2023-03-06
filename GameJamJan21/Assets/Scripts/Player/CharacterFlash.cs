@@ -66,7 +66,6 @@ public class CharacterFlash : MonoBehaviour
         // return material to default on cancel
         foreach (var (renderer, material) in renderersDefaultMatts)
         {
-            print(renderer.name + " " + material.name);
             renderer.material = material;
         }
     }

@@ -59,7 +59,19 @@ public class GunController : MonoBehaviour
     }
 
     public bool CheckShotValidity(Vector3 cur_pos) {
-        return !Physics.CheckBox(cur_pos, new Vector3(0.05f, 0.05f, 0.1f));
+        if (!Physics.CheckBox(cur_pos, new Vector3(0.05f, 0.05f, 0.1f)) && 
+            !Physics.CheckBox(transform.position, new Vector3(0.1f, 0.1f, 0.1f))) // TODO: Values are arbitrary; should be figured out
+        {
+            return true;
+        }
+        var overlaps = Physics.OverlapSphere(cur_pos, 0.5f);
+        foreach (Collider overlapper in overlaps) {
+            if (overlapper.gameObject.tag != "Transparent" && overlapper.gameObject.tag != "Powerup") {
+                // TODO: Is this too restrictive? 
+                return false;
+            }
+        }
+        return true;
     }
 
     // returns true if fired
