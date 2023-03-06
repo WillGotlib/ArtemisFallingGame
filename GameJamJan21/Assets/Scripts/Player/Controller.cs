@@ -175,14 +175,6 @@ public class Controller : MonoBehaviour
     {
         if (currentCooldown <= 0)
         {
-            print("Dashed");
-            // var abs_x = Mathf.Abs(moveDirection.x);
-            // var abs_z = Mathf.Abs(moveDirection.z);
-            // if (abs_x == 0 && abs_z == 0)
-            // {
-            //     return;
-            // }
-
             currentCooldown = GlobalStats.dashCooldown;
             _hudManager.UseStamina(playerNumber);
             StartCoroutine(Dash());
@@ -270,7 +262,7 @@ public class Controller : MonoBehaviour
             // Handle the actual movement
             moveDirection.y = 0;
 
-            controller.Move((moveDirection).normalized * speed * Time.deltaTime * momentum);
+            controller.Move((moveDirection).normalized * speed * GetSpeedBonus() * Time.deltaTime * momentum);
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -290,6 +282,10 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public bool hasEffect(Effect e) {
+        return effects.Contains(e);
+    }
+
     public float GetSpeedBonus()
     {
         float totalBonus = 1;
@@ -302,13 +298,13 @@ public class Controller : MonoBehaviour
         return totalBonus;
     }
 
-    float GetDamageBonus()
+    public float GetFireRateBonus()
     {
         // Not implemented, will require effects to be added to bullets
         float totalBonus = 1;
         foreach (Effect e in effects)
         {
-            totalBonus += e.damageBonus;
+            totalBonus *= e.fireRateBonus;
         }
 
         return totalBonus;
@@ -384,9 +380,16 @@ public class Controller : MonoBehaviour
         {
             PowerupDrop powerup = collider.gameObject.GetComponent<PowerupDrop>();
             effects.Add(powerup.GiveEffect());
-            weapon.GetComponent<GunController>().ClearPrimaryCooldown();
+            if (powerup.requiresWeapon) {
+                // TODO: Make this generally-applicable. Right now the only weapon powerup is the fire rate one...
+                weapon.GetComponent<GunController>().ClearPrimaryCooldown();
+            }
             powerup.removePowerup(); //todo make this script trackable and keep trac of powerups
             Destroy(collider.gameObject);
         }
+    }
+
+    public void AddEffect(Effect e) {
+        effects.Add(e);
     }
 }

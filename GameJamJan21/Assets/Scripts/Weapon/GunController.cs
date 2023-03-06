@@ -10,10 +10,10 @@ public class GunController : MonoBehaviour
 
     public int maxAmmo = 12;
     public int maxBouncers = 1;
-    [SerializeField] private float primaryCooldown = 0.3f;
+    private float primaryCooldown;
     private bool primaryOnCooldown = false;
     private float primaryCooldownTimer;
-    [SerializeField] private float secondaryCooldown = 1f;
+    private float secondaryCooldown;
     private bool secondaryOnCooldown = false;
     private float secondaryCooldownTimer;
     // not serialized so that other things can read and update this, ammo refills or the ui that shows ammo
@@ -28,8 +28,8 @@ public class GunController : MonoBehaviour
     {
         ammoCount = maxAmmo;
         bouncingCount = maxBouncers;
-        primaryCooldownTimer = primaryCooldown;
-        secondaryCooldownTimer = secondaryCooldown;
+        primaryCooldownTimer = bulletType.GetComponent<BulletLogic>().cooldown;
+        secondaryCooldownTimer = secondaryType.GetComponent<BulletLogic>().cooldown;
         _trajectory.RegisterScene();
     }
 
@@ -40,7 +40,7 @@ public class GunController : MonoBehaviour
             if (primaryCooldownTimer <= 0) {
                 // Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;
-                primaryCooldownTimer = primaryCooldown * owner.GetSpeedBonus();
+                primaryCooldownTimer = primaryCooldown / owner.GetFireRateBonus();
             }
         }
         if (secondaryOnCooldown) {
@@ -55,7 +55,7 @@ public class GunController : MonoBehaviour
 
     public void ClearPrimaryCooldown() {
         primaryOnCooldown = false;
-        primaryCooldownTimer = primaryCooldown * owner.GetSpeedBonus();
+        primaryCooldownTimer = primaryCooldown / owner.GetFireRateBonus();
     }
 
     public bool CheckShotValidity(Vector3 cur_pos) {
@@ -66,7 +66,7 @@ public class GunController : MonoBehaviour
         }
         var overlaps = Physics.OverlapSphere(cur_pos, 0.5f);
         foreach (Collider overlapper in overlaps) {
-            if (overlapper.gameObject.tag != "Transparent" && overlapper.gameObject.tag != "Powerup") {
+            if (overlapper.gameObject.tag == "Reflector" || overlapper.gameObject.tag == "Player") {
                 // TODO: Is this too restrictive? 
                 return false;
             }

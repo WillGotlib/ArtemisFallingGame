@@ -6,7 +6,7 @@ public class SpeedUpDrop : PowerupDrop
 {
     public override Effect GiveEffect() {
         Effect speedBoost = new Effect();
-        speedBoost.SetupEffect(damageBonus, speedBonus, dashBonus, maxDuration);
+        speedBoost.SetupEffect(fireRateBonus, speedBonus, dashBonus, maxDuration);
         return speedBoost;
     }
 }

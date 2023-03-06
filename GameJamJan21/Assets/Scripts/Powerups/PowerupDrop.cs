@@ -5,10 +5,12 @@ using UnityEngine;
 public abstract class PowerupDrop : MonoBehaviour
 {
     private PowerupPoint relatedPoint;
-    public float damageBonus = 1;
+    public float fireRateBonus = 1;
     public float speedBonus = 1;
     public float dashBonus = 1;
     public float maxDuration = 5;
+
+    public bool requiresWeapon;
 
     public void SetRelatedPoint(PowerupPoint rp) {
         relatedPoint = rp;

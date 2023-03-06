@@ -10,6 +10,7 @@ TagManager:
   - SIMULATION
   - Powerup
   - Transparent
+  - Modifier
   layers:
   - Default
   - TransparentFX

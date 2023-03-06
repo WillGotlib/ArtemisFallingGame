@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4193775538900655151}
   - component: {fileID: -718981201349760569}
   - component: {fileID: -1848706326924120752}
-  - component: {fileID: 3252770583403618107}
   - component: {fileID: 3969214465323797172}
+  - component: {fileID: 8550602094995562242}
   m_Layer: 0
-  m_Name: SpeedUp
+  m_Name: FireRateUp
   m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,23 +92,6 @@ CapsuleCollider:
   m_Height: 0.75
   m_Direction: 1
   m_Center: {x: 0, y: 0.21, z: 0}
---- !u!114 &3252770583403618107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 210597942409183111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b3f8674d4786d84a93c96c1ed34d084, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireRateBonus: 1
-  speedBonus: 1.5
-  dashBonus: 1
-  maxDuration: 10
-  requiresWeapon: 0
 --- !u!114 &3969214465323797172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +104,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad99cc572e824c818b1bf655396fbd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8550602094995562242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210597942409183111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8be3ab170b2bd47c086687a7df24229b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRateBonus: 2
+  speedBonus: 1
+  dashBonus: 1
+  maxDuration: 5
+  requiresWeapon: 1
 --- !u!1 &8600734089010388788
 GameObject:
   m_ObjectHideFlags: 0

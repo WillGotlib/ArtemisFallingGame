@@ -12,14 +12,14 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 {
     private GlobalStats stats;
     
-    public static int splashRadius = 1;
-    public static float splashDamage = 0.5f;
+    public static float splashDamage = 0.5f; // TODO: Delete this.
 
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
     public int maxBounces = 3;
     [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
+    [SerializeField] public float cooldown;
 
     public GameObject splashZone;
 
