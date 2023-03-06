@@ -16,7 +16,7 @@ public class CharacterFlash : MonoBehaviour
     [SerializeField] private float invincibleDuration;
 
     // defualt materials
-    private Dictionary<MeshRenderer,Material> renderersDefaultMatts = new ();
+    public Dictionary<MeshRenderer,Material> renderersDefaultMatts = new ();
 
     // The currently running coroutine.
     private Coroutine flashRoutine;
@@ -28,13 +28,17 @@ public class CharacterFlash : MonoBehaviour
         var meshRenderers = model.transform.GetComponentsInChildren<MeshRenderer>();
         foreach (var meshRenderer in meshRenderers)
         {
-            renderersDefaultMatts[meshRenderer] = meshRenderer.material;
+            renderersDefaultMatts[meshRenderer] = new Material(meshRenderer.material);
         }
 
         // Copy the material so it can be modified without any side effects.
         damageMaterial = new Material(damageMaterial);
         invincibleMaterial = new Material(invincibleMaterial);
         
+    }
+
+    public void SetModel(Transform model) {
+        model = model;
     }
 
     public void DamageFlash()
@@ -62,6 +66,7 @@ public class CharacterFlash : MonoBehaviour
         // return material to default on cancel
         foreach (var (renderer, material) in renderersDefaultMatts)
         {
+            print(renderer.name + " " + material.name);
             renderer.material = material;
         }
     }

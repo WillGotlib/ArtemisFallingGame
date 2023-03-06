@@ -35,7 +35,7 @@ public class PlayerColourizer : MonoBehaviour
     private Material _secondaryMat;
     private int _colourAttributeId;
 
-    public void Start()
+    public void initialColourize()
     {
         _colourAttributeId = Shader.PropertyToID(colourAttribute);
         _primaryMat = Instantiate(primary);

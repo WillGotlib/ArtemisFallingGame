@@ -194,6 +194,7 @@ MonoBehaviour:
   kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   menu: {fileID: 0}
+  animationSpeedAttrName: speed
   dashIntensity: 25
   momentum: 0.85
   maxMomentum: 1.15
@@ -397,6 +398,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: ce24e19d37e75614881b594949e06375, type: 2}
+    - target: {fileID: 919132149155446097, guid: bf5ae868eae33af4da436cda8f909a31, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 919132149155446097, guid: bf5ae868eae33af4da436cda8f909a31, type: 3}
       propertyPath: m_Name
       value: robot

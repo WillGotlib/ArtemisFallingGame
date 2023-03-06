@@ -52,6 +52,7 @@ public class StartGame : MonoBehaviour
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
             player.name = "Player " + i;
             player.GetComponent<Controller>().playerNumber = i;
+            players[i] = player.GetComponent<Controller>();
             // playerStocks[i] = GlobalStats.defaultStockCount;
             PlayerStockUpdate(i, GlobalStats.defaultStockCount);
 
@@ -60,7 +61,9 @@ public class StartGame : MonoBehaviour
                 var colourizer = player.GetComponent<PlayerColourizer>();
                 colourizer.PrimaryColour = primaryColours[i];
                 colourizer.SecondaryColour = accentColours[i];
+                colourizer.initialColourize();
             }
+            player.GetComponent<CharacterFlash>().SetModel(player.transform.Find("robot"));
             i++;
         }
     }
