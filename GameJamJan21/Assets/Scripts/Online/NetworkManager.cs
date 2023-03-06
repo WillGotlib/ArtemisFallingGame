@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
-using Grpc.Core;
 using protoBuff;
+using RSG;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 //todo add try catches in places to get errors
@@ -33,7 +34,7 @@ namespace Online
             _objects = new Dictionary<ByteString, NetworkedElement>();
             _objectLastPos = new Dictionary<ByteString, (Vector3, Quaternion)>();
             _mainthreadQueue = new Queue<RunOnMainthread>();
-            GRPC.RegisterMessageCallback(onMessage);
+            Connection.RegisterMessageCallback(onMessage);
         }
 
         // Start is called before the first frame update
@@ -72,6 +73,7 @@ namespace Online
                 }
                 catch (MissingReferenceException e)
                 {
+                    Debug.LogWarning(e);
                 }
             }
         }
@@ -87,7 +89,7 @@ namespace Online
 
         public void UnregisterObject(NetworkedElement obj)
         {
-            var id=ByteString.Empty;
+            var id = ByteString.Empty;
             foreach (var (uid, element) in _objects)
             {
                 if (!element.Equals(obj)) continue;
@@ -111,43 +113,30 @@ namespace Online
                     Id = id
                 }
             };
-            GRPC.SendRequest(req);
+            Connection.SendPriority(req);
         }
 
-        public async Task<bool> Connect(string sessionID)
+        public Promise Connect(string sessionID)
         {
-            RepeatedField<Entity> entities;
-            try
+            var result = new Promise();
+            Connection.Connect(sessionID).Then(entities =>
             {
-                entities = await GRPC.Connect(sessionID);
-            }
-            catch (RpcException e)
-            {
-                if (e.StatusCode == StatusCode.Unknown) Debug.LogWarning(e.Status.Detail);
-                return false;
-            }
+                Debug.Log(entities);
 
-            Debug.Log(entities);
+                foreach (var entity in entities)
+                {
+                    AddEntity(entity);
+                }
+                
+                Connection.StartStream(this).Then(() =>
+                {
+                    PostRegistrers();
 
-            foreach (var entity in entities)
-            {
-                AddEntity(entity);
-            }
-
-            try
-            {
-                GRPC.StartStream();
-            }
-            catch (RpcException e)
-            {
-                if (e.StatusCode == StatusCode.Unknown) Debug.LogWarning(e.Status.Detail);
-                return false;
-            }
-
-            PostRegistrers();
-
-            StartCoroutine(UpdatePosition());
-            return true;
+                    StartCoroutine(UpdatePosition());
+                    result.Resolve();                    
+                }).Catch(result.Reject);
+            }).Catch(result.Reject);
+            return result;
         }
 
         private void onMessage(Response action)
@@ -193,7 +182,7 @@ namespace Online
             if (objectID == ByteString.Empty) throw new Exception("Cant update, not registered");
 
             var pos = obj.GetPosition();
-            GRPC.SendRequest(new StreamAction
+            Connection.SendPriority(new StreamAction
             {
                 UpdateEntity = new UpdateEntity
                 {
@@ -257,13 +246,12 @@ namespace Online
         [RuntimeInitializeOnLoadMethod]
         static void RunOnStart()
         {
-            Application.quitting += GRPC.Disconnect;
+            Application.quitting += Connection.Disconnect;
             Application.wantsToQuit += () =>
             {
-                GRPC.Disconnect();
+                Connection.Disconnect();
                 Connection.Dispose(); //todo make task that starts that will quit the app and a progress bar
-                var state = Connection.GetChannelState();
-                return state == ChannelState.Shutdown || state == ChannelState.TransientFailure;
+                return Connection.IsStreaming();
             };
         }
 
@@ -271,7 +259,7 @@ namespace Online
         {
             StopAllCoroutines();
             await Task.Delay((int)(1000f / updateFps) + 10);
-            GRPC.Disconnect();
+            Connection.Disconnect();
         }
 
         private void PostRegistrers()
@@ -301,7 +289,7 @@ namespace Online
                     }
                 }
             };
-            GRPC.SendRequest(req);
+            Connection.SendPriority(req);
         }
 
         IEnumerator UpdatePosition()
@@ -319,7 +307,7 @@ namespace Online
                     {
                         pos = element.GetPosition();
                     }
-                    catch (MissingReferenceException e)
+                    catch
                     {
                         continue; // object was destroyed
                     }
@@ -340,7 +328,8 @@ namespace Online
                 }
 
                 if (requests.Count > 0)
-                    GRPC.SendRequest(new Request { Requests = { requests } });
+                    Connection.SendFast(new Request { Requests = { requests } }); 
+                // there is a change that if something moves in one frame and its packet gets lost but it doesnt move later that it just wont update
 
                 yield return new WaitForSeconds(1f / updateFps);
             }

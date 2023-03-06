@@ -1,6 +1,5 @@
 using System;
 using Google.Protobuf.Collections;
-using Grpc.Core;
 using Online;
 using TMPro;
 using UnityEngine;
@@ -13,9 +12,8 @@ using Server = protoBuff.Server;
 public class ServerPicker : MonoBehaviour
 {
     public string gameSceneName;
-    
-    [Header("Work values")]
-    public GameObject elementPrefab;
+
+    [Header("Work values")] public GameObject elementPrefab;
     public Transform elementContainer;
 
     public Button joinButton;
@@ -25,10 +23,10 @@ public class ServerPicker : MonoBehaviour
     public TMP_InputField sessionName;
 
     private RepeatedField<Server> servers;
-    
+
     void Start()
     {
-        serverAddr.SetTextWithoutNotify(Connection.GetAddress());
+        serverAddr.SetTextWithoutNotify(Address.GetAddress());
         serverChooser.SetActive(false);
         if (gameSceneName == "")
         {
@@ -41,7 +39,7 @@ public class ServerPicker : MonoBehaviour
     public void ServerValid()
     {
         var input = sessionName.text;
-        
+
         foreach (var server in servers)
         {
             if (input == server.Id && server.Max == server.Online)
@@ -50,6 +48,7 @@ public class ServerPicker : MonoBehaviour
                 return;
             }
         }
+
         joinButton.interactable = true;
     }
 
@@ -66,65 +65,75 @@ public class ServerPicker : MonoBehaviour
 
         SceneManager.sceneLoaded += GetLoadFunc(sessionID);
     }
-    private static UnityAction<Scene,LoadSceneMode> _sceneChangeFunc;
 
-    private UnityAction<Scene, LoadSceneMode> GetLoadFunc(string sessionID)
+    private static UnityAction<Scene, LoadSceneMode> _sceneChangeFunc;
+
+    private static UnityAction<Scene, LoadSceneMode> GetLoadFunc(string sessionID)
     {
-        async void Func(Scene scene, LoadSceneMode sceneMode)
+        void Func(Scene scene, LoadSceneMode sceneMode)
         {
             Debug.Log("onSceneChange");
-            if (!await FindObjectOfType<NetworkManager>().Connect(sessionID))
-                SceneManager.LoadScene("ServerSelector",
-                    LoadSceneMode.Single); // return to selector scene if load failed
-            SceneManager.sceneLoaded += _sceneChangeFunc;
+            FindObjectOfType<NetworkManager>().Connect(sessionID)
+                .Then(() => SceneManager.sceneLoaded += _sceneChangeFunc)
+                .Catch(e =>
+                {
+                    Debug.LogWarning(e);
+                    SceneManager.LoadScene("ServerSelector",
+                        LoadSceneMode.Single); // return to selector scene if load failed
+                });
         }
-        
+
         _sceneChangeFunc = Func;
         return Func;
     }
-    
-    public async void UpdateServer()
+
+    public void UpdateServer()
     {
         serverChooser.SetActive(false);
-        GRPC.Dispose();
-        var channel = await Connection.ChangeAddress(serverAddr.text);
-        if (channel.State != ChannelState.Ready && channel.State != ChannelState.Idle)
+        Address.ChangeAddress(serverAddr.text);
+        Connection.IsGameServer().Then(b =>
         {
-            Debug.Log("No channel, channel is " + channel.State);
-            return;
-        }
-        serverChooser.SetActive(true);
-        
-        GetServers();
+            if (!b)
+            {
+                Debug.Log($"{Address.GetAddress()} is not a valid address");
+                return;
+            }
+
+            serverChooser.SetActive(true);
+            GetServers();
+        }).Catch(Debug.Log);
     }
 
-    private async void GetServers()
+    private void GetServers()
     {
         foreach (Transform child in elementContainer.transform)
             Destroy(child.gameObject);
-        
-        servers = await GRPC.List();
-        if (servers.Count == 0)
-        {
-            UpdateSelection("game " + Random.Range(0, 2057));
-            return;
-        }
 
-        for (var i = 0; i < servers.Count; i++)
+        Connection.List().Then(s =>
         {
-            var server = servers[i];
-            if (i == 0)
+            servers = s;
+            if (servers.Count == 0)
             {
-                UpdateSelection(server.Id);
+                UpdateSelection("game " + Random.Range(0, 2057));
+                return;
             }
 
-            var o = Instantiate(elementPrefab, elementContainer);
-            var script = o.GetComponent<multiScreenItem>();
-            script.sessionName = server.Id;
-            script.maxPlayers = (int)server.Max;
-            script.playerAmount = (int)server.Online;
-            script.selectFunction = UpdateSelection;
-        }
+            for (var i = 0; i < servers.Count; i++)
+            {
+                var server = servers[i];
+                if (i == 0)
+                {
+                    UpdateSelection(server.Id);
+                }
+
+                var o = Instantiate(elementPrefab, elementContainer);
+                var script = o.GetComponent<multiScreenItem>();
+                script.sessionName = server.Id;
+                script.maxPlayers = (int)server.Max;
+                script.playerAmount = (int)server.Online;
+                script.selectFunction = UpdateSelection;
+            }
+        }).Catch(Debug.Log);
     }
 
     private void UpdateSelection(string s)

@@ -8,14 +8,10 @@ message SessionList{
   repeated Server servers = 1;
 }
 
-message Server{
+message Server {
   string id = 1;
   uint32 online = 2;
   uint32 max = 3;
-}
-
-message ConnectRequest {
-  string session = 1;
 }
 
 message ConnectResponse {

@@ -1,118 +1,172 @@
-using System;
 using System.Threading.Tasks;
-using Grpc.Core;
+using Google.Protobuf.Collections;
+using protoBuff;
+using Proyecto26;
+using RSG;
+using Unity.Services.Core;
+using Unity.WebRTC;
 using UnityEngine;
 
 namespace Online
 {
-    public sealed class Connection
+    public sealed class Connection //todo rate limit
     {
-        private const string DefaultAddr = "ziv.shalit.name"; //"localhost";
-        private const int DefaultPort = 37892;
+        private const string GameServerProof = "artemis-falling-server";
+
+        public static Promise<bool> IsGameServer()
+        {
+            var returnP = new Promise<bool>();
+            RestClient.Get(Address.GetUri().ToString()).Then(r =>
+                returnP.Resolve(r.StatusCode == 418 && r.GetHeader("Game") == GameServerProof)
+            ).Catch(returnP.Reject);
+            return returnP;
+        }
+
+        /////////
+        public static void SendPriority(Request request)
+        {
+            var c = GetConnection();
+            if (c.RtcAlive())
+                c._rtcConnection.SendPriority(request);
+        }
+        public static void SendFast(Request request)
+        {
+            var c = GetConnection();
+            if (c.RtcAlive())
+                c._rtcConnection.SendFast(request);
+        }
+        public static void SendPriority(StreamAction request){SendPriority(new Request { Requests = { request } });}
+        public static void SendFast(StreamAction request){SendFast(new Request { Requests = { request } });}
+        
+        //////////
 
         /// <summary>
-        ///  Connects to the saved address
+        /// Sends a connect request to the server
         /// </summary>
-        /// <returns>Grpc.Core.Channel object</returns>
-        public static Task<Channel> GetChannel()
+        /// <param name="session">The session id/name can be anything, new names will create a new session</param>
+        /// <returns>list of protoBuff.Entity's present in the session</returns>
+        public static Promise<RepeatedField<Entity>> Connect(string session)
         {
-            return connection()._getChannel();
+            return GetConnection()._connect(session);
         }
 
         /// <summary>
-        /// Changes the address for the server and connect to it
+        /// Lists all the active sessions in on the server
         /// </summary>
-        /// <param name="address">a string url with port (example: localhost:37892)</param>
-        /// <returns>Grpc.Core.Channel object</returns>
-        public static Task<Channel> ChangeAddress(string address)
+        /// <returns>A list of protoBuff.Server objects</returns>
+        public static Promise<RepeatedField<Server>> List()
         {
-            var u = new UriBuilder("tcp://" + address);
-            if (u.Port == -1)
-            {
-                u.Port = DefaultPort;
-            }
-
-            if (u.Host == "")
-            {
-                u.Host = DefaultAddr;
-            }
-
-            if (_address.Equals(u.Uri)) return GetChannel();
-            return connection()._getNewChannel(u.Uri);
+            return GetConnection()._list();
         }
 
         /// <summary>
-        ///  reads the saved address
+        /// Starts the stream to the server
         /// </summary>
-        /// <returns>address of server</returns>
-        public static string GetAddress()
+        public static Promise StartStream(MonoBehaviour parent)
         {
-            return _address.Port == DefaultPort ? _address.Host : GetAddress(true);
-        }
+            var conn = GetConnection();
+            if (conn.RtcAlive() || conn._token == "") return null; // maybe will cause issues
 
-        public static string GetAddress(bool _)
-        {
-            return _address.Host + ":" + _address.Port;
+            conn._rtcConnection = new WebRtc{callback = _callback};
+            return conn._rtcConnection.Connect(parent, conn._token);
         }
 
         /// <summary>
-        /// Disconnects the channel
+        /// Turns off the stream and disconnects from the channel
         /// </summary>
+        public static void Disconnect()
+        {
+            var conn = GetConnection();
+            if (!conn.RtcAlive()) return;
+
+            conn._rtcConnection.Disconnect();
+            conn._rtcConnection = null;
+        }
+
+
+        /// <summary>
+        /// Registers a callback that will be used when a message is received from the server
+        /// </summary>
+        /// <param name="callback">A function that takes in a protoBuff.Response and returns nothing</param>
+        public static void RegisterMessageCallback(OnMessageCallback callback)
+        {
+            _callback = callback;
+            if (GetConnection()._rtcConnection != null)
+                GetConnection()._rtcConnection.callback = callback;
+        }
+
+        public static int GetIndex()
+        {
+            return GetConnection()._index;
+        }
+
+        public static bool IsStreaming()
+        {
+            return GetConnection().RtcAlive();
+        }
+
         public static void Dispose()
         {
-            connection()._dispose();
+            Disconnect();
+            _instance = null;
         }
 
-        public static ChannelState GetChannelState()
+        private int _index;
+        private string _token;
+        private static OnMessageCallback _callback;
+
+        private WebRtc _rtcConnection;
+
+        private bool RtcAlive()
         {
-            return _channel == null ? ChannelState.Shutdown : _channel.State;
+            return _rtcConnection != null && _rtcConnection.Alive;
         }
-
-        private static Channel _channel;
-        private static Uri _address = new("tcp://" + DefaultAddr + ":" + DefaultPort);
 
         private Connection()
         {
-            _channel = null;
+            _index = -1;
         }
 
         private static Connection _instance;
 
-        private static Connection connection()
+        private static Connection GetConnection()
         {
             _instance ??= new Connection();
-
             return _instance;
         }
 
-        private async Task<Channel> _getChannel()
+        private Promise<RepeatedField<Entity>> _connect(string session)
         {
-            if (_channel != null && _channel.State != ChannelState.Shutdown)
-            {
-                return _channel;
-            }
+            var returnP = new Promise<RepeatedField<Entity>>();
+            RestClient.Post(Address.GetUri($"/connect/{session}").ToString(), "")
+                .Then(r =>
+                {
+                    if (r.StatusCode != 200)
+                    {
+                        returnP.Reject(new RequestFailedException((int)r.StatusCode, "Failed to request connection"));
+                        return;
+                    }
 
-            _channel = new Channel(GetAddress(true), ChannelCredentials.Insecure);
-            await _channel.ConnectAsync(deadline: DateTime.UtcNow.AddSeconds(2));
-            return _channel;
+                    var conn = ConnectResponse.Parser.ParseFrom(r.Data);
+                    _token = conn.Token;
+                    _index = (int)conn.Index;
+                    returnP.Resolve(conn.Entities);
+                })
+                .Catch(returnP.Reject);
+            return returnP;
         }
 
-        private async Task<Channel> _getNewChannel(Uri u)
+        private Promise<RepeatedField<Server>> _list()
         {
-            _dispose();
-            _address = u;
-            return await GetChannel();
-        }
-
-        private async void _dispose()
-        {
-            if (_channel != null)
-            {
-                Debug.Log("Shutting down channel");
-                await _channel.ShutdownAsync();
-            }
-
-            _instance = null;
+            var returnP = new Promise<RepeatedField<Server>>();
+            RestClient.Get(Address.GetUri($"/list").ToString())
+                .Then(r =>
+                {
+                    var sessions = SessionList.Parser.ParseFrom(r.Data);
+                    returnP.Resolve(sessions.Servers);
+                })
+                .Catch(returnP.Reject);
+            return returnP;
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Online
 {
-    public class Helpers
+    internal class Helpers
     {
         
         public static Position ToPosition(Vector3 position)

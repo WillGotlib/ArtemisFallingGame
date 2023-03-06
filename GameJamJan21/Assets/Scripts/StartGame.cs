@@ -39,8 +39,8 @@ public class StartGame : MonoBehaviour
     private void StartOnlineGame()
     {
         var spawnPoints = levelManager.GetSpawnPoints();
-        var spawnpoint = spawnPoints[GRPC.GetIndex()];
-        var player = spawnPlayer(GRPC.GetIndex(),spawnpoint.transform);
+        var spawnpoint = spawnPoints[Connection.GetIndex()];
+        var player = spawnPlayer(Connection.GetIndex(),spawnpoint.transform);
         
         var o = player.GetComponent<NetworkedPlayerController>();
         o.controlled = true;
