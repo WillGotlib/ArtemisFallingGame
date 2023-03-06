@@ -1,10 +1,9 @@
-using System.Threading.Tasks;
+using System;
 using Google.Protobuf.Collections;
 using protoBuff;
 using Proyecto26;
 using RSG;
 using Unity.Services.Core;
-using Unity.WebRTC;
 using UnityEngine;
 
 namespace Online
@@ -162,6 +161,11 @@ namespace Online
             RestClient.Get(Address.GetUri($"/list").ToString())
                 .Then(r =>
                 {
+                    if (r.Data == null)
+                    {
+                        returnP.Resolve(new RepeatedField<Server>());
+                        return;
+                    }
                     var sessions = SessionList.Parser.ParseFrom(r.Data);
                     returnP.Resolve(sessions.Servers);
                 })

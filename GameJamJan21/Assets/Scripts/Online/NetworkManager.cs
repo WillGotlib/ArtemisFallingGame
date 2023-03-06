@@ -251,7 +251,7 @@ namespace Online
             {
                 Connection.Disconnect();
                 Connection.Dispose(); //todo make task that starts that will quit the app and a progress bar
-                return Connection.IsStreaming();
+                return !Connection.IsStreaming();
             };
         }
 
