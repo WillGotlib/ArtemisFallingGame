@@ -1,4 +1,5 @@
-﻿using Online;
+﻿using System;
+using Online;
 using UnityEngine;
 
 public class NetworkedPlayerController : NetworkedObject, NetworkedElement
@@ -22,9 +23,24 @@ public class NetworkedPlayerController : NetworkedObject, NetworkedElement
         return (transform.position, transform.rotation);
     }
 
+    private Vector3 startPos;
+    private Vector3 targetPos;
+    private float fraction;
+    public float lerpSpeed = 1/30f;
+
     public override void HandleUpdate(Vector3 position, Quaternion rotation, string data)
     {
-        transform.position = position;
+        startPos = transform.position;
+        targetPos = position;
         transform.rotation = rotation;
+    }
+
+    public void Update()
+    {
+        if (controlled) return;
+        if (fraction < 1) {
+            fraction += Time.deltaTime * lerpSpeed;
+            transform.position = Vector3.Lerp(startPos, targetPos, fraction);
+        }
     }
 }

@@ -23,7 +23,7 @@ public class NetworkedBulletController : NetworkedObject, NetworkedElement
     }
 
     public override void HandleUpdate(Vector3 position, Quaternion rotation, string data)
-    {
+    { //todo make velocity based
         transform.position = position;
         transform.rotation = rotation;
     }
