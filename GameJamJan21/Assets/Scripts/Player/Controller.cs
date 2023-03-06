@@ -15,7 +15,11 @@ public class Controller : MonoBehaviour
     // Number of times a player can die before they are out of the game
     [NonSerialized] public int Stock = GlobalStats.defaultStockCount;
 
+    [Header("Nodes")]
     public CharacterController controller;
+    public Animator animator;
+    
+    [Header("Values")]
     public float speed = 6f;
     public float sensitivity = 5;
     public float kbdSensitivity = 4;
@@ -29,6 +33,8 @@ public class Controller : MonoBehaviour
     new Camera camera;
     bool followingCamera = true;
     public PausedMenu menu;
+
+    public string animationSpeedAttrName = "speed";
 
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
@@ -88,10 +94,8 @@ public class Controller : MonoBehaviour
         }
 
         currentCooldown = 0;
-        weapon = Object.Instantiate(weaponType, gameObject.transform, false);
-        Vector3 cur_pos = this.transform.position;
-        weapon.transform.position = new Vector3(cur_pos[0] + (this.transform.forward[0] * 0.2f), cur_pos[1],
-            cur_pos[2] + (this.transform.forward[2] * 0.2f));
+        weapon = Instantiate(weaponType, gameObject.transform);
+        weapon.transform.localPosition = new Vector3(0.66f, 2f, 1.5f);
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
         
@@ -260,6 +264,7 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
 
+        animator.SetFloat(animationSpeedAttrName,moveDirection.magnitude);
         if (!currentlyDead && moveDirection.magnitude >= 0.1f)
         {
             // Handle the actual movement
