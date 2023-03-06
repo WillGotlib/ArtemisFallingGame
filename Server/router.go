@@ -17,7 +17,7 @@ func ConnectEndpoints(e *echo.Echo) {
 	e.GET("/", mainPage)
 
 	e.GET("/list", List)
-	e.GET("/connect/:session", Connect)
+	e.POST("/connect/:session", Connect)
 
 	e.GET("/stream", connectServerEcho, middleware.TimeoutWithConfig(middleware.TimeoutConfig{
 		Timeout: 10 * time.Second, // 10 seconds to set up the session
