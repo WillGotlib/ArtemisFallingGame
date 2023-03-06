@@ -65,9 +65,13 @@ func (s *GameServer) addClient(c *backend.Client) {
 }
 
 func (s *GameServer) removeClient(id backend.Token, message string) {
-	multiLogger.Printf("%s - removing client", id)
-
 	c := s.clients[id]
+	if c == nil {
+		multiLogger.Debugf("atempting to remove an already deleted client %s", id)
+		return
+	}
+
+	multiLogger.Infof("%s - removing client", id)
 	c.Done(message) // close connection if it's still open
 	session := c.Session
 	session.RemoveClientsEntities(c)

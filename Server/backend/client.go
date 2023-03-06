@@ -36,12 +36,21 @@ func NilClient(client *Client) *Client {
 
 // Done closes and kills the clients connection
 func (c *Client) Done(message string) {
-	if c.WRTC == nil {
+	if c == nil || c.WRTC == nil || c.WRTC.SignalingState() == webrtc.SignalingStateClosed {
 		return
 	}
 	if c.PriorityChannel != nil && c.PriorityChannel.ReadyState() == webrtc.DataChannelStateOpen {
-		if err := c.PriorityChannel.SendText(message); err != nil {
+		err := c.PriorityChannel.SendText(message)
+		if err != nil {
 			log.Debug(err)
+		}
+		err = c.PriorityChannel.Close()
+		if err != nil {
+			log.Error(err)
+		}
+		err = c.FastChannel.Close()
+		if err != nil {
+			log.Error(err)
 		}
 		c.PriorityChannel = nil
 		c.FastChannel = nil

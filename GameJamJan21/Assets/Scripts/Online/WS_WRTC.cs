@@ -109,11 +109,10 @@ namespace Online
         {
             Debug.Log("ice state " + state);
 
-            if (state == RTCIceConnectionState.Connected || state == RTCIceConnectionState.Completed)
+            if (state == RTCIceConnectionState.Completed)
             {
                 Debug.Log("connected, closing websocket");
-                _webSocket?.Close();
-                _webSocket = null;
+                _webSocket.Close();
                 _promise.Resolve();
             }
         }
