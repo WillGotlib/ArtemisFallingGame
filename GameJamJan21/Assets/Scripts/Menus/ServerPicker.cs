@@ -74,10 +74,10 @@ public class ServerPicker : MonoBehaviour
         {
             Debug.Log("onSceneChange");
             FindObjectOfType<NetworkManager>().Connect(sessionID)
-                .Then(() => SceneManager.sceneLoaded += _sceneChangeFunc)
+                .Finally(() => SceneManager.sceneLoaded -= _sceneChangeFunc)
                 .Catch(e =>
                 {
-                    Debug.LogWarning(e);
+                    Debug.LogError(e);
                     SceneManager.LoadScene("ServerSelector",
                         LoadSceneMode.Single); // return to selector scene if load failed
                 });

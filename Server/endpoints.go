@@ -33,7 +33,7 @@ func Connect(e echo.Context) error {
 	if len(sessionId) < 3 || len(sessionId) > 25 {
 		return echo.NewHTTPError(http.StatusBadRequest, "invalid sessionId Provided")
 	}
-	multiLogger.Info("Incoming connection to", sessionId)
+	multiLogger.Infof("Incoming connection to %s", sessionId)
 
 	if server.makeSession(sessionId) {
 		go server.removeSession(sessionId, false) // remove after timeout if new session

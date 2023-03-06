@@ -84,16 +84,16 @@ namespace Online
             var priorityConf = new RTCDataChannelInit();
             var fastConf = new RTCDataChannelInit
             {
-                maxPacketLifeTime = 0,
+                // maxPacketLifeTime = 0,
                 maxRetransmits = 0,
                 ordered = false,
             };
-            _priorityChannel = CreateDataChannel(_connection, priorityConf, () =>
+            _priorityChannel = CreateDataChannel(_connection, "priority", priorityConf, () =>
             {
                 _priorityOpen = true;
                 SendPriority(GroupQueue(_priorityIdleQueue));
             });
-            _fastChannel = CreateDataChannel(_connection, fastConf, () =>
+            _fastChannel = CreateDataChannel(_connection, "fast", fastConf, () =>
             {
                 _fastOpen = true;
                 SendFast(GroupQueue(_fastIdleQueue));
@@ -119,9 +119,9 @@ namespace Online
             Alive = false;
         }
 
-        private RTCDataChannel CreateDataChannel(RTCPeerConnection pc, RTCDataChannelInit config, DelegateOnOpen onOpen)
+        private RTCDataChannel CreateDataChannel(RTCPeerConnection pc, string name, RTCDataChannelInit config, DelegateOnOpen onOpen)
         {
-            var dataChannel = pc.CreateDataChannel("fast", config);
+            var dataChannel = pc.CreateDataChannel(name, config);
             dataChannel.OnOpen = onOpen;
             dataChannel.OnMessage = data =>
             {
