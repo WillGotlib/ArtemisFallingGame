@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using Google.Protobuf;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace Analytics
 {
     public class AnalyticsManager : MonoBehaviour
     {
-        private string _loggingVersion = "0.0.1";
+        private string _loggingVersion = "0.1.1";
         private byte[] _magic = { 0x89, 0x41, 0x52, 0x54 }; // identifiable byte sequence 
 
         [SerializeField] private int loggingFPS = 30;
@@ -30,26 +29,46 @@ namespace Analytics
 
         private readonly Queue<Event> _eventQueue = new();
 
-        //[RuntimeInitializeOnLoadMethod]
-
         public void ChangeMap(string mapName)
         {
             _eventQueue.Enqueue(new Event { Map = new MapEvent { MapName = mapName } });
         }
 
-        public void CustomEvent(string type, ByteString data)
+        public void DeathEvent(GameObject diee)
         {
-            _eventQueue.Enqueue(new Event { Custom = new CustomEvent { Type = type, Value = data } });
+            _eventQueue.Enqueue(new Event { Death = new DeathEvent { Id = GetId(Utils.NameObject(diee)) } });
         }
 
-        public void CustomEvent(string type, string data)
+        public void RespawnEvent(GameObject respawnee)
         {
-            CustomEvent(type, ByteString.CopyFromUtf8(data));
+            _eventQueue.Enqueue(new Event { Respawn = new RespawnEvent { Id = GetId(Utils.NameObject(respawnee)) } });
         }
 
-        public void CustomEvent(string type, byte[] data)
+        public void HealthEvent(GameObject player, float health)
         {
-            CustomEvent(type, ByteString.CopyFrom(data));
+            _eventQueue.Enqueue(new Event { Health = new PlayerHealth
+            {
+                Id = GetId(Utils.NameObject(player)),
+                Amount = health
+            } });
+        }
+        
+        public void DamageEvent(GameObject player, GameObject damager)
+        {
+            _eventQueue.Enqueue(new Event { Damage = new DamageEvent
+            {
+                Id = GetId(Utils.NameObject(player)),
+                Damager = GetId(Utils.NameObject(damager))
+            } });
+        }
+        
+        public void StockUpdate(GameObject player, int stock)
+        {
+            _eventQueue.Enqueue(new Event { Stock = new PlayerStock
+            {
+                Id = GetId(Utils.NameObject(player)),
+                Stock = stock
+            }});
         }
 
         private void Start()
@@ -99,8 +118,14 @@ namespace Analytics
         {
             CloseLogFile();
             var logFile = "log-" + time.ToString("yyyy-MM-dd\\THH.mm.ss") + ".artemis";
+
+            if (Application.isEditor) logPath = Path.Combine(Directory.GetCurrentDirectory(), logPath);
+            else logPath = Path.Combine(Application.dataPath, logPath);
+
+            logFile = Path.Combine(logPath, logFile);
+
             Directory.CreateDirectory(logPath);
-            _loggingStream = new FileStream(Path.Combine(logPath, logFile), FileMode.Append);
+            _loggingStream = new FileStream(logFile, FileMode.Append);
             _loggingFile = new BinaryWriter(_loggingStream, Encoding.UTF8);
             _loggingFile.Write(_magic);
             _loggingFile.Flush();

@@ -12,6 +12,8 @@ using Object = UnityEngine.Object;
 public class Controller : MonoBehaviour
 {
     [NonSerialized] public int playerNumber;
+    // Number of times a player can die before they are out of the game
+    [NonSerialized] public int Stock = GlobalStats.defaultStockCount;
 
     [Header("Nodes")]
     public CharacterController controller;
@@ -98,6 +100,10 @@ public class Controller : MonoBehaviour
         startMomentum = momentum;
         
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        
+        _analyticsManager.HealthEvent(gameObject, playerHealth);
+        _analyticsManager.StockUpdate(gameObject, Stock);
+        
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
 
@@ -219,12 +225,15 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0)
             {
-                playerController.RespawnPlayer(transform, playerNumber);
+                playerController.RespawnPlayer(this);
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
                 _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
-                _analyticsManager.CustomEvent("respawn", Utils.NameObject(gameObject));
+                
+                _analyticsManager.RespawnEvent(gameObject);
+                _analyticsManager.StockUpdate(gameObject, Stock); // maybe put all these events in the game manager rather then in each player and bullet
+                    
                 return;
             }
         }
@@ -324,12 +333,19 @@ public class Controller : MonoBehaviour
             return false;
         }
 
+        if (damageAmount == 0)
+        {
+            Debug.Log("Direct shot invalidated");
+            return false;
+        }
+
         // print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
 
         // playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         _hudManager.ChangeHealth(playerNumber, playerHealth);
+        _analyticsManager.HealthEvent(gameObject, playerHealth);
         if (playerHealth <= 0)
         {
             Debug.Log(playerNumber);
@@ -349,7 +365,7 @@ public class Controller : MonoBehaviour
             // SetActive(false);
             
             _tempLivesManager.ApplyDeath(playerNumber);
-            _analyticsManager.CustomEvent("death", Utils.NameObject(gameObject));
+            _analyticsManager.DeathEvent(gameObject);
         }
     }
 

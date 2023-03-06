@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Analytics;
 using UnityEngine;
 
 public class SplashZone : MonoBehaviour
@@ -23,16 +24,18 @@ public class SplashZone : MonoBehaviour
     private List<Collider> damageablesInside = new List<Collider>();
 
     private AudioSource _audioBullet;
-    
+    private AnalyticsManager _analytics;
+
     // Start is called before the first frame update
     void Start()
     {
         transform.localScale = new Vector3(splashRadius, 1, splashRadius);
-        explosion.transform.localScale *= Mathf.Max(splashRadius / 4f, 1);
+        explosion.transform.localScale /= splashRadius;
         explosion.transform.parent = null;
 
         _audioBullet = GetComponent<AudioSource>();
         _audioBullet.Play(0);
+        _analytics = FindObjectOfType<AnalyticsManager>();
     }
 
     // Update is called once per frame
@@ -46,7 +49,10 @@ public class SplashZone : MonoBehaviour
                 foreach (Collider target in damageablesInside) {
                 // TODO: Make it a different timer for each target. Use Coroutines.
                     Controller playerInside = target.gameObject.GetComponent<Controller>();
+                  
                     playerInside.InflictDamage(damageOverTimeDamage);
+                    _analytics.DamageEvent(target.gameObject,gameObject);
+                    
                     damageOverTimeActive = false;
                     damageOverTimeRemaining = damageOverTimeCooldown;
                 }
@@ -73,7 +79,9 @@ public class SplashZone : MonoBehaviour
         // print("splash zone trigger was set off");
         if (explodesOnImpact && collider.gameObject.tag == "Player") {
             Controller playerEntered = collider.gameObject.GetComponent<Controller>();
+
             playerEntered.InflictDamage(explosionDamage);
+            _analytics.DamageEvent(collider.gameObject,gameObject);
         }
         if (damageOverTime && collider.gameObject.tag == "Player") {
             if (!damageablesInside.Contains(collider)) {

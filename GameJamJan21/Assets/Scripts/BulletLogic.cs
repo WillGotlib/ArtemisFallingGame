@@ -11,10 +11,14 @@ using UnityEngine.InputSystem.Controls;
 public class BulletLogic : MonoBehaviour, ITrackableScript
 {
     private GlobalStats stats;
+    
+    public static int splashRadius = 1;
+    public static float splashDamage = 0.5f;
 
     [SerializeField] private Rigidbody _rb;
     public GameObject bullet;
-    public int maxBounces;
+    public int maxBounces = 3;
+    [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
 
     public GameObject splashZone;
@@ -31,8 +35,16 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     public TrailRenderer trail;
 
+    public float maxFlightTimeSeconds = 10;
     private Coroutine expiration;
-    
+
+    public int ghostBounces = 3;
+    private AnalyticsManager _analytics;
+
+    private void Start()
+    {
+        _analytics = FindObjectOfType<AnalyticsManager>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -47,22 +59,23 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         vel = _rb.velocity;
         isGhost = ghost;
         
+        if (isGhost)
+        {
+            bounced = 0;
+            maxBounces = ghostBounces;
+            return;
+        }
         expiration = StartCoroutine(ExpirationTimer());
 
+        trail.enabled = true;
         // Play sound
-        if (isGhost == false) {
-            trail.enabled = true;
-            
-            _audioBullet = GetComponent<AudioSource>();
-            _audioBullet.Play(0);
-            // maxBounces = GlobalStats.bulletMaxBounces;
-        } else {
-            maxBounces = 3;
-        }
+        _audioBullet = GetComponent<AudioSource>();
+        _audioBullet.Play(0);
     }
 
     private IEnumerator ExpirationTimer() {
-        yield return new WaitForSeconds(10f); // TODO: Un-hard-code this
+        yield return new WaitForSeconds(maxFlightTimeSeconds);
+        Debug.Log("bullet expired");
         finishShot(false);
     }
 
@@ -73,34 +86,24 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     float GetBulletDamage() {
         // The main function that is used to find bullet damage
-        return GlobalStats.bulletSplashDamage * BulletDamageMultiplier();
+        return splashDamage * BulletDamageMultiplier();
     }
 
     int BulletDamageMultiplier() {
         // The multiplier for the base splash damage. Separate for checking purposes
-        return GlobalStats.bulletMaxBounces - maxBounces;
+        return Mathf.Min(maxBounces, bounced);
     }
 
 
     void OnCollisionEnter(Collision collision)
     {
-        // print("collided with something");
         // Check tag for Transient or Reflector
         // Reflect if applicable
         if (collision.gameObject.tag == "Transient")
         {
-            print("Encountered transient object");
-            // Do nothing and pass through
-            Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
-            // Destroy but keep velocity!
-            Destroy(collision.gameObject);
-            _rb.velocity = vel;
+            EncounterTransient(collision);
         } else if (isGhost == false && collision.gameObject.tag == "Player") {
-            print("Encountered player");
-            Controller player = collision.gameObject.GetComponent<Controller>();
-            float damage = GetBulletDamage();
-            player.InflictDamage(damage);
-            finishShot(BulletDamageMultiplier()!=0);
+            EncounterPlayer(collision);
         } else if (collision.gameObject.tag == "Powerup") {
             // Do nothing lol
         } else  {
@@ -109,13 +112,29 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         }
     }
 
+    void EncounterTransient(Collision collision) {
+            // Do nothing and pass through
+            Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
+            // Destroy but keep velocity!
+            Destroy(collision.gameObject);
+            _rb.velocity = vel;
+    }
+
+    void EncounterPlayer(Collision collision) {
+            Controller player = collision.gameObject.GetComponent<Controller>();
+            float damage = GetBulletDamage();
+            _analytics.DamageEvent(collision.gameObject,gameObject);
+            player.InflictDamage(damage);
+            finishShot(BulletDamageMultiplier()!=0);
+    }
+
     void ricochetBullet(Collision collision) {
             ContactPoint contact = collision.contacts[0];
             Vector3 oldvel = vel;
             float speed = oldvel.magnitude;
 
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
-            float rot = 90 - Mathf.Atan2(reflectedVelo.z, reflectedVelo.x) * Mathf.Rad2Deg;
+            float rot = Mathf.Atan2(reflectedVelo.x, reflectedVelo.z) * Mathf.Rad2Deg;
             transform.eulerAngles = new Vector3(0, rot, 0);
             
             reflectedVelo.y = 0;
@@ -124,9 +143,9 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             vel = _rb.velocity;
             // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
-            // Subtract bounces and maybe destroy
-            maxBounces -= 1;
-            if (maxBounces < 1) {
+            // add to bounces tally and maybe destroy
+            bounced++;
+            if (bounced > maxBounces) {
                 finishShot(true);
             }
             else
@@ -138,17 +157,20 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     void finishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
-        if (!isGhost) {
-            bullet.GetComponent<MeshRenderer>().enabled = false;
-            if (explode) {
-                GameObject splash = Instantiate(splashZone);
-                var pos = transform.position+Vector3.zero;
-                pos.y = 0;
-                splash.transform.position = pos;
-            }
-            StopCoroutine(expiration);
-            Destroy(gameObject);
+        if (isGhost)
+        {
+            return;
         }
+
+        bullet.GetComponent<MeshRenderer>().enabled = false;
+        if (explode) {
+            GameObject splash = Instantiate(splashZone);
+            var pos = transform.position+Vector3.zero;
+            pos.y = 0;
+            splash.transform.position = pos;
+        }
+        StopCoroutine(expiration);
+        Destroy(gameObject);
     }
 
     public void setShooter(Controller player) {

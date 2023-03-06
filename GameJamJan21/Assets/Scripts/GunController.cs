@@ -58,22 +58,31 @@ public class GunController : MonoBehaviour
         primaryCooldownTimer = primaryCooldown * owner.GetSpeedBonus();
     }
 
+    public bool CheckShotValidity(Vector3 cur_pos) {
+        return !Physics.CheckBox(cur_pos, new Vector3(0.05f, 0.05f, 0.1f));
+    }
+
     // returns true if fired
-    public bool PrimaryFire()
+    public void PrimaryFire()
     {
         // Debug.Log("PRIMARY COOLDOWN: " + primaryCooldownTimer);
         if (primaryOnCooldown) {
             Debug.Log("Tried to primary fire, but cooldown has not completed yet.");
-            return false; 
+            return;
         } 
-        GameObject bullet = UnityEngine.Object.Instantiate(bulletType);
         Vector3 cur_pos = this.transform.position + (this.transform.forward / 3);
-        bullet.transform.position = cur_pos;
-        bullet.transform.rotation = this.transform.rotation;
-        bullet.GetComponent<BulletLogic>().setShooter(owner);
-        bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
-        primaryOnCooldown = true;
-        return true;
+
+        // Check to make sure we aren't colliding
+        if (CheckShotValidity(cur_pos)) {
+            GameObject bullet = UnityEngine.Object.Instantiate(bulletType);
+            bullet.transform.position = cur_pos;
+            bullet.transform.rotation = this.transform.rotation;
+            bullet.GetComponent<BulletLogic>().setShooter(owner);
+            bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
+            primaryOnCooldown = true;
+        } else {
+            Debug.Log("Bullet would appear inside an object!");
+        }
     }
     
     public bool SecondaryFire()
