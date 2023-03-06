@@ -8,6 +8,20 @@ import (
 	"google.golang.org/protobuf/proto"
 )
 
+var (
+	IceConfig webrtc.Configuration
+)
+
+func init() {
+	IceConfig = webrtc.Configuration{
+		ICEServers: []webrtc.ICEServer{
+			{
+				URLs: []string{"stun:stun.l.google.com:19302"},
+			},
+		},
+	}
+}
+
 func connectServer(client *backend.Client, ws *websocket.Conn) error {
 	defer func(ws *websocket.Conn) {
 		err := ws.Close()
@@ -16,7 +30,7 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 		}
 	}(ws)
 
-	peerConnection, err := webrtc.NewPeerConnection(webrtc.Configuration{})
+	peerConnection, err := webrtc.NewPeerConnection(IceConfig)
 	if err != nil {
 		return err
 	}
@@ -43,7 +57,6 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 			return
 		}
 		if err = ws.WriteMessage(websocket.BinaryMessage, d); err != nil {
-			log.Error(err)
 			return
 		}
 	})
@@ -79,7 +92,7 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 		// Read each inbound WebSocket Message
 		_, msg, err := ws.ReadMessage()
 		if e, ok := err.(*websocket.CloseError); ok {
-			log.Info(e)
+			log.Debug(e)
 			return nil
 		} else if err != nil {
 			return err

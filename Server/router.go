@@ -3,9 +3,7 @@ package main
 import (
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 	"net/http"
-	"time"
 )
 
 var upgrader = websocket.Upgrader{}
@@ -19,9 +17,7 @@ func ConnectEndpoints(e *echo.Echo) {
 	e.GET("/list", List)
 	e.POST("/connect/:session", Connect)
 
-	e.GET("/stream", connectServerEcho, middleware.TimeoutWithConfig(middleware.TimeoutConfig{
-		Timeout: 10 * time.Second, // 10 seconds to set up the session
-	}))
+	e.GET("/stream", connectServerEcho)
 }
 
 //func websocketWrapper(function func(ws *websocket.Conn) error) func(c echo.Context) error {

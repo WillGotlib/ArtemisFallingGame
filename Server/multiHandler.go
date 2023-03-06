@@ -139,7 +139,7 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 }
 
 func (s *GameServer) getClientFromContext(c echo.Context) (*backend.Client, error) {
-	tokenRaw := c.Request().Header.Get("Token")
+	tokenRaw := c.Request().Header.Get("Authorization")
 	if len(tokenRaw) == 0 {
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "no token provided")
 	}

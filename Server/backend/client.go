@@ -39,11 +39,13 @@ func (c *Client) Done(message string) {
 	if c.WRTC == nil {
 		return
 	}
-	if err := c.PriorityChannel.SendText(message); err != nil {
-		log.Debug(err)
+	if c.PriorityChannel != nil && c.PriorityChannel.ReadyState() == webrtc.DataChannelStateOpen {
+		if err := c.PriorityChannel.SendText(message); err != nil {
+			log.Debug(err)
+		}
+		c.PriorityChannel = nil
+		c.FastChannel = nil
 	}
-	c.PriorityChannel = nil
-	c.FastChannel = nil
 
 	if err := c.WRTC.Close(); err != nil {
 		log.Debug("failed to close peer connection")

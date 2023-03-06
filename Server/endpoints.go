@@ -88,6 +88,7 @@ func connectServerEcho(c echo.Context) error {
 		return err
 	}
 
+	//todo make a timeout
 	err = connectServer(client, ws)
 	if err != nil {
 		log.WithField("websocket", c.Path()).Debug(err)

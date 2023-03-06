@@ -20,11 +20,11 @@ namespace Online
             var addr = new UriBuilder(Address.GetUri("/stream"));
             addr.Scheme = "ws";
             _webSocket = new WebSocket(addr.Uri.ToString(),
-                new Dictionary<string, string> { { "Token", token } });
+                new Dictionary<string, string> { { "Authorization", token } });
 
             _webSocket.OnError += e =>
             {
-                Debug.Log("ws Error! " + e);
+                    Debug.Log("ws Error! " + e);
                 _promise.Reject(new Exception(e));
             };
             _webSocket.OnClose += e =>
