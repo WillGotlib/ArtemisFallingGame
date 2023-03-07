@@ -1,10 +1,9 @@
-using System;
 using Google.Protobuf.Collections;
 using protoBuff;
 using Proyecto26;
 using RSG;
 using Unity.Services.Core;
-using UnityEngine;
+using Unity.WebRTC;
 
 namespace Online
 {
@@ -66,7 +65,7 @@ namespace Online
             var conn = GetConnection();
             if (conn.RtcAlive() || conn._token == "") return null; // maybe will cause issues
 
-            conn._rtcConnection = new WebRtc{callback = _callback};
+            conn._rtcConnection = new WebRtc{callback = _callback,onClose = _onClose};
             return conn._rtcConnection.Connect(conn._token);
         }
 
@@ -80,6 +79,7 @@ namespace Online
 
             conn._rtcConnection.Disconnect();
             conn._rtcConnection = null;
+            _instance = null;
         }
 
 
@@ -104,16 +104,22 @@ namespace Online
             return GetConnection().RtcAlive();
         }
 
-        public static void Dispose()
+
+        public static void OnClose(DelegateOnClose onClose)
         {
-            Disconnect();
-            _instance = null;
+            _onClose = ()=>
+            {
+                Disconnect();
+                onClose();
+            };
+            if (GetConnection().RtcAlive()) GetConnection()._rtcConnection.onClose=_onClose;
         }
 
         private int _index;
         private string _token;
         private static OnMessageCallback _callback;
-
+        private static DelegateOnClose _onClose;
+        
         private WebRtc _rtcConnection;
 
         private bool RtcAlive()

@@ -66,7 +66,9 @@ public class ServerPicker : MonoBehaviour
 
         gameLoaded = false;
 
-        FindObjectOfType<NetworkManager>().Connect(sessionID)
+        var networkManager = FindObjectOfType<NetworkManager>();
+        networkManager.OnDisconnect(Disconnected); // todo fix
+        networkManager.Connect(sessionID)
             .Then(() =>
             {
                 SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single); //todo loading bar
@@ -77,16 +79,21 @@ public class ServerPicker : MonoBehaviour
                     gameLoaded = true;
                     
                     FindObjectOfType<StartGame>().StartMatch();
-                    FindObjectOfType<PausedMenu>().ResumeGame();
+                    FindObjectOfType<PausedMenu>().SwitchMenuState();
                 };
             })
             .Catch(e =>
             {
                 Debug.LogError(e);
-                //joinButton.interactable = true;
-                SceneManager.LoadScene("ServerSelector",
-                    LoadSceneMode.Single); // return to selector scene if load failed
-            });
+                Disconnected(); // return to selector scene if load failed
+            })
+            .Finally(() => joinButton.interactable = true);
+    }   
+
+    private void Disconnected()
+    {
+        Debug.LogWarning("disconnected");
+        SceneManager.LoadScene("ServerSelector", LoadSceneMode.Single);
     }
     
     public void UpdateServer()

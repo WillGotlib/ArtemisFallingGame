@@ -24,7 +24,7 @@ namespace Online
                 _priorityIdleQueue.Enqueue(request);
                 return;
             }
-            
+
             try
             {
                 _priorityChannel.Send(request.ToByteArray());
@@ -35,6 +35,7 @@ namespace Online
                 Alive = false;
             }
         }
+
         public void SendFast(Request request)
         {
             if (!Alive) return;
@@ -43,7 +44,7 @@ namespace Online
                 _fastIdleQueue.Enqueue(request);
                 return;
             }
-            
+
             try
             {
                 _fastChannel.Send(request.ToByteArray());
@@ -64,8 +65,9 @@ namespace Online
         private readonly Queue<Request> _fastIdleQueue;
 
         public bool Alive { private set; get; }
-        
+
         public OnMessageCallback callback = Debug.Log; // just log the responses by default
+        public DelegateOnClose onClose;
 
         public WebRtc()
         {
@@ -77,7 +79,14 @@ namespace Online
                 iceServers = new[] { new RTCIceServer { urls = new[] { "stun:stun.l.google.com:19302" } } }
             };
             _connection = new RTCPeerConnection(ref config);
-            
+            _connection.OnConnectionStateChange = s =>
+            {
+                if (s == RTCPeerConnectionState.Closed ||
+                    s == RTCPeerConnectionState.Failed ||
+                    s == RTCPeerConnectionState.Disconnected)
+                    onClose();
+            };
+
             var priorityConf = new RTCDataChannelInit();
             var fastConf = new RTCDataChannelInit
             {
@@ -96,7 +105,7 @@ namespace Online
                 SendFast(GroupQueue(_fastIdleQueue));
             });
         }
-        
+
         public Promise Connect(string token)
         {
             var promise = new Promise();
@@ -112,13 +121,15 @@ namespace Online
 
         public void Disconnect()
         {
+            if (_connection.ConnectionState != RTCPeerConnectionState.Connected)return;
             _connection.Close();
             _fastOpen = false;
             _priorityOpen = false;
             Alive = false;
         }
 
-        private RTCDataChannel CreateDataChannel(RTCPeerConnection pc, string name, RTCDataChannelInit config, DelegateOnOpen onOpen)
+        private RTCDataChannel CreateDataChannel(RTCPeerConnection pc, string name, RTCDataChannelInit config,
+            DelegateOnOpen onOpen)
         {
             var dataChannel = pc.CreateDataChannel(name, config);
             dataChannel.OnOpen = onOpen;
@@ -133,12 +144,19 @@ namespace Online
         private static Request GroupQueue(Queue<Request> queue)
         {
             var newReq = new RepeatedField<StreamAction>();
-            while (queue.Count>0)
+            while (queue.Count > 0)
                 foreach (var streamAction in queue.Dequeue().Requests)
                     newReq.Add(streamAction);
 
-            return new Request {Requests = { newReq }};
+            return new Request { Requests = { newReq } };
         }
 
+        /*
+        public void OnClose(DelegateOnClose onClose)
+        {
+            //_fastChannel.OnClose = onClose;
+            _priorityChannel.OnClose = onClose;
+        }
+    */
     }
 }

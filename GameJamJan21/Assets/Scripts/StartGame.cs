@@ -112,7 +112,7 @@ public class StartGame : MonoBehaviour
         var playerNumber = player.playerNumber;
         PlayerStockUpdate(playerNumber, player.Stock);
         PlayerHealthUpdate(playerNumber, GlobalStats.baseHealth);
-        print("STOCKS: " + players[0].Stock + "/" + players[1].Stock);
+        print("STOCKS: " + players[0]?.Stock + "/" + players[1]?.Stock);
 
         if (player.Stock > 0) {
             var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];

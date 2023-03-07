@@ -6,6 +6,7 @@ using Google.Protobuf;
 using Google.Protobuf.Collections;
 using protoBuff;
 using RSG;
+using Unity.WebRTC;
 using UnityEngine;
 
 //todo add try catches in places to get errors
@@ -55,6 +56,11 @@ namespace Online
             PostRegistrers();
 
             positionUpdater = StartCoroutine(UpdatePosition());
+        }
+
+        public void OnDisconnect(DelegateOnClose disconnect)
+        {
+            Connection.OnClose(disconnect);
         }
 
         public void Awake()
@@ -256,12 +262,6 @@ namespace Online
         static void RunOnStart()
         {
             Application.quitting += Connection.Disconnect;
-            Application.wantsToQuit += () =>
-            {
-                Connection.Disconnect();
-                Connection.Dispose(); //todo make task that starts that will quit the app and a progress bar
-                return !Connection.IsStreaming();
-            };
         }
 
         public async void Disconnect()
@@ -311,11 +311,10 @@ namespace Online
                     if (element.GetControlType() == ElementType.Listener) continue;
                     // ideally projectiles should be controlled by the server but i am making them be controlled by the sender for simplicities sake
 
-                    (Vector3, Quaternion, float) pos;
+                    (Vector3, Quaternion) pos;
                     try
                     {
-                        var p = element.GetPosition();
-                        pos = (p.Item1, p.Item2, Time.time);
+                        pos = element.GetPosition();
                     }
                     catch
                     {
@@ -324,7 +323,7 @@ namespace Online
 
                     if (_objectLastPos.ContainsKey(id) && (Time.time - _objectLastPos[id].Item3) < MaxSecondsNoUpdate &&
                         _objectLastPos[id].Item1 == pos.Item1 && _objectLastPos[id].Item2 == pos.Item2) continue;
-                    _objectLastPos[id] = pos;
+                    _objectLastPos[id] = (pos.Item1,pos.Item2, Time.time);
 
                     requests.Add(new StreamAction
                     {
