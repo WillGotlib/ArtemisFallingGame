@@ -306,7 +306,6 @@ public class Controller : MonoBehaviour
         {
             totalBonus *= e.fireRateBonus;
         }
-
         return totalBonus;
     }
 

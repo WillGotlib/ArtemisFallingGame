@@ -119,7 +119,7 @@ MonoBehaviour:
   fireRateBonus: 2
   speedBonus: 1
   dashBonus: 1
-  maxDuration: 5
+  maxDuration: 4
   requiresWeapon: 1
 --- !u!1 &8600734089010388788
 GameObject:

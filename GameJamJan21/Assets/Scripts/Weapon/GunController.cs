@@ -28,8 +28,10 @@ public class GunController : MonoBehaviour
     {
         ammoCount = maxAmmo;
         bouncingCount = maxBouncers;
-        primaryCooldownTimer = bulletType.GetComponent<BulletLogic>().cooldown;
-        secondaryCooldownTimer = secondaryType.GetComponent<BulletLogic>().cooldown;
+        primaryCooldown = bulletType.GetComponent<BulletLogic>().cooldown;
+        primaryCooldownTimer = primaryCooldown;
+        secondaryCooldown = secondaryType.GetComponent<BulletLogic>().cooldown;
+        secondaryCooldownTimer = secondaryCooldown;
         _trajectory.RegisterScene();
     }
 
@@ -38,7 +40,7 @@ public class GunController : MonoBehaviour
         if (primaryOnCooldown) {
             primaryCooldownTimer -= Time.deltaTime;
             if (primaryCooldownTimer <= 0) {
-                // Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
+                Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;
                 primaryCooldownTimer = primaryCooldown / owner.GetFireRateBonus();
             }
