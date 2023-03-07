@@ -15,8 +15,8 @@ import (
 )
 
 const (
-	EmptySessionTimeout = 5 * time.Second // 5 seconds should be plenty of time for someone to join
-	clientTimeout       = 10 * time.Second
+	EmptySessionTimeout = 10 * time.Second // 10 seconds should be plenty of time for someone to join
+	clientTimeout       = 30 * time.Second
 )
 
 var server *GameServer
@@ -166,7 +166,9 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 	s.sessionsMu.Unlock()
 
 	s.gamesMu.Lock()
-	s.games[id].Stop()
+	if _, ok := s.games[id]; ok {
+		s.games[id].Stop()
+	}
 	delete(s.games, id)
 	s.gamesMu.Unlock()
 
@@ -221,14 +223,15 @@ func (s *GameServer) parseMessage(dcLabel string, client *backend.Client) func(m
 }
 
 func (s *GameServer) watchTimeout() {
-	timeoutTicker := time.NewTicker(1 * time.Minute)
+	timeoutTicker := time.NewTicker(5 * time.Second)
 	go func() {
 		for {
 			s.clientsMu.RLock()
 			for _, client := range s.clients {
 				if time.Since(client.LastMessage) > clientTimeout {
+					s.clientsMu.RUnlock()
 					s.removeClient(client.Id, "you have been timed out")
-					return
+					s.clientsMu.RLock()
 				}
 			}
 			s.clientsMu.RUnlock()

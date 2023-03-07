@@ -30,7 +30,6 @@ public class StartGame : MonoBehaviour
     void Start()
     {
         if (primaryColours.Length != accentColours.Length) throw new Exception("colour lists must be the same length");
-        levelManager = FindObjectOfType<LevelManager>();
         if (FindObjectOfType<NetworkManager>() == null) // have the network manager call this when the game starts
             StartMatch();
     }
@@ -39,6 +38,7 @@ public class StartGame : MonoBehaviour
         foreach (Transform player in transform)
             Destroy(player.gameObject);
         
+        levelManager = FindObjectOfType<LevelManager>();
         var spawnPoints = levelManager.GetSpawnPoints();
         CreatePhysicsScene();
         players = new Controller[Mathf.Min(playerCount, spawnPoints.Length)];
