@@ -5053,10 +5053,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2992de513708d34394b94c5d8d9a1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerOneHealth: {fileID: 996679649}
-  playerTwoHealth: {fileID: 815565797}
-  playerOneStamina: {fileID: 531201859}
-  playerTwoStamina: {fileID: 913008186}
+  playerOneHealth: {fileID: 815565797}
+  playerTwoHealth: {fileID: 996679649}
+  playerOneStamina: {fileID: 913008186}
+  playerTwoStamina: {fileID: 531201859}
 --- !u!114 &1695668389
 MonoBehaviour:
   m_ObjectHideFlags: 0
