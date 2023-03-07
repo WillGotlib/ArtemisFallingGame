@@ -11,10 +11,11 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private Slider playerTwoHealth;
     [SerializeField] private Slider playerOneStamina;
     [SerializeField] private Slider playerTwoStamina;
-    private float playerOneWaitTime = 5.0f;
-    private float playerTwoWaitTime = 5.0f;
+    private float playerOneWaitTime = GlobalStats.dashCooldown;
+    private float playerTwoWaitTime = GlobalStats.dashCooldown;
     private int[] playerStocks = new int[2];
     private float[] playerHealths = new float[2];
+    private int staminaDisplayMultiplier = 30;
 
     void Start() {
         playerHealths[0] = GlobalStats.baseHealth;
@@ -28,11 +29,11 @@ public class HUDManager : MonoBehaviour
     void Update() {
         if (playerOneStamina.value != 100) {
             playerOneWaitTime -= Time.deltaTime;
-            playerOneStamina.value = (GlobalStats.dashCooldown - playerOneWaitTime) * 20;
+            playerOneStamina.value = (GlobalStats.dashCooldown - playerOneWaitTime) * staminaDisplayMultiplier;
         }
         if (playerTwoStamina.value != 100) {
             playerTwoWaitTime -= Time.deltaTime;
-            playerTwoStamina.value = (GlobalStats.dashCooldown - playerTwoWaitTime) * 20;
+            playerTwoStamina.value = (GlobalStats.dashCooldown - playerTwoWaitTime) * staminaDisplayMultiplier;
         }
     }
 
@@ -53,12 +54,12 @@ public class HUDManager : MonoBehaviour
     public void UseStamina(int playerNumber) {
         if (playerNumber == 0) {
             playerOneStamina.value = 0;
-            playerOneWaitTime = 5.0f;
+            playerOneWaitTime = GlobalStats.dashCooldown;
         }
 
         else if (playerNumber == 1) {
             playerTwoStamina.value = 0;
-            playerTwoWaitTime = 5.0f;
+            playerTwoWaitTime = GlobalStats.dashCooldown;
         }
     }
 }
