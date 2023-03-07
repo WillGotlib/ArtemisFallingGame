@@ -167,7 +167,6 @@ public class Controller : MonoBehaviour
     }
 
     public void OnEnterMenu() {
-        print(menu);
         menu.SwitchMenuState();
     }
 
@@ -217,7 +216,12 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0)
             {
-                playerController.RespawnPlayer(this);
+                if (playerController == null) {
+                    var tutorialSpawner = FindObjectOfType<StartTutorial>();
+                    tutorialSpawner.RespawnPlayer(this);
+                } else {
+                    playerController.RespawnPlayer(this);
+                }
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();

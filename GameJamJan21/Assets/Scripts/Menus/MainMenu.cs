@@ -23,6 +23,15 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Gameplay");
     }
 
+    public void PlayTutorial() {
+        if (PausedMenu.isPaused == true) {
+            Time.timeScale = 1f;
+            PausedMenu.isPaused = false;
+        }
+
+        SceneManager.LoadScene("Tutorial");
+    }
+
     public void QuitGame() {
         Debug.Log("Good Bye");
         Application.Quit();
