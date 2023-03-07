@@ -32,7 +32,7 @@ namespace Online
             catch (Exception e)
             {
                 Debug.Log(e);
-                Alive = false;
+                _priorityChannel.OnClose();
             }
         }
 
@@ -52,7 +52,7 @@ namespace Online
             catch (Exception e)
             {
                 Debug.Log(e);
-                Alive = false;
+                _priorityChannel.OnClose();
             }
         }
 
@@ -81,10 +81,14 @@ namespace Online
             _connection = new RTCPeerConnection(ref config);
             _connection.OnConnectionStateChange = s =>
             {
+                if (!Alive) return;
                 if (s == RTCPeerConnectionState.Closed ||
                     s == RTCPeerConnectionState.Failed ||
                     s == RTCPeerConnectionState.Disconnected)
+                {
+                    Alive = false;
                     onClose();
+                }
             };
 
             var priorityConf = new RTCDataChannelInit();
@@ -137,6 +141,12 @@ namespace Online
             {
                 var message = Response.Parser.ParseFrom(data);
                 callback(message);
+            };
+            dataChannel.OnClose = () =>
+            {
+                if (!Alive) return;
+                Alive = false;
+                onClose();
             };
             return dataChannel;
         }

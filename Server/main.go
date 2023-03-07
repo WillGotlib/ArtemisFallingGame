@@ -83,8 +83,6 @@ func main() {
 	if err := e.Shutdown(ctx); err != nil {
 		e.Logger.Fatal(err)
 	}
-
-	time.Sleep(500 * time.Millisecond)
 }
 
 func mainPage(e echo.Context) error {

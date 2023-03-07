@@ -14,7 +14,14 @@ namespace Online
         public static Promise<bool> IsGameServer()
         {
             var returnP = new Promise<bool>();
-            RestClient.Get(Address.GetUri().ToString()).Then(r =>
+            RestClient.Get(new RequestHelper
+            {
+                Uri = Address.GetUri().ToString(),
+                Timeout = 2,
+                Retries = 0,
+                DefaultContentType = false,
+                ParseResponseBody = false
+            }).Then(r =>
                 returnP.Resolve(r.StatusCode == 204 && r.GetHeader("Game") == GameServerProof)
             ).Catch(returnP.Reject);
             return returnP;
@@ -27,15 +34,24 @@ namespace Online
             if (c.RtcAlive())
                 c._rtcConnection.SendPriority(request);
         }
+
         public static void SendFast(Request request)
         {
             var c = GetConnection();
             if (c.RtcAlive())
                 c._rtcConnection.SendFast(request);
         }
-        public static void SendPriority(StreamAction request){SendPriority(new Request { Requests = { request } });}
-        public static void SendFast(StreamAction request){SendFast(new Request { Requests = { request } });}
-        
+
+        public static void SendPriority(StreamAction request)
+        {
+            SendPriority(new Request { Requests = { request } });
+        }
+
+        public static void SendFast(StreamAction request)
+        {
+            SendFast(new Request { Requests = { request } });
+        }
+
         //////////
 
         /// <summary>
@@ -65,7 +81,7 @@ namespace Online
             var conn = GetConnection();
             if (conn.RtcAlive() || conn._token == "") return null; // maybe will cause issues
 
-            conn._rtcConnection = new WebRtc{callback = _callback,onClose = _onClose};
+            conn._rtcConnection = new WebRtc { callback = _callback, onClose = _onClose };
             return conn._rtcConnection.Connect(conn._token);
         }
 
@@ -107,19 +123,19 @@ namespace Online
 
         public static void OnClose(DelegateOnClose onClose)
         {
-            _onClose = ()=>
+            _onClose = () =>
             {
                 Disconnect();
                 onClose();
             };
-            if (GetConnection().RtcAlive()) GetConnection()._rtcConnection.onClose=_onClose;
+            if (GetConnection().RtcAlive()) GetConnection()._rtcConnection.onClose = _onClose;
         }
 
         private int _index;
         private string _token;
         private static OnMessageCallback _callback;
         private static DelegateOnClose _onClose;
-        
+
         private WebRtc _rtcConnection;
 
         private bool RtcAlive()
@@ -143,7 +159,14 @@ namespace Online
         private Promise<RepeatedField<Entity>> _connect(string session)
         {
             var returnP = new Promise<RepeatedField<Entity>>();
-            RestClient.Post(Address.GetUri($"/connect/{session}").ToString(), "")
+            RestClient.Post(
+                    new RequestHelper
+                    {
+                        Uri = Address.GetUri($"/connect/{session}").ToString(),
+                        Retries = 0,
+                        DefaultContentType = false,
+                        ParseResponseBody = false
+                    })
                 .Then(r =>
                 {
                     if (r.StatusCode != 200)
@@ -164,7 +187,14 @@ namespace Online
         private Promise<RepeatedField<Server>> _list()
         {
             var returnP = new Promise<RepeatedField<Server>>();
-            RestClient.Get(Address.GetUri($"/list").ToString())
+            RestClient.Get(new RequestHelper
+                {
+                    Uri = Address.GetUri($"/list").ToString(),
+                    Timeout = 5,
+                    Retries = 0,
+                    DefaultContentType = false,
+                    ParseResponseBody = false
+                })
                 .Then(r =>
                 {
                     if (r.Data == null)
@@ -172,6 +202,7 @@ namespace Online
                         returnP.Resolve(new RepeatedField<Server>());
                         return;
                     }
+
                     var sessions = SessionList.Parser.ParseFrom(r.Data);
                     returnP.Resolve(sessions.Servers);
                 })

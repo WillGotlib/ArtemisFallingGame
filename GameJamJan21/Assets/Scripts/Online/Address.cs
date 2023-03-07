@@ -48,18 +48,5 @@ namespace Online
         }
 
         private static Uri _address = new($"{DefaultProtocol}://{DefaultAddr}:{DefaultPort}");
-        
-        /*private Address()
-        {
-        }
-
-        private static Address _instance;
-
-        private static Address connection()
-        {
-            _instance ??= new Address();
-
-            return _instance;
-        }*/
     }
 }

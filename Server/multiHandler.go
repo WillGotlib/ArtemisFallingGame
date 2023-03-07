@@ -62,6 +62,7 @@ func (s *GameServer) Stop() {
 		s.gamesMu.RLock()
 	}
 	s.gamesMu.RUnlock()
+	time.Sleep(500 * time.Millisecond)
 	server = nil
 }
 
