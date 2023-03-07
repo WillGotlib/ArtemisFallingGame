@@ -51,5 +51,18 @@ public class TempLivesManager : MonoBehaviour
         liveFour.enabled = true;
         liveFive.enabled = true;
         liveSix.enabled = true;
+
+        if (GlobalStats.defaultStockCount < 4) {
+            liveThree.enabled = false;
+            liveSix.enabled = false;
+        }
+        if (GlobalStats.defaultStockCount < 3) {
+            liveTwo.enabled = false;
+            liveFive.enabled = false;
+        }
+        if (GlobalStats.defaultStockCount < 2) {
+            liveOne.enabled = false;
+            liveFour.enabled = false;
+        }
     }
 }

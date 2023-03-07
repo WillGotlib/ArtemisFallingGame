@@ -480,11 +480,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: {fileID: 9165814152039018566, guid: 46b405b11a4104e4d94c322cc2ca5117, type: 3}
-  secondaryType: {fileID: 9165814152039018566, guid: b7577be1fd91c4a7a9fab71345e58277, type: 3}
+  secondaryType: {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
   maxAmmo: 12
   maxBouncers: 1
-  primaryCooldown: 1
-  secondaryCooldown: 3
   _trajectory: {fileID: -4194139606902899362}
   animationController: {fileID: 2263409211759763732}
 --- !u!114 &-4194139606902899362

@@ -5,10 +5,10 @@ using UnityEngine;
 // SPECIFICALLY FOR STORING WHAT ARE BASICALLY MACROS
 public class GlobalStats : MonoBehaviour
 {
-    public static int defaultStockCount = 4;
+    public static int defaultStockCount = 2;
 
-    public static float baseHealth = 12f;
-    public static float dashCooldown = 5f;
+    public static float baseHealth = 10f;
+    public static float dashCooldown = 3f;
     public static float deathCooldown = 3f;
     public static float invincibilityCooldown = 4f;
 }
