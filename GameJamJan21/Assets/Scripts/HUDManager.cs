@@ -39,8 +39,10 @@ public class HUDManager : MonoBehaviour
 
     public void LateUpdate()
     {
-        playerOneHealth.value = Mathf.RoundToInt(playerHealths[0]);
-        playerTwoHealth.value = Mathf.RoundToInt(playerHealths[1]);
+        // playerOneHealth.value = Mathf.RoundToInt(playerHealths[0]);
+        // playerTwoHealth.value = Mathf.RoundToInt(playerHealths[1]);
+        playerOneHealth.value = (playerHealths[0]);
+        playerTwoHealth.value = (playerHealths[1]);
     }
 
     public void ChangeHealth(int playerNumber, float newHealth) {
