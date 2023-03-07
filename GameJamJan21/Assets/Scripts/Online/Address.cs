@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using UnityEngine.Networking;
 
 namespace Online
 {
@@ -31,7 +29,7 @@ namespace Online
             }
 
             _address = u.Uri;
-            Connection.Dispose();
+            Connection.Disconnect();
         }
 
         /// <summary>

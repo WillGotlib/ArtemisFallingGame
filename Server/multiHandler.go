@@ -100,7 +100,12 @@ func (s *GameServer) removeClient(id backend.Token, message string) {
 		return
 	}
 
-	serverUsers := make([]*backend.Client, len(users)-1, maxClients)
+	nUsers := len(users) - 1
+	if nUsers < 0 {
+		nUsers = 0
+	}
+
+	serverUsers := make([]*backend.Client, nUsers, maxClients)
 	count := 0
 	for _, i := range users {
 		if i == c {
