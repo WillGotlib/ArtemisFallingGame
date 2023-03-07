@@ -109,6 +109,7 @@ public class ServerPicker : MonoBehaviour
             }
 
             serverChooser.SetActive(true);
+            joinButton.interactable = true;
             GetServers();
         }).Catch(Debug.Log);
     }
