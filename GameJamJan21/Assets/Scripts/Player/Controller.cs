@@ -164,8 +164,9 @@ public class Controller : MonoBehaviour
     {
         if (!currentlyDead)
         {
-            animator.CrossFade(GrenadeLobName, .2f);
-            weapon.GetComponent<GunController>().SecondaryFire();
+            if (weapon.GetComponent<GunController>().SecondaryFire()) {
+                animator.CrossFade(GrenadeLobName, .2f);
+            }
         }
     }
 
