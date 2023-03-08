@@ -34,7 +34,8 @@ public class Controller : MonoBehaviour
     bool followingCamera = true;
     public PausedMenu menu;
 
-    public string animationSpeedAttrName = "speed";
+    private string _animationSpeedAttrName = "speed";
+    private string _animationDashAttrName = "dashing";
 
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
@@ -190,7 +191,8 @@ public class Controller : MonoBehaviour
     IEnumerator Dash() {
         float startTime = Time.time;
         _jetParticles.Shoot();
-        
+        animator.SetBool(_animationDashAttrName,true);
+
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
                 controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
@@ -201,6 +203,7 @@ public class Controller : MonoBehaviour
             yield return null;
         }
         _jetParticles.Stop();
+        animator.SetBool(_animationDashAttrName,false);
     }
 
     // Update is called once per frame
@@ -265,7 +268,7 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
 
-        animator.SetFloat(animationSpeedAttrName,moveDirection.magnitude);
+        animator.SetFloat(_animationSpeedAttrName,moveDirection.magnitude);
         if (!currentlyDead && moveDirection.magnitude >= 0.1f)
         {
             // Handle the actual movement
