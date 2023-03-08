@@ -67,6 +67,8 @@ public class Controller : MonoBehaviour
 
     private TempLivesManager _tempLivesManager;
 
+    private DashJets _jetParticles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,16 +76,18 @@ public class Controller : MonoBehaviour
         dashIntensity = 10f;
         var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
         lookDirection = rotation * transform.rotation * Vector3.forward;
-
+        
         _analyticsManager = FindObjectOfType<AnalyticsManager>();
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
+        _jetParticles = GetComponent<DashJets>();
         cameraController = FindObjectOfType<CameraSwitch>();
         _hudManager = FindObjectOfType<HUDManager>();
         _tempLivesManager = FindObjectOfType<TempLivesManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         menu.SwitchMenuState();
+
 
         // controller = GetComponent<CharacterController>();
         // controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
@@ -186,7 +190,8 @@ public class Controller : MonoBehaviour
 
     IEnumerator Dash() {
         float startTime = Time.time;
-
+        _jetParticles.Shoot();
+        
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
                 controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
@@ -196,6 +201,7 @@ public class Controller : MonoBehaviour
             }
             yield return null;
         }
+        _jetParticles.Stop();
     }
 
     // Update is called once per frame
