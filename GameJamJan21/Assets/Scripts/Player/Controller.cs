@@ -2,11 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Analytics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
-using Object = UnityEngine.Object;
 
 
 public class Controller : MonoBehaviour
@@ -34,8 +31,9 @@ public class Controller : MonoBehaviour
     bool followingCamera = true;
     public PausedMenu menu;
 
-    private string _animationSpeedAttrName = "speed";
-    private string _animationDashAttrName = "dashing";
+    private const string AnimationSpeedAttrName = "speed";
+    private const string AnimationDashAttrName = "dashing";
+    private const string GrenadeLobName ="grenade lob";
 
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
@@ -166,6 +164,7 @@ public class Controller : MonoBehaviour
     {
         if (!currentlyDead)
         {
+            animator.CrossFade(GrenadeLobName, .2f);
             weapon.GetComponent<GunController>().SecondaryFire();
         }
     }
@@ -191,7 +190,7 @@ public class Controller : MonoBehaviour
     IEnumerator Dash() {
         float startTime = Time.time;
         _jetParticles.Shoot();
-        animator.SetBool(_animationDashAttrName,true);
+        animator.SetBool(AnimationDashAttrName,true);
 
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
@@ -203,7 +202,7 @@ public class Controller : MonoBehaviour
             yield return null;
         }
         _jetParticles.Stop();
-        animator.SetBool(_animationDashAttrName,false);
+        animator.SetBool(AnimationDashAttrName,false);
     }
 
     // Update is called once per frame
@@ -268,7 +267,7 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
 
-        animator.SetFloat(_animationSpeedAttrName,moveDirection.magnitude);
+        animator.SetFloat(AnimationSpeedAttrName,moveDirection.magnitude);
         if (!currentlyDead && moveDirection.magnitude >= 0.1f)
         {
             // Handle the actual movement
