@@ -103,11 +103,10 @@ public class Controller : MonoBehaviour
         weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
         
-        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
-        
         _analyticsManager.HealthEvent(gameObject, playerHealth);
         _analyticsManager.StockUpdate(gameObject, Stock);
         
+        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
 
