@@ -43,18 +43,16 @@ public class PlayerColourizer : MonoBehaviour
         
         foreach (var renderer in model.GetComponentsInChildren<MeshRenderer>())
         {
-            var materials = renderer.materials;
+            var materials = renderer.sharedMaterials;
             for (var i = 0; i < materials.Length; i++)
             {
                 var material = materials[i];
-                var mattName = material.name.Substring(0,
-                    material.name.Length - " (Instance)".Length); // probably not the best way to do this
 
-                if (mattName == primary.name || material.name == primary.name)
+                if (material == primary)
                 {
                     materials[i] = _primaryMat;
                 }
-                else if (mattName == secondary.name || material.name == secondary.name)
+                else if (material == secondary)
                 {
                     materials[i] = _secondaryMat;
                 }
