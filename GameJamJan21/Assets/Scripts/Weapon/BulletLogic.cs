@@ -14,12 +14,15 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     
     public static float splashDamage = 0.5f; // TODO: Delete this.
 
-    [SerializeField] private Rigidbody _rb;
-    public GameObject bullet;
+    private Rigidbody _rb;
+    [SerializeField] private GameObject bullet;
     public int maxBounces = 3;
     [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
     [SerializeField] public float cooldown;
+    
+    [Tooltip("spin amount every frame for x y z in degrees per second")]
+    public Vector3 spin;
 
     public GameObject splashZone;
 
@@ -41,14 +44,17 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public int ghostBounces = 3;
     private AnalyticsManager _analytics;
 
-    private void Start()
+    private void Awake()
     {
+        _rb = GetComponent<Rigidbody>();
         _analytics = FindObjectOfType<AnalyticsManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        bullet.transform.Rotate(spin * Time.deltaTime);
+        
         // TODO: Look at this. Wasteful making this run every frame...
         _rb.velocity = vel.normalized * _bulletSpeed;
     }
@@ -162,7 +168,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             return;
         }
 
-        bullet.GetComponent<MeshRenderer>().enabled = false;
+        bullet.SetActive(false);
         if (explode) {
             GameObject splash = Instantiate(splashZone);
             var pos = transform.position+Vector3.zero;

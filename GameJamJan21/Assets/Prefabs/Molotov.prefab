@@ -454,11 +454,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ee0b1ce762a1404286885528e564385, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rb: {fileID: 7560826534295098678}
-  bullet: {fileID: 0}
+  bullet: {fileID: 6117381863587361867}
   maxBounces: 1
   _bulletSpeed: 5
   cooldown: 4
+  spin: {x: 450, y: 0, z: 0}
   splashZone: {fileID: 6234232466112906086, guid: da5c5bc93ddf0ad4792869db5085d860, type: 3}
   rotationSpeed: 0.3
   trail: {fileID: 7718076483670826406}
@@ -631,6 +631,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+--- !u!1 &6117381863587361867 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+  m_PrefabInstance: {fileID: 6351245033421113626}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6894622662928822001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
