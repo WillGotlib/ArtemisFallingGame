@@ -289,11 +289,6 @@ public class Controller : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        animator.gameObject.transform.localPosition = Vector3.zero; // take into account root motion
-    }
-
     void TickDownEffects()
     {
         foreach (Effect e in new List<Effect>(effects))
