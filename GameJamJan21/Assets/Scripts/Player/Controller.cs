@@ -278,7 +278,7 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
 
-        var animationMovement = (Quaternion.LookRotation(new Vector3(-lookDirection.x,0,lookDirection.z)) * moveDirection).normalized;
+        var animationMovement = Quaternion.LookRotation(new Vector3(-lookDirection.x,0,lookDirection.z)) * moveDirection;
         animator.XSpeed = animationMovement.x;
         animator.YSpeed = animationMovement.z;
         if (!currentlyDead && moveDirection.magnitude >= 0.1f)
@@ -286,7 +286,6 @@ public class Controller : MonoBehaviour
             // Handle the actual movement
             moveDirection.y = 0;
 
-            //controller.Move((moveDirection).normalized * speed * GetSpeedBonus() * Time.deltaTime * momentum);
             animator.AnimationSpeed = speed * GetSpeedBonus() * Time.deltaTime * momentum;
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
