@@ -90,7 +90,8 @@ public class Controller : MonoBehaviour
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         menu.SwitchMenuState();
-
+        
+        _jetParticles.Shoot();
 
         // controller = GetComponent<CharacterController>();
         // controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
@@ -203,7 +204,8 @@ public class Controller : MonoBehaviour
 
     IEnumerator Dash() {
         float startTime = Time.time;
-        _jetParticles.Shoot();
+        //_jetParticles.Shoot();
+        _jetParticles.SetStartSpeed(10);
         animator.SetBool(AnimationDashAttrName,true);
 
         while (Time.time < startTime + dashDuration) {
@@ -215,7 +217,8 @@ public class Controller : MonoBehaviour
             }
             yield return null;
         }
-        _jetParticles.Stop();
+        // _jetParticles.Stop();
+        _jetParticles.SetStartSpeed();
         animator.SetBool(AnimationDashAttrName,false);
     }
 

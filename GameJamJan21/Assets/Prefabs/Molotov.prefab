@@ -460,7 +460,7 @@ MonoBehaviour:
   maxBounces: 1
   _bulletSpeed: 5
   cooldown: 4
-  spin: {x: 450, y: 0, z: 0}
+  spin: {x: 270, y: 0, z: 0}
   splashZone: {fileID: 6234232466112906086, guid: da5c5bc93ddf0ad4792869db5085d860, type: 3}
   rotationSpeed: 0.3
   trail: {fileID: 7718076483670826406}
@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffc7c0f1299171b4c932a0121d7e4d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colour: {r: 0.754717, g: 0.080972545, b: 0.0747597, a: 0}
+  colour: {r: 0.7254902, g: 0.2901961, b: 0.23529412, a: 0}
   grenade: {fileID: 6894622662928822001}
   colourMaterial: {fileID: 2100000, guid: b4c118fd8b3fcd6449d3f19378e120b8, type: 2}
 --- !u!114 &5381165715268956920

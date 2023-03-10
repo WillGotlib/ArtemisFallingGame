@@ -41,7 +41,7 @@ public class AnimationUtils : MonoBehaviour
             // in the case an animation was quit early
             Debug.Log("switched state");
             _holdPosition = true;
-            JetOff();
+            _jets.SetStartSpeed();
             Landing = false;
             _playerController.SpawnGun();
         }
@@ -50,18 +50,14 @@ public class AnimationUtils : MonoBehaviour
         
         if (_holdPosition)
         {
+            //_playerController.transform.localPosition -= transform.localPosition;
             transform.localPosition = Vector3.zero; // take into account root motion
         }
     }
 
-    public void JetOn()
+    public void JetLength(float length)
     {
-        _jets.Shoot();
-    }
-
-    public void JetOff()
-    {
-        _jets.Stop();
+        _jets.SetStartSpeed(length);
     }
 
     public void AllowAnimationMovement(int movement)
