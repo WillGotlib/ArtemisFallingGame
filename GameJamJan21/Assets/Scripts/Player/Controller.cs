@@ -31,7 +31,8 @@ public class Controller : MonoBehaviour
     bool followingCamera = true;
     public PausedMenu menu;
 
-    private const string AnimationSpeedAttrName = "speed";
+    private const string AnimationXSpeedAttrName = "xSpeed";
+    private const string AnimationYSpeedAttrName = "ySpeed";
     private const string AnimationDashAttrName = "dashing";
     private const string GrenadeLobName ="grenade lob";
 
@@ -268,7 +269,9 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
 
-        animator.SetFloat(AnimationSpeedAttrName,moveDirection.magnitude);
+        var animationMovement = (Quaternion.LookRotation(lookDirection) * moveDirection).normalized; //todo fix this so it works in all orientations
+        animator.SetFloat(AnimationYSpeedAttrName, animationMovement.z);
+        animator.SetFloat(AnimationXSpeedAttrName, animationMovement.x);
         if (!currentlyDead && moveDirection.magnitude >= 0.1f)
         {
             // Handle the actual movement
