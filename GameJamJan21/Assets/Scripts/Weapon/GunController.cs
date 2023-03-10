@@ -20,6 +20,10 @@ public class GunController : MonoBehaviour
     [NonSerialized] public int ammoCount;
     [NonSerialized] public int bouncingCount;
     [SerializeField] private Trajectory _trajectory;
+    [SerializeField] private float cooldownMultiplier = 1f;
+    [SerializeField] private float cooldownIncrements = 0.1f;
+    [SerializeField] private float cooldownRecovery = 0.001f;
+    private float currentCooldownMultiplier;
 
     [Header("Object values")] public Animator animationController;
     private Controller owner;
@@ -32,18 +36,21 @@ public class GunController : MonoBehaviour
         primaryCooldownTimer = primaryCooldown;
         secondaryCooldown = secondaryType.GetComponent<BulletLogic>().cooldown;
         secondaryCooldownTimer = secondaryCooldown;
+        currentCooldownMultiplier = cooldownMultiplier;
         _trajectory.RegisterScene();
     }
 
     void Update() {
         _trajectory.SimulateTrajectory(this);
         if (primaryOnCooldown) {
-            primaryCooldownTimer -= Time.deltaTime;
+            primaryCooldownTimer -= Time.deltaTime * currentCooldownMultiplier;
             if (primaryCooldownTimer <= 0) {
                 Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;
                 primaryCooldownTimer = primaryCooldown / owner.GetFireRateBonus();
             }
+        } else {
+            IncreaseCooldownMultiplier();
         }
         if (secondaryOnCooldown) {
             secondaryCooldownTimer -= Time.deltaTime;
@@ -53,6 +60,18 @@ public class GunController : MonoBehaviour
             }
         }
 
+    }
+
+    void DecreaseCooldownMultiplier() {
+        currentCooldownMultiplier -= cooldownIncrements;
+        if(currentCooldownMultiplier <= 0) {
+            currentCooldownMultiplier = 0.1f;
+        }
+    }
+
+    void IncreaseCooldownMultiplier() {
+        if (currentCooldownMultiplier < cooldownMultiplier)
+            currentCooldownMultiplier += cooldownRecovery;
     }
 
     public void ClearPrimaryCooldown() {
@@ -94,6 +113,7 @@ public class GunController : MonoBehaviour
             bullet.GetComponent<BulletLogic>().setShooter(owner);
             bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
             primaryOnCooldown = true;
+            DecreaseCooldownMultiplier();
         } else {
             Debug.Log("Bullet would appear inside an object!");
         }

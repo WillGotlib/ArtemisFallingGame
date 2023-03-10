@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class MatchLevelSelector : MonoBehaviour
 {
-    [SerializeField] private MatchMenu MatchMenu;
+    [SerializeField] private MatchMenu matchMenu;
+    [SerializeField] private MidMatchMenu midMatchMenu;
     
     public int buttonOptionNumber;
     public MatchDataScriptable matchDataScriptable;
@@ -15,6 +16,11 @@ public class MatchLevelSelector : MonoBehaviour
         print(buttonOptionNumber.ToString());
         // this.GetComponent<Button>().Select();
         // matchDataScriptable.levelIdx = buttonOptionNumber;
-        MatchMenu.ChooseLevel(buttonOptionNumber);
+        if (midMatchMenu == null) {
+            matchMenu.ChooseLevel(buttonOptionNumber);
+        } else {
+            midMatchMenu.ChooseLevel(buttonOptionNumber);
+        }
+        
     }
 }
