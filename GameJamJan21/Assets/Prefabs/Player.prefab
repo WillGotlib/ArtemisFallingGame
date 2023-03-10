@@ -226,6 +226,7 @@ MonoBehaviour:
   sensitivity: 2000
   kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
+  weaponHandBone: {fileID: 8487846109932820590}
   menu: {fileID: 0}
   dashIntensity: 25
   momentum: 0.85
@@ -647,6 +648,11 @@ Transform:
 --- !u!4 &3744894742958760270 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3995442595547766584, guid: bf5ae868eae33af4da436cda8f909a31, type: 3}
+  m_PrefabInstance: {fileID: 8896262713196528006}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8487846109932820590 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8160737081461843480, guid: bf5ae868eae33af4da436cda8f909a31, type: 3}
   m_PrefabInstance: {fileID: 8896262713196528006}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8625719418848869591 stripped

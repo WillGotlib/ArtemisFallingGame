@@ -7,21 +7,31 @@ public class AnimationUtils : MonoBehaviour
 {
     private DashJets _jets;
 
-    // private Controller _playerController;
+    private Controller _playerController;
     private Animator _animator;
 
     private bool _holdPosition = true;
+    private bool _transition;
+
+    private bool _landing;
+    public bool Landing
+    {
+        get => _landing;
+        set
+        {
+            _landing = value;
+            _animator.SetBool("landing", value);
+        }
+    }
 
     void Awake()
     {
         _jets = GetComponentInParent<DashJets>();
         _animator = GetComponent<Animator>();
-        // _playerController = GetComponentInParent<Controller>();
+        _playerController = GetComponentInParent<Controller>();
     }
 
-    private bool _transition;
-
-
+    
     private void LateUpdate()
     {
         // catch the falling edge
@@ -32,6 +42,8 @@ public class AnimationUtils : MonoBehaviour
             Debug.Log("switched state");
             _holdPosition = true;
             JetOff();
+            Landing = false;
+            _playerController.SpawnGun();
         }
         _transition = t;
 
@@ -55,5 +67,16 @@ public class AnimationUtils : MonoBehaviour
     public void AllowAnimationMovement(int movement)
     {
         _holdPosition = movement == 0;
+    }
+
+    public void PulloutGun()
+    {
+        _playerController.SpawnGun();
+    }
+
+    public void PlayLanding()
+    {
+        Landing = true;
+        _animator.CrossFade("landing",0);
     }
 }

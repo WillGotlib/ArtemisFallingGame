@@ -22,6 +22,7 @@ public class Controller : MonoBehaviour
     public float kbdSensitivity = 4;
     public GameObject weaponType;
     private GameObject weapon;
+    [SerializeField] private Transform weaponHandBone;
     public float playerHealth { get; private set; } = GlobalStats.baseHealth;
 
     float turnSmoothVelocity;
@@ -100,9 +101,6 @@ public class Controller : MonoBehaviour
         }
 
         currentCooldown = 0;
-        weapon = Instantiate(weaponType, gameObject.transform);
-        weapon.transform.localPosition = new Vector3(0.66f, 2f, 1.5f);
-        weapon.GetComponent<GunController>().setOwner(this);
         startMomentum = momentum;
         
         _analyticsManager.HealthEvent(gameObject, playerHealth);
@@ -110,6 +108,18 @@ public class Controller : MonoBehaviour
         
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
+    }
+
+    public void SpawnGun()
+    {
+        if (weapon != null) return;
+        
+        weapon = Instantiate(weaponType, weaponHandBone);
+        weapon.transform.localPosition = new Vector3(.6f, 6f, 0);
+        weapon.transform.localRotation = Quaternion.Euler(-113, -180, 90);
+        weapon.transform.localScale = new Vector3(.5f, .5f, .5f);
+        
+        weapon.GetComponent<GunController>().setOwner(this);
     }
 
     public void OnMovement(InputValue value)
@@ -375,6 +385,9 @@ public class Controller : MonoBehaviour
             print("PLAYER DIED");
             // transform.position = transform.position + new Vector3(0, 10, 0);
             // SetActive(false);
+            
+            Destroy(weapon.gameObject);
+            weapon = null;
             
             _tempLivesManager.ApplyDeath(playerNumber);
             _analyticsManager.DeathEvent(gameObject);

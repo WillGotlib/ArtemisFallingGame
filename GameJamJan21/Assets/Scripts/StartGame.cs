@@ -64,6 +64,8 @@ public class StartGame : MonoBehaviour
                 colourizer.initialColourize();
             }
             player.GetComponent<CharacterFlash>().SetModel(player.transform.Find("robot"));
+            player.GetComponentInChildren<AnimationUtils>().Landing = true;
+            
             i++;
         }
     }
@@ -92,6 +94,8 @@ public class StartGame : MonoBehaviour
             var playerTransform = player.transform;
             playerTransform.position = spawnpoint.transform.position;
             playerTransform.rotation = spawnpoint.transform.rotation;
+
+            player.GetComponentInChildren<AnimationUtils>().PlayLanding();
         }
         else {
             print("PLAYER " + playerNumber + " IS OUT!");
