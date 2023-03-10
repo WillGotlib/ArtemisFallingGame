@@ -14,9 +14,11 @@ public class AnimationUtils : MonoBehaviour
     private bool _holdPosition = true;
     private bool _transition;
 
+    private bool _landing;
     public bool Landing
     {
-        set => _animator.SetBool(Animations.Landing, value);
+        get => _landing;
+        set =>_animator.SetBool(Animations.Landing, _landing = value);
     }
 
     public bool Dashing
@@ -88,6 +90,7 @@ public class AnimationUtils : MonoBehaviour
     public void PlayLanding()
     {
         Landing = true;
+        AnimationSpeed = 1;
         Play(Animations.Landing);
     }
 

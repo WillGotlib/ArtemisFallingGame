@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
     public AnimationUtils animator;
     
     [Header("Values")]
-    public float speed = 6f;
+    public float speed = 2f;
     public float sensitivity = 5;
     public float kbdSensitivity = 4;
     public GameObject weaponType;
@@ -107,7 +107,11 @@ public class Controller : MonoBehaviour
 
     public void SpawnGun()
     {
-        if (weapon != null) return;
+        if (weapon)
+        {
+            weapon.SetActive(true);
+            return;
+        }
         
         weapon = Instantiate(weaponType, weaponHandBone);
         weapon.transform.localPosition = new Vector3(.6f, 6f, 0);
@@ -162,7 +166,7 @@ public class Controller : MonoBehaviour
 
     public void OnPrimaryFire()
     {
-        if (!currentlyDead)
+        if (!currentlyDead && weapon != null && weapon.activeSelf)
         {
             weapon.GetComponent<GunController>().PrimaryFire();
         }
@@ -170,7 +174,7 @@ public class Controller : MonoBehaviour
 
     public void OnSecondaryFire()
     {
-        if (!currentlyDead)
+        if (!currentlyDead && weapon != null && weapon.activeSelf)
         {
             if (weapon.GetComponent<GunController>().SecondaryFire()) {
                 animator.Play(Animations.Lobbing);
@@ -281,12 +285,12 @@ public class Controller : MonoBehaviour
         var animationMovement = Quaternion.LookRotation(new Vector3(-lookDirection.x,0,lookDirection.z)) * moveDirection;
         animator.XSpeed = animationMovement.x;
         animator.YSpeed = animationMovement.z;
-        if (!currentlyDead && moveDirection.magnitude >= 0.1f)
+        if (!currentlyDead && moveDirection.magnitude >= 0.1f && !animator.Landing)
         {
             // Handle the actual movement
             moveDirection.y = 0;
 
-            animator.AnimationSpeed = speed * GetSpeedBonus() * Time.deltaTime * momentum;
+            animator.AnimationSpeed = speed * GetSpeedBonus() * momentum;
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -298,7 +302,8 @@ public class Controller : MonoBehaviour
 
     private void LateUpdate()
     {
-        controller.Move(moveDirection.normalized*animator.transform.localPosition.magnitude);
+        if (!currentlyDead && !animator.Landing)
+            controller.Move(moveDirection.normalized*animator.transform.localPosition.magnitude);
     }
 
     void TickDownEffects()
@@ -388,8 +393,7 @@ public class Controller : MonoBehaviour
             // transform.position = transform.position + new Vector3(0, 10, 0);
             // SetActive(false);
             
-            Destroy(weapon.gameObject);
-            weapon = null;
+            weapon.SetActive(false);
             
             _tempLivesManager.ApplyDeath(playerNumber);
             _analyticsManager.DeathEvent(gameObject);

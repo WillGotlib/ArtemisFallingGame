@@ -173,7 +173,7 @@ CharacterController:
   m_Radius: 0.79
   m_SlopeLimit: 25
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.43, z: -0.15}
 --- !u!114 &2111890155133846231
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 3349455145992540266}
   animator: {fileID: 344936565922596221}
-  speed: 4
+  speed: 1
   sensitivity: 2000
   kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
