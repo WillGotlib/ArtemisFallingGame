@@ -33,6 +33,8 @@ public class Controller : MonoBehaviour
 
     private const string AnimationXSpeedAttrName = "xSpeed";
     private const string AnimationYSpeedAttrName = "ySpeed";
+    private const float XScale = 2; 
+    private const float YScale = 8; 
     private const string AnimationDashAttrName = "dashing";
     private const string GrenadeLobName ="grenade lob";
 
@@ -269,9 +271,9 @@ public class Controller : MonoBehaviour
             // this.transform.Rotate(lookDirection);
         }
 
-        var animationMovement = (Quaternion.LookRotation(lookDirection) * moveDirection).normalized; //todo fix this so it works in all orientations
-        animator.SetFloat(AnimationYSpeedAttrName, animationMovement.z);
-        animator.SetFloat(AnimationXSpeedAttrName, animationMovement.x);
+        var animationMovement = (Quaternion.LookRotation(new Vector3(-lookDirection.x,0,lookDirection.z)) * moveDirection).normalized;
+        animator.SetFloat(AnimationYSpeedAttrName, animationMovement.z * YScale);
+        animator.SetFloat(AnimationXSpeedAttrName, animationMovement.x * XScale);
         if (!currentlyDead && moveDirection.magnitude >= 0.1f)
         {
             // Handle the actual movement
@@ -285,6 +287,11 @@ public class Controller : MonoBehaviour
         {
             momentum = startMomentum;
         }
+    }
+
+    private void LateUpdate()
+    {
+        animator.gameObject.transform.localPosition = Vector3.zero; // take into account root motion
     }
 
     void TickDownEffects()
