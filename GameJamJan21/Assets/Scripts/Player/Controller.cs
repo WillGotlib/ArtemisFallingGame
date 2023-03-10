@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Analytics;
+using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +15,7 @@ public class Controller : MonoBehaviour
 
     [Header("Nodes")]
     public CharacterController controller;
-    public Animator animator;
+    public AnimationUtils animator;
     
     [Header("Values")]
     public float speed = 6f;
@@ -31,14 +32,7 @@ public class Controller : MonoBehaviour
     new Camera camera;
     bool followingCamera = true;
     public PausedMenu menu;
-
-    private const string AnimationXSpeedAttrName = "xSpeed";
-    private const string AnimationYSpeedAttrName = "ySpeed";
-    private const float XScale = 2; 
-    private const float YScale = 8; 
-    private const string AnimationDashAttrName = "dashing";
-    private const string GrenadeLobName ="grenade lob";
-
+    
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
 
@@ -179,7 +173,7 @@ public class Controller : MonoBehaviour
         if (!currentlyDead)
         {
             if (weapon.GetComponent<GunController>().SecondaryFire()) {
-                animator.CrossFade(GrenadeLobName, .0f);
+                animator.Play(Animations.Lobbing);
             }
         }
     }
@@ -206,7 +200,7 @@ public class Controller : MonoBehaviour
         float startTime = Time.time;
         //_jetParticles.Shoot();
         _jetParticles.SetStartSpeed(10);
-        animator.SetBool(AnimationDashAttrName,true);
+        animator.Dashing = true;
 
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
@@ -219,7 +213,7 @@ public class Controller : MonoBehaviour
         }
         // _jetParticles.Stop();
         _jetParticles.SetStartSpeed();
-        animator.SetBool(AnimationDashAttrName,false);
+        animator.Dashing = false;
     }
 
     // Update is called once per frame
@@ -285,14 +279,15 @@ public class Controller : MonoBehaviour
         }
 
         var animationMovement = (Quaternion.LookRotation(new Vector3(-lookDirection.x,0,lookDirection.z)) * moveDirection).normalized;
-        animator.SetFloat(AnimationYSpeedAttrName, animationMovement.z * YScale);
-        animator.SetFloat(AnimationXSpeedAttrName, animationMovement.x * XScale);
+        animator.XSpeed = animationMovement.x;
+        animator.YSpeed = animationMovement.z;
         if (!currentlyDead && moveDirection.magnitude >= 0.1f)
         {
             // Handle the actual movement
             moveDirection.y = 0;
 
-            controller.Move((moveDirection).normalized * speed * GetSpeedBonus() * Time.deltaTime * momentum);
+            //controller.Move((moveDirection).normalized * speed * GetSpeedBonus() * Time.deltaTime * momentum);
+            animator.AnimationSpeed = speed * GetSpeedBonus() * Time.deltaTime * momentum;
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -300,6 +295,11 @@ public class Controller : MonoBehaviour
         {
             momentum = startMomentum;
         }
+    }
+
+    private void LateUpdate()
+    {
+        controller.Move(moveDirection.normalized*animator.transform.localPosition.magnitude);
     }
 
     void TickDownEffects()

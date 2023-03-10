@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 3349455145992540266}
-  animator: {fileID: 7229605623330708682}
+  animator: {fileID: 344936565922596221}
   speed: 4
   sensitivity: 2000
   kbdSensitivity: 4

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 
 public class AnimationUtils : MonoBehaviour
@@ -13,15 +14,29 @@ public class AnimationUtils : MonoBehaviour
     private bool _holdPosition = true;
     private bool _transition;
 
-    private bool _landing;
     public bool Landing
     {
-        get => _landing;
-        set
-        {
-            _landing = value;
-            _animator.SetBool("landing", value);
-        }
+        set => _animator.SetBool(Animations.Landing, value);
+    }
+
+    public bool Dashing
+    {
+        set => _animator.SetBool(Attributes.Dashing, value);
+    }
+
+    public float XSpeed
+    {
+        set => _animator.SetFloat(Attributes.XSpeed, value);
+    }
+
+    public float YSpeed
+    {
+        set => _animator.SetFloat(Attributes.YSpeed, value);
+    }
+    
+    public float AnimationSpeed
+    {
+        set => _animator.SetFloat(Attributes.AnimationMultiplier, value);
     }
 
     void Awake()
@@ -31,7 +46,7 @@ public class AnimationUtils : MonoBehaviour
         _playerController = GetComponentInParent<Controller>();
     }
 
-    
+
     private void LateUpdate()
     {
         // catch the falling edge
@@ -45,12 +60,12 @@ public class AnimationUtils : MonoBehaviour
             Landing = false;
             _playerController.SpawnGun();
         }
+
         _transition = t;
 
-        
+
         if (_holdPosition)
         {
-            //_playerController.transform.localPosition -= transform.localPosition;
             transform.localPosition = Vector3.zero; // take into account root motion
         }
     }
@@ -73,6 +88,11 @@ public class AnimationUtils : MonoBehaviour
     public void PlayLanding()
     {
         Landing = true;
-        _animator.CrossFade("landing",0);
+        Play(Animations.Landing);
+    }
+
+    public void Play(string animationName)
+    {
+        _animator.Play(animationName);
     }
 }
