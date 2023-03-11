@@ -68,11 +68,4 @@ public class Spinning : DynamicComponent
         rotations[i] = v_end;
         speedRamps[i] = null;
     }
-    
-    public void OnTriggerStay(Collider col) {
-        var ctrl = col.gameObject.GetComponent<CharacterController>();
-        if (ctrl) {
-            ctrl.SimpleMove(Vector3.back);
-        }
-    }
 }
