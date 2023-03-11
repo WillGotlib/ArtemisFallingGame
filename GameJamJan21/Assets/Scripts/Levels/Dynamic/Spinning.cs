@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spinning : DynamicComponent
@@ -27,7 +26,7 @@ public class Spinning : DynamicComponent
             if (reverseIntervals[i] > 0) {
                 intervalRoutines[i] = StartCoroutine(reversalInterval(i));
             }
-            oldRotations[i] = -10000; // TODO: THIS IS BAD CODE. Wish there was a Mathf.NegativeInf thing...
+            oldRotations[i] = Mathf.NegativeInfinity;
         }
     }
 
@@ -68,5 +67,12 @@ public class Spinning : DynamicComponent
         }
         rotations[i] = v_end;
         speedRamps[i] = null;
+    }
+    
+    public void OnTriggerStay(Collider col) {
+        var ctrl = col.gameObject.GetComponent<CharacterController>();
+        if (ctrl) {
+            ctrl.SimpleMove(Vector3.back);
+        }
     }
 }
