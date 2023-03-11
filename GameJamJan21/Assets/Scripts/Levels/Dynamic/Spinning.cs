@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spinning : DynamicComponent
 {
+    [SerializeField] Rigidbody rb;
     // Start is called before the first frame update
     [SerializeField] float[] rotationSpeeds = new float[3];
     
@@ -40,7 +41,9 @@ public class Spinning : DynamicComponent
         
         // print("(" + rotations[0] + ", " + rotations[1] + ", " + rotations[2] + ")");
         oldRotations = new float[] {rotations[0], rotations[1], rotations[2]};
-        transform.Rotate(rotations[0], rotations[1], rotations[2], Space.World);
+        Quaternion new_rot = Quaternion.Euler(new Vector3(rotations[2], rotations[0], rotations[1]));
+        rb.MoveRotation(rb.rotation * new_rot);
+        // transform.Rotate(rotations[0], rotations[1], rotations[2], Space.World);
     }
 
     private IEnumerator reversalInterval(int i)
