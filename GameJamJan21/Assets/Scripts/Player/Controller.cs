@@ -66,6 +66,8 @@ public class Controller : MonoBehaviour
     private HUDManager _hudManager;
 
     private TempLivesManager _tempLivesManager;
+    
+    public MatchDataScriptable mds;
 
     // Start is called before the first frame update
     void Start()
@@ -97,6 +99,8 @@ public class Controller : MonoBehaviour
         weapon = Instantiate(weaponType, gameObject.transform);
         weapon.transform.localPosition = new Vector3(0.66f, 2f, 1.5f);
         weapon.GetComponent<GunController>().setOwner(this);
+        weapon.GetComponent<GunController>().setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
+
         startMomentum = momentum;
         
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);

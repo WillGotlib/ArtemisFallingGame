@@ -41,6 +41,10 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public int ghostBounces = 3;
     private AnalyticsManager _analytics;
 
+    [Header("Labels")]
+    public Sprite thumbnail;
+    public string label;
+
     private void Start()
     {
         _analytics = FindObjectOfType<AnalyticsManager>();

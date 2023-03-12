@@ -465,6 +465,8 @@ MonoBehaviour:
   trail: {fileID: 7718076483670826406}
   maxFlightTimeSeconds: 10
   ghostBounces: 3
+  thumbnail: {fileID: 7482667652216324306, guid: 4ce4d74e4e32f47c7b572ec30284111b, type: 3}
+  label: Freeze Shot
 --- !u!108 &5761309379727644029
 Light:
   m_ObjectHideFlags: 0

@@ -27,7 +27,7 @@ public class MidMatchMenu : MonoBehaviour
             Level currLevel = matchDataScriptable.levels[i].GetComponent<Level>();
             buttonSet[i].GetComponent<Image>().sprite = currLevel.thumbnail;
             buttonSet[i].gameObject.GetComponentInChildren<TMP_Text>().text = currLevel.nid;
-            buttonSet[i].gameObject.GetComponent<MatchLevelSelector>().buttonOptionNumber = i;
+            buttonSet[i].gameObject.GetComponent<MatchMenuSelector>().buttonOptionNumber = i;
         }
         matchDataScriptable.levelIdx = 0;
     }

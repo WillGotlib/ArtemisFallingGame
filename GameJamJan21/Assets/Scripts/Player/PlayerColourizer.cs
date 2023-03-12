@@ -60,7 +60,7 @@ public class PlayerColourizer : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"material not matched: {material.name}");
+                    Debug.Log($"material not matched on {renderer.gameObject.name}: {material.name}");
                 }
             }
 
