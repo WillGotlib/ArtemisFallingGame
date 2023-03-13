@@ -480,10 +480,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: {fileID: 9165814152039018566, guid: 46b405b11a4104e4d94c322cc2ca5117, type: 3}
-  secondaryType: {fileID: 2160589781498056887, guid: ae65e96d0c84bae428aaf3fd01cdce35, type: 3}
+  secondaryType: {fileID: 2160589781498056887, guid: b7577be1fd91c4a7a9fab71345e58277, type: 3}
   maxAmmo: 12
   maxBouncers: 1
   _trajectory: {fileID: -4194139606902899362}
+  cooldownMultiplier: 1
+  cooldownIncrements: 0.1
+  cooldownRecovery: 0.001
   animationController: {fileID: 2263409211759763732}
 --- !u!114 &-4194139606902899362
 MonoBehaviour:

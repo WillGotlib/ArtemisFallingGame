@@ -27,8 +27,8 @@ public class Trajectory : MonoBehaviour
             ghostBullet.transform.position = cur_pos;
             ghostBullet.transform.rotation = weapon.transform.rotation;
             ghostBullet.GetComponentInChildren<Renderer>().enabled = false;
-            SceneManager.MoveGameObjectToScene(ghostBullet, _simulatorScene);
             isBulletGenerated = true;
+            SceneManager.MoveGameObjectToScene(ghostBullet, _simulatorScene);
         }
 
         else {
