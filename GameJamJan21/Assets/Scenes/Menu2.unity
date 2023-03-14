@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4452,7 +4452,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -135, y: 112.22589}
-  m_SizeDelta: {x: 120, y: 30}
+  m_SizeDelta: {x: 223.6, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1054074704
 MonoBehaviour:
@@ -4729,6 +4729,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2111890155133846231, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109998347142427980, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
+      propertyPath: m_Drag
+      value: Infinity
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109998347142427980, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
+      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3349455145992540266, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
@@ -5536,7 +5544,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -135, y: 50.22766}
-  m_SizeDelta: {x: 200, y: 30}
+  m_SizeDelta: {x: 182.1, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1208815821
 MonoBehaviour:
@@ -6171,6 +6179,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2111890155133846231, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109998347142427980, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
+      propertyPath: m_Drag
+      value: Infinity
+      objectReference: {fileID: 0}
+    - target: {fileID: 3109998347142427980, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
+      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3349455145992540266, guid: 4112ffa7a8cad9a4685c1cc4346ca1a8, type: 3}
@@ -7545,7 +7561,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -135, y: 19.4637}
-  m_SizeDelta: {x: 120, y: 30}
+  m_SizeDelta: {x: 112.8, y: 35.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1610691761
 MonoBehaviour:

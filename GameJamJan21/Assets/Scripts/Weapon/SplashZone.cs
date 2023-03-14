@@ -23,7 +23,6 @@ public class SplashZone : MonoBehaviour
 
     private List<Collider> damageablesInside = new List<Collider>();
 
-    private AudioSource _audioBullet;
     private AnalyticsManager _analytics;
 
     // Start is called before the first frame update
@@ -33,8 +32,6 @@ public class SplashZone : MonoBehaviour
         explosion.transform.localScale /= splashRadius;
         explosion.transform.parent = null;
 
-        _audioBullet = GetComponent<AudioSource>();
-        _audioBullet.Play(0);
         _analytics = FindObjectOfType<AnalyticsManager>();
     }
 

@@ -2,11 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Analytics;
-using Unity.VisualScripting;
+using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
-using Object = UnityEngine.Object;
 
 
 public class Controller : MonoBehaviour
@@ -16,16 +14,17 @@ public class Controller : MonoBehaviour
     [NonSerialized] public int Stock = GlobalStats.defaultStockCount;
 
     [Header("Nodes")]
-    // public CharacterController controller;
     public Rigidbody rb;
-    public Animator animator;
+    public CharacterController controller;
+    public AnimationUtils animator;
     
     [Header("Values")]
-    public float speed = 6f;
+    public float speed = 2f;
     public float sensitivity = 5;
     public float kbdSensitivity = 4;
     public GameObject weaponType;
     private GameObject weapon;
+    [SerializeField] private Transform weaponHandBone;
     public float playerHealth { get; private set; } = GlobalStats.baseHealth;
 
     float turnSmoothVelocity;
@@ -34,20 +33,18 @@ public class Controller : MonoBehaviour
     new Camera camera;
     bool followingCamera = true;
     public PausedMenu menu;
-
-    public string animationSpeedAttrName = "speed";
-
+    
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
 
     // public float gravity = 0.000001f; // TODO: OK to delete this?
-    public float dashIntensity;
+    public float dashIntensity = 10;
     float currentCooldown;
 
     public float momentum = 0.85f;
     private float startMomentum;
     public float maxMomentum = 1.5f;
-    public float dashDuration;
+    public float dashDuration= 0.1f;
     public GameObject backupCamera;
 
     private bool currentlyDead;
@@ -68,25 +65,33 @@ public class Controller : MonoBehaviour
     
     public MatchDataScriptable mds;
 
+    private DashJets _jetParticles;
     private Collider _capsule;
+
+    [Header("CHANGE THIS!")]
+    public float movementAugment = 1;
+
+
+    static bool menuOnCooldown = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        dashDuration = 0.1f;
-        dashIntensity = 10f;
         var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
         lookDirection = rotation * transform.rotation * Vector3.forward;
-
+        
         _analyticsManager = FindObjectOfType<AnalyticsManager>();
         playerController = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
+        _jetParticles = GetComponent<DashJets>();
         cameraController = FindObjectOfType<CameraSwitch>();
         _hudManager = FindObjectOfType<HUDManager>();
         _tempLivesManager = FindObjectOfType<TempLivesManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         menu.SwitchMenuState();
+        
+        _jetParticles.Shoot();
 
         // controller = GetComponent<CharacterController>();
         // controller = gameObject.GetComponent(typeof(CharacterController)) as CharacterController;
@@ -97,21 +102,33 @@ public class Controller : MonoBehaviour
         }
 
         currentCooldown = 0;
-        weapon = Instantiate(weaponType, gameObject.transform);
-        weapon.transform.localPosition = new Vector3(0.66f, 2f, 1.5f);
-        weapon.GetComponent<GunController>().setOwner(this);
-        weapon.GetComponent<GunController>().setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
-
         startMomentum = momentum;
-        
-        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         
         _analyticsManager.HealthEvent(gameObject, playerHealth);
         _analyticsManager.StockUpdate(gameObject, Stock);
 
         _capsule = GetComponent<CapsuleCollider>();
         
+        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
+    }
+
+    public void SpawnGun()
+    {
+        if (weapon)
+        {
+            weapon.SetActive(true);
+            return;
+        }
+        
+        weapon = Instantiate(weaponType, weaponHandBone);
+        weapon.transform.localPosition = new Vector3(.6f, 6f, 0);
+        weapon.transform.localRotation = Quaternion.Euler(-113, -180, 90);
+        weapon.transform.localScale = new Vector3(.5f, .5f, .5f);
+        
+        var gunController = weapon.GetComponent<GunController>();
+        gunController.setOwner(this);
+        gunController.setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
     }
 
     public void OnMovement(InputValue value)
@@ -133,12 +150,14 @@ public class Controller : MonoBehaviour
         // the action is bound to.
 
         kbdHeld = !kbdHeld;
+        // print("ROTATION (DASH): " + direction);
         direction = value.Get<Vector3>();
     }
 
     private void UpdateLookDirection()
     {
         if (!kbdHeld) return;
+        if (direction.sqrMagnitude == 0) return;
 
         if (direction.y != 0)
         {
@@ -159,7 +178,7 @@ public class Controller : MonoBehaviour
 
     public void OnPrimaryFire()
     {
-        if (!currentlyDead)
+        if (!currentlyDead && weapon != null && weapon.activeSelf)
         {
             weapon.GetComponent<GunController>().PrimaryFire();
         }
@@ -167,14 +186,25 @@ public class Controller : MonoBehaviour
 
     public void OnSecondaryFire()
     {
-        if (!currentlyDead)
+        if (!currentlyDead && weapon != null && weapon.activeSelf)
         {
-            weapon.GetComponent<GunController>().SecondaryFire();
+            if (weapon.GetComponent<GunController>().SecondaryFire()) {
+                animator.Play(Animations.Lobbing);
+            }
         }
     }
 
     public void OnEnterMenu() {
+        if (menuOnCooldown) return;
+        menuOnCooldown = true;
         menu.SwitchMenuState();
+        StartCoroutine(MenuCooldown());
+    }
+
+    private IEnumerator MenuCooldown()
+    {
+        yield return new WaitForSeconds(0.2f);
+        menuOnCooldown = false;
     }
 
     public void OnDash()
@@ -191,19 +221,28 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public bool dashing;
     IEnumerator Dash() {
         float startTime = Time.time;
+        //_jetParticles.Shoot();
+        _jetParticles.SetStartSpeed(10);
+        animator.Dashing = true;
+        dashing = true;
 
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
                 // controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
-                rb.MovePosition(transform.position + (Time.deltaTime * dashIntensity * GetDashBonus()) * moveDirection.normalized);    
+                rb.AddForce((dashIntensity * GetDashBonus()) * moveDirection.normalized);    
             }
             else {
-                rb.MovePosition(transform.position + (Time.deltaTime * dashIntensity * GetDashBonus()) * lookDirection);
+                rb.AddForce((dashIntensity * GetDashBonus()) * lookDirection.normalized);
             }
             yield return null;
         }
+        // _jetParticles.Stop();
+        _jetParticles.SetStartSpeed();
+        animator.Dashing = false;
+        dashing = false;
     }
 
     // Update is called once per frame
@@ -255,9 +294,10 @@ public class Controller : MonoBehaviour
 
         if (!isGrounded())
         {
-            Vector3 fall = new Vector3(0, -(1), 0);
-            rb.MovePosition(transform.position + fall * Time.deltaTime);
-            // controller.Move(fall * Time.deltaTime);
+            animator.XSpeed = 0;
+            animator.YSpeed = 0;
+            animator.AnimationSpeed = 1;
+            return;
         }
         // if (state != PlayerState.Aiming) {
 
@@ -265,18 +305,24 @@ public class Controller : MonoBehaviour
         {
             Quaternion newAngle = Quaternion.LookRotation(lookDirection, Vector3.up);
             //print("LOOK VALUE: " + lookDirection + " ADJUSTED ANGLE: " + newAngle);
-            this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, newAngle, sensitivity * Time.deltaTime);
-            // this.transform.Rotate(lookDirection);
+
+            // transform.rotation = Quaternion.RotateTowards(transform.rotation, newAngle, sensitivity * Time.deltaTime);
+            rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, newAngle, sensitivity * Time.deltaTime));
         }
 
-        animator.SetFloat(animationSpeedAttrName,moveDirection.magnitude);
-        if (!currentlyDead && moveDirection.magnitude >= 0.1f)
+        Vector3 newMove = new Vector3(-lookDirection.x,0,lookDirection.z);
+        var animationMovement = Vector3.zero;
+        animationMovement = Quaternion.LookRotation(newMove.normalized) * moveDirection;
+        // if (newMove.sqrMagnitude != 0) {
+        // }
+        animator.XSpeed = animationMovement.x;
+        animator.YSpeed = animationMovement.z;
+        if (!currentlyDead && moveDirection.magnitude >= 0.1f && !animator.Landing)
         {
             // Handle the actual movement
             moveDirection.y = 0;
 
-            // controller.Move((moveDirection).normalized * speed * GetSpeedBonus() * Time.deltaTime * momentum);
-            rb.MovePosition(transform.position + (speed * GetSpeedBonus() * Time.deltaTime * momentum) * moveDirection.normalized);
+            animator.AnimationSpeed = GetSpeedBonus() * momentum;
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -286,8 +332,16 @@ public class Controller : MonoBehaviour
         }
     }
 
-    bool isGrounded() {
-        return Physics.Raycast(transform.position, -Vector3.up, _capsule.bounds.extents.y + 0.1f);
+    private void LateUpdate()
+    {
+        if (!currentlyDead && !animator.Landing && !dashing && isGrounded()) // todo you cant go up on ledges 
+            rb.MovePosition(transform.position + moveDirection.normalized * movementAugment * animator.transform.localPosition.magnitude);
+    }
+
+    bool isGrounded()
+    {
+        var bounds = _capsule.bounds;
+        return Physics.Raycast(bounds.center, Vector3.down, bounds.extents.y + 0.1f);
     }
 
     void TickDownEffects()
@@ -376,6 +430,8 @@ public class Controller : MonoBehaviour
             print("PLAYER DIED");
             // transform.position = transform.position + new Vector3(0, 10, 0);
             // SetActive(false);
+            
+            weapon.SetActive(false);
             
             _tempLivesManager.ApplyDeath(playerNumber);
             _analyticsManager.DeathEvent(gameObject);
