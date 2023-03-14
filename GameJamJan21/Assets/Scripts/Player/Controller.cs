@@ -307,7 +307,7 @@ public class Controller : MonoBehaviour
     private void LateUpdate()
     {
         if (!currentlyDead && !animator.Landing)
-            rb.MovePosition(moveDirection.normalized*animator.transform.localPosition.magnitude);
+            rb.MovePosition(transform.position + moveDirection.normalized*animator.transform.localPosition.magnitude);
     }
 
     bool isGrounded() {
