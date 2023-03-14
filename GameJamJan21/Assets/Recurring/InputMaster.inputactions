@@ -505,12 +505,12 @@
                 },
                 {
                     "name": "Navigate",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "e018d7ad-b05b-4605-89c4-787cc81054b6",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Pause",
@@ -536,25 +536,36 @@
                 },
                 {
                     "name": "",
-                    "id": "685eea30-7d14-451f-89ca-451915d67ac2",
-                    "path": "<Gamepad>/leftStick/up",
+                    "id": "c9d54b34-f740-4f5a-a50f-7a04821bb5af",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad2",
-                    "action": "Navigate",
+                    "groups": "",
+                    "action": "Enter",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "Gamepad",
                     "id": "98d997f8-9f47-49eb-89d7-efcdc7afaca3",
-                    "path": "3DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone(min=0.2,max=1)",
                     "groups": "",
                     "action": "Navigate",
                     "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Up",
+                    "id": "641eb5f3-b780-417d-be54-cc921bc166ce",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad2",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "right",
@@ -568,7 +579,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "left",
+                    "name": "Left",
                     "id": "4b543da1-011b-45e6-85c5-98ebe03c3d21",
                     "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
@@ -579,7 +590,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "backward",
+                    "name": "down",
                     "id": "480b9232-c976-4852-9ed0-5b42ff95773b",
                     "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
@@ -590,12 +601,56 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "forward",
-                    "id": "641eb5f3-b780-417d-be54-cc921bc166ce",
-                    "path": "<Gamepad>/leftStick/up",
+                    "name": "Keyboard",
+                    "id": "fb614a8b-9670-4d20-8cec-dbeb1c170532",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad2",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "1e42a69d-ba8f-4f71-b55d-411836058846",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "631e27c4-6a2e-4843-8022-2bfc8c78aff5",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "e75f74d3-e8c2-41f5-8576-76ef0443ef8a",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Navigate",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "7f40439d-312d-4466-be25-6e0aa452469b",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Navigate",
                     "isComposite": false,
                     "isPartOfComposite": true
