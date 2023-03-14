@@ -65,6 +65,8 @@ public class Controller : MonoBehaviour
     private AnalyticsManager _analyticsManager;
     private HUDManager _hudManager;
     private TempLivesManager _tempLivesManager;
+    
+    public MatchDataScriptable mds;
 
     private Collider _capsule;
 
@@ -98,6 +100,8 @@ public class Controller : MonoBehaviour
         weapon = Instantiate(weaponType, gameObject.transform);
         weapon.transform.localPosition = new Vector3(0.66f, 2f, 1.5f);
         weapon.GetComponent<GunController>().setOwner(this);
+        weapon.GetComponent<GunController>().setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
+
         startMomentum = momentum;
         
         playerController.PlayerHealthUpdate(playerNumber, playerHealth);

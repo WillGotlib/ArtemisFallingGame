@@ -141,4 +141,8 @@ public class GunController : MonoBehaviour
     public void setOwner(Controller player) {
         owner = player;
     }
+
+    public void setSecondary(GameObject newSecondary) {
+        secondaryType = newSecondary;
+    }
 }
