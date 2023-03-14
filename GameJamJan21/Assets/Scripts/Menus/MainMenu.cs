@@ -32,6 +32,14 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void ShowPrematchMenu() 
+    { 
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
+            player.GetComponentInChildren<AnimationUtils>().PlayLanding();
+            player.GetComponentInChildren<AnimationUtils>().Landing = true;
+        }    
+    }
+
     public void QuitGame() {
         Debug.Log("Good Bye");
         Application.Quit();
