@@ -144,12 +144,14 @@ public class Controller : MonoBehaviour
         // the action is bound to.
 
         kbdHeld = !kbdHeld;
+        // print("ROTATION (DASH): " + direction);
         direction = value.Get<Vector3>();
     }
 
     private void UpdateLookDirection()
     {
         if (!kbdHeld) return;
+        if (direction.sqrMagnitude == 0) return;
 
         if (direction.y != 0)
         {
@@ -215,10 +217,10 @@ public class Controller : MonoBehaviour
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
                 // controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
-                rb.MovePosition(transform.position + (Time.deltaTime * dashIntensity * GetDashBonus()) * moveDirection.normalized);    
+                rb.AddForce((dashIntensity * GetDashBonus()) * moveDirection.normalized);    
             }
             else {
-                rb.MovePosition(transform.position + (Time.deltaTime * dashIntensity * GetDashBonus()) * lookDirection);
+                rb.AddForce((dashIntensity * GetDashBonus()) * lookDirection.normalized);
             }
             yield return null;
         }
@@ -293,7 +295,11 @@ public class Controller : MonoBehaviour
             rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, newAngle, sensitivity * Time.deltaTime));
         }
 
-        var animationMovement = Quaternion.LookRotation(new Vector3(-lookDirection.x,0,lookDirection.z)) * moveDirection;
+        Vector3 newMove = new Vector3(-lookDirection.x,0,lookDirection.z);
+        var animationMovement = Vector3.zero;
+        animationMovement = Quaternion.LookRotation(newMove) * moveDirection;
+        // if (newMove.sqrMagnitude != 0) {
+        // }
         animator.XSpeed = animationMovement.x;
         animator.YSpeed = animationMovement.z;
         if (!currentlyDead && moveDirection.magnitude >= 0.1f && !animator.Landing)

@@ -204,13 +204,13 @@ MonoBehaviour:
   rb: {fileID: 3109998347142427980}
   controller: {fileID: 0}
   animator: {fileID: 344936565922596221}
-  speed: 1
+  speed: 2
   sensitivity: 2000
   kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   weaponHandBone: {fileID: 8487846109932820590}
   menu: {fileID: 0}
-  dashIntensity: 10
+  dashIntensity: 200
   momentum: 0.85
   maxMomentum: 1.15
   dashDuration: 0.1
