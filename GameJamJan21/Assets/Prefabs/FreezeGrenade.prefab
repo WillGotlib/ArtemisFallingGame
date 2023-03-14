@@ -20,9 +20,17 @@ PrefabInstance:
       value: 0.1254902
       objectReference: {fileID: 0}
     - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: label
+      value: Freeze Grenade
+      objectReference: {fileID: 0}
+    - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
       propertyPath: cooldown
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: thumbnail
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 4ce4d74e4e32f47c7b572ec30284111b, type: 3}
     - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
       propertyPath: splashZone
       value: 

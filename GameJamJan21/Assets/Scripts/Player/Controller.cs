@@ -68,6 +68,12 @@ public class Controller : MonoBehaviour
     private DashJets _jetParticles;
     private Collider _capsule;
 
+    [Header("CHANGE THIS!")]
+    public float movementAugment = 1;
+
+
+    static bool menuOnCooldown = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -189,7 +195,16 @@ public class Controller : MonoBehaviour
     }
 
     public void OnEnterMenu() {
+        if (menuOnCooldown) return;
+        menuOnCooldown = true;
         menu.SwitchMenuState();
+        StartCoroutine(MenuCooldown());
+    }
+
+    private IEnumerator MenuCooldown()
+    {
+        yield return new WaitForSeconds(0.2f);
+        menuOnCooldown = false;
     }
 
     public void OnDash()
@@ -297,7 +312,7 @@ public class Controller : MonoBehaviour
 
         Vector3 newMove = new Vector3(-lookDirection.x,0,lookDirection.z);
         var animationMovement = Vector3.zero;
-        animationMovement = Quaternion.LookRotation(newMove) * moveDirection;
+        animationMovement = Quaternion.LookRotation(newMove.normalized) * moveDirection;
         // if (newMove.sqrMagnitude != 0) {
         // }
         animator.XSpeed = animationMovement.x;
@@ -307,7 +322,7 @@ public class Controller : MonoBehaviour
             // Handle the actual movement
             moveDirection.y = 0;
 
-            animator.AnimationSpeed = speed * GetSpeedBonus() * momentum;
+            animator.AnimationSpeed = GetSpeedBonus() * momentum;
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -320,7 +335,7 @@ public class Controller : MonoBehaviour
     private void LateUpdate()
     {
         if (!currentlyDead && !animator.Landing && !dashing && isGrounded()) // todo you cant go up on ledges 
-            rb.MovePosition(transform.position + moveDirection.normalized*animator.transform.localPosition.magnitude);
+            rb.MovePosition(transform.position + moveDirection.normalized * movementAugment * animator.transform.localPosition.magnitude);
     }
 
     bool isGrounded()
