@@ -73,7 +73,7 @@ public class MatchMenuSelector : MonoBehaviour
 
     private IEnumerator SelectCooldown()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return null;
         selectionOnCooldown = false;
     }
 }
