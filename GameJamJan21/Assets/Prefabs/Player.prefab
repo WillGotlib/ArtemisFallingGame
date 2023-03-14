@@ -168,7 +168,7 @@ Rigidbody:
   m_GameObject: {fileID: 6668230694903963034}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 5
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -210,11 +210,12 @@ MonoBehaviour:
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   weaponHandBone: {fileID: 8487846109932820590}
   menu: {fileID: 0}
-  dashIntensity: 25
+  dashIntensity: 10
   momentum: 0.85
   maxMomentum: 1.15
-  dashDuration: 0
+  dashDuration: 0.1
   backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
+  dashing: 0
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0

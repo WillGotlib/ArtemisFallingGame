@@ -38,13 +38,13 @@ public class Controller : MonoBehaviour
     private CharacterFlash flashManager;
 
     // public float gravity = 0.000001f; // TODO: OK to delete this?
-    public float dashIntensity;
+    public float dashIntensity = 10;
     float currentCooldown;
 
     public float momentum = 0.85f;
     private float startMomentum;
     public float maxMomentum = 1.5f;
-    public float dashDuration;
+    public float dashDuration= 0.1f;
     public GameObject backupCamera;
 
     private bool currentlyDead;
@@ -69,8 +69,6 @@ public class Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dashDuration = 0.1f;
-        dashIntensity = 10f;
         var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
         lookDirection = rotation * transform.rotation * Vector3.forward;
         
