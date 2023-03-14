@@ -487,6 +487,9 @@ MonoBehaviour:
   cooldownMultiplier: 1
   cooldownIncrements: 0.1
   cooldownRecovery: 0.001
+  sizeMultiplier: 1
+  sizeIncrements: 0.06
+  sizeRecovery: 0.001
   animationController: {fileID: 2263409211759763732}
 --- !u!114 &-4194139606902899362
 MonoBehaviour:

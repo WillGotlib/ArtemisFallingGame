@@ -164,7 +164,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             if (!isGhost && _dynamics != null) {
                 float ratio = 1.0f * bounced / (maxBounces + 1);
                 // _dynamics.BulletGrow(ratio);
-                print("Bounced: with ratio " + ratio + " --> bounced = " + bounced + ", maxBounces = " + maxBounces);
+                //print("Bounced: with ratio " + ratio + " --> bounced = " + bounced + ", maxBounces = " + maxBounces);
                 _dynamics.BulletBrighten(ratio);
             }
 
