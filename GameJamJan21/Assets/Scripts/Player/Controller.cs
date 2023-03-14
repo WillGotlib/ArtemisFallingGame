@@ -62,6 +62,8 @@ public class Controller : MonoBehaviour
     private AnalyticsManager _analyticsManager;
     private HUDManager _hudManager;
     private TempLivesManager _tempLivesManager;
+    
+    public MatchDataScriptable mds;
 
     private DashJets _jetParticles;
     private Collider _capsule;
@@ -118,7 +120,9 @@ public class Controller : MonoBehaviour
         weapon.transform.localRotation = Quaternion.Euler(-113, -180, 90);
         weapon.transform.localScale = new Vector3(.5f, .5f, .5f);
         
-        weapon.GetComponent<GunController>().setOwner(this);
+        var gunController = weapon.GetComponent<GunController>();
+        gunController.setOwner(this);
+        gunController.setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
     }
 
     public void OnMovement(InputValue value)

@@ -37,8 +37,8 @@ public class CharacterFlash : MonoBehaviour
         
     }
 
-    public void SetModel(Transform model) {
-        model = model;
+    public void SetModel(Transform newModel) {
+        model = newModel;
     }
 
     public void DamageFlash()

@@ -40,8 +40,13 @@ public class GunController : MonoBehaviour
         _trajectory.RegisterScene();
     }
 
-    void Update() {
-        _trajectory.SimulateTrajectory(this);
+    private int _runCounter;
+    void Update()
+    {
+        _runCounter = (_runCounter + 1) % 4;
+        if (_runCounter == 0)
+            _trajectory.SimulateTrajectory(this); // todo properly optimise this
+
         if (primaryOnCooldown) {
             primaryCooldownTimer -= Time.deltaTime * currentCooldownMultiplier;
             if (primaryCooldownTimer <= 0) {
@@ -135,5 +140,9 @@ public class GunController : MonoBehaviour
 
     public void setOwner(Controller player) {
         owner = player;
+    }
+
+    public void setSecondary(GameObject newSecondary) {
+        secondaryType = newSecondary;
     }
 }

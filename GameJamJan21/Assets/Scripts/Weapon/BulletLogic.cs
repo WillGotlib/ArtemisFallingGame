@@ -43,7 +43,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     public int ghostBounces = 3;
     private AnalyticsManager _analytics;
-
     private BulletDynamics _dynamics;
 
     [Header("Labels")]
