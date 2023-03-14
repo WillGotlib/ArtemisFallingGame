@@ -16,7 +16,8 @@ public class Controller : MonoBehaviour
     [NonSerialized] public int Stock = GlobalStats.defaultStockCount;
 
     [Header("Nodes")]
-    public CharacterController controller;
+    // public CharacterController controller;
+    public Rigidbody rb;
     public Animator animator;
     
     [Header("Values")]
@@ -62,12 +63,12 @@ public class Controller : MonoBehaviour
     private bool kbdHeld;
 
     private AnalyticsManager _analyticsManager;
-
     private HUDManager _hudManager;
-
     private TempLivesManager _tempLivesManager;
     
     public MatchDataScriptable mds;
+
+    private Collider _capsule;
 
     // Start is called before the first frame update
     void Start()
@@ -107,6 +108,8 @@ public class Controller : MonoBehaviour
         
         _analyticsManager.HealthEvent(gameObject, playerHealth);
         _analyticsManager.StockUpdate(gameObject, Stock);
+
+        _capsule = GetComponent<CapsuleCollider>();
         
         // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
@@ -193,10 +196,11 @@ public class Controller : MonoBehaviour
 
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
-                controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
+                // controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
+                rb.MovePosition(transform.position + (Time.deltaTime * dashIntensity * GetDashBonus()) * moveDirection.normalized);    
             }
             else {
-                controller.Move(lookDirection * Time.deltaTime * dashIntensity * GetDashBonus());
+                rb.MovePosition(transform.position + (Time.deltaTime * dashIntensity * GetDashBonus()) * lookDirection);
             }
             yield return null;
         }
@@ -249,10 +253,11 @@ public class Controller : MonoBehaviour
         if (followingCamera == true)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
-        if (!controller.isGrounded)
+        if (!isGrounded())
         {
             Vector3 fall = new Vector3(0, -(1), 0);
-            controller.Move(fall * Time.deltaTime);
+            rb.MovePosition(transform.position + fall * Time.deltaTime);
+            // controller.Move(fall * Time.deltaTime);
         }
         // if (state != PlayerState.Aiming) {
 
@@ -270,7 +275,8 @@ public class Controller : MonoBehaviour
             // Handle the actual movement
             moveDirection.y = 0;
 
-            controller.Move((moveDirection).normalized * speed * GetSpeedBonus() * Time.deltaTime * momentum);
+            // controller.Move((moveDirection).normalized * speed * GetSpeedBonus() * Time.deltaTime * momentum);
+            rb.MovePosition(transform.position + (speed * GetSpeedBonus() * Time.deltaTime * momentum) * moveDirection.normalized);
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -278,6 +284,10 @@ public class Controller : MonoBehaviour
         {
             momentum = startMomentum;
         }
+    }
+
+    bool isGrounded() {
+        return Physics.Raycast(transform.position, -Vector3.up, _capsule.bounds.extents.y + 0.1f);
     }
 
     void TickDownEffects()
