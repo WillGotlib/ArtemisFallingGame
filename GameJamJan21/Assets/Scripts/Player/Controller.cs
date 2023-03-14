@@ -404,6 +404,7 @@ public class Controller : MonoBehaviour
         if (damageAmount == 0)
         {
             Debug.Log("Direct shot invalidated");
+            flashManager.InvincibilityFlash();
             return false;
         }
 
