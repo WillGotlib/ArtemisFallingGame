@@ -69,6 +69,8 @@ public class Controller : MonoBehaviour
 
     static bool menuOnCooldown = false;
 
+    bool dashing = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -305,20 +307,20 @@ public class Controller : MonoBehaviour
             rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, newAngle, sensitivity * Time.deltaTime));
         }
 
-        Vector3 newMove = new Vector3(-lookDirection.x,0,lookDirection.z);
-        var animationMovement = Vector3.zero;
-        animationMovement = Quaternion.LookRotation(newMove.normalized) * moveDirection;
+        // Vector3 newMove = new Vector3(-lookDirection.x,0,lookDirection.z);
+        // var animationMovement = Vector3.zero;
+        // animationMovement = Quaternion.LookRotation(newMove.normalized) * moveDirection;
         // if (newMove.sqrMagnitude != 0) {
         // }
-        animator.XSpeed = animationMovement.x;
-        animator.YSpeed = animationMovement.z;
+        // animator.XSpeed = animationMovement.x;
+        // animator.YSpeed = animationMovement.z;
         if (!currentlyDead && moveDirection.magnitude >= 0.1f && !animator.Landing)
         {
             // Handle the actual movement
             moveDirection.y = 0;
 
-            animator.AnimationSpeed = /*speed **/ GetSpeedBonus() * momentum;
-            rb.MovePosition(transform.position + moveDirection.normalized*(speed * animator.AnimationSpeed*Time.deltaTime)); // todo temporary
+            // animator.AnimationSpeed = /*speed **/ GetSpeedBonus() * momentum;
+            // rb.MovePosition(transform.position + moveDirection.normalized*(speed * animator.AnimationSpeed*Time.deltaTime)); // todo temporary
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -328,6 +330,21 @@ public class Controller : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        /*
+        todo reenable this
+            var mag = animator.transform.localPosition.magnitude;
+            if (mag!= 0 && 
+                !currentlyDead &&
+                !animator.Landing &&
+                !_dashing && 
+                isGrounded()) // todo you cant go up on ledges 
+                rb.MovePosition(transform.position + moveDirection.normalized*mag);
+        }*/
+        if (!currentlyDead && !animator.Landing && !dashing && isGrounded()) // todo you cant go up on ledges 
+            rb.MovePosition(transform.position + moveDirection.normalized * 0.01f * GetSpeedBonus() * speed * momentum);
+    }
     /*
      todo reenable this
     private void LateUpdate()
