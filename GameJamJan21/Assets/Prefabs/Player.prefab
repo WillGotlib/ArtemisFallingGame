@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3109998347142427980}
   animator: {fileID: 344936565922596221}
-  speed: 5
+  speed: 11
   sensitivity: 2000
   kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
