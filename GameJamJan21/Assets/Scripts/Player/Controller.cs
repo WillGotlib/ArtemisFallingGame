@@ -15,7 +15,6 @@ public class Controller : MonoBehaviour
 
     [Header("Nodes")]
     public Rigidbody rb;
-    public CharacterController controller;
     public AnimationUtils animator;
     
     [Header("Values")]

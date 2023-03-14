@@ -1453,8 +1453,8 @@ MonoBehaviour:
   maxNumPowerups: 3
   scndsBetweenSpawns: 5
   powerups:
-  - {fileID: 210597942409183111, guid: 47e0379da4ef145fa98a1d35e3e02290, type: 3}
-  - {fileID: 210597942409183111, guid: 9c4fceec75119614c99b45b31b9b138b, type: 3}
+  - {fileID: 3614272197581274846, guid: 05ca17a09aa7dcb4796112cdae84b868, type: 3}
+  - {fileID: 7551418302150134041, guid: 038ac83d42467a74aa3f0d2b88b75a9e, type: 3}
 --- !u!114 &541731795 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 111780088485238031, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
