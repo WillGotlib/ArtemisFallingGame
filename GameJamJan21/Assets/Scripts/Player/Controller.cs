@@ -308,7 +308,7 @@ public class Controller : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!currentlyDead && !animator.Landing && isGrounded())
+        if (!currentlyDead && !animator.Landing && isGrounded()) // todo you cant go up on ledges 
             rb.MovePosition(transform.position + moveDirection.normalized*animator.transform.localPosition.magnitude);
     }
 

@@ -68,7 +68,7 @@ public class AnimationUtils : MonoBehaviour
 
         if (_holdPosition)
         {
-            transform.localPosition = Vector3.zero; // take into account root motion
+            transform.localPosition = Vector3.zero;
         }
     }
 
