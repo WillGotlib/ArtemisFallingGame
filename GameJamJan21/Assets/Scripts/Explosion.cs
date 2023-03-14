@@ -4,6 +4,7 @@ using UnityEngine;
 public class Explosion : MonoBehaviour
 {
     public ParticleSystem particles;
+    //audio source is obsolete, we dont use it anymore. 
     public AudioSource audioSource;
 
     private bool _exploded;
@@ -20,7 +21,7 @@ public class Explosion : MonoBehaviour
         var particleDuration = particles.main.duration;
         var audioDuration = audioSource.clip.length;
         particles.Play();
-        audioSource.Play();
+       
 
         _exploded = true;
         

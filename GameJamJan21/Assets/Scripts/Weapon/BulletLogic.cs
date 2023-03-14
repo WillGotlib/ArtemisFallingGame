@@ -82,8 +82,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
         trail.enabled = true;
         // Play sound
-        _audioBullet = GetComponent<AudioSource>();
-        _audioBullet.Play(0);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Rocket Launch", GetComponent<Transform>().position);
     }
 
     private IEnumerator ExpirationTimer() {

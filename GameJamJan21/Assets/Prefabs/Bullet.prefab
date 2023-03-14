@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 3251894738368888167}
   - component: {fileID: 2301455758190603568}
   - component: {fileID: 3370136375179352519}
+  - component: {fileID: -8632033621297967363}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Reflector
@@ -235,7 +236,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9165814152039018566}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 55155d3fb323e402fb21540cece2845c, type: 3}
@@ -372,8 +373,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2492ae721064448687a6fb4f16bd1e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outerMaterial: {fileID: 2100000, guid: a2d6388316719426ebbf26e29f2940e5, type: 2}
   outerBullet: {fileID: 1914455183034855118}
+--- !u!114 &-8632033621297967363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165814152039018566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1001 &1608043492590719903
 PrefabInstance:
   m_ObjectHideFlags: 0

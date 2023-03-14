@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 4197792261558065796}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
@@ -80,7 +80,7 @@ MonoBehaviour:
   - {fileID: 1186221470585687667}
   StringsBanks:
   - {fileID: 2217396142503425360}
-  cacheTime: 638143033114022956
+  cacheTime: 638143766644102934
   cacheVersion: 131601
 --- !u!114 &1182724935959619603
 MonoBehaviour:
@@ -124,7 +124,7 @@ MonoBehaviour:
   Path: ../../../ArtemisFallingSoundDesign/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638143033112106447
+  lastModified: 638143766643317417
   FileSizes:
   - Name: Desktop
     Value: 1036
@@ -144,7 +144,7 @@ MonoBehaviour:
   Path: ../../../ArtemisFallingSoundDesign/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638143033112115502
+  lastModified: 638143766643323797
   FileSizes:
   - Name: Desktop
     Value: 980
@@ -164,7 +164,7 @@ MonoBehaviour:
   Path: ../../../ArtemisFallingSoundDesign/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638143033114022956
+  lastModified: 638143766644102934
   FileSizes:
   - Name: Desktop
     Value: 397696
