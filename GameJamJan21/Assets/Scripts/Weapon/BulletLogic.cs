@@ -44,10 +44,17 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public int ghostBounces = 3;
     private AnalyticsManager _analytics;
 
+    private BulletDynamics _dynamics;
+
+    [Header("Labels")]
+    public Sprite thumbnail;
+    public string label;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _analytics = FindObjectOfType<AnalyticsManager>();
+        _dynamics = GetComponent<BulletDynamics>();
     }
 
     // Update is called once per frame
@@ -56,12 +63,12 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         bullet.transform.Rotate(spin * Time.deltaTime);
         
         // TODO: Look at this. Wasteful making this run every frame...
-        _rb.velocity = vel.normalized * _bulletSpeed;
+        _rb.velocity = vel.normalized * _bulletSpeed * GetBulletSpeedBonus();
     }
 
     public void Fire(Vector3 direction, bool ghost)
     {
-        _rb.velocity = direction.normalized * _bulletSpeed;
+        _rb.velocity = direction.normalized * _bulletSpeed * GetBulletSpeedBonus();
         vel = _rb.velocity;
         isGhost = ghost;
         
@@ -95,11 +102,15 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         return splashDamage * BulletDamageMultiplier();
     }
 
+    float GetBulletSpeedBonus() {
+        return Mathf.Sqrt(bounced) / 4 + 1;
+        // return Mathf.Max(1, )
+    }
+
     int BulletDamageMultiplier() {
         // The multiplier for the base splash damage. Separate for checking purposes
         return Mathf.Min(maxBounces, bounced);
     }
-
 
     void OnCollisionEnter(Collision collision)
     {
@@ -145,12 +156,20 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             
             reflectedVelo.y = 0;
             // print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
-            _rb.velocity = reflectedVelo.normalized * _bulletSpeed;
+            _rb.velocity = reflectedVelo.normalized * _bulletSpeed * GetBulletSpeedBonus();
             vel = _rb.velocity;
             // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
             // add to bounces tally and maybe destroy
             bounced++;
+            // Modify model
+            if (!isGhost && _dynamics != null) {
+                float ratio = 1.0f * bounced / (maxBounces + 1);
+                // _dynamics.BulletGrow(ratio);
+                print("Bounced: with ratio " + ratio + " --> bounced = " + bounced + ", maxBounces = " + maxBounces);
+                _dynamics.BulletBrighten(ratio);
+            }
+
             if (bounced > maxBounces) {
                 finishShot(true);
             }
