@@ -19,7 +19,7 @@ MonoBehaviour:
     Data3: -1390862697
     Data4: -668440398
   Banks:
-  - {fileID: 4197792261558065796}
+  - {fileID: 1812524027965038072}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -27,6 +27,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-3382061787215690112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: ArtemisFallingSoundDesign/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638143808772620098
+  FileSizes:
+  - Name: Desktop
+    Value: 980
+  Exists: 1
 --- !u!114 &-485257644370944085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,7 +66,7 @@ MonoBehaviour:
     Data3: -1763950957
     Data4: -35784557
   Banks:
-  - {fileID: 4197792261558065796}
+  - {fileID: 1812524027965038072}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -54,6 +74,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-410633231031516732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: ArtemisFallingSoundDesign/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638143808772620098
+  FileSizes:
+  - Name: Desktop
+    Value: 1036
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,9 +107,9 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: 2217396142503425360}
-  - {fileID: 1186221470585687667}
-  - {fileID: 4197792261558065796}
+  - {fileID: -3382061787215690112}
+  - {fileID: -410633231031516732}
+  - {fileID: 1812524027965038072}
   EditorEvents:
   - {fileID: -4158610655417158447}
   - {fileID: 1182724935959619603}
@@ -77,10 +117,10 @@ MonoBehaviour:
   - {fileID: 8761184600780059628}
   EditorParameters: []
   MasterBanks:
-  - {fileID: 1186221470585687667}
+  - {fileID: -410633231031516732}
   StringsBanks:
-  - {fileID: 2217396142503425360}
-  cacheTime: 638143766644102934
+  - {fileID: -3382061787215690112}
+  cacheTime: 638143808772630702
   cacheVersion: 131601
 --- !u!114 &1182724935959619603
 MonoBehaviour:
@@ -101,7 +141,7 @@ MonoBehaviour:
     Data3: 1294150077
     Data4: -786297611
   Banks:
-  - {fileID: 4197792261558065796}
+  - {fileID: 1812524027965038072}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -109,47 +149,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &1186221470585687667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: ../../../ArtemisFallingSoundDesign/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638143766643317417
-  FileSizes:
-  - Name: Desktop
-    Value: 1036
-  Exists: 1
---- !u!114 &2217396142503425360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
-  Path: ../../../ArtemisFallingSoundDesign/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638143766643323797
-  FileSizes:
-  - Name: Desktop
-    Value: 980
-  Exists: 1
---- !u!114 &4197792261558065796
+--- !u!114 &1812524027965038072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,10 +161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
   m_Name: bank:/SFX.bank
   m_EditorClassIdentifier: 
-  Path: ../../../ArtemisFallingSoundDesign/Build/Desktop/SFX.bank
+  Path: ArtemisFallingSoundDesign/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638143766644102934
+  lastModified: 638143808772630702
   FileSizes:
   - Name: Desktop
     Value: 397696
@@ -188,7 +188,7 @@ MonoBehaviour:
     Data3: 2069515649
     Data4: -977357641
   Banks:
-  - {fileID: 4197792261558065796}
+  - {fileID: 1812524027965038072}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1

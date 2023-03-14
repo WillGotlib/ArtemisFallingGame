@@ -19,15 +19,14 @@ public class Explosion : MonoBehaviour
         if (_exploded) return;
 
         var particleDuration = particles.main.duration;
-        var audioDuration = audioSource.clip.length;
+        //var audioDuration = audioSource.clip.length;
         particles.Play();
        
 
         _exploded = true;
         
-        Invoke(nameof(StopAudio),audioDuration);
         Invoke(nameof(StopParticles),particleDuration);
-        Invoke(nameof(Kill),math.max(particleDuration,audioDuration));
+        Invoke(nameof(Kill), particleDuration);
     }
 
     private void StopAudio()
