@@ -70,6 +70,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         {
             bounced = 0;
             maxBounces = ghostBounces;
+            bullet.GetComponent<MeshRenderer>().enabled = false;
             return;
         }
         expiration = StartCoroutine(ExpirationTimer());
