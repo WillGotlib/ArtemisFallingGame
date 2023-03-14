@@ -15,10 +15,11 @@ public class AnimationUtils : MonoBehaviour
     private bool _transition;
 
     private bool _landing;
+
     public bool Landing
     {
         get => _landing;
-        set =>_animator.SetBool(Animations.Landing, _landing = value);
+        set => _animator.SetBool(Animations.Landing, _landing = value);
     }
 
     public bool Dashing
@@ -35,10 +36,13 @@ public class AnimationUtils : MonoBehaviour
     {
         set => _animator.SetFloat(Attributes.YSpeed, value);
     }
-    
+
+    private float _animationSpeed;
+
     public float AnimationSpeed
     {
-        set => _animator.SetFloat(Attributes.AnimationMultiplier, value);
+        get => _animationSpeed;
+        set => _animator.SetFloat(Attributes.AnimationMultiplier, _animationSpeed = value);
     }
 
     void Awake()

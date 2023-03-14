@@ -202,9 +202,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3109998347142427980}
-  controller: {fileID: 0}
   animator: {fileID: 344936565922596221}
-  speed: 2
+  speed: 5
   sensitivity: 2000
   kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
@@ -216,8 +215,6 @@ MonoBehaviour:
   dashDuration: 0.1
   backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
-  movementAugment: 5
-  dashing: 0
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0

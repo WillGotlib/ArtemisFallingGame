@@ -67,10 +67,6 @@ public class Controller : MonoBehaviour
     private DashJets _jetParticles;
     private Collider _capsule;
 
-    [Header("CHANGE THIS!")]
-    public float movementAugment = 1;
-
-
     static bool menuOnCooldown = false;
 
     // Start is called before the first frame update
@@ -220,13 +216,13 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public bool dashing;
+    private bool _dashing;
     IEnumerator Dash() {
         float startTime = Time.time;
         //_jetParticles.Shoot();
         _jetParticles.SetStartSpeed(10);
         animator.Dashing = true;
-        dashing = true;
+        _dashing = true;
 
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
@@ -241,7 +237,7 @@ public class Controller : MonoBehaviour
         // _jetParticles.Stop();
         _jetParticles.SetStartSpeed();
         animator.Dashing = false;
-        dashing = false;
+        _dashing = false;
     }
 
     // Update is called once per frame
@@ -321,7 +317,8 @@ public class Controller : MonoBehaviour
             // Handle the actual movement
             moveDirection.y = 0;
 
-            animator.AnimationSpeed = GetSpeedBonus() * momentum;
+            animator.AnimationSpeed = /*speed **/ GetSpeedBonus() * momentum;
+            rb.MovePosition(transform.position + moveDirection.normalized*(speed * animator.AnimationSpeed*Time.deltaTime)); // todo temporary
             if (momentum < maxMomentum)
                 momentum += 0.1f * Time.deltaTime;
         }
@@ -331,11 +328,18 @@ public class Controller : MonoBehaviour
         }
     }
 
+    /*
+     todo reenable this
     private void LateUpdate()
     {
-        if (!currentlyDead && !animator.Landing && !dashing && isGrounded()) // todo you cant go up on ledges 
-            rb.MovePosition(transform.position + moveDirection.normalized * movementAugment * animator.transform.localPosition.magnitude);
-    }
+        var mag = animator.transform.localPosition.magnitude;
+        if (mag!= 0 && 
+            !currentlyDead &&
+            !animator.Landing &&
+            !_dashing && 
+            isGrounded()) // todo you cant go up on ledges 
+            rb.MovePosition(transform.position + moveDirection.normalized*mag);
+    }*/
 
     bool isGrounded()
     {
