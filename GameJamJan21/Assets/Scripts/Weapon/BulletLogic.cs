@@ -15,7 +15,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public static float splashDamage = 0.5f; // TODO: Delete this.
 
     private Rigidbody _rb;
-    [SerializeField] private GameObject bullet;
+    public GameObject bullet;
     public int maxBounces = 3;
     [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
@@ -67,7 +67,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     public void Fire(Vector3 direction, bool ghost)
     {
-        _rb.velocity = direction.normalized * _bulletSpeed * GetBulletSpeedBonus();
+        _rb.velocity = direction.normalized * (_bulletSpeed * GetBulletSpeedBonus());
         vel = _rb.velocity;
         isGhost = ghost;
         
@@ -75,7 +75,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         {
             bounced = 0;
             maxBounces = ghostBounces;
-            bullet.GetComponent<MeshRenderer>().enabled = false;
             return;
         }
         expiration = StartCoroutine(ExpirationTimer());

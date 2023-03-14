@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,10 +19,11 @@ public class Trajectory : MonoBehaviour
         _physicsScene = _simulatorScene.GetPhysicsScene();
     }
 
-
+    private BulletLogic _bulletLogic;
+    
     public void SimulateTrajectory(GunController weapon) {
         if (isBulletGenerated == false) {
-            ghostBullet = UnityEngine.Object.Instantiate(bulletType);
+            ghostBullet = Instantiate(bulletType);
             ghostBullet.name = "Trajectory bullet";
             Vector3 cur_pos = weapon.transform.position + weapon.transform.forward * 0.1f;
             ghostBullet.transform.position = cur_pos;
@@ -29,6 +31,8 @@ public class Trajectory : MonoBehaviour
             ghostBullet.GetComponentInChildren<Renderer>().enabled = false;
             isBulletGenerated = true;
             SceneManager.MoveGameObjectToScene(ghostBullet, _simulatorScene);
+            _bulletLogic = ghostBullet.GetComponent<BulletLogic>();
+            _bulletLogic.bullet.GetComponent<MeshRenderer>().enabled = false;
         }
 
         else {
@@ -37,7 +41,7 @@ public class Trajectory : MonoBehaviour
             ghostBullet.transform.rotation = weapon.transform.rotation;
         }
 
-        ghostBullet.GetComponent<BulletLogic>().Fire(weapon.transform.forward, true);
+        _bulletLogic.Fire(weapon.transform.forward, true);
         
 
         _line.positionCount = _maxIterations;
