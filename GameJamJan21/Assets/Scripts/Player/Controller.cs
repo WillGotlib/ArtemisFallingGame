@@ -202,11 +202,13 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public bool dashing;
     IEnumerator Dash() {
         float startTime = Time.time;
         //_jetParticles.Shoot();
         _jetParticles.SetStartSpeed(10);
         animator.Dashing = true;
+        dashing = true;
 
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
@@ -221,6 +223,7 @@ public class Controller : MonoBehaviour
         // _jetParticles.Stop();
         _jetParticles.SetStartSpeed();
         animator.Dashing = false;
+        dashing = false;
     }
 
     // Update is called once per frame
@@ -308,7 +311,7 @@ public class Controller : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!currentlyDead && !animator.Landing && isGrounded()) // todo you cant go up on ledges 
+        if (!currentlyDead && !animator.Landing && !dashing && isGrounded()) // todo you cant go up on ledges 
             rb.MovePosition(transform.position + moveDirection.normalized*animator.transform.localPosition.magnitude);
     }
 
