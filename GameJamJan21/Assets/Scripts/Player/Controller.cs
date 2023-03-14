@@ -272,9 +272,10 @@ public class Controller : MonoBehaviour
 
         if (!isGrounded())
         {
-            Vector3 fall = new Vector3(0, -(1), 0);
-            rb.MovePosition(transform.position + fall * Time.deltaTime);
-            // controller.Move(fall * Time.deltaTime);
+            animator.XSpeed = 0;
+            animator.YSpeed = 0;
+            animator.AnimationSpeed = 1;
+            return;
         }
         // if (state != PlayerState.Aiming) {
 
@@ -282,8 +283,9 @@ public class Controller : MonoBehaviour
         {
             Quaternion newAngle = Quaternion.LookRotation(lookDirection, Vector3.up);
             //print("LOOK VALUE: " + lookDirection + " ADJUSTED ANGLE: " + newAngle);
-            this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, newAngle, sensitivity * Time.deltaTime);
-            // this.transform.Rotate(lookDirection);
+
+            // transform.rotation = Quaternion.RotateTowards(transform.rotation, newAngle, sensitivity * Time.deltaTime);
+            rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, newAngle, sensitivity * Time.deltaTime));
         }
 
         var animationMovement = Quaternion.LookRotation(new Vector3(-lookDirection.x,0,lookDirection.z)) * moveDirection;
@@ -306,12 +308,14 @@ public class Controller : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!currentlyDead && !animator.Landing)
+        if (!currentlyDead && !animator.Landing && isGrounded())
             rb.MovePosition(transform.position + moveDirection.normalized*animator.transform.localPosition.magnitude);
     }
 
-    bool isGrounded() {
-        return Physics.Raycast(transform.position, -Vector3.up, _capsule.bounds.extents.y + 0.1f);
+    bool isGrounded()
+    {
+        var bounds = _capsule.bounds;
+        return Physics.Raycast(bounds.center, Vector3.down, bounds.extents.y + 0.1f);
     }
 
     void TickDownEffects()
