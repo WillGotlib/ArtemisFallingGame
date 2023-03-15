@@ -198,7 +198,7 @@ public class Controller : MonoBehaviour
 
     private IEnumerator MenuCooldown()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return null;
         menuOnCooldown = false;
     }
 
