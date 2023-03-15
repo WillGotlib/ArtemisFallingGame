@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: explosion
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1190407533784283270, guid: 089b82526b2906c44a89a7314e2181c3, type: 3}
     - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: splashDamage
       value: 0.1
