@@ -41,6 +41,7 @@ public class Trajectory : MonoBehaviour
             ghostBullet.transform.rotation = weapon.transform.rotation;
         }
 
+        if (!_bulletLogic) return;
         _bulletLogic.Fire(weapon.transform.forward, true);
         
 
