@@ -35,8 +35,11 @@ public class MainMenu : MonoBehaviour
 
     public void ResetLanding()
     {
-        foreach (var player in GameObject.FindGameObjectsWithTag("Player")) 
+        foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            player.GetComponent<Controller>().HideGun();
             player.GetComponentInChildren<AnimationUtils>().Landing = false;
+        }
     }
 
     public void ShowPrematchMenu() 

@@ -126,6 +126,12 @@ public class Controller : MonoBehaviour
         gunController.setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
     }
 
+    public void HideGun()
+    {
+        if (weapon)
+            weapon.SetActive(false);
+    }
+
     public void OnMovement(InputValue value)
     {
         moveDirection = value.Get<Vector3>();
@@ -433,7 +439,7 @@ public class Controller : MonoBehaviour
             // transform.position = transform.position + new Vector3(0, 10, 0);
             // SetActive(false);
             
-            weapon.SetActive(false);
+            HideGun();
             
             _tempLivesManager.ApplyDeath(playerNumber);
             _analyticsManager.DeathEvent(gameObject);
