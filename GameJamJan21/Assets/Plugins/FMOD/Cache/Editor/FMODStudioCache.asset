@@ -89,7 +89,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638143766643317416
+lastModified: 638143766643317416
   FileSizes:
   - Name: Desktop
     Value: 1036
@@ -164,7 +164,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638143766644102934
+  lastModified: 638143869491182446
   FileSizes:
   - Name: Desktop
     Value: 397696
