@@ -42,7 +42,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638143766643323796
+  lastModified: 638143869491172442
   FileSizes:
   - Name: Desktop
     Value: 980
@@ -89,7 +89,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-lastModified: 638143766643317416
+  lastModified: 638143869491162466
   FileSizes:
   - Name: Desktop
     Value: 1036
@@ -120,7 +120,7 @@ MonoBehaviour:
   - {fileID: -410633231031516732}
   StringsBanks:
   - {fileID: -3382061787215690112}
-  cacheTime: 638143766644102934
+  cacheTime: 638143869491182446
   cacheVersion: 131601
 --- !u!114 &1182724935959619603
 MonoBehaviour:

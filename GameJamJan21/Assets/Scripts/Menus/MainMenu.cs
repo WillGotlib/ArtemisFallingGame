@@ -36,7 +36,6 @@ public class MainMenu : MonoBehaviour
     { 
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
             player.GetComponentInChildren<AnimationUtils>().PlayLanding();
-            player.GetComponentInChildren<AnimationUtils>().Landing = true;
         }    
     }
 
