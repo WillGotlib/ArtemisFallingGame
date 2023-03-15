@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class MenuCursor : MonoBehaviour
 {
+    public int playerNumber;
     private GameObject currentlySelected;
 
     [SerializeField] private Sprite[] cursorImages;
@@ -24,9 +25,7 @@ public class MenuCursor : MonoBehaviour
             currentlySelected = newTarget;
             transform.position = newTarget.transform.position;
             RectTransform x = newTarget.GetComponent<RectTransform>();
-            if (x) {
-                print(transform.position.x + 2);
-            }
+            transform.position = new Vector3(transform.position.x - 110f, transform.position.y - 5f, transform.position.z);
             print(newTarget);    
         }
         // Action();

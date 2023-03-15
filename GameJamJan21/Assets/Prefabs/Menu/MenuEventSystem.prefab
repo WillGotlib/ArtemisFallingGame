@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cursorImages: []
+  _eventSys: {fileID: 0}
 --- !u!114 &5535065260966499824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +145,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 7980415938502629626}
           m_TargetAssemblyTypeName: MenuCursor, Assembly-CSharp
-          m_MethodName: Action
+          m_MethodName: OnNavigate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
