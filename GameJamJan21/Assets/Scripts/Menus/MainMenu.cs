@@ -32,8 +32,20 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
-    public void QuitGame() {
+    public void ShowPrematchMenu() 
+    { 
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
+            player.GetComponentInChildren<AnimationUtils>().PlayLanding();
+            player.GetComponentInChildren<AnimationUtils>().Landing = true;
+        }    
+    }
+
+    public static void QuitGame() {
         Debug.Log("Good Bye");
-        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
     }
 }

@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+      propertyPath: explosion
+      value: 
+      objectReference: {fileID: 1190407533784283270, guid: 089b82526b2906c44a89a7314e2181c3, type: 3}
+    - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: splashDamage
       value: 0.1
       objectReference: {fileID: 0}
@@ -109,4 +113,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 392166303206611285, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+    - {fileID: 602408222738698599, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+--- !u!1 &6234232466112906086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+  m_PrefabInstance: {fileID: 6082182574940372193}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-8378544725535550916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6234232466112906086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b46ab1ddbff1419b95fff6d25aac18c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
