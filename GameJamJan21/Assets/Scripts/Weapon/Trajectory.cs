@@ -4,52 +4,80 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class Trajectory : MonoBehaviour
 {   
-    private Scene _simulatorScene;
-    private PhysicsScene _physicsScene;
-    [SerializeField] private LineRenderer _line;
-    [SerializeField] private int _maxIterations = 100;
-    public GameObject bulletType;
-    private GameObject ghostBullet;
-    private bool isBulletGenerated = false;
+    public int reflections;
+    private Ray ray;
+    private RaycastHit hit;
+    private Vector3 direction;
+    private Controller player;
+    private GunController gunController;
 
-    public void RegisterScene() {
-        _simulatorScene = SceneManager.GetSceneByName("Trajectory");
-        _physicsScene = _simulatorScene.GetPhysicsScene();
+    [SerializeField] private LineRenderer _line;
+    [SerializeField] private int _lineLength;
+    [SerializeField] private int _traceLength;
+
+    private void Start() {
+        gunController = gameObject.GetComponent<GunController>();
+        player = gunController.owner;
     }
 
-    private BulletLogic _bulletLogic;
-    
-    public void SimulateTrajectory(GunController weapon) {
-        if (isBulletGenerated == false) {
-            ghostBullet = Instantiate(bulletType);
-            ghostBullet.name = "Trajectory bullet";
-            Vector3 cur_pos = weapon.transform.position + weapon.transform.forward * 0.1f;
-            ghostBullet.transform.position = cur_pos;
-            ghostBullet.transform.rotation = weapon.transform.rotation;
-            ghostBullet.GetComponentInChildren<Renderer>().enabled = false;
-            isBulletGenerated = true;
-            SceneManager.MoveGameObjectToScene(ghostBullet, _simulatorScene);
-            _bulletLogic = ghostBullet.GetComponent<BulletLogic>();
-            _bulletLogic.bullet.GetComponent<MeshRenderer>().enabled = false;
-        }
 
-        else {
-            Vector3 cur_pos = weapon.transform.position + weapon.transform.forward * 0.1f;
-            ghostBullet.transform.position = cur_pos;
-            ghostBullet.transform.rotation = weapon.transform.rotation;
-        }
+    private void Update() {
+        ray = new Ray(transform.position, transform.forward);
 
-        _bulletLogic.Fire(weapon.transform.forward, true);
+        _line.positionCount = 1;
+        _line.SetPosition(0, transform.position);
+        float remainingLineLength = _lineLength;
+        float remainingTraceLength = _traceLength;
+        int layerNumber = LayerMask.NameToLayer("Ignore Raycast");
+        int layerMask = 1 << layerNumber;
+
+        for (int i = 0; i < reflections; i++)
+        {
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, remainingLineLength, ~layerMask)) {
+                _line.positionCount += 1;
+                _line.SetPosition(_line.positionCount -1, hit.point);
+                remainingLineLength -= Vector3.Distance(ray.origin, hit.point);
+                if (hit.collider.tag == "Reflector") {
+                    ray = new Ray(hit.point, Vector3.Reflect(ray.direction, hit.normal));
+                }
         
+                if (hit.collider.tag == "Player") {
+                    break;
+                }
+            }
 
-        _line.positionCount = _maxIterations;
-
-        for (int i = 0; i < _maxIterations; i++) {
-             _physicsScene.Simulate(Time.fixedDeltaTime * 0.7f);
-             _line.SetPosition(i, ghostBullet.transform.position);
+            else {
+                if (_line.positionCount < remainingLineLength) {
+                    _line.positionCount += 1;
+                    _line.SetPosition(_line.positionCount - 1, ray.origin + ray.direction * remainingLineLength);
+                }
+            }
         }
-        // Destroy(ghostBullet.gameObject);
+
+        for (int i = 0; i < reflections; i++)
+        {
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, remainingTraceLength, ~layerMask)) {
+                remainingTraceLength -= Vector3.Distance(ray.origin, hit.point);
+                if (hit.collider.tag == "Reflector") {
+                    ray = new Ray(hit.point, Vector3.Reflect(ray.direction, hit.normal));
+                }
+        
+                if (hit.collider.tag == "Player") {
+                    if (hit.collider.gameObject.GetComponent<Controller>() != player) {
+                        _line.startColor = Color.red;
+                        _line.endColor = Color.red;
+                    }
+                    break;
+                }
+                else {
+                    _line.startColor = Color.white;
+                    _line.endColor = Color.white;
+                }
+            }
+
+        }
     }
 }

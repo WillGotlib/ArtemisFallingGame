@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GunController : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class GunController : MonoBehaviour
     private float currentSizeMultiplier;
 
     [Header("Object values")] public Animator animationController;
-    private Controller owner;
+    public Controller owner;
 
     void Start()
     {
@@ -44,15 +45,17 @@ public class GunController : MonoBehaviour
         secondaryCooldownTimer = secondaryCooldown;
         currentCooldownMultiplier = cooldownMultiplier;
         ResetSizeMultiplier();
-        _trajectory.RegisterScene();  
     }
 
     private int _runCounter;
     void Update()
     {
+        // if (!_trajectory.isRegistered && SceneManager.GetSceneByName("Gameplay").IsValid()) {
+        //     _trajectory.RegisterScene();  
+        // }
         _runCounter = (_runCounter + 1) % 4;
-        if (_runCounter == 0)
-            _trajectory.SimulateTrajectory(this); // todo properly optimise this
+        // if (_runCounter == 0 && SceneManager.GetSceneByName("Gameplay").IsValid())
+        //     _trajectory.SimulateTrajectory(this); // todo properly optimise this
 
         if (primaryOnCooldown) {
             primaryCooldownTimer -= Time.deltaTime * currentCooldownMultiplier;

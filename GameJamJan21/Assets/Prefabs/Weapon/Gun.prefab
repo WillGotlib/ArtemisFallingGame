@@ -503,9 +503,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127c56d91805d92428788e9bf88625a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reflections: 4
   _line: {fileID: -6796899859370855475}
-  _maxIterations: 50
-  bulletType: {fileID: 9165814152039018566, guid: 46b405b11a4104e4d94c322cc2ca5117, type: 3}
+  _lineLength: 8
+  _traceLength: 20
 --- !u!120 &-6796899859370855475
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -595,7 +596,7 @@ LineRenderer:
       m_Mode: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 0
+    numCornerVertices: 30
     numCapVertices: 0
     alignment: 0
     textureMode: 1

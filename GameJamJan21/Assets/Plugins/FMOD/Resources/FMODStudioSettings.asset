@@ -283,8 +283,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ArtemisFallingSoundDesign/ArtemisFallingSoundDesign.fspro
-  sourceBankPath: ArtemisFallingSoundDesign/Build
+  sourceProjectPath: ../../../ArtemisFallingSoundDesign/ArtemisFallingSoundDesign.fspro
+  sourceBankPath: ../../../ArtemisFallingSoundDesign/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 0

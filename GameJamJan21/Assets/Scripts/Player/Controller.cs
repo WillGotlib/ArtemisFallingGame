@@ -5,6 +5,8 @@ using Analytics;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.Users;
 
 
 public class Controller : MonoBehaviour
@@ -69,9 +71,26 @@ public class Controller : MonoBehaviour
 
     static bool menuOnCooldown = false;
 
+    public PlayerInput Input;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (Input.devices.Count == 0) {
+            Input.SwitchCurrentControlScheme("P1Keyboard", Keyboard.current);
+        }
+        var unpaired = InputUser.GetUnpairedInputDevices();
+        var ipa = new InputMaster();
+
+        foreach (var devices in unpaired) {
+            var scheme = InputControlScheme.FindControlSchemeForDevice(devices, ipa.controlSchemes);
+
+            if (scheme?.name == "Gamepad2") {
+                Input.SwitchCurrentControlScheme("Gamepad2", devices);
+                break;
+            }
+        }
+
         var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
         lookDirection = rotation * transform.rotation * Vector3.forward;
         
@@ -124,6 +143,12 @@ public class Controller : MonoBehaviour
         var gunController = weapon.GetComponent<GunController>();
         gunController.setOwner(this);
         gunController.setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
+    }
+
+    public void HideGun()
+    {
+        if (weapon)
+            weapon.SetActive(false);
     }
 
     public void OnMovement(InputValue value)
@@ -433,7 +458,7 @@ public class Controller : MonoBehaviour
             // transform.position = transform.position + new Vector3(0, 10, 0);
             // SetActive(false);
             
-            weapon.SetActive(false);
+            HideGun();
             
             _tempLivesManager.ApplyDeath(playerNumber);
             _analyticsManager.DeathEvent(gameObject);

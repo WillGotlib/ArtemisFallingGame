@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3000948030658400078}
   - component: {fileID: 2420030110721789441}
   - component: {fileID: 2615414214479137252}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bullet POV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8462646338342632486}
   - component: {fileID: 7718076483670826406}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,9 +285,9 @@ GameObject:
   - component: {fileID: 1296478522850859445}
   - component: {fileID: 5381165715268956920}
   - component: {fileID: -2544521050228010822}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Molotov
-  m_TagString: Reflector
+  m_TagString: Grenade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -465,7 +465,6 @@ MonoBehaviour:
   rotationSpeed: 0.3
   trail: {fileID: 7718076483670826406}
   maxFlightTimeSeconds: 10
-  ghostBounces: 3
   thumbnail: {fileID: 7482667652216324306, guid: 7e9b43615aa6041f0b764a72e9173450, type: 3}
   label: Molotov
 --- !u!108 &5761309379727644029
@@ -652,14 +651,42 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: b4c118fd8b3fcd6449d3f19378e120b8, type: 2}
+    - target: {fileID: -5599561876615414015, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2607626066905764478, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2187411794490086618, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1574078040688967270, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
       propertyPath: m_Name
       value: grenade
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494298884561708670, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2014062321362750968, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: db122967f06a4044caf4023c1280f4af, type: 2}
+    - target: {fileID: 3038553406859991095, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3205789406370162119, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -668,6 +695,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: db122967f06a4044caf4023c1280f4af, type: 2}
+    - target: {fileID: 6753286836372306085, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6892530371520507874, guid: b5bbe1c398335a74e9a28a934efb13e8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
