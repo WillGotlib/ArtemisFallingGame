@@ -1,0 +1,220 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1727477523385163371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4664166567813688104}
+  - component: {fileID: 4252220061363959764}
+  - component: {fileID: 4872507841284969245}
+  - component: {fileID: 3493855110424310300}
+  - component: {fileID: 8232710037800117139}
+  - component: {fileID: 1036248833248138461}
+  m_Layer: 0
+  m_Name: MenuPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4664166567813688104
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727477523385163371}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1, y: 1}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4252220061363959764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727477523385163371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 0c3686f0a5cff15459b2853fedf4743c, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b031336f-603d-43c4-8d4e-13d21ce98de5
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/d,/Keyboard/a,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/rightArrow,/Keyboard/leftArrow,/DualShock4GamepadHID/leftStick/down,/DualSenseGamepadHID/leftStick/down,/DualShock4GamepadHID/leftStick/up,/DualSenseGamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/left,/DualSenseGamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right,/DualSenseGamepadHID/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e78f9ebe-126a-4c4f-8454-058ddd98f4c5
+    m_ActionName: Player/Look[/DualShock4GamepadHID/rightStick/left,/DualSenseGamepadHID/rightStick/left,/DualShock4GamepadHID/rightStick/right,/DualSenseGamepadHID/rightStick/right,/DualShock4GamepadHID/rightStick/up,/DualSenseGamepadHID/rightStick/up,/DualShock4GamepadHID/rightStick/down,/DualSenseGamepadHID/rightStick/down,/Keyboard/q,/Keyboard/e,/Keyboard/rightAlt,/Keyboard/rightCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b43816c3-833f-463f-9baf-cead8331356c
+    m_ActionName: Player/SwitchCamera[/DualShock4GamepadHID/rightShoulder,/DualSenseGamepadHID/rightShoulder,/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c8c9df9e-28b5-44a6-a5e3-4c22acfe3560
+    m_ActionName: Player/Dash[/Keyboard/shift,/DualShock4GamepadHID/leftShoulder,/DualSenseGamepadHID/leftShoulder,/Keyboard/rightShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4665af22-391b-42ae-8aa8-2c5b25efb779
+    m_ActionName: Player/PrimaryFire[/DualShock4GamepadHID/rightTrigger,/DualSenseGamepadHID/rightTrigger,/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4fcaf0c2-66f2-4dbd-8e15-f7d15c8ca959
+    m_ActionName: Player/SecondaryFire[/Keyboard/f,/DualShock4GamepadHID/rightShoulder,/DualSenseGamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0c4706f0-bbaa-4d56-91e1-9899b63d7add
+    m_ActionName: Player/EnterMenu[/DualShock4GamepadHID/start,/DualSenseGamepadHID/start,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 03796bce-d31c-4da9-b86c-6f843bcbf81f
+    m_ActionName: UI/Enter[/DualShock4GamepadHID/rightTrigger,/DualSenseGamepadHID/rightTrigger,/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e018d7ad-b05b-4605-89c4-787cc81054b6
+    m_ActionName: UI/Navigate[/DualShock4GamepadHID/leftStick/up,/DualSenseGamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/right,/DualSenseGamepadHID/leftStick/right,/DualShock4GamepadHID/leftStick/left,/DualSenseGamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/down,/DualSenseGamepadHID/leftStick/down,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca47009f-82e3-4653-b62a-fdd470f85ad9
+    m_ActionName: UI/Pause[/DualShock4GamepadHID/start,/DualSenseGamepadHID/start]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: UI
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &4872507841284969245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727477523385163371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d69e8430f0e4294ab060e96056fa5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNumber: 0
+  cursorImages:
+  - {fileID: 21300000, guid: b32a93b9252404c099427a18b15bd24a, type: 3}
+  - {fileID: 21300000, guid: 93884ad480c5d45c5b3d0b58f6b92b87, type: 3}
+  _eventSys: {fileID: 0}
+--- !u!212 &3493855110424310300
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727477523385163371}
+  m_Enabled: 0
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 1740651591
+  m_SortingLayer: 1
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 0
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!222 &8232710037800117139
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727477523385163371}
+  m_CullTransparentMesh: 1
+--- !u!114 &1036248833248138461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727477523385163371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b32a93b9252404c099427a18b15bd24a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1

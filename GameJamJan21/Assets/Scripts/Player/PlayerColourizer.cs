@@ -8,28 +8,20 @@ public class PlayerColourizer : MonoBehaviour
     [SerializeField] private Material secondary;
     [SerializeField] private string colourAttribute = "_Colour";
 
-    private Color _primaryColour = Color.clear;
-    private Color _secondaryColour = Color.clear;
+    private Color _primaryColour;
+    private Color _secondaryColour;
 
     public Color PrimaryColour
     {
         get => _primaryColour;
-        set
-        {
-            _primaryMat?.SetColor(_colourAttributeId, value);
-            _primaryColour = value;
-        }
+        set => _primaryMat?.SetColor(_colourAttributeId, _primaryColour = value);
     }
 
     public Color SecondaryColour
     {
         get => _secondaryColour;
-        set
-        {
-            _secondaryMat?.SetColor(_colourAttributeId, value);
-            _secondaryColour = value;
-        }
-    }
+        set => _secondaryMat?.SetColor(_colourAttributeId, _secondaryColour = value);
+}
 
     private Material _primaryMat;
     private Material _secondaryMat;
@@ -65,14 +57,8 @@ public class PlayerColourizer : MonoBehaviour
             renderer.materials = materials;
         }
 
-        if (_primaryColour != Color.clear)
-        {
-            PrimaryColour = _primaryColour;
-        }
-
-        if (_secondaryColour != Color.clear)
-        {
-            SecondaryColour = _secondaryColour;
-        }
+        
+        _primaryColour = primary.GetColor(_colourAttributeId);
+        _secondaryColour = secondary.GetColor(_colourAttributeId);
     }
 }

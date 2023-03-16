@@ -66,7 +66,6 @@ public class StartGame : MonoBehaviour
                 colourizer.SecondaryColour = mds.accentColours[playerIndex];
                 colourizer.initialColourize();
             }
-            player.GetComponent<CharacterFlash>().SetModel(player.transform.Find("robot"));
             player.GetComponentInChildren<AnimationUtils>().Landing = true;
             
             i++;

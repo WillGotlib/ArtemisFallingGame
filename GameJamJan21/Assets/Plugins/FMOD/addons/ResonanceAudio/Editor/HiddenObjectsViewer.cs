@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public class HiddenObjectsViewer : EditorWindow
 {
-    //[MenuItem("House of Secrets/Hidden Objects Viewer")]
+    [MenuItem("Vikram Stuff/Hidden Objects Viewer")]
     public static void ShowWindow()
     {
         var window = GetWindow<HiddenObjectsViewer>();
