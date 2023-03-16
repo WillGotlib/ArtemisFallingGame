@@ -121,9 +121,11 @@ Material:
     - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
+    - _dark_spots: 2.14
     - _speed: 0.36
     m_Colors:
     - _BaseColor: {r: 0.15794194, g: 0.09049413, b: 0.7063328, a: 1}
+    - _Base_Colour: {r: 0.7830189, g: 0.12927197, b: 0.62188584, a: 1}
     - _Color: {r: 0.15794191, g: 0.090494104, b: 0.7063328, a: 1}
     - _EmissionColor: {r: 0.41587546, g: 12.595078, b: 1.0086931, a: 10}
     - _GLow: {r: 0.02745098, g: 0.7490196, b: 0.0627451, a: 1}
