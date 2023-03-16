@@ -14,14 +14,22 @@ public class PlayerColourizer : MonoBehaviour
     public Color PrimaryColour
     {
         get => _primaryColour;
-        set => _primaryMat?.SetColor(_colourAttributeId, _primaryColour = value);
+        set
+        {
+            _primaryColour = value;
+            if (_primaryMat) _primaryMat.SetColor(_colourAttributeId, value);
+        }
     }
 
     public Color SecondaryColour
     {
         get => _secondaryColour;
-        set => _secondaryMat?.SetColor(_colourAttributeId, _secondaryColour = value);
-}
+        set
+        {
+            _secondaryColour = value;
+            if (_secondaryMat) _secondaryMat.SetColor(_colourAttributeId, value);
+        }
+    }
 
     private Material _primaryMat;
     private Material _secondaryMat;
@@ -29,6 +37,8 @@ public class PlayerColourizer : MonoBehaviour
 
     public void initialColourize()
     {
+        if (_primaryMat != null) return; // dont init if already inited
+        
         _colourAttributeId = Shader.PropertyToID(colourAttribute);
         _primaryMat = Instantiate(primary);
         _secondaryMat = Instantiate(secondary);
