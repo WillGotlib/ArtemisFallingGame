@@ -87,5 +87,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Grenade
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4213059346157768680, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+    - {fileID: 7769586475236240067, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+    - {fileID: 2420030110721789441, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
