@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEditor;
+#if UNITY_EDITOR
 using UnityEditor.SceneManagement;
+#endif
 using System.Collections.Generic;
 
 public class HiddenObjectsViewer : EditorWindow
 {
-    [MenuItem("House of Secrets/Hidden Objects Viewer")]
+    //[MenuItem("House of Secrets/Hidden Objects Viewer")]
     public static void ShowWindow()
     {
         var window = GetWindow<HiddenObjectsViewer>();

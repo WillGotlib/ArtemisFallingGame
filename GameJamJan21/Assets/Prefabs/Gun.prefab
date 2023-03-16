@@ -444,6 +444,7 @@ GameObject:
   - component: {fileID: 7396633362927915507}
   - component: {fileID: -4194139606902899362}
   - component: {fileID: -6796899859370855475}
+  - component: {fileID: 437457601922070733}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Transient
@@ -491,6 +492,7 @@ MonoBehaviour:
   sizeIncrements: 0.06
   sizeRecovery: 0.001
   animationController: {fileID: 2263409211759763732}
+  owner: {fileID: 0}
 --- !u!114 &-4194139606902899362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,6 +606,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!65 &437457601922070733
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493655363811869585}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9090801182086252134
 GameObject:
   m_ObjectHideFlags: 0
