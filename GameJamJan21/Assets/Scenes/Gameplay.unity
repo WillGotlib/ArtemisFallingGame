@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028417, g: 0.2257145, b: 0.3069222, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028392, g: 0.22571419, b: 0.30692145, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1167,21 +1167,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 111780088485238024, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
   m_PrefabInstance: {fileID: 2059657279}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &541731790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541731786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 127c56d91805d92428788e9bf88625a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _line: {fileID: 0}
-  _maxIterations: 100
-  bulletType: {fileID: 0}
 --- !u!114 &541731791 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
@@ -5676,7 +5661,7 @@ PrefabInstance:
     - target: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
       propertyPath: _trajectory
       value: 
-      objectReference: {fileID: 541731790}
+      objectReference: {fileID: 0}
     - target: {fileID: 111780088485238029, guid: 4b2b3b693ceb30b4ba004174e24acadc, type: 3}
       propertyPath: playerCount
       value: 2

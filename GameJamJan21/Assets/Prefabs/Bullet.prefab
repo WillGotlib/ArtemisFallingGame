@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: -8632033621297967363}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Reflector
+  m_TagString: Transient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
