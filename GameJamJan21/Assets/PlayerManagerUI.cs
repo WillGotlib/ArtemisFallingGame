@@ -15,8 +15,9 @@ public class PlayerManagerUI : MonoBehaviour
 
     public static int currNumPlayers = 0;
 
-    private List<MenuCursor> players = new List<MenuCursor>();
-
+    private List<MenuCursor> playerCursors = new List<MenuCursor>();
+    private List<MultiplayerEventSystem> playerES = new List<MultiplayerEventSystem>();
+    
     // Update is called once per frame
     void Start()
     {
@@ -26,12 +27,19 @@ public class PlayerManagerUI : MonoBehaviour
     }
 
     public void RefreshCursors(GameObject next) {
-        foreach (MenuCursor player in players) {
-            print("player " + player + " selected " + next);
-            player.gameObject.GetComponent<MultiplayerEventSystem>().SetSelectedGameObject(next);
-            player.OnNavigate();
-            print(player.gameObject.transform.position);
-            
+        for (int i = 0; i < playerCursors.Count; i++) {
+            print("player " + playerCursors[i] + " selected " + next);
+            playerES[i].SetSelectedGameObject(next);
+            playerCursors[i].refresh(Vector2.zero);
+            playerCursors[i].MoveToTarget(next, new Vector3(0, 0, 0));
+        }
+    }
+
+    public void SelectionCheck() {
+        // Make sure that if there's a cursor beside a Selectable, it's selected
+        for (int i = 0; i < playerCursors.Count; i++) {
+            GameObject curr = playerCursors[i].currentlySelected;
+            curr.GetComponent<Selectable>().Select();
         }
     }
 
@@ -40,6 +48,8 @@ public class PlayerManagerUI : MonoBehaviour
         GameObject newPlayer = Instantiate(MPEventSystem, transform);
         MultiplayerEventSystem playerEventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
         playerEventSys.SetSelectedGameObject(DefaultFirstSelected[currNumPlayers]);
+        playerES.Add(playerEventSys);
+
         currNumPlayers++;
         newPlayer.name = "MenuEventSystem P" + currNumPlayers;
 
@@ -50,16 +60,17 @@ public class PlayerManagerUI : MonoBehaviour
             // Destroy (go.gameObject);
             go.name = "MenuP" + currNumPlayers;
             go.GetComponent<PlayerInput>().uiInputModule = GetComponent<InputSystemUIInputModule>();
+            
             MenuCursor x = go.GetComponent<MenuCursor>();
             x.LoadCursorImage(currNumPlayers - 1);
             print("GETTING EVENT SYSTEM: " + newPlayer.GetComponent<EventSystem>());
             x._eventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
             print("NEW ROOT: " + newPlayer.GetComponent<MultiplayerEventSystem>());
             go.transform.SetParent(canvas.transform);
-            print(x);
-            players.Add(x);
-            Debug.Log(go.name + " added."); 
-            x.OnNavigate();
+            x.setManager(this);
+            playerCursors.Add(x);
+            Debug.Log(go.name + " added.");
+            x.refresh(Vector2.zero);
         }
         // print(go);
     }

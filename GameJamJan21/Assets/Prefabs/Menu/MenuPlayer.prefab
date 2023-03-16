@@ -65,7 +65,47 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b031336f-603d-43c4-8d4e-13d21ce98de5
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/d,/Keyboard/a,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/rightArrow,/Keyboard/leftArrow,/DualShock4GamepadHID/leftStick/down,/DualSenseGamepadHID/leftStick/down,/DualShock4GamepadHID/leftStick/up,/DualSenseGamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/left,/DualSenseGamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/right,/DualSenseGamepadHID/leftStick/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e78f9ebe-126a-4c4f-8454-058ddd98f4c5
+    m_ActionName: Player/Look[/DualShock4GamepadHID/rightStick/left,/DualSenseGamepadHID/rightStick/left,/DualShock4GamepadHID/rightStick/right,/DualSenseGamepadHID/rightStick/right,/DualShock4GamepadHID/rightStick/up,/DualSenseGamepadHID/rightStick/up,/DualShock4GamepadHID/rightStick/down,/DualSenseGamepadHID/rightStick/down,/Keyboard/q,/Keyboard/e,/Keyboard/rightAlt,/Keyboard/rightCtrl]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b43816c3-833f-463f-9baf-cead8331356c
+    m_ActionName: Player/SwitchCamera[/DualShock4GamepadHID/rightShoulder,/DualSenseGamepadHID/rightShoulder,/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c8c9df9e-28b5-44a6-a5e3-4c22acfe3560
+    m_ActionName: Player/Dash[/Keyboard/shift,/DualShock4GamepadHID/leftShoulder,/DualSenseGamepadHID/leftShoulder,/Keyboard/rightShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4665af22-391b-42ae-8aa8-2c5b25efb779
+    m_ActionName: Player/PrimaryFire[/DualShock4GamepadHID/rightTrigger,/DualSenseGamepadHID/rightTrigger,/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4fcaf0c2-66f2-4dbd-8e15-f7d15c8ca959
+    m_ActionName: Player/SecondaryFire[/Keyboard/f,/DualShock4GamepadHID/rightShoulder,/DualSenseGamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0c4706f0-bbaa-4d56-91e1-9899b63d7add
+    m_ActionName: Player/EnterMenu[/DualShock4GamepadHID/start,/DualSenseGamepadHID/start,/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 03796bce-d31c-4da9-b86c-6f843bcbf81f
+    m_ActionName: UI/Enter[/DualShock4GamepadHID/rightTrigger,/DualSenseGamepadHID/rightTrigger,/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e018d7ad-b05b-4605-89c4-787cc81054b6
+    m_ActionName: UI/Navigate[/DualShock4GamepadHID/leftStick/up,/DualSenseGamepadHID/leftStick/up,/DualShock4GamepadHID/leftStick/right,/DualSenseGamepadHID/leftStick/right,/DualShock4GamepadHID/leftStick/left,/DualSenseGamepadHID/leftStick/left,/DualShock4GamepadHID/leftStick/down,/DualSenseGamepadHID/leftStick/down,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ca47009f-82e3-4653-b62a-fdd470f85ad9
+    m_ActionName: UI/Pause[/DualShock4GamepadHID/start,/DualSenseGamepadHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: UI
@@ -83,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d69e8430f0e4294ab060e96056fa5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 0
   cursorImages:
   - {fileID: 21300000, guid: b32a93b9252404c099427a18b15bd24a, type: 3}
   - {fileID: 21300000, guid: 93884ad480c5d45c5b3d0b58f6b92b87, type: 3}
