@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MatchData
   m_EditorClassIdentifier: 
   numPlayers: 2
-  levelIdx: 1
+  levelIdx: 0
   numGames: 1
   levels:
   - {fileID: 8804078544648102232, guid: bee05a9ff03524ba697b338eb4a11afe, type: 3}

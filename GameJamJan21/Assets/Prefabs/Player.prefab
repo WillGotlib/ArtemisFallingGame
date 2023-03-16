@@ -209,7 +209,7 @@ MonoBehaviour:
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   weaponHandBone: {fileID: 8487846109932820590}
   menu: {fileID: 0}
-  dashIntensity: 80
+  dashIntensity: 60
   momentum: 0.85
   maxMomentum: 1.15
   dashDuration: 0.1
