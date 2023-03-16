@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1931172875997447737}
   - component: {fileID: 1190407533784283270}
   - component: {fileID: 1190407533784283265}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: explosion
   m_TagString: Transient
   m_Icon: {fileID: 0}
