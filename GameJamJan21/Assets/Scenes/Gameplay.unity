@@ -1032,14 +1032,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
---- !u!81 &451268167
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3728489329392126659}
-  m_Enabled: 0
 --- !u!1 &531201857
 GameObject:
   m_ObjectHideFlags: 0
@@ -6210,11 +6202,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139461966}
   m_CullTransparentMesh: 1
---- !u!1 &3728489329392126659 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
-  m_PrefabInstance: {fileID: 451268156}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &3728489329392126685 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 3728489329499391201, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}

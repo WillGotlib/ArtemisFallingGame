@@ -58,8 +58,15 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: PlaySound
-        data: event:/Actions/MovementWalk
+        functionName: PlayFootstepsEvent
+        data: event:/Actions/MechFootsteps3D
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.50111115
+        functionName: PlayFootstepsEvent
+        data: event:/Actions/MechFootsteps3D
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0

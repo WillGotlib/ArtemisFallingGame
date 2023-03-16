@@ -31,9 +31,9 @@ MonoBehaviour:
   - {r: 0.42455417, g: 0.21586864, b: 0.46226418, a: 0}
   - {r: 0.903554, g: 1, b: 0.10849059, a: 1}
   - {r: 1, g: 1, b: 1, a: 1}
-  playerColourSchemes: 0300000002000000
-  selectedColourSchemes: 0200000003000000
+  playerColourSchemes: 0300000001000000
+  selectedColourSchemes: 0300000001000000
   secondaryTypes:
   - {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
   - {fileID: 2160589781498056887, guid: b7577be1fd91c4a7a9fab71345e58277, type: 3}
-  playerSecondaries: 0100000000000000
+  playerSecondaries: 0000000000000000
