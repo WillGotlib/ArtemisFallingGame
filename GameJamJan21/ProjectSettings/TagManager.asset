@@ -12,6 +12,7 @@ TagManager:
   - Transparent
   - Modifier
   - SkyBox
+  - Grenade
   layers:
   - Default
   - TransparentFX

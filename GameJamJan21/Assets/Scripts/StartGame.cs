@@ -43,7 +43,7 @@ public class StartGame : MonoBehaviour
         
         var spawnPoints = levelManager.GetSpawnPoints();
         // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
-        CreatePhysicsScene();
+        // CreatePhysicsScene();
         players = new Controller[Mathf.Min(playerCount, spawnPoints.Length)];
         var i=0;
         foreach (GameObject spawn in spawnPoints) {
@@ -106,25 +106,25 @@ public class StartGame : MonoBehaviour
         }
     }
 
-    void CreatePhysicsScene()
-    {
-        if (!_simulatorScene.isLoaded)
-        {
-            CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
-            _simulatorScene = SceneManager.CreateScene("Trajectory", parameters);
-            _physicsScene = _simulatorScene.GetPhysicsScene();
-        }
+    // void CreatePhysicsScene()
+    // {
+    //     if (!_simulatorScene.isLoaded)
+    //     {
+    //         CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
+    //         _simulatorScene = SceneManager.CreateScene("Trajectory", parameters);
+    //         _physicsScene = _simulatorScene.GetPhysicsScene();
+    //     }
 
-        foreach (var sim in GameObject.FindGameObjectsWithTag("SIMULATION"))
-            Destroy(sim);
+    //     foreach (var sim in GameObject.FindGameObjectsWithTag("SIMULATION"))
+    //         Destroy(sim);
 
-        foreach (Transform obj in levelManager.GetObstacles()) {
-            var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
-            ghostObj.GetComponent<Renderer>().enabled = false;
-            var obj_scale = obj.gameObject.transform.lossyScale;
-            ghostObj.transform.localScale = obj_scale;
-            ghostObj.tag = "SIMULATION";
-            SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
-        }
-    }
+    //     foreach (Transform obj in levelManager.GetObstacles()) {
+    //         var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
+    //         ghostObj.GetComponent<Renderer>().enabled = false;
+    //         var obj_scale = obj.gameObject.transform.lossyScale;
+    //         ghostObj.transform.localScale = obj_scale;
+    //         ghostObj.tag = "SIMULATION";
+    //         SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
+    //     }
+    // }
 }
