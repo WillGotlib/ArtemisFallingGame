@@ -82,6 +82,7 @@ public class PlayerManagerUI : MonoBehaviour
     }
 
     void Awake() {
+        reset();
         for (int i = 0; i < currNumPlayers; i++) {
             OnPlayerJoined();
         }
