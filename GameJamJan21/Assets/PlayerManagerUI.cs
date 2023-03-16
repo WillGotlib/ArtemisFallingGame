@@ -30,7 +30,7 @@ public class PlayerManagerUI : MonoBehaviour
         for (int i = 0; i < playerCursors.Count; i++) {
             print("player " + playerCursors[i] + " selected " + next);
             playerES[i].SetSelectedGameObject(next);
-            playerCursors[i].refresh(Vector2.zero);
+            // playerCursors[i].refresh(Vector2.zero);
             playerCursors[i].MoveToTarget(next, new Vector3(0, 0, 0));
         }
     }
@@ -38,8 +38,11 @@ public class PlayerManagerUI : MonoBehaviour
     public void SelectionCheck() {
         // Make sure that if there's a cursor beside a Selectable, it's selected
         for (int i = 0; i < playerCursors.Count; i++) {
-            GameObject curr = playerCursors[i].currentlySelected;
-            curr.GetComponent<Selectable>().Select();
+            print("CURRENTLY SELECTED: " + playerES[i].currentSelectedGameObject);
+            // playerES[i].currentSelectedGameObject.GetComponent<Selectable>().Select();
+            
+            // GameObject curr = playerCursors[i].currentlySelected;
+            // curr.GetComponent<Selectable>().Select();
         }
     }
 
@@ -47,6 +50,8 @@ public class PlayerManagerUI : MonoBehaviour
         print("Player Joined");
         GameObject newPlayer = Instantiate(MPEventSystem, transform);
         MultiplayerEventSystem playerEventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
+        playerEventSys.firstSelectedGameObject = DefaultFirstSelected[currNumPlayers];
+        playerEventSys.playerRoot = canvas;
         playerEventSys.SetSelectedGameObject(DefaultFirstSelected[currNumPlayers]);
         playerES.Add(playerEventSys);
 
@@ -62,6 +67,7 @@ public class PlayerManagerUI : MonoBehaviour
             go.GetComponent<PlayerInput>().uiInputModule = GetComponent<InputSystemUIInputModule>();
             
             MenuCursor x = go.GetComponent<MenuCursor>();
+            x.playerNumber = currNumPlayers - 1;
             x.LoadCursorImage(currNumPlayers - 1);
             print("GETTING EVENT SYSTEM: " + newPlayer.GetComponent<EventSystem>());
             x._eventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
@@ -73,5 +79,9 @@ public class PlayerManagerUI : MonoBehaviour
             x.refresh(Vector2.zero);
         }
         // print(go);
+    }
+
+    public void reset() {
+        currNumPlayers = 0;
     }
 }

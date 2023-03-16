@@ -24,11 +24,11 @@ public class MenuCursor : MonoBehaviour
 
     public void OnNavigate(InputValue value) {
         Vector2 vec = value.Get<Vector2>();
-        if (!currentlyMoving && vec.magnitude > 0.6) {
+        if (!currentlyMoving && vec.magnitude > 0.5) {
             currentlyMoving = true;
             print("Navigated" + value.Get<Vector2>());
             refresh(vec);
-        } else if (vec.magnitude < 0.1) {
+        } else if (vec.magnitude < 0.05) {
             currentlyMoving = false;
         }
         // Action();
@@ -36,7 +36,8 @@ public class MenuCursor : MonoBehaviour
 
     public void OnEnter() {
         print("We pressed enter");
-         _eventSys.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+        if (playerNumber > 0) 
+            _eventSys.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
     }
 
     public void refresh(Vector2 dir) {
@@ -63,7 +64,8 @@ public class MenuCursor : MonoBehaviour
         transform.position = newTarget.transform.position + offset;;
         // RectTransform x = newTarget.GetComponent<RectTransform>();
         // transform.position = transform.position 
-        print(newTarget);    
+        print(newTarget);
+        manager.SelectionCheck();
     }
 
     public void LoadCursorImage(int playerNumber) {
