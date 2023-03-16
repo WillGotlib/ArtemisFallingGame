@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PropigateTag : MonoBehaviour
 {
-    [SerializeField] private string tag;
+    [SerializeField] private string _tag;
 
     private void Awake()
     {
@@ -14,7 +12,7 @@ public class PropigateTag : MonoBehaviour
         while (items.Count!=0)
         {
             var item = items.Dequeue();
-            item.tag = tag;
+            item.tag = _tag;
             foreach (Transform child in item.transform)
                 items.Enqueue(child.gameObject);
         }
