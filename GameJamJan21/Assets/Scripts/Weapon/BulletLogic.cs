@@ -78,7 +78,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     private IEnumerator ExpirationTimer() {
         yield return new WaitForSeconds(maxFlightTimeSeconds);
         Debug.Log("bullet expired");
-        finishShot(false);
+        FinishShot(false);
     }
 
     void PreShotOrienting() {
@@ -122,12 +122,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     }
 
     void EncounterGrenade(Collision collision) {
-        BulletLogic collisionLogic = collision.gameObject.GetComponent<BulletLogic>();
-        GameObject splash = Instantiate(collisionLogic.splashZone);
-        var pos = collision.gameObject.transform.position+Vector3.zero;
-        pos.y = 0;
-        splash.transform.position = pos;
-        Destroy(collision.gameObject);
+        collision.gameObject.GetComponent<BulletLogic>().FinishShot(true);
+        FinishShot(false);
     }
 
     void EncounterTransient(Collision collision) {
@@ -142,7 +138,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             float damage = GetBulletDamage();
             _analytics.DamageEvent(collision.gameObject,gameObject);
             player.InflictDamage(damage);
-            finishShot(BulletDamageMultiplier()!=0);
+            FinishShot(BulletDamageMultiplier()!=0);
     }
 
     void ricochetBullet(Collision collision) {
@@ -171,7 +167,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             }
 
             if (bounced > maxBounces) {
-                finishShot(true);
+                FinishShot(true);
             }
             else
             {
@@ -180,7 +176,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             }
     }
 
-    void finishShot(bool explode) {
+    public void FinishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
 
         bullet.SetActive(false);
