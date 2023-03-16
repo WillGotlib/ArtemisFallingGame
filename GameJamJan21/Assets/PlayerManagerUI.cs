@@ -60,28 +60,34 @@ public class PlayerManagerUI : MonoBehaviour
 
         GameObject go = GameObject.Find ("MenuPlayer(Clone)"); // Temp
         
-        //if the tree exist then destroy it
-        if (go) {
-            // Destroy (go.gameObject);
-            go.name = "MenuP" + currNumPlayers;
-            go.GetComponent<PlayerInput>().uiInputModule = GetComponent<InputSystemUIInputModule>();
-            
-            MenuCursor x = go.GetComponent<MenuCursor>();
-            x.playerNumber = currNumPlayers - 1;
-            x.LoadCursorImage(currNumPlayers - 1);
-            print("GETTING EVENT SYSTEM: " + newPlayer.GetComponent<EventSystem>());
-            x._eventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
-            print("NEW ROOT: " + newPlayer.GetComponent<MultiplayerEventSystem>());
-            go.transform.SetParent(canvas.transform);
-            x.setManager(this);
-            playerCursors.Add(x);
-            Debug.Log(go.name + " added.");
-            x.refresh(Vector2.zero);
+        //if the character doesn't exist we need to manually spawn them in.
+        if (!go) {
+            GameObject menuPlayer = Instantiate(PlayerPrefab, canvas.transform);
         }
+        go.name = "MenuP" + currNumPlayers;
+        go.GetComponent<PlayerInput>().uiInputModule = GetComponent<InputSystemUIInputModule>();
+        
+        MenuCursor x = go.GetComponent<MenuCursor>();
+        x.playerNumber = currNumPlayers - 1;
+        x.LoadCursorImage(currNumPlayers - 1);
+        print("GETTING EVENT SYSTEM: " + newPlayer.GetComponent<EventSystem>());
+        x._eventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
+        print("NEW ROOT: " + newPlayer.GetComponent<MultiplayerEventSystem>());
+        go.transform.SetParent(canvas.transform);
+        x.setManager(this);
+        playerCursors.Add(x);
+        Debug.Log(go.name + " added.");
+        x.refresh(Vector2.zero);
         // print(go);
     }
 
-    public void reset() {
+    void Awake() {
+        for (int i = 0; i < currNumPlayers; i++) {
+            OnPlayerJoined();
+        }
+    }
+
+    void reset() {
         currNumPlayers = 0;
     }
 }
