@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,88 +6,68 @@ using UnityEngine;
 public class CharacterFlash : MonoBehaviour
 {
 
-    [SerializeField] private Transform model;
+    private PlayerColourizer _colourizer;
     
-    [Tooltip("Material to switch to when damaged")]
-    [SerializeField] private Material damageMaterial;
-    [SerializeField] private Material invincibleMaterial;
+    [Tooltip("Colours to switch to when damaged")]
+    [SerializeField] private Color damageColour;
+    [SerializeField] private Color invincibleColour;
 
     [Tooltip("Duration of the flash.")]
     [SerializeField] private float damageDuration;
     [SerializeField] private float invincibleDuration;
 
-    // defualt materials
-    public Dictionary<MeshRenderer,Material> renderersDefaultMatts = new ();
+    private void Awake()
+    {
+        _colourizer = GetComponent<PlayerColourizer>();
+    }
+
+    // defualt colours
+    private Color _originalPrimary;
+    private Color _originalSecondary;
 
     // The currently running coroutine.
     private Coroutine flashRoutine;
 
-    void Start()
-    {
-        // Get the SpriteRenderer to be used,
-        // alternatively you could set it from the inspector.
-        var meshRenderers = model.transform.GetComponentsInChildren<MeshRenderer>();
-        foreach (var meshRenderer in meshRenderers)
-        {
-            renderersDefaultMatts[meshRenderer] = new Material(meshRenderer.material);
-        }
-
-        // Copy the material so it can be modified without any side effects.
-        damageMaterial = new Material(damageMaterial);
-        invincibleMaterial = new Material(invincibleMaterial);
-        
-    }
-
-    public void SetModel(Transform newModel) {
-        model = newModel;
-    }
-
     public void DamageFlash()
     {
-        Flash(damageMaterial, damageDuration);
+        Flash(damageColour, damageDuration);
     }
     
     public void InvincibilityFlash()
     {
-        Flash(invincibleMaterial, invincibleDuration);
+        Flash(invincibleColour, invincibleDuration);
     }
 
-    private void Flash(Material mat, float duration) {
+    private void Flash(Color col, float duration) {
         if (flashRoutine == null)
         {
-            flashRoutine = StartCoroutine(FlashRoutine(mat, duration));
+            _originalPrimary = _colourizer.PrimaryColour;
+            _originalSecondary = _colourizer.SecondaryColour;
+            flashRoutine = StartCoroutine(FlashRoutine(col, duration));
             return;
         }
 
-        if (mat != damageMaterial) {
+        if (col != damageColour) {
                 return; // We can let this happen if it's damage but not invincibility.
         }
         StopCoroutine(flashRoutine);
         flashRoutine = null;
-        // return material to default on cancel
-        foreach (var (renderer, material) in renderersDefaultMatts)
-        {
-            renderer.material = material;
-        }
+        // return colours to default on cancel
+        _colourizer.PrimaryColour = _originalPrimary;
+        _colourizer.SecondaryColour = _originalSecondary;
     }
 
-    private IEnumerator FlashRoutine(Material mat, float duration)
+    private IEnumerator FlashRoutine(Color col, float duration)
     {
-        foreach (var (renderer, _) in renderersDefaultMatts)
-        {
-            // Swap to the flashMaterial.
-            renderer.material = mat;
-        }
+        _colourizer.PrimaryColour = col;
+        _colourizer.SecondaryColour = col;
 
         // Pause the execution of this function for "duration" seconds.
         yield return new WaitForSeconds(duration);
 
-        // After the pause, swap back to the original material.
-        foreach (var (renderer, material) in renderersDefaultMatts)
-        {
-            renderer.material = material;
-        }
-        
+        _colourizer.PrimaryColour = _originalPrimary;
+        _colourizer.SecondaryColour = _originalSecondary;
+
         yield return new WaitForSeconds(duration);
 
         // Set the flashRoutine to null, signaling that it's finished.

@@ -322,9 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6304a83abe9c4f7ebe697ba95167a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 9007030689590978157}
-  damageMaterial: {fileID: 2100000, guid: 3b40a00ffb1da474b94351cd90b8eb19, type: 2}
-  invincibleMaterial: {fileID: 2100000, guid: 4c3963f94f19f4ef88575a5203bfb296, type: 2}
+  damageColour: {r: 1, g: 0.28627452, b: 0.28627452, a: 1}
+  invincibleColour: {r: 1, g: 0.28627452, b: 0.28627452, a: 1}
   damageDuration: 0.1
   invincibleDuration: 0.2
 --- !u!114 &1067523678096033842

@@ -64,7 +64,6 @@ public class StartTutorial : MonoBehaviour
                 colourizer.SecondaryColour = accentColours[i];
                 colourizer.initialColourize();
             }
-            player.GetComponent<CharacterFlash>().SetModel(player.transform.Find("robot"));
             i++;
         }
     }
