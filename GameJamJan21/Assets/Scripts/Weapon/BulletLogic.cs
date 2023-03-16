@@ -32,7 +32,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public float rotationSpeed = 0.3f;
     private AudioSource _audioBullet;
     private Controller shooter;
-    private bool isGhost;
 
     private bool _ricocheted=false;
 
@@ -41,7 +40,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public float maxFlightTimeSeconds = 10;
     private Coroutine expiration;
 
-    public int ghostBounces = 3;
     private AnalyticsManager _analytics;
     private BulletDynamics _dynamics;
 
@@ -69,14 +67,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     {
         _rb.velocity = direction.normalized * (_bulletSpeed * GetBulletSpeedBonus());
         vel = _rb.velocity;
-        isGhost = ghost;
         
-        if (isGhost)
-        {
-            bounced = 0;
-            maxBounces = ghostBounces;
-            return;
-        }
         expiration = StartCoroutine(ExpirationTimer());
 
         trail.enabled = true;
@@ -117,7 +108,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         if (collision.gameObject.tag == "Transient")
         {
             EncounterTransient(collision);
-        } else if (isGhost == false && collision.gameObject.tag == "Player") {
+        } else if (collision.gameObject.tag == "Player") {
             EncounterPlayer(collision);
         } else if (collision.gameObject.tag == "Powerup") {
             // Do nothing lol
@@ -130,8 +121,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     void EncounterTransient(Collision collision) {
             // Do nothing and pass through
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
-            // Destroy but keep velocity!
-            Destroy(collision.gameObject);
+
             _rb.velocity = vel;
     }
 
@@ -161,7 +151,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             // add to bounces tally and maybe destroy
             bounced++;
             // Modify model
-            if (!isGhost && _dynamics != null) {
+            if (_dynamics != null) {
                 float ratio = 1.0f * bounced / (maxBounces + 1);
                 // _dynamics.BulletGrow(ratio);
                 //print("Bounced: with ratio " + ratio + " --> bounced = " + bounced + ", maxBounces = " + maxBounces);
@@ -180,10 +170,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     void finishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
-        if (isGhost)
-        {
-            return;
-        }
 
         bullet.SetActive(false);
         if (explode) {
