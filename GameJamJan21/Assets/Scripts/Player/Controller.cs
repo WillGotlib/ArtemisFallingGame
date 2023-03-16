@@ -231,6 +231,7 @@ public class Controller : MonoBehaviour
     {
         if (currentCooldown <= 0)
         {
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Dash", GetComponent<Transform>().position);
             currentCooldown = GlobalStats.dashCooldown;
             _hudManager.UseStamina(playerNumber);
             StartCoroutine(Dash());
@@ -480,6 +481,7 @@ public class Controller : MonoBehaviour
         {
             PowerupDrop powerup = collider.gameObject.GetComponent<PowerupDrop>();
             effects.Add(powerup.GiveEffect());
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/PowerUppickup", GetComponent<Transform>().position);
             if (powerup.requiresWeapon) {
                 // TODO: Make this generally-applicable. Right now the only weapon powerup is the fire rate one...
                 weapon.GetComponent<GunController>().ClearPrimaryCooldown();
