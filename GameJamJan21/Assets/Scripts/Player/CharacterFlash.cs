@@ -37,13 +37,7 @@ public class CharacterFlash : MonoBehaviour
     }
 
     private void Flash(Color col, float duration) {
-        if (_flashRoutine != null && col == invincibleColour)
-        {
-            StopCoroutine(_flashRoutine);
-            _flashRoutine = null;
-            _colourizer.PrimaryColour =_originalPrimary ;
-            _colourizer.SecondaryColour =_originalSecondary ;
-        } else if (_flashRoutine != null)
+        if (_flashRoutine != null)
             return;
         
             

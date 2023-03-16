@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageColour: {r: 1, g: 0.28627452, b: 0.28627452, a: 1}
-  invincibleColour: {r: 1, g: 0.28627452, b: 0.28627452, a: 1}
+  invincibleColour: {r: 0.5803922, g: 0.6313726, b: 0.8509804, a: 1}
   damageDuration: 0.1
   invincibleDuration: 0.2
 --- !u!114 &1067523678096033842
