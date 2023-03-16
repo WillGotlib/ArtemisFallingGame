@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: -2544521050228010822}
   m_Layer: 2
   m_Name: Molotov
-  m_TagString: Transient
+  m_TagString: Grenade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -465,7 +465,6 @@ MonoBehaviour:
   rotationSpeed: 0.3
   trail: {fileID: 7718076483670826406}
   maxFlightTimeSeconds: 10
-  ghostBounces: 3
   thumbnail: {fileID: 7482667652216324306, guid: 7e9b43615aa6041f0b764a72e9173450, type: 3}
   label: Molotov
 --- !u!108 &5761309379727644029

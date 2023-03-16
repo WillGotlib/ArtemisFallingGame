@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
+        ResetLanding();
         version.text = Application.version;
     }
 
@@ -32,11 +33,19 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Tutorial");
     }
 
+    public void ResetLanding()
+    {
+        foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            player.GetComponent<Controller>().HideGun();
+            player.GetComponentInChildren<AnimationUtils>().Landing = false;
+        }
+    }
+
     public void ShowPrematchMenu() 
     { 
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
             player.GetComponentInChildren<AnimationUtils>().PlayLanding();
-            player.GetComponentInChildren<AnimationUtils>().Landing = true;
         }    
     }
 

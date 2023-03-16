@@ -112,16 +112,28 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             EncounterPlayer(collision);
         } else if (collision.gameObject.tag == "Powerup") {
             // Do nothing lol
-        } else  {
+        } else if (collision.gameObject.tag == "Grenade") {
+            EncounterGrenade(collision);
+        }
+        else  {
             // Ricochet
             ricochetBullet(collision);
         }
     }
 
+    void EncounterGrenade(Collision collision) {
+        BulletLogic collisionLogic = collision.gameObject.GetComponent<BulletLogic>();
+        GameObject splash = Instantiate(collisionLogic.splashZone);
+        var pos = collision.gameObject.transform.position+Vector3.zero;
+        pos.y = 0;
+        splash.transform.position = pos;
+        Destroy(collision.gameObject);
+    }
+
     void EncounterTransient(Collision collision) {
             // Do nothing and pass through
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
-
+            // Destroy but keep velocity!
             _rb.velocity = vel;
     }
 

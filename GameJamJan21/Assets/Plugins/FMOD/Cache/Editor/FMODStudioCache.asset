@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4158610655417158447
+--- !u!114 &-8833017625054090480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,24 +10,71 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Actions/MovementWalk
+  m_Name: event:/Actions/MechFootsteps3D
   m_EditorClassIdentifier: 
-  Path: event:/Actions/MovementWalk
+  Path: event:/Actions/MechFootsteps3D
   Guid:
-    Data1: -507766266
-    Data2: 1197845922
-    Data3: -1390862697
-    Data4: -668440398
+    Data1: -1321532026
+    Data2: 1223783597
+    Data3: -380292709
+    Data4: -2064836311
   Banks:
-  - {fileID: 1812524027965038072}
+  - {fileID: -5607327001454907688}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &-3382061787215690112
+--- !u!114 &-5607327001454907688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SFX.bank
+  m_EditorClassIdentifier: 
+  Path: ArtemisFallingSoundDesign/Build/Desktop/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 638145151522866503
+  FileSizes:
+  - Name: Desktop
+    Value: 567264
+  Exists: 1
+--- !u!114 &-4161482512809701427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Actions/PowerUppickup
+  m_EditorClassIdentifier: 
+  Path: event:/Actions/PowerUppickup
+  Guid:
+    Data1: 62992292
+    Data2: 1079760062
+    Data3: -647164787
+    Data4: 2001540235
+  Banks:
+  - {fileID: -5607327001454907688}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2500
+--- !u!114 &-4125503971807381163
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -42,11 +89,58 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638145130395015909
+  lastModified: 638145151520917376
   FileSizes:
   - Name: Desktop
-    Value: 980
+    Value: 1222
   Exists: 1
+--- !u!114 &-3598907692761118034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: ArtemisFallingSoundDesign/Build/Desktop/Music.bank
+  Name: Music
+  StudioPath: bank:/Music
+  lastModified: 638145151547145119
+  FileSizes:
+  - Name: Desktop
+    Value: 1832256
+  Exists: 1
+--- !u!114 &-2881834308618119530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Actions/Dash
+  m_EditorClassIdentifier: 
+  Path: event:/Actions/Dash
+  Guid:
+    Data1: 1799758413
+    Data2: 1240156353
+    Data3: -928404594
+    Data4: 1023247927
+  Banks:
+  - {fileID: -5607327001454907688}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 500
 --- !u!114 &-485257644370944085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +160,7 @@ MonoBehaviour:
     Data3: -1763950957
     Data4: -35784557
   Banks:
-  - {fileID: 1812524027965038072}
+  - {fileID: -5607327001454907688}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -89,7 +183,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638143869491162466
+  lastModified: 638144949984820647
   FileSizes:
   - Name: Desktop
     Value: 1036
@@ -107,20 +201,25 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -3382061787215690112}
-  - {fileID: -410633231031516732}
-  - {fileID: 1812524027965038072}
+  - {fileID: -4125503971807381163}
+  - {fileID: 5514650131770521399}
+  - {fileID: -3598907692761118034}
+  - {fileID: -5607327001454907688}
   EditorEvents:
-  - {fileID: -4158610655417158447}
   - {fileID: 1182724935959619603}
   - {fileID: -485257644370944085}
   - {fileID: 8761184600780059628}
+  - {fileID: -8833017625054090480}
+  - {fileID: -4161482512809701427}
+  - {fileID: 6140510531924685468}
+  - {fileID: 4235138497115462986}
+  - {fileID: -2881834308618119530}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -410633231031516732}
+  - {fileID: 5514650131770521399}
   StringsBanks:
-  - {fileID: -3382061787215690112}
-  cacheTime: 638145130395025883
+  - {fileID: -4125503971807381163}
+  cacheTime: 638145151547145119
   cacheVersion: 131601
 --- !u!114 &1182724935959619603
 MonoBehaviour:
@@ -141,7 +240,7 @@ MonoBehaviour:
     Data3: 1294150077
     Data4: -786297611
   Banks:
-  - {fileID: 1812524027965038072}
+  - {fileID: -5607327001454907688}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -149,7 +248,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &1812524027965038072
+--- !u!114 &4235138497115462986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Menu/MainMenuMusic
+  m_EditorClassIdentifier: 
+  Path: event:/Menu/MainMenuMusic
+  Guid:
+    Data1: 992655803
+    Data2: 1312779483
+    Data3: 1917969564
+    Data4: 199664510
+  Banks:
+  - {fileID: -3598907692761118034}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 148965
+--- !u!114 &5514650131770521399
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,16 +285,43 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/SFX.bank
+  m_Name: bank:/Master.bank
   m_EditorClassIdentifier: 
-  Path: ArtemisFallingSoundDesign/Build/Desktop/SFX.bank
-  Name: SFX
-  StudioPath: bank:/SFX
-  lastModified: 638145130395025883
+  Path: ArtemisFallingSoundDesign/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638145151520903534
   FileSizes:
   - Name: Desktop
-    Value: 397696
+    Value: 1036
   Exists: 1
+--- !u!114 &6140510531924685468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Actions/MechLanding
+  m_EditorClassIdentifier: 
+  Path: event:/Actions/MechLanding
+  Guid:
+    Data1: -505672151
+    Data2: 1226345020
+    Data3: 1751960
+    Data4: -1108746586
+  Banks:
+  - {fileID: -5607327001454907688}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2500
 --- !u!114 &8761184600780059628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,7 +341,7 @@ MonoBehaviour:
     Data3: 2069515649
     Data4: -977357641
   Banks:
-  - {fileID: 1812524027965038072}
+  - {fileID: -5607327001454907688}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
