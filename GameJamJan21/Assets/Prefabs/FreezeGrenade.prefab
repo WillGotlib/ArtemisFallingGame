@@ -83,5 +83,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: FreezeGrenade
       objectReference: {fileID: 0}
+    - target: {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_TagString
+      value: Grenade
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}

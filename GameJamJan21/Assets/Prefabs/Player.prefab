@@ -209,12 +209,13 @@ MonoBehaviour:
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   weaponHandBone: {fileID: 8487846109932820590}
   menu: {fileID: 0}
-  dashIntensity: 80
+  dashIntensity: 60
   momentum: 0.85
   maxMomentum: 1.15
   dashDuration: 0.1
   backupCamera: {fileID: 3728489329499391231, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
+  Input: {fileID: 3349455145992540270}
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +294,7 @@ MonoBehaviour:
     m_ActionId: ca47009f-82e3-4653-b62a-fdd470f85ad9
     m_ActionName: UI/Pause[/DualShock4GamepadHID/start]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: P2Keyboard
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
