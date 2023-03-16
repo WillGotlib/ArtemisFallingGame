@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterFlash : MonoBehaviour
@@ -26,7 +24,7 @@ public class CharacterFlash : MonoBehaviour
     private Color _originalSecondary;
 
     // The currently running coroutine.
-    private Coroutine flashRoutine;
+    private Coroutine _flashRoutine;
 
     public void DamageFlash()
     {
@@ -39,22 +37,19 @@ public class CharacterFlash : MonoBehaviour
     }
 
     private void Flash(Color col, float duration) {
-        if (flashRoutine == null)
+        if (_flashRoutine != null && col == invincibleColour)
         {
-            _originalPrimary = _colourizer.PrimaryColour;
-            _originalSecondary = _colourizer.SecondaryColour;
-            flashRoutine = StartCoroutine(FlashRoutine(col, duration));
+            StopCoroutine(_flashRoutine);
+            _flashRoutine = null;
+            _colourizer.PrimaryColour =_originalPrimary ;
+            _colourizer.SecondaryColour =_originalSecondary ;
+        } else if (_flashRoutine != null)
             return;
-        }
-
-        if (col != damageColour) {
-                return; // We can let this happen if it's damage but not invincibility.
-        }
-        StopCoroutine(flashRoutine);
-        flashRoutine = null;
-        // return colours to default on cancel
-        _colourizer.PrimaryColour = _originalPrimary;
-        _colourizer.SecondaryColour = _originalSecondary;
+        
+            
+        _originalPrimary = _colourizer.PrimaryColour;
+        _originalSecondary = _colourizer.SecondaryColour;
+        _flashRoutine = StartCoroutine(FlashRoutine(col, duration));
     }
 
     private IEnumerator FlashRoutine(Color col, float duration)
@@ -71,6 +66,6 @@ public class CharacterFlash : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         // Set the flashRoutine to null, signaling that it's finished.
-        flashRoutine = null;
+        _flashRoutine = null;
     }
 }
