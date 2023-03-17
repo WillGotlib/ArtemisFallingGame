@@ -1936,7 +1936,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1273310824}
+    m_SelectOnUp: {fileID: 438542342}
     m_SelectOnDown: {fileID: 744668086}
     m_SelectOnLeft: {fileID: 282275627}
     m_SelectOnRight: {fileID: 786088538}

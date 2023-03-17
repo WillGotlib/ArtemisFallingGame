@@ -21,7 +21,7 @@ public class PlayerManagerUI : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        print("Starting");
+        //print("Starting");
         // Instantiate(PlayerPrefab);
         // OnPlayerJoined(); // Call this once
     }
