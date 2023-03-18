@@ -6,8 +6,8 @@ using TMPro;
 
 public class MatchMenuSelector : MonoBehaviour
 {
-    [SerializeField] private MatchMenu matchMenu;
-    [SerializeField] private MidMatchMenu midMatchMenu;
+    [SerializeField] private MatchSetupMenu matchMenu;
+    // [SerializeField] private MidMatchMenu midMatchMenu;
     
     public int buttonOptionNumber;
     public int playerNumber; // -1 is not associated with a player
@@ -17,13 +17,9 @@ public class MatchMenuSelector : MonoBehaviour
     
     public void ChooseMap() {
         print(buttonOptionNumber.ToString());
-        if (midMatchMenu == null) {
-            matchMenu.ChooseLevel(buttonOptionNumber);
-            GetComponent<Button>().FindSelectable(new Vector3(1,0,0)).Select();
-            GetComponent<Button>().interactable = false;
-        } else {
-            midMatchMenu.ChooseLevel(buttonOptionNumber);
-        }
+        matchMenu.ChooseLevel(buttonOptionNumber);
+        GetComponent<Button>().FindSelectable(new Vector3(1,0,0)).Select();
+        GetComponent<Button>().interactable = false;
     }
 
     public void NextColor() {

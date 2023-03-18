@@ -5,15 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class MatchMenu : MonoBehaviour
+public class MatchMenu : MatchSetupMenu
 {    
-    public int selectedLevel;
+    // public int selectedLevel;
 
+    [Header("Starting Match Menu")]
     [SerializeField] GameObject buttonSetParent;
     [SerializeField] GameObject[] playerOptionsParents;
     [SerializeField] GameObject[] robots;
-    int m_Index;
-    public MatchDataScriptable mds;
 
     void Start() {
         //Fetch the Dropdown GameObject the script is attached to
@@ -51,14 +50,14 @@ public class MatchMenu : MonoBehaviour
         }
     }
 
-    public void ColourUpdate(int player) {
+    public override void ColourUpdate(int player) {
         int playerIndex = mds.playerColourSchemes[player];
         var colourizer = robots[player].GetComponent<PlayerColourizer>();
         colourizer.PrimaryColour = mds.primaryColours[playerIndex];
         colourizer.SecondaryColour = mds.accentColours[playerIndex];
     }
     
-    public void ChooseLevel(int levelNumber) {
+    public override void ChooseLevel(int levelNumber) {
         selectedLevel = levelNumber;
         mds.levelIdx = levelNumber;
         print("Selected " + levelNumber);
@@ -72,7 +71,7 @@ public class MatchMenu : MonoBehaviour
         }
     }
 
-    public void PlayGame() {
+    public override void PlayGame() {
         if (PausedMenu.isPaused == true) {
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
