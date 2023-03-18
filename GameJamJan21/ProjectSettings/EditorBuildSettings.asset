@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MidMatchMenu.unity
     guid: 2451cc4a147c6db408fddc8f14ff2a3c
   - enabled: 1
+    path: Assets/Scenes/VictoryMenu.unity
+    guid: 1a5544502e14f2a4097a4e9c729429c1
+  - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: dcccdb809c398a64fa4f203534e90c68
   m_configObjects: {}

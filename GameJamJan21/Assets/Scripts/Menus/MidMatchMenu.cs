@@ -10,7 +10,6 @@ public class MidMatchMenu : MatchSetupMenu
     [Header("Mid-Match Menu")]
     // These fields COULD be abstracted to the SetupMenu class
     [SerializeField] GameObject buttonSetParent;
-    [SerializeField] GameObject[] robots; // for colourization
 
     [SerializeField] RawImage[] robotCams;
 
@@ -21,8 +20,8 @@ public class MidMatchMenu : MatchSetupMenu
     int m_Index;
 
     public void Start() {
-        p1WinText.text = ""+ mds.p1Wins;
-        p2WinText.text = ""+ mds.p2Wins;
+        p1WinText.text = ""+ mds.playerWins[0];
+        p2WinText.text = ""+ mds.playerWins[1];
         currentWinnerText.text = $"PLAYER {mds.lastWinner} WINS!";
         for (int i = 0; i < mds.numPlayers; i++) {
             if (i == mds.lastWinner) robotCams[i].color = Color.white;
@@ -41,24 +40,10 @@ public class MidMatchMenu : MatchSetupMenu
         }
         mds.levelIdx = 0;
 
-        // Copied code from MatchMenu. Should be abstracted.
-        for (int i = 0; i < mds.numPlayers; i++) { // Two for the players, two for the options (color and secondary type)
-            ColourUpdate(i);
-        }
-    }
-
-    // This should really only be executed once on this menu per player,
-    // upon load to make sure the robots look right.
-    public override void ColourUpdate(int playerNumber) {
-        int playerIndex = mds.playerColourSchemes[playerNumber];
-            var colourizer = robots[playerNumber].GetComponent<PlayerColourizer>();
-            colourizer.PrimaryColour = mds.primaryColours[playerIndex];
-            colourizer.SecondaryColour = mds.accentColours[playerIndex];
-            colourizer.initialColourize();
+        initialColors();
     }
 
     public override void ChooseLevel(int levelNumber) {
-        selectedLevel = levelNumber;
         mds.levelIdx = levelNumber;
         print("Selected " + levelNumber);
 
@@ -76,7 +61,6 @@ public class MidMatchMenu : MatchSetupMenu
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
-
         SceneManager.LoadScene("Gameplay");
     }
 }

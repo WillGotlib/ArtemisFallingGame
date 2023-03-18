@@ -2,17 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     public TMP_Text version;
-    public MatchDataScriptable matchDataScriptable;
+    public MatchDataScriptable mds;
 
     public void Start()
     {
         ResetLanding();
         version.text = Application.version;
+    }
+
+    [SerializeField] GameObject PreMatchMenu;
+    [SerializeField] Button PreMatchButton;
+
+
+    public void Awake() {
+        if (mds.skipMainMenu) {
+            mds.skipMainMenu = false;
+            PreMatchButton.onClick.Invoke();
+        }
     }
 
     public void PlayGame() {

@@ -7,12 +7,9 @@ using TMPro;
 
 public class MatchMenu : MatchSetupMenu
 {    
-    // public int selectedLevel;
-
     [Header("Starting Match Menu")]
     [SerializeField] GameObject buttonSetParent;
     [SerializeField] GameObject[] playerOptionsParents;
-    [SerializeField] GameObject[] robots;
 
     void Start() {
         //Fetch the Dropdown GameObject the script is attached to
@@ -41,24 +38,11 @@ public class MatchMenu : MatchSetupMenu
             optionsButtons[1].gameObject.GetComponentInChildren<TMP_Text>().text = 
                 mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label;
             print(mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label);
-            
-            int playerIndex = mds.playerColourSchemes[i];
-            var colourizer = robots[i].GetComponent<PlayerColourizer>();
-            colourizer.PrimaryColour = mds.primaryColours[playerIndex];
-            colourizer.SecondaryColour = mds.accentColours[playerIndex];
-            colourizer.initialColourize();
         }
-    }
-
-    public override void ColourUpdate(int player) {
-        int playerIndex = mds.playerColourSchemes[player];
-        var colourizer = robots[player].GetComponent<PlayerColourizer>();
-        colourizer.PrimaryColour = mds.primaryColours[playerIndex];
-        colourizer.SecondaryColour = mds.accentColours[playerIndex];
+        initialColors();
     }
     
     public override void ChooseLevel(int levelNumber) {
-        selectedLevel = levelNumber;
         mds.levelIdx = levelNumber;
         print("Selected " + levelNumber);
 

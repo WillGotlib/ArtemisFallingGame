@@ -10,8 +10,7 @@ public class MatchDataScriptable : ScriptableObject
     public int levelIdx;
     public int numGames;
     [SerializeField] public GameObject[] levels = {};
-    public int p1Wins;
-    public int p2Wins;
+    public int[] playerWins;
     public int lastWinner;
 
     [Header("Colours")]
@@ -23,6 +22,8 @@ public class MatchDataScriptable : ScriptableObject
 
     public GameObject[] secondaryTypes;
     public int[] playerSecondaries;
+
+    public bool skipMainMenu = false;
     
 
 }
