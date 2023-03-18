@@ -3170,7 +3170,10 @@ MonoBehaviour:
   - {fileID: 922777796}
   - {fileID: 265764908}
   seriesStatsRoot: {fileID: 565277980}
-  scores: []
+  scores:
+  - {fileID: 1439122345}
+  - {fileID: 2088258456}
+  currentWinnerText: {fileID: 1610411750}
 --- !u!1 &1101910093
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,12 +7,13 @@ public class VictoryMenu : MatchSetupMenu
     // Here the winner will be index 0 in robots (and in scores).
     // The loser(s) will be at index >= 1.
     [SerializeField] GameObject seriesStatsRoot;
-    TMP_Text[] scores; 
+    [SerializeField] TMP_Text[] scores; 
+    [SerializeField] TMP_Text currentWinnerText;
 
     // Start is called before the first frame update
     void Start()
     {
-        scores = new TMP_Text[mds.numPlayers];
+        currentWinnerText.text = $"PLAYER {mds.lastWinner} WINS!";
         // Correctly colouring the robots
         int j = 1;
         for (int i = 0; i < mds.numPlayers; i++) {
