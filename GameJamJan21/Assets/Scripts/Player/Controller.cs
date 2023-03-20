@@ -207,6 +207,15 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public void OnPrimaryFireCharge()
+    {
+        if (!currentlyDead && weapon != null && weapon.activeSelf)
+        {
+            weapon.GetComponent<GunController>().ApplyChargeSizeMultiplier();
+            weapon.GetComponent<GunController>().PrimaryFire();
+        }
+    }
+
     public void OnSecondaryFire()
     {
         if (!currentlyDead && weapon != null && weapon.activeSelf)

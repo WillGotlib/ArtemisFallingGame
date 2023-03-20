@@ -69,7 +69,16 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""id"": ""4665af22-391b-42ae-8aa8-2c5b25efb779"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Tap(duration=1.5,pressPoint=0.5)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrimaryFireCharge"",
+                    ""type"": ""Button"",
+                    ""id"": ""f07058ed-4f52-4473-a9ec-bc87f5fe4ed3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=1.6)"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -531,6 +540,39 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                     ""action"": ""EnterMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b73de3ef-1847-4738-b96e-a46f9763d885"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad2"",
+                    ""action"": ""PrimaryFireCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7eb651b-924f-4bb8-95a1-cce1bea61dc9"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""P1Keyboard"",
+                    ""action"": ""PrimaryFireCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""279ba734-9200-4ff8-8cf3-769d26260d6b"",
+                    ""path"": ""<Keyboard>/backslash"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""P2Keyboard"",
+                    ""action"": ""PrimaryFireCharge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -756,6 +798,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         m_Player_SwitchCamera = m_Player.FindAction("SwitchCamera", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_PrimaryFire = m_Player.FindAction("PrimaryFire", throwIfNotFound: true);
+        m_Player_PrimaryFireCharge = m_Player.FindAction("PrimaryFireCharge", throwIfNotFound: true);
         m_Player_SecondaryFire = m_Player.FindAction("SecondaryFire", throwIfNotFound: true);
         m_Player_EnterMenu = m_Player.FindAction("EnterMenu", throwIfNotFound: true);
         // UI
@@ -827,6 +870,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SwitchCamera;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_PrimaryFire;
+    private readonly InputAction m_Player_PrimaryFireCharge;
     private readonly InputAction m_Player_SecondaryFire;
     private readonly InputAction m_Player_EnterMenu;
     public struct PlayerActions
@@ -838,6 +882,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         public InputAction @SwitchCamera => m_Wrapper.m_Player_SwitchCamera;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @PrimaryFire => m_Wrapper.m_Player_PrimaryFire;
+        public InputAction @PrimaryFireCharge => m_Wrapper.m_Player_PrimaryFireCharge;
         public InputAction @SecondaryFire => m_Wrapper.m_Player_SecondaryFire;
         public InputAction @EnterMenu => m_Wrapper.m_Player_EnterMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -864,6 +909,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @PrimaryFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryFire;
                 @PrimaryFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryFire;
                 @PrimaryFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryFire;
+                @PrimaryFireCharge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryFireCharge;
+                @PrimaryFireCharge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryFireCharge;
+                @PrimaryFireCharge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPrimaryFireCharge;
                 @SecondaryFire.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
                 @SecondaryFire.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
                 @SecondaryFire.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryFire;
@@ -889,6 +937,9 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
                 @PrimaryFire.started += instance.OnPrimaryFire;
                 @PrimaryFire.performed += instance.OnPrimaryFire;
                 @PrimaryFire.canceled += instance.OnPrimaryFire;
+                @PrimaryFireCharge.started += instance.OnPrimaryFireCharge;
+                @PrimaryFireCharge.performed += instance.OnPrimaryFireCharge;
+                @PrimaryFireCharge.canceled += instance.OnPrimaryFireCharge;
                 @SecondaryFire.started += instance.OnSecondaryFire;
                 @SecondaryFire.performed += instance.OnSecondaryFire;
                 @SecondaryFire.canceled += instance.OnSecondaryFire;
@@ -982,6 +1033,7 @@ public partial class @InputMaster : IInputActionCollection2, IDisposable
         void OnSwitchCamera(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnPrimaryFire(InputAction.CallbackContext context);
+        void OnPrimaryFireCharge(InputAction.CallbackContext context);
         void OnSecondaryFire(InputAction.CallbackContext context);
         void OnEnterMenu(InputAction.CallbackContext context);
     }

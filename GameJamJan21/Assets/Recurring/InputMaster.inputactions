@@ -47,7 +47,16 @@
                     "id": "4665af22-391b-42ae-8aa8-2c5b25efb779",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Tap(duration=1.5,pressPoint=0.5)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrimaryFireCharge",
+                    "type": "Button",
+                    "id": "f07058ed-4f52-4473-a9ec-bc87f5fe4ed3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold(duration=1.6)",
                     "initialStateCheck": false
                 },
                 {
@@ -507,6 +516,39 @@
                     "processors": "",
                     "groups": "Gamepad2;P1Keyboard;P2Keyboard",
                     "action": "EnterMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b73de3ef-1847-4738-b96e-a46f9763d885",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad2",
+                    "action": "PrimaryFireCharge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7eb651b-924f-4bb8-95a1-cce1bea61dc9",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "P1Keyboard",
+                    "action": "PrimaryFireCharge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "279ba734-9200-4ff8-8cf3-769d26260d6b",
+                    "path": "<Keyboard>/backslash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "P2Keyboard",
+                    "action": "PrimaryFireCharge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

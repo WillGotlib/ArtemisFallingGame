@@ -491,6 +491,7 @@ MonoBehaviour:
   sizeMultiplier: 1
   sizeIncrements: 0.06
   sizeRecovery: 0.001
+  chargeBonus: 1.5
   animationController: {fileID: 2263409211759763732}
   owner: {fileID: 0}
 --- !u!114 &-4194139606902899362
