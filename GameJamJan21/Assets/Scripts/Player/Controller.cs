@@ -6,6 +6,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem.Interactions;
 
 
 public class Controller : MonoBehaviour
@@ -199,11 +200,14 @@ public class Controller : MonoBehaviour
         UpdateLookDirection();
     }
 
-    public void OnPrimaryFire()
+    public void OnPrimaryFire(InputAction.CallbackContext value)
     {
-        if (!currentlyDead && weapon != null && weapon.activeSelf)
-        {
-            weapon.GetComponent<GunController>().PrimaryFire();
+        //context? Define InputAction var?
+        if (value.interaction is TapInteraction) {
+            if (!currentlyDead && weapon != null && weapon.activeSelf)
+            {
+                weapon.GetComponent<GunController>().PrimaryFire();
+            }
         }
     }
 
