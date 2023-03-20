@@ -196,14 +196,20 @@ public class Controller : MonoBehaviour
         UpdateLookDirection();
     }
 
-    public void OnPrimaryFire(InputAction.CallbackContext value)
+    public void OnPrimaryFire()
     {
-        //context? Define InputAction var?
-        if (value.interaction is TapInteraction) {
-            if (!currentlyDead && weapon != null && weapon.activeSelf)
-            {
-                weapon.GetComponent<GunController>().PrimaryFire();
-            }
+        if (!currentlyDead && weapon != null && weapon.activeSelf)
+        {
+            weapon.GetComponent<GunController>().PrimaryFire();
+        }
+    }
+
+    public void OnPrimaryFireCharge()
+    {
+        if (!currentlyDead && weapon != null && weapon.activeSelf)
+        {
+            weapon.GetComponent<GunController>().ApplyChargeSizeMultiplier();
+            weapon.GetComponent<GunController>().PrimaryFire();
         }
     }
 

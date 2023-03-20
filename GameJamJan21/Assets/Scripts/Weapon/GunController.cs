@@ -31,6 +31,10 @@ public class GunController : MonoBehaviour
     [SerializeField] private float sizeIncrements = 0.1f;
     [SerializeField] private float sizeRecovery = 0.001f;
     private float currentSizeMultiplier;
+    private float oldSizeMultiplier;
+    private bool charged = false;
+
+    [SerializeField] private float chargeBonus = 5f;
 
     [Header("Object values")] public Animator animationController;
     public Controller owner;
@@ -82,15 +86,22 @@ public class GunController : MonoBehaviour
     }
 
     void DecreaseBulletSize() {
+        var minimumSize = 0.1f;
         currentSizeMultiplier -= sizeIncrements;
         if(currentSizeMultiplier <= 0) {
-            currentSizeMultiplier = 0.1f;
+            currentSizeMultiplier = minimumSize;
         }
     }
 
     void IncreaseBulletSize() {
         if (currentSizeMultiplier < sizeMultiplier)
             currentSizeMultiplier += sizeRecovery;
+    }
+
+    public void ApplyChargeSizeMultiplier() {
+        oldSizeMultiplier = currentSizeMultiplier;
+        currentSizeMultiplier = sizeMultiplier * chargeBonus;
+        charged = true;
     }
 
     void DecreaseCooldownMultiplier() {
@@ -148,6 +159,10 @@ public class GunController : MonoBehaviour
             bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
             primaryOnCooldown = true;
             DecreaseBulletSize();
+            if (charged) {
+                currentSizeMultiplier = oldSizeMultiplier;
+                charged = !charged;
+            }
         } else {
             Debug.Log("Bullet would appear inside an object!");
         }
