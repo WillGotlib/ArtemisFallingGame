@@ -12,7 +12,6 @@ public class MatchDataScriptable : ScriptableObject
     [SerializeField] public GameObject[] levels = {};
     public int p1Wins;
     public int p2Wins;
-    public int lastWinner;
 
     [Header("Colours")]
     [Tooltip("Lists have to be the same length")]

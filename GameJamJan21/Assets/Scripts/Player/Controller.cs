@@ -153,11 +153,7 @@ public class Controller : MonoBehaviour
 
     public void OnMovement(InputValue value)
     {
-        // Vector3 temp = value.Get<Vector3>();
-        // if (temp.magnitude > 0) print("3d vector input: " + temp);
-        Vector2 temp2 = value.Get<Vector2>();
-        if (temp2.magnitude > 0) print("2d vector input: " + temp2);
-        moveDirection = new Vector3(temp2.x, 0, temp2.y);
+        moveDirection = value.Get<Vector3>();
     }
 
     public void OnSwitchCamera()

@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
     private PowerupManager powerUpManager;
 
     [Header("If you were expecting to see a list of levels here,\ncheck Recurring/MatchData\n")]
-    [SerializeField] private MatchDataScriptable mds;
+    [SerializeField] private MatchDataScriptable matchDataScriptable;
     private GameObject[] levels = {};
     
     public void MakeLevel()
@@ -60,10 +60,10 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
-        levels = mds.levels;
+        levels = matchDataScriptable.levels;
         powerUpManager = FindObjectOfType<PowerupManager>();
         levelsAmount = levels.Length;
-        selectedLevel = mds.levelIdx;
+        selectedLevel = matchDataScriptable.levelIdx;
         MakeLevel();
     }
     
@@ -75,25 +75,23 @@ public class LevelManager : MonoBehaviour
 
     public void EndLevel(int playerNumber) {
         if (playerNumber == 0) {
-            mds.p1Wins += 1;
+            matchDataScriptable.p1Wins += 1;
         } else {
-            mds.p2Wins += 1;
+            matchDataScriptable.p2Wins += 1;
         }
-        mds.lastWinner = playerNumber;
-        int threshold = mds.numGames / 2 + 1;
-        if (mds.p1Wins < threshold && mds.p2Wins < threshold) {
+        if (matchDataScriptable.p1Wins < matchDataScriptable.numGames / 2 + 1 &&
+                matchDataScriptable.p2Wins < matchDataScriptable.numGames / 2 + 1)
+        {
             SceneManager.LoadScene("MidMatchMenu");
         } else {
-            SceneManager.LoadScene("VictoryMenu");
-            // TODO: Add these to the Victory Menu return to menu button.
-            // ResetData();
-            // SceneManager.LoadScene("Menu2");
+            ResetData();
+            SceneManager.LoadScene("Menu2");
         }
     }
 
     private void ResetData() {
-        mds.p1Wins = 0;
-        mds.p2Wins = 0;
-        mds.levelIdx = 0;
+        matchDataScriptable.p1Wins = 0;
+        matchDataScriptable.p2Wins = 0;
+        matchDataScriptable.levelIdx = 0;
     }
 }
