@@ -36,7 +36,7 @@ func init() {
 
 	log = logrus.New()
 	multiLogger = log.WithField("mode", "multi server")
-	//log.Level = logrus.DebugLevel
+	log.Level = logrus.DebugLevel
 }
 
 func main() {

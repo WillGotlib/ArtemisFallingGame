@@ -5,11 +5,14 @@ import (
 	pb "artemisFallingServer/proto"
 	"github.com/gorilla/websocket"
 	"github.com/pion/webrtc/v3"
+	"github.com/sirupsen/logrus"
 	"google.golang.org/protobuf/proto"
 )
 
 var (
 	IceConfig webrtc.Configuration
+
+	webRTClog *logrus.Entry
 )
 
 func init() {
@@ -20,11 +23,15 @@ func init() {
 			},
 		},
 	}
+
+	webRTClog = log.WithField("mode", "webrtc")
 }
 
 func connectServer(client *backend.Client, ws *websocket.Conn) error {
+	clientLog := webRTClog.WithField("client", client.Id)
 	peerConnection, err := webrtc.NewPeerConnection(IceConfig)
 	if err != nil {
+		clientLog.Error(clientLog)
 		return err
 	}
 	client.WRTC = peerConnection
@@ -46,7 +53,7 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 		}
 		d, err := proto.Marshal(&pb.Trickle{Message: &pb.Trickle_Candidate{Candidate: resp}})
 		if err != nil {
-			log.Errorf("Error while marshaling message: %s", err.Error())
+			clientLog.Errorf("Error while marshaling message: %s", err.Error())
 			return
 		}
 		if err = ws.WriteMessage(websocket.BinaryMessage, d); err != nil {
@@ -55,10 +62,16 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 	})
 
 	peerConnection.OnConnectionStateChange(func(state webrtc.PeerConnectionState) {
-		log.Debug("state is now ", state)
+		clientLog.Debug("state is now ", state)
 
 		if state == webrtc.PeerConnectionStateConnected {
+			clientLog.Debug("client now active")
 			client.Active = true
+
+			err = ws.Close()
+			if err != nil {
+				clientLog.Error()
+			}
 		}
 
 		if state == webrtc.PeerConnectionStateFailed || state == webrtc.PeerConnectionStateDisconnected || state == webrtc.PeerConnectionStateClosed { // remove even a temp disconnected client
@@ -68,13 +81,14 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 
 	peerConnection.OnDataChannel(func(d *webrtc.DataChannel) {
 		d.OnOpen(func() {
+			clientLog.Debugf("got datachannel: %s", d.Label())
 			switch d.Label() {
 			case "priority":
 				client.PriorityChannel = d
 			case "fast":
 				client.FastChannel = d
 			default:
-				log.Debug("unknown datachannel type", d.Label())
+				clientLog.Info("unknown datachannel type", d.Label())
 			}
 		})
 
@@ -85,11 +99,13 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 		// Read each inbound WebSocket Message
 		_, msg, err := ws.ReadMessage()
 		if e, ok := err.(*websocket.CloseError); ok {
-			log.Debug(e)
+			clientLog.Debug(e)
 			return nil
 		} else if err != nil {
+			clientLog.Error(err)
 			return err
 		}
+		clientLog.Debugf("got message: %s", msg)
 
 		var data = new(pb.Trickle)
 		err = proto.Unmarshal(msg, data)
@@ -124,7 +140,7 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 			}}}
 			d, err := proto.Marshal(resp)
 			if err != nil {
-				log.Errorf("Error while marshaling message: %s", err.Error())
+				clientLog.Errorf("Error while marshaling message: %s", err.Error())
 				return err
 			}
 
@@ -148,7 +164,7 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 				return err
 			}
 		default:
-			log.Error("Unknown message", msg)
+			clientLog.Error("Unknown message", msg)
 			return nil
 		}
 	}
