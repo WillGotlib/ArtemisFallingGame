@@ -19,8 +19,8 @@ MonoBehaviour:
   - {fileID: 8804078544648102232, guid: bee05a9ff03524ba697b338eb4a11afe, type: 3}
   - {fileID: 8804078544648102232, guid: d12e17ee50f58ef4db46cbba110a777e, type: 3}
   - {fileID: 8804078544648102232, guid: 857ae5ce289abbf4c852cf8339bedf0e, type: 3}
-  p1Wins: 0
-  p2Wins: 0
+  playerWins: 0000000000000000
+  lastWinner: 0
   primaryColours:
   - {r: 0.2894028, g: 0.4339623, b: 0.16990031, a: 0}
   - {r: 0.9150943, g: 0.34618747, b: 0.12517802, a: 0}
@@ -37,3 +37,4 @@ MonoBehaviour:
   - {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
   - {fileID: 2160589781498056887, guid: b7577be1fd91c4a7a9fab71345e58277, type: 3}
   playerSecondaries: 0000000000000000
+  skipMainMenu: 0

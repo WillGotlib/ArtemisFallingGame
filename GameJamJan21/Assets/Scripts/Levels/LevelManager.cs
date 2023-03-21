@@ -74,26 +74,15 @@ public class LevelManager : MonoBehaviour
     }
 
     public void EndLevel(int playerNumber) {
-        if (playerNumber == 0) {
-            mds.p1Wins += 1;
-        } else {
-            mds.p2Wins += 1;
-        }
+        mds.playerWins[playerNumber]++;
         mds.lastWinner = playerNumber;
         int threshold = mds.numGames / 2 + 1;
-        if (mds.p1Wins < threshold && mds.p2Wins < threshold) {
+        if (mds.playerWins[0] < threshold && mds.playerWins[1] < threshold) {
             SceneManager.LoadScene("MidMatchMenu");
         } else {
             SceneManager.LoadScene("VictoryMenu");
-            // TODO: Add these to the Victory Menu return to menu button.
-            // ResetData();
-            // SceneManager.LoadScene("Menu2");
         }
     }
 
-    private void ResetData() {
-        mds.p1Wins = 0;
-        mds.p2Wins = 0;
-        mds.levelIdx = 0;
-    }
+    
 }

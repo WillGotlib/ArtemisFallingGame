@@ -101,29 +101,9 @@ public class StartGame : MonoBehaviour
         }
         else {
             print("PLAYER " + playerNumber + " IS OUT!");
-            levelManager.EndLevel(playerNumber);
+            int winner = 0;
+            if (playerNumber == winner) winner = 1;
+            levelManager.EndLevel(winner);
         }
     }
-
-    // void CreatePhysicsScene()
-    // {
-    //     if (!_simulatorScene.isLoaded)
-    //     {
-    //         CreateSceneParameters parameters = new CreateSceneParameters(LocalPhysicsMode.Physics3D);
-    //         _simulatorScene = SceneManager.CreateScene("Trajectory", parameters);
-    //         _physicsScene = _simulatorScene.GetPhysicsScene();
-    //     }
-
-    //     foreach (var sim in GameObject.FindGameObjectsWithTag("SIMULATION"))
-    //         Destroy(sim);
-
-    //     foreach (Transform obj in levelManager.GetObstacles()) {
-    //         var ghostObj = Instantiate(obj.gameObject, obj.position, obj.rotation);
-    //         ghostObj.GetComponent<Renderer>().enabled = false;
-    //         var obj_scale = obj.gameObject.transform.lossyScale;
-    //         ghostObj.transform.localScale = obj_scale;
-    //         ghostObj.tag = "SIMULATION";
-    //         SceneManager.MoveGameObjectToScene(ghostObj, _simulatorScene);
-    //     }
-    // }
 }
