@@ -6,16 +6,20 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/pion/webrtc/v3"
 	"github.com/sirupsen/logrus"
+	"github.com/snaka/whatsmyip/lib/whatsmyip"
 	"google.golang.org/protobuf/proto"
 )
 
 var (
 	IceConfig webrtc.Configuration
+	webrtcApi *webrtc.API
 
 	webRTClog *logrus.Entry
 )
 
 func init() {
+	webRTClog = log.WithField("mode", "webrtc")
+
 	IceConfig = webrtc.Configuration{
 		ICEServers: []webrtc.ICEServer{
 			{
@@ -23,13 +27,30 @@ func init() {
 			},
 		},
 	}
+}
 
-	webRTClog = log.WithField("mode", "webrtc")
+func SetupWRTCEngine() {
+	publicIp, err := whatsmyip.DiscoverPublicIPSync()
+	if err != nil {
+		log.WithError(err).Error("cant get public ip")
+		return
+	}
+	log.Infof("Public ip is \"%s\"", publicIp)
+
+	s := webrtc.SettingEngine{}
+	s.SetNAT1To1IPs([]string{publicIp}, webrtc.ICECandidateTypeHost)
+	err = s.SetEphemeralUDPPortRange(52000, 52100)
+	if err != nil {
+		webRTClog.WithError(err).Error("cant set port range limit")
+		return
+	}
+
+	webrtcApi = webrtc.NewAPI(webrtc.WithSettingEngine(s))
 }
 
 func connectServer(client *backend.Client, ws *websocket.Conn) error {
 	clientLog := webRTClog.WithField("client", client.Id)
-	peerConnection, err := webrtc.NewPeerConnection(IceConfig)
+	peerConnection, err := webrtcApi.NewPeerConnection(IceConfig)
 	if err != nil {
 		clientLog.Error(clientLog)
 		return err
@@ -67,11 +88,6 @@ func connectServer(client *backend.Client, ws *websocket.Conn) error {
 		if state == webrtc.PeerConnectionStateConnected {
 			clientLog.Debug("client now active")
 			client.Active = true
-
-			err = ws.Close()
-			if err != nil {
-				clientLog.Error()
-			}
 		}
 
 		if state == webrtc.PeerConnectionStateFailed || state == webrtc.PeerConnectionStateDisconnected || state == webrtc.PeerConnectionStateClosed { // remove even a temp disconnected client

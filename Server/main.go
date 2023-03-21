@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/labstack/echo/v4/middleware"
 	"math/rand"
 	"net/http"
 	"os"
@@ -13,6 +12,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/sirupsen/logrus"
 )
 
@@ -40,6 +40,8 @@ func init() {
 }
 
 func main() {
+	SetupWRTCEngine()
+
 	e := echo.New()
 	e.HideBanner = true
 	echo.NotFoundHandler = func(c echo.Context) error {
