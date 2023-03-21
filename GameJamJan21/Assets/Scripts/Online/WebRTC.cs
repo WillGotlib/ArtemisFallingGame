@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
 using protoBuff;
@@ -113,22 +112,22 @@ namespace Online
         public Promise Connect(string token)
         {
             var promise = new Promise();
-            var wsWrtc = new GameObject("ws rtc Connector").AddComponent<WS_WRTC>();
-            wsWrtc.SetPeer(_connection);
-            wsWrtc.Connect(token).Then(() =>
+            var wWrtc = new GameObject("WRTC Connector").AddComponent<WRTCConnector>();
+            wWrtc.Connect(token, _connection).Then(() =>
             {
                 Alive = true;
                 promise.Resolve();
-            }).Catch(promise.Reject).Finally(wsWrtc.Destroy);
+            }).Catch(promise.Reject).Finally(wWrtc.Destroy);
             return promise;
         }
 
         public void Disconnect()
         {
-            if (_connection.ConnectionState != RTCPeerConnectionState.Connected)return;
+            if (_connection.ConnectionState != RTCPeerConnectionState.Connected) return;
             _connection.Close();
             _fastOpen = false;
             _priorityOpen = false;
+            _connection = null;
             Alive = false;
         }
 
@@ -160,13 +159,5 @@ namespace Online
 
             return new Request { Requests = { newReq } };
         }
-
-        /*
-        public void OnClose(DelegateOnClose onClose)
-        {
-            //_fastChannel.OnClose = onClose;
-            _priorityChannel.OnClose = onClose;
-        }
-    */
     }
 }

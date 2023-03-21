@@ -93,12 +93,14 @@ public class ServerPicker : MonoBehaviour
     private void Disconnected()
     {
         Debug.LogWarning("disconnected");
+        Connection.Disconnect();
         SceneManager.LoadScene("ServerSelector", LoadSceneMode.Single);
     }
     
     public void UpdateServer()
     {
         serverChooser.SetActive(false);
+        Connection.Disconnect();
         Address.ChangeAddress(serverAddr.text);
         Connection.IsGameServer().Then(b =>
         {

@@ -85,21 +85,12 @@ func connectServerEcho(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusUnauthorized, "token in use")
 	}
 
-	ws, err := upgrader.Upgrade(c.Response(), c.Request(), nil)
-	if err != nil {
-		return err
-	}
-
 	//todo make a timeout
-	err = connectServer(client, ws)
+	err = connectServer(client, c)
 	if err != nil {
 		server.removeClient(client.Id, "failed to connect")
 		log.WithField("websocket", c.Path()).Debug(err)
 		return err
-	}
-	err = ws.Close()
-	if err != nil {
-		log.Debug(err)
 	}
 
 	if cancelTimeout, ok := server.gameTimeouts[client.Session.GameId]; ok {

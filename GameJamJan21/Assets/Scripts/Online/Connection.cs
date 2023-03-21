@@ -1,3 +1,4 @@
+using Google.Protobuf;
 using Google.Protobuf.Collections;
 using protoBuff;
 using Proyecto26;
@@ -165,7 +166,7 @@ namespace Online
                         Uri = Address.GetUri($"/connect/{session}").ToString(),
                         Retries = 0,
                         DefaultContentType = false,
-                        ParseResponseBody = false
+                        ParseResponseBody = false,
                     })
                 .Then(r =>
                 {
