@@ -146,8 +146,6 @@ public class WSTest : MonoBehaviour
         if (state == RTCIceConnectionState.Connected || state == RTCIceConnectionState.Completed)
         {
             Debug.Log("connected, closing websocket");
-            websocket.Close();
-            websocket = null;
         }
     }
 
