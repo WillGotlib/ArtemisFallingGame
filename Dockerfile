@@ -2,7 +2,7 @@
 FROM --platform=linux/amd64 namely/protoc as PROTOCOMPILER
 WORKDIR /compile
 
-COPY Protobuf/ .
+COPY Protobuf/Online .
 RUN protoc --go-grpc_out=./ --go_out=./ ./*.proto && echo "built go protos"
 
 
