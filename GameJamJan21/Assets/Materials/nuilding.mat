@@ -105,11 +105,11 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _amount: 20.58
+    - _amount: 20.9
     - _brightness: 50
-    - _height: 2.8
+    - _height: 30
     - _hight: 0.37
-    - _width: 2.41
+    - _width: 20
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
