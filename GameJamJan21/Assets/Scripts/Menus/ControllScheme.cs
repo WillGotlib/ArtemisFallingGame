@@ -1,0 +1,66 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class ControllScheme : MonoBehaviour
+{
+    [SerializeField] private int _currentController;
+
+    [SerializeField] private GameObject[] controllers;
+
+    [Header("Labels")] public Transform shoot;
+    [SerializeField] private Transform secondary;
+    [SerializeField] private Transform dash;
+    [SerializeField] private Transform move;
+    [SerializeField] private Transform look;
+
+    [Header("positions")] public Vector2[] shootPositions;
+    [SerializeField] private Vector2[] secondaryPositions;
+    [SerializeField] private Vector2[] dashPositions;
+    [SerializeField] private Vector2[] movePositions;
+    [SerializeField] private Vector2[] lookPositions;
+
+    public int CurrentController
+    {
+        private get => _currentController;
+        set
+        {
+            _currentController = value;
+            if (_currentController < 0) _currentController = 0;
+            if (_currentController >= controllers.Length) _currentController = controllers.Length - 1;
+
+            UpdatePositions();
+        }
+    }
+
+    private void Awake()
+    {
+        var len = controllers.Length;
+        if (shootPositions.Length != len && secondaryPositions.Length != len && dashPositions.Length != len &&
+            movePositions.Length != len && lookPositions.Length != len)
+        {
+            throw new Exception("all lists must be the same length");
+        }
+
+        if (_currentController < 0) _currentController = 0;
+        if (_currentController >= len) _currentController = len - 1;
+
+        UpdatePositions();
+    }
+
+    private void UpdatePositions()
+    {
+        for (var i = 0; i < controllers.Length; i++)
+        {
+            controllers[i].SetActive(i == _currentController);
+        }
+
+        secondary.localPosition = secondaryPositions[_currentController];
+        shoot.localPosition = shootPositions[_currentController];
+        dash.localPosition = dashPositions[_currentController];
+        move.localPosition = movePositions[_currentController];
+        look.localPosition = lookPositions[_currentController];
+    }
+}
