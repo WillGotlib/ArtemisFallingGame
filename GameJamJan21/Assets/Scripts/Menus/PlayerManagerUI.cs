@@ -40,6 +40,7 @@ public class PlayerManagerUI : MonoBehaviour
         // Make sure that if there's a cursor beside a Selectable, it's selected
         for (int i = 0; i < playerCursors.Count; i++) {
             print("CURRENTLY SELECTED: " + playerES[i].currentSelectedGameObject);
+            // playerCursors[i].MoveToTarget(playerES[i].currentSelectedGameObject, new Vector3(0, 0, 0));
             // playerES[i].currentSelectedGameObject.GetComponent<Selectable>().Select();
             
             // GameObject curr = playerCursors[i].currentlySelected;
