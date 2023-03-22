@@ -105,7 +105,7 @@ Material:
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
-    - _amount: 20.7
+    - _amount: 0.5
     - _brightness: 50
     - _height: 2.8
     - _hight: 0.37
