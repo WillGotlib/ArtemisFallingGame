@@ -26,12 +26,14 @@ public class MenuCursor : MonoBehaviour
         Vector2 vec = value.Get<Vector2>();
         if (!currentlyMoving && vec.magnitude > 0.5) {
             currentlyMoving = true;
-            print("Navigated" + value.Get<Vector2>());
-            refresh(vec);
+            print("Navigated" + value.Get<Vector2>() + " to " + _eventSys.currentSelectedGameObject);
+            // print(GetComponent<PlayerInput>().currentControlScheme);
+            StartCoroutine(waitTest(vec));
+            // manager.SelectionCheck();
         } else if (vec.magnitude < 0.05) {
             currentlyMoving = false;
         }
-        // Action();
+        
     }
 
     public void OnEnter() {
@@ -43,6 +45,7 @@ public class MenuCursor : MonoBehaviour
     public void refresh(Vector2 dir) {
         GameObject newTarget = _eventSys.currentSelectedGameObject;
         if (newTarget != currentlySelected) {
+            print("Cursor Target didn't match: cursor had " + currentlySelected + ", ES had " + newTarget);
             currentlySelected = newTarget;
             MoveToTarget(newTarget, new Vector3(-110f, -5f, 0));
         } else if (dir.magnitude != 0) {
@@ -52,20 +55,30 @@ public class MenuCursor : MonoBehaviour
             if (currSelectable) {
                 _eventSys.SetSelectedGameObject(currSelectable.gameObject);
                 currentlySelected = currSelectable.gameObject;
-                MoveToTarget(currentlySelected, new Vector3(-110f, -5f, 0));
                 print("Had to manually make the move. Now on " + currSelectable);
             }
+            MoveToTarget(currentlySelected, new Vector3(-110f, -5f, 0));
         }
         // Do a check for if there are any hovering cursors with a non-selected button
         // manager.SelectionCheck();
+    }
+
+    IEnumerator waitTest(Vector2 vec)
+    {
+        // Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        yield return new WaitForSeconds(0.05f);
+        manager.SelectionCheck();
+        refresh(vec);
+        // print("\tTerminating coroutine");
     }
 
     public void MoveToTarget(GameObject newTarget, Vector3 offset) {
         transform.position = newTarget.transform.position + offset;;
         // RectTransform x = newTarget.GetComponent<RectTransform>();
         // transform.position = transform.position 
-        print(newTarget);
-        manager.SelectionCheck();
+        print("New target: " + newTarget);
+        // StartCoroutine(waitTest());
+        // manager.SelectionCheck();
     }
 
     public void LoadCursorImage(int playerNumber) {

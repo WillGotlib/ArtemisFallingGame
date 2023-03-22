@@ -134,11 +134,11 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     }
 
     void EncounterPlayer(Collision collision) {
-            Controller player = collision.gameObject.GetComponent<Controller>();
-            float damage = GetBulletDamage();
-            _analytics.DamageEvent(collision.gameObject,gameObject);
-            player.InflictDamage(damage);
-            FinishShot(BulletDamageMultiplier()!=0);
+        Controller player = collision.gameObject.GetComponent<Controller>();
+        float damage = GetBulletDamage();
+        _analytics.DamageEvent(collision.gameObject,gameObject);
+        player.InflictDamage(damage);
+        FinishShot(BulletDamageMultiplier()!=0);
     }
 
     void ricochetBullet(Collision collision) {
@@ -164,6 +164,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
                 // _dynamics.BulletGrow(ratio);
                 //print("Bounced: with ratio " + ratio + " --> bounced = " + bounced + ", maxBounces = " + maxBounces);
                 _dynamics.BulletBrighten(ratio);
+                transform.localScale += new Vector3(0.2f,0.2f,0.2f);
             }
 
             if (bounced > maxBounces) {
