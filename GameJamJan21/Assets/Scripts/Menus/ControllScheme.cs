@@ -10,13 +10,15 @@ public class ControllScheme : MonoBehaviour
 
     [SerializeField] private GameObject[] controllers;
 
-    [Header("Labels")] public Transform shoot;
+    [Header("Labels")]
+    [SerializeField] private Transform shoot;
     [SerializeField] private Transform secondary;
     [SerializeField] private Transform dash;
     [SerializeField] private Transform move;
     [SerializeField] private Transform look;
 
-    [Header("positions")] public Vector2[] shootPositions;
+    [Header("positions")]
+    [SerializeField] private Vector2[] shootPositions;
     [SerializeField] private Vector2[] secondaryPositions;
     [SerializeField] private Vector2[] dashPositions;
     [SerializeField] private Vector2[] movePositions;
