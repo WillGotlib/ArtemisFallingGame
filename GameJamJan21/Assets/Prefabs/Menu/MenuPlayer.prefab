@@ -106,9 +106,9 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: ca47009f-82e3-4653-b62a-fdd470f85ad9
     m_ActionName: UI/Pause[/DualShock4GamepadHID/start,/DualSenseGamepadHID/start]
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
+  m_DefaultActionMap: 7b2ebfc9-4c11-4836-b33b-7b01c86a3f1f
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &4872507841284969245
@@ -124,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
+  currentlySelected: {fileID: 0}
   cursorImages:
   - {fileID: 21300000, guid: b32a93b9252404c099427a18b15bd24a, type: 3}
   - {fileID: 21300000, guid: 93884ad480c5d45c5b3d0b58f6b92b87, type: 3}

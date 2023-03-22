@@ -156,7 +156,7 @@ public class Controller : MonoBehaviour
         // if (temp.magnitude > 0) print("3d vector input: " + temp);
         Vector2 temp2 = value.Get<Vector2>();
         if (temp2.magnitude > 0) print("2d vector input: " + temp2);
-        moveDirection = new Vector3(temp2.x, 0, temp2.y);
+        moveDirection = new Vector3(-temp2.y, 0, temp2.x);
     }
 
     public void OnSwitchCamera()
