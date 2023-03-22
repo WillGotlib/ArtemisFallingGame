@@ -10053,6 +10053,7 @@ MonoBehaviour:
   - {fileID: 709711292}
   canvas: {fileID: 888204324}
   PlayerPrefab: {fileID: 1727477523385163371, guid: 034345ef0ba0040169140eda45249778, type: 3}
+  controlScheme: {fileID: 1165488532}
 --- !u!114 &1824809442
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class PlayerManagerUI : MonoBehaviour
     [SerializeField] GameObject[] DefaultFirstSelected;
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject PlayerPrefab;
+    [SerializeField] ControllScheme controlScheme;
 
     public static int currNumPlayers = 0;
 
@@ -65,7 +66,9 @@ public class PlayerManagerUI : MonoBehaviour
             GameObject menuPlayer = Instantiate(PlayerPrefab, canvas.transform);
         }
         go.name = "MenuP" + currNumPlayers;
-        go.GetComponent<PlayerInput>().uiInputModule = GetComponent<InputSystemUIInputModule>();
+        var playerinput = go.GetComponent<PlayerInput>();
+        playerinput.uiInputModule = GetComponent<InputSystemUIInputModule>();
+        controlScheme.CurrentController = playerinput.currentControlScheme == "P1Keyboard" ? 1 : 0;
         
         MenuCursor x = go.GetComponent<MenuCursor>();
         x.playerNumber = currNumPlayers - 1;
