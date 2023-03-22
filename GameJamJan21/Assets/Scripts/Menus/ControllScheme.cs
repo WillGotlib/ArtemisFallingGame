@@ -13,6 +13,7 @@ public class ControllScheme : MonoBehaviour
     [SerializeField] private Transform dash;
     [SerializeField] private Transform move;
     [SerializeField] private Transform look;
+    [SerializeField] private Transform pause;
 
     [Header("positions")]
     [SerializeField] private Vector2[] shootPositions;
@@ -20,6 +21,7 @@ public class ControllScheme : MonoBehaviour
     [SerializeField] private Vector2[] dashPositions;
     [SerializeField] private Vector2[] movePositions;
     [SerializeField] private Vector2[] lookPositions;
+    [SerializeField] private Vector2[] pausePositions;
 
     public int CurrentController
     {
@@ -36,11 +38,13 @@ public class ControllScheme : MonoBehaviour
     private void Awake()
     {
         var len = controllers.Length;
-        if (shootPositions.Length != len && secondaryPositions.Length != len && dashPositions.Length != len &&
-            movePositions.Length != len && lookPositions.Length != len)
+#if UnityEditor
+        if (shootPositions.Length != len || secondaryPositions.Length != len || dashPositions.Length != len ||
+            movePositions.Length != len || lookPositions.Length != len || pausePositions.Length!=len)
         {
             throw new Exception("all lists must be the same length");
         }
+#endif
 
         if (_currentController < 0) _currentController = 0;
         if (_currentController >= len) _currentController = len - 1;
@@ -60,5 +64,6 @@ public class ControllScheme : MonoBehaviour
         dash.localPosition = dashPositions[_currentController];
         move.localPosition = movePositions[_currentController];
         look.localPosition = lookPositions[_currentController];
+        pause.localPosition = pausePositions[_currentController];
     }
 }
