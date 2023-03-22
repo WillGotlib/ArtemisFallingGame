@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3711969974758792037}
   - component: {fileID: 4465862857271666977}
   - component: {fileID: 2949105067546056676}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1403498211974229698}
   - component: {fileID: 2183946792979613707}
   - component: {fileID: 4687765614106511264}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2263409211759763732}
   - component: {fileID: 593774860855797260}
   - component: {fileID: 2201518497677743149}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 4571156384410838390}
   - component: {fileID: 6394891221196149491}
   - component: {fileID: 2302017257162163298}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -346,7 +346,7 @@ GameObject:
   - component: {fileID: 2742785817772201875}
   - component: {fileID: 5884430515768438769}
   - component: {fileID: 2397334938060646104}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -445,7 +445,7 @@ GameObject:
   - component: {fileID: -4194139606902899362}
   - component: {fileID: -6796899859370855475}
   - component: {fileID: 437457601922070733}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Gun
   m_TagString: Transient
   m_Icon: {fileID: 0}
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127c56d91805d92428788e9bf88625a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reflections: 3
+  reflections: 4
   _line: {fileID: -6796899859370855475}
   _lineLength: 10
   _traceLength: 20
@@ -649,7 +649,7 @@ GameObject:
   - component: {fileID: 1674997982099762830}
   - component: {fileID: 8939154117664532575}
   - component: {fileID: 1030371000230116014}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

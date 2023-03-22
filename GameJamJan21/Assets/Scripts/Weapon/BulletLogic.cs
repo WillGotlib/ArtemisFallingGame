@@ -16,7 +16,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     private Rigidbody _rb;
     public GameObject bullet;
-    public int maxBounces = 3;
+    public int maxBounces = 4;
     [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
     [SerializeField] public float cooldown;
