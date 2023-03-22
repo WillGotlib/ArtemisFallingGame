@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ControllScheme : MonoBehaviour
@@ -26,7 +23,6 @@ public class ControllScheme : MonoBehaviour
 
     public int CurrentController
     {
-        private get => _currentController;
         set
         {
             _currentController = value;
