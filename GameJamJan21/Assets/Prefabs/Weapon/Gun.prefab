@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127c56d91805d92428788e9bf88625a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reflections: 4
+  reflections: 3
   _line: {fileID: -6796899859370855475}
   _lineLength: 10
   _traceLength: 20

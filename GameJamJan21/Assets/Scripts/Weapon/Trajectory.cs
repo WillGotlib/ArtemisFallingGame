@@ -21,6 +21,7 @@ public class Trajectory : MonoBehaviour
     private void Start() {
         gunController = gameObject.GetComponent<GunController>();
         player = gunController.owner;
+        _line.sortingOrder = 1;
     }
 
 
