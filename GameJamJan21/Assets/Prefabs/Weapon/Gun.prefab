@@ -505,9 +505,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127c56d91805d92428788e9bf88625a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  reflections: 4
+  reflections: 3
   _line: {fileID: -6796899859370855475}
-  _lineLength: 8
+  _lineLength: 10
   _traceLength: 20
 --- !u!120 &-6796899859370855475
 LineRenderer:
@@ -566,6 +566,24 @@ LineRenderer:
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.8163665
+        value: 0.17582552
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
