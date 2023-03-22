@@ -26,7 +26,19 @@ public class Trajectory : MonoBehaviour
 
 
     private void Update() {
-        ray = new Ray(transform.position, transform.forward);
+        Debug.Log(player.lookDirection.x);
+        if (0.80f <= Mathf.Abs(player.lookDirection.x) && Mathf.Abs(player.lookDirection.x) <= 1.00f) {
+            ray = new Ray(transform.position, transform.forward);
+        }
+        else if (0.00f <= Mathf.Abs(player.lookDirection.x) && Mathf.Abs(player.lookDirection.x) <= 0.20f) {
+            ray = new Ray(transform.position, transform.forward);
+        }
+        else if (-0.2f > player.lookDirection.x && player.lookDirection.x > -0.8f) {
+            ray = new Ray(transform.position + transform.right * -0.2f, transform.forward);
+        }
+        else {
+            ray = new Ray(transform.position + transform.right * 0.2f, transform.forward);
+        }
 
         _line.positionCount = 1;
         _line.SetPosition(0, transform.position);
