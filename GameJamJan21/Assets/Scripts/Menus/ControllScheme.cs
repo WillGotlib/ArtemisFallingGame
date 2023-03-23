@@ -23,28 +23,40 @@ public class ControllScheme : MonoBehaviour
     [SerializeField] private Vector2[] lookPositions;
     [SerializeField] private Vector2[] pausePositions;
 
-    public int CurrentController
+    public void SetBindings(int layoutIndex)
     {
-        set
-        {
-            _currentController = value;
-            if (_currentController < 0) _currentController = 0;
-            if (_currentController >= controllers.Length) _currentController = controllers.Length - 1;
+        _currentController = layoutIndex;
+        if (_currentController < 0) _currentController = 0;
+        if (_currentController >= controllers.Length) _currentController = controllers.Length - 1;
 
-            UpdatePositions();
+        UpdatePositions();
+    }
+    
+    public void SetBindings(string layoutName)
+    {
+        switch (layoutName)
+        {
+            case "P1Keyboard":
+                SetBindings(1);
+                break;
+            case "P2Keyboard":
+                SetBindings(2);
+                break;
+            case "Gamepad2":
+            default:
+                SetBindings(0);
+                break;
         }
     }
 
     private void Awake()
     {
         var len = controllers.Length;
-#if UnityEditor
         if (shootPositions.Length != len || secondaryPositions.Length != len || dashPositions.Length != len ||
             movePositions.Length != len || lookPositions.Length != len || pausePositions.Length!=len)
         {
             throw new Exception("all lists must be the same length");
         }
-#endif
 
         if (_currentController < 0) _currentController = 0;
         if (_currentController >= len) _currentController = len - 1;

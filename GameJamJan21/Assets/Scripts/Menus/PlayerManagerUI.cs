@@ -67,9 +67,9 @@ public class PlayerManagerUI : MonoBehaviour
             GameObject menuPlayer = Instantiate(PlayerPrefab, canvas.transform);
         }
         go.name = "MenuP" + currNumPlayers;
-        var playerinput = go.GetComponent<PlayerInput>();
-        playerinput.uiInputModule = GetComponent<InputSystemUIInputModule>();
-        controlScheme.CurrentController = playerinput.currentControlScheme == "P1Keyboard" ? 1 : 0;
+        var playerInput = go.GetComponent<PlayerInput>();
+        playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
+        controlScheme.SetBindings(playerInput.currentControlScheme);
         
         MenuCursor x = go.GetComponent<MenuCursor>();
         x.playerNumber = currNumPlayers - 1;
