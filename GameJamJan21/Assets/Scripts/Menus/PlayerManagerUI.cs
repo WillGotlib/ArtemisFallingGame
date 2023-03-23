@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -12,7 +10,7 @@ public class PlayerManagerUI : MonoBehaviour
     [SerializeField] GameObject[] DefaultFirstSelected;
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject PlayerPrefab;
-    [SerializeField] ControllScheme controlScheme;
+    [SerializeField] CurrentControlScheme controlScheme;
 
     public static int currNumPlayers = 0;
 
@@ -69,7 +67,7 @@ public class PlayerManagerUI : MonoBehaviour
         go.name = "MenuP" + currNumPlayers;
         var playerInput = go.GetComponent<PlayerInput>();
         playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
-        controlScheme.SetBindings(playerInput.currentControlScheme);
+        controlScheme.SetControlScheme(playerInput.currentControlScheme);
         
         MenuCursor x = go.GetComponent<MenuCursor>();
         x.playerNumber = currNumPlayers - 1;

@@ -981,7 +981,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchMenu: {fileID: 471334982}
-  midMatchMenu: {fileID: 0}
   buttonOptionNumber: 0
   playerNumber: 0
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
@@ -1204,7 +1203,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchMenu: {fileID: 471334982}
-  midMatchMenu: {fileID: 0}
   buttonOptionNumber: 1
   playerNumber: 1
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
@@ -1532,15 +1530,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73603f4c9bcdc4af6b1e2d603b0565ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedLevel: 0
+  mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
+  robots:
+  - {fileID: 595675880}
+  - {fileID: 1267917543}
   buttonSetParent: {fileID: 1900219115}
   playerOptionsParents:
   - {fileID: 2085247196}
   - {fileID: 280279037}
-  robots:
-  - {fileID: 595675880}
-  - {fileID: 1267917543}
-  mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
 --- !u!1 &481723157
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,7 +2142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchMenu: {fileID: 471334982}
-  midMatchMenu: {fileID: 0}
   buttonOptionNumber: 0
   playerNumber: -1
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
@@ -3093,7 +3089,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchMenu: {fileID: 471334982}
-  midMatchMenu: {fileID: 0}
   buttonOptionNumber: 1
   playerNumber: 1
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
@@ -5003,7 +4998,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchMenu: {fileID: 471334982}
-  midMatchMenu: {fileID: 0}
   buttonOptionNumber: 2
   playerNumber: -1
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
@@ -6582,7 +6576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchMenu: {fileID: 471334982}
-  midMatchMenu: {fileID: 0}
   buttonOptionNumber: 1
   playerNumber: -1
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
@@ -9086,6 +9079,7 @@ MonoBehaviour:
   - {fileID: 1659645804}
   canvas: {fileID: 888204324}
   PlayerPrefab: {fileID: 1230254774}
+  controlScheme: {fileID: 11400000, guid: 2acf5ab650eb3ec4fac7c1a8598e9e22, type: 2}
 --- !u!114 &1824809442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9465,7 +9459,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   matchMenu: {fileID: 471334982}
-  midMatchMenu: {fileID: 0}
   buttonOptionNumber: 0
   playerNumber: 0
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
@@ -10603,7 +10596,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: {fileID: 1902504653}
-  matchDataScriptable: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
+  mds: {fileID: 0}
+  PreMatchMenu: {fileID: 0}
+  PreMatchButton: {fileID: 0}
 --- !u!1 &2095133279
 GameObject:
   m_ObjectHideFlags: 0

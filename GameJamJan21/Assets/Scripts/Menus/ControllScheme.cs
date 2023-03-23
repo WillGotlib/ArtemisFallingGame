@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class ControllScheme : MonoBehaviour
 {
-    [SerializeField] private int _currentController;
+    [SerializeField] private CurrentControlScheme controlScheme;
 
+    [Tooltip("must be in the order of the enum")]
     [SerializeField] private GameObject[] controllers;
 
     [Header("Labels")]
@@ -23,32 +24,6 @@ public class ControllScheme : MonoBehaviour
     [SerializeField] private Vector2[] lookPositions;
     [SerializeField] private Vector2[] pausePositions;
 
-    public void SetBindings(int layoutIndex)
-    {
-        _currentController = layoutIndex;
-        if (_currentController < 0) _currentController = 0;
-        if (_currentController >= controllers.Length) _currentController = controllers.Length - 1;
-
-        UpdatePositions();
-    }
-    
-    public void SetBindings(string layoutName)
-    {
-        switch (layoutName)
-        {
-            case "P1Keyboard":
-                SetBindings(1);
-                break;
-            case "P2Keyboard":
-                SetBindings(2);
-                break;
-            case "Gamepad2":
-            default:
-                SetBindings(0);
-                break;
-        }
-    }
-
     private void Awake()
     {
         var len = controllers.Length;
@@ -58,24 +33,27 @@ public class ControllScheme : MonoBehaviour
             throw new Exception("all lists must be the same length");
         }
 
-        if (_currentController < 0) _currentController = 0;
-        if (_currentController >= len) _currentController = len - 1;
-
-        UpdatePositions();
+        controlScheme.RegisterListener(gameObject);
+        OnSchemeChange(controlScheme.ControlScheme);
     }
 
-    private void UpdatePositions()
+    public void OnSchemeChange(ControlSchemes currentController)
+    {
+        UpdatePositions((int)currentController);
+    }
+
+    private void UpdatePositions(int currentController)
     {
         for (var i = 0; i < controllers.Length; i++)
         {
-            controllers[i].SetActive(i == _currentController);
+            controllers[i].SetActive(i == currentController);
         }
 
-        secondary.localPosition = secondaryPositions[_currentController];
-        shoot.localPosition = shootPositions[_currentController];
-        dash.localPosition = dashPositions[_currentController];
-        move.localPosition = movePositions[_currentController];
-        look.localPosition = lookPositions[_currentController];
-        pause.localPosition = pausePositions[_currentController];
+        secondary.localPosition = secondaryPositions[currentController];
+        shoot.localPosition = shootPositions[currentController];
+        dash.localPosition = dashPositions[currentController];
+        move.localPosition = movePositions[currentController];
+        look.localPosition = lookPositions[currentController];
+        pause.localPosition = pausePositions[currentController];
     }
 }
