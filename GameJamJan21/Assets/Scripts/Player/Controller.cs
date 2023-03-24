@@ -28,8 +28,8 @@ public class Controller : MonoBehaviour
     public float playerHealth { get; private set; } = GlobalStats.baseHealth;
 
     float turnSmoothVelocity;
-    Vector3 moveDirection;
-    Vector3 lookDirection;
+    public Vector3 moveDirection;
+    public Vector3 lookDirection;
     new Camera camera;
     bool followingCamera = true;
     public PausedMenu menu;
@@ -197,6 +197,7 @@ public class Controller : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateLookDirection();
+        Debug.Log(lookDirection.x);
     }
 
     public void OnPrimaryFire()

@@ -18,6 +18,8 @@ public class ZoomCamera : MonoBehaviour
     [SerializeField] private Camera main_camera;
     [SerializeField] private float trigger_movement = 0.85f;
     [SerializeField] private float max_zoom = 0.7f;
+    private float scalingFactor;
+    private bool isCameraSet = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,8 +38,24 @@ public class ZoomCamera : MonoBehaviour
             else if (player_two == null) {
                 player_two = player;
                 orig_dist = Vector3.Distance(player_one.transform.position, player_two.transform.position);
-                Debug.Log(orig_dist);
+                // Debug.Log(orig_dist);
             }
+        }
+        
+        // Temporary hardcoding'
+        if (isCameraSet == false) {
+            Vector3 criteriaDistOne = new Vector3(-0.44446f, 1, -3.68f);
+            Vector3 criteriaDistTwo = new Vector3(-0.41558f, 1, 2.92f);
+            float distScaling = Vector3.Distance(criteriaDistOne, criteriaDistTwo);
+            scalingFactor = orig_dist / distScaling;
+            orig_camera_size = orig_camera_size * scalingFactor * 0.7f;
+            if (orig_camera_size > 10) {
+                orig_camera_size = 10f;
+            }
+            else if (orig_camera_size < 4) {
+                orig_camera_size = 4f;
+            }
+            isCameraSet = true;
         }
 
         AdjustCamera(player_one, player_two);
