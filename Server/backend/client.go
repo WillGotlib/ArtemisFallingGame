@@ -42,22 +42,22 @@ func (c *Client) Done(message string) {
 	if c.PriorityChannel != nil && c.PriorityChannel.ReadyState() == webrtc.DataChannelStateOpen {
 		err := c.PriorityChannel.SendText(message)
 		if err != nil {
-			log.Debug(err)
+			log.WithError(err).Error("error sending close message to priority channel")
 		}
 		err = c.PriorityChannel.Close()
 		if err != nil {
-			log.Error(err)
+			log.WithError(err).Error("error closing priority channel")
 		}
 		err = c.FastChannel.Close()
 		if err != nil {
-			log.Error(err)
+			log.WithError(err).Error("error closing fast channel")
 		}
 		c.PriorityChannel = nil
 		c.FastChannel = nil
 	}
 
 	if err := c.WRTC.Close(); err != nil {
-		log.Debug("failed to close peer connection")
+		log.WithError(err).Debug("failed to close peer connection")
 	}
 	c.WRTC = nil
 }

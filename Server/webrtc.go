@@ -61,7 +61,7 @@ func connectServer(client *backend.Client, c echo.Context) error {
 
 	peerConnection, err := webrtcApi.NewPeerConnection(IceConfig)
 	if err != nil {
-		clientLog.Error(clientLog)
+		clientLog.WithError(err).Error("cant make new peer connection")
 		return err
 	}
 	client.WRTC = peerConnection
@@ -130,7 +130,7 @@ func connectServer(client *backend.Client, c echo.Context) error {
 	}
 	d, err := proto.Marshal(resp)
 	if err != nil {
-		clientLog.Errorf("Error while marshaling message: %s", err.Error())
+		clientLog.WithError(err).Error("Error while marshaling session description")
 		return err
 	}
 

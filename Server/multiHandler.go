@@ -170,7 +170,7 @@ func (s *GameServer) removeSession(id string, immediate bool) {
 	s.sessionsMu.Lock()
 	s.clientsMu.Lock()
 	for _, c := range s.sessionUsers[id] {
-		go c.Done("session has shut down")
+		c.Done("session has shut down")
 		delete(s.clients, c.Id)
 	}
 	delete(s.sessionUsers, id)
@@ -260,7 +260,7 @@ func (s *GameServer) broadcast(resp *backend.Action) {
 	m := &pb.Response{Responses: group.GetActions()}
 	message, err := proto.Marshal(m)
 	if err != nil {
-		multiLogger.Errorf("send failed: %s", err.Error())
+		multiLogger.WithError(err).Error("send sending message")
 		return
 	}
 
