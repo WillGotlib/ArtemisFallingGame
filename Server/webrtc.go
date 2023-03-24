@@ -38,7 +38,7 @@ func SetupWRTCEngine() {
 		log.WithError(err).Error("cant get public ip")
 		return
 	}
-	log.Infof("Public ip is \"%s\"", publicIp)
+	log.Infof("Public ip is '%s'", publicIp)
 
 	s := webrtc.SettingEngine{}
 	s.SetNAT1To1IPs([]string{publicIp}, webrtc.ICECandidateTypeHost)

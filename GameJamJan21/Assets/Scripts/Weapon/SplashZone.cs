@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Analytics;
+using Online;
 using UnityEngine;
 
 public class SplashZone : MonoBehaviour
@@ -25,6 +26,9 @@ public class SplashZone : MonoBehaviour
 
     private AudioSource _audioBullet;
     private AnalyticsManager _analytics;
+    
+    private NetworkManager _networkedManager;
+    private NetworkedSplashController _splashController;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +40,11 @@ public class SplashZone : MonoBehaviour
         _audioBullet = GetComponent<AudioSource>();
         _audioBullet.Play(0);
         _analytics = FindObjectOfType<AnalyticsManager>();
+        
+        _splashController = GetComponent<NetworkedSplashController>();
+        _networkedManager = FindObjectOfType<NetworkManager>();
+        if (_networkedManager && _splashController.controlled)
+            _networkedManager.RegisterObject(_splashController);
     }
 
     // Update is called once per frame
@@ -72,6 +81,7 @@ public class SplashZone : MonoBehaviour
         }
         else {
             Destroy(gameObject);
+            if (_networkedManager) _networkedManager.UnregisterObject(_splashController);
         }
     }
 

@@ -106,6 +106,7 @@ namespace Online
         /// be careful with this and dont have scripts register on wake since it can lead to recursion 
         public void RegisterObject(NetworkedElement obj)
         {
+            if (obj == null) throw new Exception("can't register null");
             var id = Guid.NewGuid().ToByteArray();
             var uid = ByteString.CopyFrom(id);
             _objects.Add(uid, obj);
@@ -114,8 +115,9 @@ namespace Online
 
         public void UnregisterObject(NetworkedElement obj)
         {
+            if (obj == null) throw new Exception("can't unregister null");
             var id = ByteString.Empty;
-            foreach (var (uid, element) in _objects)
+            foreach (var (uid, element) in _objects) // can probably do binary search
             {
                 if (!element.Equals(obj)) continue;
                 id = uid;
@@ -228,7 +230,7 @@ namespace Online
 
         private void RemoveEntity(ByteString id)
         {
-            if (isControlled(id)) return;
+            if (isControlled(id) || !_objects.ContainsKey(id)) return;
             var obj = _objects[id];
             _objects.Remove(id);
             obj.Destroy();

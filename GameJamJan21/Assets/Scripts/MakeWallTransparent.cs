@@ -35,12 +35,12 @@ public class MakeWallTransparent : MonoBehaviour
         }
 
         // update objects that are blocking and showing
-        if (zoomCamera.is_zoomed == true) {
+        if (zoomCamera.is_zoomed && player_two) {
             Vector3 new_offset = offset;
             new_offset.x = offset.x - 0.5f;
             ManageBlockingView(player_one, player_two, new_offset);
         }
-        else {
+        else if (player_two) {
             ManageBlockingView(player_one, player_two, offset);
         }
         

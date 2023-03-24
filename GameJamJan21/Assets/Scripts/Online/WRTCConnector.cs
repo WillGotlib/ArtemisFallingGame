@@ -15,10 +15,13 @@ namespace Online
     {
         public Promise Connect(string token, RTCPeerConnection peer)
         {
+            DontDestroyOnLoad(gameObject);
+            
             _promise = new Promise();
             _token = token;
 
             SetPeer(peer);
+            Debug.Log(peer.IceConnectionState);
             
             return _promise;
         }
@@ -32,7 +35,7 @@ namespace Online
             _rtcPeer = peer;
             _rtcPeer.OnIceCandidate = OnIceCandidate;
             _rtcPeer.OnIceConnectionChange = OnIceConnectionChange;
-            _rtcPeer.OnNegotiationNeeded = ()=> StartCoroutine(NegotiatePeer());
+            _rtcPeer.OnNegotiationNeeded = ()=> StartCoroutine(NegotiatePeer()); //todo this sometimes does not trigger
         }
 
         private void OnIceCandidate(RTCIceCandidate ice)
@@ -53,6 +56,9 @@ namespace Online
                 Debug.Log("connected");
                 //_webSocket.Close();
                 _promise.Resolve();
+            } else if (state == RTCIceConnectionState.Failed)
+            {
+                _promise.Reject(new Exception("connection closed"));
             }
         }
 

@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MidMatchMenu.unity
     guid: 2451cc4a147c6db408fddc8f14ff2a3c
+  - enabled: 1
+    path: Assets/Scenes/LoadingScreen.unity
+    guid: e2c46f3f38332194e895dafd21d31fe8
   m_configObjects: {}

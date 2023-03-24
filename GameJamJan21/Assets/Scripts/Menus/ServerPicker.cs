@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Google.Protobuf.Collections;
 using Online;
 using TMPro;
@@ -20,6 +21,8 @@ public class ServerPicker : MonoBehaviour
     public GameObject serverChooser;
     public TMP_InputField serverAddr;
     public TMP_InputField sessionName;
+
+    private Coroutine _updateServers;
 
     private RepeatedField<Server> servers;
 
@@ -51,8 +54,16 @@ public class ServerPicker : MonoBehaviour
         joinButton.interactable = true;
     }
 
-    public static bool gameLoaded;
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != gameSceneName) return;
+                    
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        FindObjectOfType<StartGame>().StartMatch();
+    }
+
+    
     public void ConnectToSession()
     {
         var sessionID = sessionName.text;
@@ -63,30 +74,23 @@ public class ServerPicker : MonoBehaviour
         }
         joinButton.interactable = false;
 
-        gameLoaded = false;
 
         var networkManager = FindObjectOfType<NetworkManager>();
         networkManager.OnDisconnect(Disconnected); // todo fix
+
+        SceneManager.LoadScene("LoadingScreen", LoadSceneMode.Single);
         networkManager.Connect(sessionID)
             .Then(() =>
             {
                 SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single); //todo loading bar
-                
-                SceneManager.sceneLoaded += (scene, _) =>
-                {
-                    if (gameLoaded || scene.name != gameSceneName) return;
-                    gameLoaded = true;
-                    
-                    FindObjectOfType<StartGame>().StartMatch();
-                    FindObjectOfType<PausedMenu>().SwitchMenuState();
-                };
+                SceneManager.sceneLoaded += OnSceneLoaded;
             })
             .Catch(e =>
             {
                 Debug.LogError(e);
                 Disconnected(); // return to selector scene if load failed
-            })
-            .Finally(() => joinButton.interactable = true);
+            });
+        // .Finally(() => joinButton.interactable = true);
     }   
 
     private void Disconnected()
@@ -100,6 +104,9 @@ public class ServerPicker : MonoBehaviour
     {
         serverChooser.SetActive(false);
         Connection.Disconnect();
+        if (_updateServers != null)
+            StopCoroutine(_updateServers);
+        
         Address.ChangeAddress(serverAddr.text);
         Connection.IsGameServer().Then(b =>
         {
@@ -111,7 +118,7 @@ public class ServerPicker : MonoBehaviour
 
             serverChooser.SetActive(true);
             joinButton.interactable = true;
-            GetServers();
+            _updateServers = StartCoroutine(UpdateServerLoop());
         }).Catch(Debug.Log);
     }
 
@@ -145,6 +152,16 @@ public class ServerPicker : MonoBehaviour
                 script.selectFunction = UpdateSelection;
             }
         }).Catch(Debug.Log);
+    }
+
+    private IEnumerator UpdateServerLoop()
+    {
+        while (true)
+        {
+            Debug.Log("Updating server list");
+            GetServers();
+            yield return new WaitForSeconds(15);
+        }
     }
 
     private void UpdateSelection(string s)

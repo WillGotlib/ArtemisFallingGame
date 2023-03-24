@@ -91,10 +91,12 @@ namespace Online
         public static void Disconnect()
         {
             var conn = GetConnection();
-            if (!conn.RtcAlive()) return;
+            if (conn._rtcConnection!=null) // !conn.RtcAlive()
+            {
+                conn._rtcConnection.Disconnect();
+                conn._rtcConnection = null;
+            }
 
-            conn._rtcConnection.Disconnect();
-            conn._rtcConnection = null;
             _instance = null;
         }
 

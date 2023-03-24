@@ -30,17 +30,17 @@ public class ZoomCamera : MonoBehaviour
     {
         pos = transform.position;
         foreach (Transform player in startGame.transform) {
-            if (player_one == null) {
+            if (!player_one) {
                 player_one = player;
             }
-            else if (player_two == null) {
+            else if (!player_two) {
                 player_two = player;
                 orig_dist = Vector3.Distance(player_one.transform.position, player_two.transform.position);
                 Debug.Log(orig_dist);
             }
         }
-
-        AdjustCamera(player_one, player_two);
+        if (player_two) 
+            AdjustCamera(player_one, player_two);
     }
 
     private void AdjustCamera(Transform player_one, Transform player_two) {

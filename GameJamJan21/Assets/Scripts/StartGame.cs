@@ -60,6 +60,7 @@ public class StartGame : MonoBehaviour
 
         networkManager.PrepNewScene();
         networkManager.RegisterObject(o);
+        FindObjectOfType<PausedMenu>().ResumeGame();
     }
 
     private void StartLocalGame(GameObject[] spawnPoints)

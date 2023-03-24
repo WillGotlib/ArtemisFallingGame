@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 4213059346157768680}
   - component: {fileID: 7769586475236240067}
   - component: {fileID: 3251894738368888167}
+  - component: {fileID: -7156765127581516829}
   - component: {fileID: 5761309379727644029}
   - component: {fileID: 5381165715268956920}
   - component: {fileID: -2544521050228010822}
@@ -431,6 +432,20 @@ MonoBehaviour:
   trail: {fileID: 7718076483670826406}
   maxFlightTimeSeconds: 10
   ghostBounces: 3
+--- !u!114 &-7156765127581516829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165814152039018566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee62d8f2dca4155aff96f1053be7262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlled: 1
+  removeOnDisconnect: 0
 --- !u!108 &5761309379727644029
 Light:
   m_ObjectHideFlags: 0

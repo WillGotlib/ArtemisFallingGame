@@ -22,7 +22,9 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     public GameObject splashZone;
 
-    private Vector3 vel;
+    [NonSerialized] public Vector3 vel;
+    private Vector3 _velSpeed;
+    
     private Vector3 lookDirection;
 
     public float rotationSpeed = 0.3f;
@@ -32,6 +34,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     
     private NetworkManager _networkedManager;
     private NetworkedBulletController _networkedBullet;
+    private bool _networkRegistered;
 
     private bool _ricocheted=false;
 
@@ -51,14 +54,19 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     // Update is called once per frame
     void Update()
     {
-        // TODO: Look at this. Wasteful making this run every frame...
-        _rb.velocity = vel.normalized * _bulletSpeed;
+        _rb.velocity = _velSpeed;
+    }
+
+    public void UpdateVelocity(Vector3 velocity)
+    {
+        vel = velocity;
+        _velSpeed = vel.normalized * _bulletSpeed;
     }
 
     public void Fire(Vector3 direction, bool ghost)
     {
         _rb.velocity = direction.normalized * _bulletSpeed;
-        vel = _rb.velocity;
+        UpdateVelocity(_rb.velocity);
         isGhost = ghost;
         
         if (isGhost)
@@ -72,12 +80,15 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         trail.enabled = true;
         // Play sound
         _audioBullet = GetComponent<AudioSource>();
-        _audioBullet.Play(0);
+        if(_audioBullet) _audioBullet.Play(0);
         
         _networkedBullet = GetComponent<NetworkedBulletController>();
         _networkedManager = FindObjectOfType<NetworkManager>();
-        if (_networkedManager != null && _networkedBullet.controlled)
+        if (!_networkRegistered&&_networkedManager && _networkedBullet.controlled)
+        {
+            _networkRegistered = true;
             _networkedManager.RegisterObject(_networkedBullet);
+        }
     }
 
     private IEnumerator ExpirationTimer() {
@@ -124,7 +135,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
             // Destroy but keep velocity!
             Destroy(collision.gameObject);
-            _rb.velocity = vel;
+            _rb.velocity = _velSpeed;
     }
 
     void EncounterPlayer(Collision collision) {
@@ -138,7 +149,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     void ricochetBullet(Collision collision) {
             ContactPoint contact = collision.contacts[0];
             Vector3 oldvel = vel;
-            float speed = oldvel.magnitude;
 
             Vector3 reflectedVelo = Vector3.Reflect(oldvel.normalized, contact.normal);
             float rot = Mathf.Atan2(reflectedVelo.x, reflectedVelo.z) * Mathf.Rad2Deg;
@@ -147,7 +157,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             reflectedVelo.y = 0;
             // print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
             _rb.velocity = reflectedVelo.normalized * _bulletSpeed;
-            vel = _rb.velocity;
+            UpdateVelocity(_rb.velocity);
             // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 
             // add to bounces tally and maybe destroy
@@ -162,7 +172,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             }
     }
 
-    void finishShot(bool explode) {
+    void finishShot(bool explode) { //todo handle networked cases
         _rb.velocity = new Vector3(0,0,0);
         if (isGhost)
         {
