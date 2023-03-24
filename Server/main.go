@@ -65,7 +65,7 @@ func main() {
 	ConnectEndpoints(e)
 
 	rand.Seed(time.Now().Unix())
-	server := NewGameServer()
+	gameServer := NewGameServer()
 
 	go func() {
 		if err := e.Start(addr); err != nil && err != http.ErrServerClosed {
@@ -81,7 +81,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	server.Stop()
+	gameServer.Stop()
 	if err := e.Shutdown(ctx); err != nil {
 		e.Logger.Fatal(err)
 	}

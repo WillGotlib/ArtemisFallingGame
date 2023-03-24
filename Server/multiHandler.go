@@ -14,6 +14,8 @@ import (
 	"time"
 )
 
+//todo object pooling
+
 const (
 	EmptySessionTimeout = 10 * time.Second // 10 seconds should be plenty of time for someone to join
 	clientTimeout       = 30 * time.Second
@@ -54,15 +56,19 @@ func NewGameServer() *GameServer {
 }
 
 func (s *GameServer) Stop() {
+	wg := sync.WaitGroup{}
 	s.gamesMu.RLock()
+	wg.Add(len(s.games))
 	for id := range s.games {
 		multiLogger.Printf("Stopping \"%s\"\n", id)
-		s.gamesMu.RUnlock()
-		s.removeSession(id, true)
-		s.gamesMu.RLock()
+		go func(id string) {
+			s.removeSession(id, true)
+			wg.Done()
+		}(id)
 	}
 	s.gamesMu.RUnlock()
-	time.Sleep(500 * time.Millisecond)
+	wg.Wait()
+	time.Sleep(100 * time.Millisecond)
 	server = nil
 }
 
@@ -235,9 +241,7 @@ func (s *GameServer) watchTimeout() {
 			s.clientsMu.RLock()
 			for _, client := range s.clients {
 				if time.Since(client.LastMessage) > clientTimeout {
-					s.clientsMu.RUnlock()
-					s.removeClient(client.Id, "you have been timed out")
-					s.clientsMu.RLock()
+					go s.removeClient(client.Id, "you have been timed out")
 				}
 			}
 			s.clientsMu.RUnlock()
