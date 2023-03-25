@@ -20,7 +20,7 @@ public class NetworkedBulletController : NetworkedObject, NetworkedElement
             Y = _bulletLogic.vel.y,
             X = _bulletLogic.vel.x,
             Z = _bulletLogic.vel.z,
-        }.ToByteString().ToString();
+        }.ToByteString().ToBase64();
     }
 
     public override void Destroy()
@@ -39,7 +39,7 @@ public class NetworkedBulletController : NetworkedObject, NetworkedElement
         transform.position = position;
         transform.rotation = rotation;
         
-        var vel = Position.Parser.ParseFrom(Encoding.ASCII.GetBytes(data));
+        var vel = Position.Parser.ParseFrom(ByteString.FromBase64(data));
         _bulletLogic.UpdateVelocity(new Vector3 { x = vel.X, y = vel.Y, z = vel.Z });
     }
 }
