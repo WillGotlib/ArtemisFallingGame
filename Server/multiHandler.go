@@ -283,7 +283,7 @@ func (s *GameServer) broadcast(resp *backend.Action) {
 
 		if err := channel.Send(message); err != nil {
 			multiLogger.Printf("%s - broadcast error %v", id, err)
-			s.removeClient(currentClient.Id, "failed to broadcast message")
+			go s.removeClient(currentClient.Id, "failed to broadcast message")
 			continue
 		}
 	}
