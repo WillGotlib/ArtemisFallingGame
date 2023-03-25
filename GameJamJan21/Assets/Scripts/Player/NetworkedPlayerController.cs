@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class NetworkedPlayerController : NetworkedObject, NetworkedElement
 {
-    private NetworkedPlayerController() : base("PLAYER")
-    {
-    }
-
     public override string Data()
     {
         return "";

@@ -211,18 +211,6 @@ MonoBehaviour:
   trail: {fileID: 1364202883547966758}
   maxFlightTimeSeconds: 10
   ghostBounces: 3
---- !u!114 &2301455758190603568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9165814152039018566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad99cc572e824c818b1bf655396fbd0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1469619570440754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlled: 1
+  networkTypeId: BULLET
   removeOnDisconnect: 0
 --- !u!54 &7560826534295098678
 Rigidbody:
@@ -371,6 +360,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2301455758190603568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9165814152039018566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad99cc572e824c818b1bf655396fbd0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5314699478796746713
 PrefabInstance:
   m_ObjectHideFlags: 0

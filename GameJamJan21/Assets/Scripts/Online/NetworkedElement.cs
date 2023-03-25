@@ -1,6 +1,4 @@
-using Google.Protobuf;
 using UnityEngine;
-using protoBuff;
 
 namespace Online
 {

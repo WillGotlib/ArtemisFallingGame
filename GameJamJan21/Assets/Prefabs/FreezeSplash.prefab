@@ -47,6 +47,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Transparent
       objectReference: {fileID: 0}
+    - target: {fileID: 361174404572957724, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+      propertyPath: networkTypeId
+      value: FSPLASH
+      objectReference: {fileID: 0}
     - target: {fileID: 3552917965720065834, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

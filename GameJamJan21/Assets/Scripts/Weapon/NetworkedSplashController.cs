@@ -6,10 +6,6 @@ using UnityEngine;
 
 public class NetworkedSplashController : NetworkedObject, NetworkedElement
 {
-    private NetworkedSplashController() : base("SPLASH") //todo somehow handle splash variations without needing to make lots of scripts
-    {
-    }
-
     private SplashZone _splashZone;
     
     private void Awake()

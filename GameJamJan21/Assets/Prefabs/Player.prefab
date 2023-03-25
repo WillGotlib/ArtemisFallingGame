@@ -296,6 +296,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlled: 1
+  networkTypeId: PLAYER
   removeOnDisconnect: 1
 --- !u!114 &1574579996388501985
 MonoBehaviour:

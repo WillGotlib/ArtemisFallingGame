@@ -8,10 +8,6 @@ public class NetworkedBulletController : NetworkedObject, NetworkedElement
 {
     private BulletLogic _bulletLogic;
 
-    private NetworkedBulletController() : base("BULLET")
-    {
-    }
-
     private void Awake()
     {
         _bulletLogic = GetComponent<BulletLogic>();

@@ -18,6 +18,7 @@ namespace Online
             _factoryRotation = Helpers.ToQuaternion(entity.Rotation);
 
             var o = Instantiate(obj, _factoryPosition, _factoryRotation, parent);
+            o.GetComponent<NetworkedObject>().controlled = false;
             _factoryObject = o.GetComponent<NetworkedElement>();
             return _factoryObject;
         }

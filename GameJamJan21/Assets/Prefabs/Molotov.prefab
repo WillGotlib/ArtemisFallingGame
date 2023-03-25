@@ -441,10 +441,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 9165814152039018566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fee62d8f2dca4155aff96f1053be7262, type: 3}
+  m_Script: {fileID: 11500000, guid: 10e198aa972cf2e4da8552983c189042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   controlled: 1
+  networkTypeId: FIRE
   removeOnDisconnect: 0
 --- !u!108 &5761309379727644029
 Light:

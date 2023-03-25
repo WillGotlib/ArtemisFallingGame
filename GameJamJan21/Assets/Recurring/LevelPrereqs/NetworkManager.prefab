@@ -45,8 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnables:
-  - {fileID: 8711157573611507703, guid: 286e42c0222718749afea0c07f590a8a, type: 3}
   - {fileID: 8093326624263988052, guid: 3adb3d5b8487e5a4bbca8ca39ba51b8b, type: 3}
-  - {fileID: 6723918953661745904, guid: aac51635ede64074bb200f5cbf00c817, type: 3}
-  - {fileID: 6241819242857181936, guid: 3fa2f517f81b852499515906fd1ecfdc, type: 3}
-  updateFps: 30
+  - {fileID: 9165814152039018566, guid: 46b405b11a4104e4d94c322cc2ca5117, type: 3}
+  - {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+  - {fileID: 9165814152039018566, guid: b7577be1fd91c4a7a9fab71345e58277, type: 3}
+  - {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+  - {fileID: 6234232466112906086, guid: da5c5bc93ddf0ad4792869db5085d860, type: 3}
+  - {fileID: 6234232466112906086, guid: 89bdaff0bbe5148b8b09fbe8c91bd454, type: 3}
+  updateFps: 60
