@@ -7,8 +7,8 @@ public class PlayerColourizer : MonoBehaviour
     [SerializeField] private Material secondary;
     [SerializeField] private string colourAttribute = "_Colour";
 
-    private Color _primaryColour = Color.clear;
-    private Color _secondaryColour = Color.clear;
+    [SerializeField] private Color _primaryColour = Color.clear;
+    [SerializeField] private Color _secondaryColour = Color.clear;
 
     public Color PrimaryColour
     {
@@ -33,6 +33,13 @@ public class PlayerColourizer : MonoBehaviour
     private Material _primaryMat;
     private Material _secondaryMat;
     private int _colourAttributeId;
+    [SerializeField] private bool initOnAwake;
+
+    private void Awake()
+    {
+        if (initOnAwake)
+            initialColourize();
+    }
 
     public void initialColourize()
     {
