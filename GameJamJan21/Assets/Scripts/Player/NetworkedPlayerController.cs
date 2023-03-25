@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class NetworkedPlayerController : NetworkedObject, NetworkedElement
 {
+    private Controller _playerController;
+
+    private void Start()
+    {
+        _playerController = GetComponent<Controller>();
+    }
+    
     public override string Data()
     {
         return "";
@@ -23,12 +30,11 @@ public class NetworkedPlayerController : NetworkedObject, NetworkedElement
     private Vector3 targetPos;
     private float fraction;
     private float lerpSpeed;
-    private int fps;
 
     private void Awake()
     {
         var n = FindObjectOfType<NetworkManager>();
-        fps = n == null ? 1 : n.updateFps;
+        var fps = n == null ? 1 : n.updateFps;
         lerpSpeed = 1f / fps;
     }
 
@@ -37,7 +43,8 @@ public class NetworkedPlayerController : NetworkedObject, NetworkedElement
         startPos = transform.position;
         targetPos = position;
         fraction = 0;
-        transform.rotation = rotation;
+        
+        _playerController.lookDirection = rotation * Vector3.forward; //todo maybe use this for movement too
     }
 
     public void Update()
@@ -45,7 +52,7 @@ public class NetworkedPlayerController : NetworkedObject, NetworkedElement
         if (controlled) return;
         if (fraction > 1) return;
 
-        fraction += Time.deltaTime * lerpSpeed; //todo fix lerp function
-        transform.position = Vector3.Lerp(startPos, targetPos, fraction*fps);
+        fraction += Time.deltaTime / lerpSpeed;
+        transform.position = Vector3.Lerp(startPos, targetPos, fraction);
     }
 }
