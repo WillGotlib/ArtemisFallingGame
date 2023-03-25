@@ -132,7 +132,7 @@ namespace Online
 
         public void UnregisterObject(ByteString id)
         {
-            if (_objects.ContainsKey(id)) return;
+            if (!_objects.ContainsKey(id)) return;
             _objects[id].Destroy();
             _objects.Remove(id);
 
