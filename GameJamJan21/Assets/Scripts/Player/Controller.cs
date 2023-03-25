@@ -6,10 +6,7 @@ using Online;
 using Player;
 using UnityEngine;
 using UnityEngine.InputSystem;           
-using Object = UnityEngine.Object;
-using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
-
 
 public class Controller : MonoBehaviour
 {
@@ -80,18 +77,27 @@ public class Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (Input.devices.Count == 0) {
-            Input.SwitchCurrentControlScheme("P1Keyboard", Keyboard.current);
-        }
-        var unpaired = InputUser.GetUnpairedInputDevices();
-        var ipa = new InputMaster();
+        _networkedPlayer = GetComponent<NetworkedPlayerController>();
 
-        foreach (var devices in unpaired) {
-            var scheme = InputControlScheme.FindControlSchemeForDevice(devices, ipa.controlSchemes);
+        if (_networkedPlayer.controlled)
+        {
+            if (Input.devices.Count == 0)
+            {
+                Input.SwitchCurrentControlScheme("P1Keyboard", Keyboard.current);
+            }
 
-            if (scheme?.name == "Gamepad2") {
-                Input.SwitchCurrentControlScheme("Gamepad2", devices);
-                break;
+            var unpaired = InputUser.GetUnpairedInputDevices();
+            var ipa = new InputMaster();
+
+            foreach (var devices in unpaired)
+            {
+                var scheme = InputControlScheme.FindControlSchemeForDevice(devices, ipa.controlSchemes);
+
+                if (scheme?.name == "Gamepad2")
+                {
+                    Input.SwitchCurrentControlScheme("Gamepad2", devices);
+                    break;
+                }
             }
         }
 
@@ -100,19 +106,7 @@ public class Controller : MonoBehaviour
         
         _analyticsManager = FindObjectOfType<AnalyticsManager>();
         playerController = FindObjectOfType<StartGame>();
-        _networkedPlayer = GetComponent<NetworkedPlayerController>();
 
-        if (_networkedPlayer.controlled)
-        {
-            camera = GetComponentInChildren<Camera>();
-            cameraController = FindObjectOfType<CameraSwitch>();
-            if (camera == null)
-            {
-                camera = backupCamera.GetComponentInChildren<Camera>();
-                followingCamera = false;
-            }
-        }
-        
         camera = GetComponentInChildren<Camera>();
         _jetParticles = GetComponent<DashJets>();
         cameraController = FindObjectOfType<CameraSwitch>();
@@ -135,9 +129,6 @@ public class Controller : MonoBehaviour
         currentCooldown = 0;
         startMomentum = momentum;
         
-        if (_networkedPlayer != null && !_networkedPlayer.controlled)
-            GetComponent<PlayerInput>().enabled = false;
-
         _analyticsManager.HealthEvent(gameObject, playerHealth);
         _analyticsManager.StockUpdate(gameObject, Stock);
 

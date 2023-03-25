@@ -11,6 +11,8 @@ public class NetworkedBulletController : NetworkedObject, NetworkedElement
     private void Awake()
     {
         _bulletLogic = GetComponent<BulletLogic>();
+        if (!controlled)
+            _bulletLogic.Fire(Vector3.zero);
     }
 
     public override string Data()
@@ -36,7 +38,7 @@ public class NetworkedBulletController : NetworkedObject, NetworkedElement
 
     public override void HandleUpdate(Vector3 position, Quaternion rotation, string data)
     {
-        transform.position = position;
+        transform.position = position; // change only move if this is too far from intended location
         transform.rotation = rotation;
         
         var vel = Position.Parser.ParseFrom(ByteString.FromBase64(data));

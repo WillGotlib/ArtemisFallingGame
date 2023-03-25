@@ -156,7 +156,7 @@ public class GunController : MonoBehaviour
             bullet.transform.position = cur_pos;
             bullet.transform.rotation = this.transform.rotation;
             bullet.GetComponent<BulletLogic>().setShooter(owner);
-            bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
+            bullet.GetComponent<BulletLogic>().Fire(transform.forward * 2);
             primaryOnCooldown = true;
             DecreaseBulletSize();
             if (charged) {
@@ -177,7 +177,7 @@ public class GunController : MonoBehaviour
         grenade.transform.position = cur_pos;
         grenade.transform.rotation = this.transform.rotation;
         grenade.GetComponent<BulletLogic>().setShooter(owner);
-        grenade.GetComponent<BulletLogic>().Fire(this.transform.forward, false);
+        grenade.GetComponent<BulletLogic>().Fire(transform.forward);
         secondaryOnCooldown = true;
         return true;
     }

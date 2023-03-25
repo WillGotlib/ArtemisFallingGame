@@ -72,7 +72,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         _velSpeed = vel.normalized * _bulletSpeed;
     }
 
-    public void Fire(Vector3 direction, bool ghost)
+    public void Fire(Vector3 direction)
     {
         _rb.velocity = direction.normalized * (_bulletSpeed * GetBulletSpeedBonus());
         UpdateVelocity(_rb.velocity);
@@ -85,11 +85,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         
         _networkedBullet = GetComponent<NetworkedBulletController>();
         _networkedManager = FindObjectOfType<NetworkManager>();
-        if (!_networkRegistered&&_networkedManager && _networkedBullet.controlled)
-        {
-            _networkRegistered = true;
+        if (_networkedManager && _networkedBullet.controlled)
             _networkedManager.RegisterObject(_networkedBullet);
-        }
     }
 
     private IEnumerator ExpirationTimer() {
