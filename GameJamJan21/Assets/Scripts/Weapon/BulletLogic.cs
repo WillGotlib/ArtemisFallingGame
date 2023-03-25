@@ -165,6 +165,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
                 //print("Bounced: with ratio " + ratio + " --> bounced = " + bounced + ", maxBounces = " + maxBounces);
                 _dynamics.BulletBrighten(ratio);
                 transform.localScale += new Vector3(0.2f,0.2f,0.2f);
+                _rb.mass *= 1.2f;
             }
 
             if (bounced > maxBounces) {
