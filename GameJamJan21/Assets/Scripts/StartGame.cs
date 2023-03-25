@@ -30,8 +30,7 @@ public class StartGame : MonoBehaviour
     void Start()
     {
         if (primaryColours.Length != accentColours.Length) throw new Exception("colour lists must be the same length");
-        if (FindObjectOfType<NetworkManager>() == null) // have the network manager call this when the game starts
-            StartMatch();
+        StartMatch();
     }
     public void StartMatch()
     {
@@ -58,7 +57,7 @@ public class StartGame : MonoBehaviour
         var o = player.GetComponent<NetworkedPlayerController>();
         o.controlled = true;
 
-        networkManager.PrepNewScene();
+        networkManager.ActivateNetwork();
         networkManager.RegisterObject(o);
         FindObjectOfType<PausedMenu>().ResumeGame();
     }

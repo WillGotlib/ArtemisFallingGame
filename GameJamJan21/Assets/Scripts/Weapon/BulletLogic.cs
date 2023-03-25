@@ -127,6 +127,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         } else  {
             // Ricochet
             ricochetBullet(collision);
+            if (_networkedBullet.controlled)
+                _networkedManager.UpdateObject(_networkedBullet);
         }
     }
 
@@ -172,9 +174,9 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             }
     }
 
-    void finishShot(bool explode) { //todo handle networked cases
+    void finishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
-        if (isGhost)
+        if (isGhost || !_networkedBullet.controlled)
         {
             return;
         }
@@ -196,8 +198,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     
     private void OnDestroy()
      {
-         if (_networkedManager != null)
-             _networkedManager.UnregisterObject(_networkedBullet); //todo find what is registering the bullets
+         if (_networkedManager != null && _networkedBullet.controlled)
+             _networkedManager.UnregisterObject(_networkedBullet);
      }
 
     public ByteString GetAnalyticsFields()

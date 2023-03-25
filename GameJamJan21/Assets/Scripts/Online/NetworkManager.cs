@@ -31,6 +31,8 @@ namespace Online
         private GameObject networkParent;
         private Coroutine positionUpdater;
         private RepeatedField<Entity> onJoinEnteties;
+
+        private bool _active;
         
         public NetworkManager()
 
@@ -41,7 +43,7 @@ namespace Online
             Connection.RegisterMessageCallback(onMessage);
         }
 
-        public void PrepNewScene()
+        public void ActivateNetwork()
         {
             if (positionUpdater != null) StopCoroutine(positionUpdater);
 
@@ -56,6 +58,7 @@ namespace Online
             PostRegistrers();
 
             positionUpdater = StartCoroutine(UpdatePosition());
+            _active = true;
         }
 
         public void OnDisconnect(DelegateOnClose disconnect)
@@ -158,6 +161,8 @@ namespace Online
 
         private void onMessage(Response action)
         {
+            if (!_active) return; // ignore all messages if not active yet
+
             foreach (var response in action.Responses) // maybe unwrap events and fire them one by one
             {
                 // Debug.Log(action);
@@ -246,8 +251,9 @@ namespace Online
         private void MoveEntity(MoveEntity moveAction)
         {
             if (isControlled(moveAction.Id)) return;
-            _objects[moveAction.Id].HandleUpdate(Helpers.ToVector3(moveAction.Position),
-                Helpers.ToQuaternion(moveAction.Rotation), "");
+            if (_objects.ContainsKey(moveAction.Id))
+               _objects[moveAction.Id].HandleUpdate(Helpers.ToVector3(moveAction.Position),
+                    Helpers.ToQuaternion(moveAction.Rotation), "");
         }
 
         private void OnDestroy()
