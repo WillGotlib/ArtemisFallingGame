@@ -5,38 +5,57 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class MatchMenu : MonoBehaviour
+public class MatchMenu : MatchSetupMenu
 {    
-    public int selectedLevel;
-
+    [Header("Starting Match Menu")]
     [SerializeField] GameObject buttonSetParent;
-    int m_Index;
-    public MatchDataScriptable matchDataScriptable;
+    [SerializeField] GameObject[] playerOptionsParents;
 
     void Start() {
         //Fetch the Dropdown GameObject the script is attached to
         // button_set = GetComponent<TMPro.TMP_Dropdown>();
         
-        Button[] buttonSet = buttonSetParent.GetComponentsInChildren<Button>();
+        Button[] levelButtonSet = buttonSetParent.GetComponentsInChildren<Button>();
 
         // List of level names
         // TODO: This is not extensible right now. Fix it.
-        for (int i = 0; i < matchDataScriptable.levels.Length; i++) {
-            Level currLevel = matchDataScriptable.levels[i].GetComponent<Level>();
-            buttonSet[i].GetComponent<Image>().sprite = currLevel.thumbnail;
-            buttonSet[i].gameObject.GetComponentInChildren<TMP_Text>().text = currLevel.nid;
-            buttonSet[i].gameObject.GetComponent<MatchLevelSelector>().buttonOptionNumber = i;
+        for (int i = 0; i < mds.levels.Length; i++) {
+            Level currLevel = mds.levels[i].GetComponent<Level>();
+            levelButtonSet[i].GetComponent<Image>().sprite = currLevel.thumbnail;
+            levelButtonSet[i].gameObject.GetComponentInChildren<TMP_Text>().text = currLevel.nid;
+            levelButtonSet[i].gameObject.GetComponent<MatchMenuSelector>().buttonOptionNumber = i;
         }
-        matchDataScriptable.levelIdx = 0;
+        mds.levelIdx = 0;
+        levelButtonSet[0].interactable = false;
+
+        for (int i = 0; i < mds.numPlayers; i++) { // Two for the players, two for the options (color and secondary type)
+            Button[] optionsButtons = playerOptionsParents[i].GetComponentsInChildren<Button>();
+            Color temp = mds.primaryColours[mds.playerColourSchemes[i]];
+            temp.a = 1f;
+            optionsButtons[0].GetComponent<Image>().color = temp;
+            
+            optionsButtons[1].GetComponent<Image>().sprite = mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().thumbnail;
+            optionsButtons[1].gameObject.GetComponentInChildren<TMP_Text>().text = 
+                mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label;
+            print(mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label);
+        }
+        initialColors();
     }
     
-    public void ChooseLevel(int levelNumber) {
-        selectedLevel = levelNumber;
-        matchDataScriptable.levelIdx = levelNumber;
+    public override void ChooseLevel(int levelNumber) {
+        mds.levelIdx = levelNumber;
         print("Selected " + levelNumber);
+
+        // Find the disabled level and bring it back
+        Button[] levelButtonSet = buttonSetParent.GetComponentsInChildren<Button>();
+        foreach (Button level in levelButtonSet) {
+            if (level.interactable == false) {
+                level.interactable = true;
+            }
+        }
     }
 
-    public void PlayGame() {
+    public override void PlayGame() {
         if (PausedMenu.isPaused == true) {
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;

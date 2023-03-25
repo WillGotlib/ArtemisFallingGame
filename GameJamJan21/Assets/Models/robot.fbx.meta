@@ -52,6 +52,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: glowingLine
+    second: {fileID: 2100000, guid: 66c5bf25d2f91644292a46bdff479cf8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: green
     second: {fileID: 2100000, guid: ce24e19d37e75614881b594949e06375, type: 2}
   - first:

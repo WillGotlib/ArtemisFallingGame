@@ -1,0 +1,9 @@
+{7247f50d-61cf-49f9-9fb7-3574fbbfb2b1} bank:/Master
+{ea5ad5d9-10b4-05bb-19fe-bf8a0a4cb429} bank:/Master.strings
+{5d1c2df0-1e9f-434d-9bb0-abefb1a3de8f} bank:/SFX
+{c316db61-14b3-43f0-9a97-bf1cfdaf7cf7} bus:/
+{0e1addb7-1751-416e-9fcd-6b007e6a87c8} bus:/Reverb
+{b13b0586-74ad-48f1-9b31-55e92919ed84} event:/Actions/MechFootsteps3D
+{b850bc93-5098-4f92-bd29-234df50c22d1} event:/Actions/MolotovExplosion
+{9f467fb2-6900-4f88-933e-dc9693f8ddfd} event:/Actions/Rocket Launch
+{dd26f8df-5712-4b9b-814d-5a7bb7b4bec5} event:/Actions/RocketExplosion

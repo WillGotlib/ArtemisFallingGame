@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GunController : MonoBehaviour
 {
@@ -20,28 +21,55 @@ public class GunController : MonoBehaviour
     [NonSerialized] public int ammoCount;
     [NonSerialized] public int bouncingCount;
     [SerializeField] private Trajectory _trajectory;
+    
+    [SerializeField] private float cooldownMultiplier = 1f;
+    [SerializeField] private float cooldownIncrements = 0.1f;
+    [SerializeField] private float cooldownRecovery = 0.001f;
+    private float currentCooldownMultiplier;
+
+    [SerializeField] private float sizeMultiplier = 1f;
+    [SerializeField] private float sizeIncrements = 0.1f;
+    [SerializeField] private float sizeRecovery = 0.001f;
+    private float currentSizeMultiplier;
+    private float oldSizeMultiplier;
+    private bool charged = false;
+
+    [SerializeField] private float chargeBonus = 5f;
 
     [Header("Object values")] public Animator animationController;
-    private Controller owner;
+    public Controller owner;
 
     void Start()
     {
         ammoCount = maxAmmo;
         bouncingCount = maxBouncers;
-        primaryCooldownTimer = bulletType.GetComponent<BulletLogic>().cooldown;
-        secondaryCooldownTimer = secondaryType.GetComponent<BulletLogic>().cooldown;
-        _trajectory.RegisterScene();
+        primaryCooldown = bulletType.GetComponent<BulletLogic>().cooldown;
+        primaryCooldownTimer = primaryCooldown;
+        secondaryCooldown = secondaryType.GetComponent<BulletLogic>().cooldown;
+        secondaryCooldownTimer = secondaryCooldown;
+        currentCooldownMultiplier = cooldownMultiplier;
+        ResetSizeMultiplier();
     }
 
-    void Update() {
-        _trajectory.SimulateTrajectory(this);
+    private int _runCounter;
+    void Update()
+    {
+        // if (!_trajectory.isRegistered && SceneManager.GetSceneByName("Gameplay").IsValid()) {
+        //     _trajectory.RegisterScene();  
+        // }
+        _runCounter = (_runCounter + 1) % 4;
+        // if (_runCounter == 0 && SceneManager.GetSceneByName("Gameplay").IsValid())
+        //     _trajectory.SimulateTrajectory(this); // todo properly optimise this
+
         if (primaryOnCooldown) {
-            primaryCooldownTimer -= Time.deltaTime;
+            primaryCooldownTimer -= Time.deltaTime * currentCooldownMultiplier;
             if (primaryCooldownTimer <= 0) {
-                // Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
+                Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;
                 primaryCooldownTimer = primaryCooldown / owner.GetFireRateBonus();
             }
+        } else {
+            IncreaseBulletSize();
         }
         if (secondaryOnCooldown) {
             secondaryCooldownTimer -= Time.deltaTime;
@@ -51,6 +79,43 @@ public class GunController : MonoBehaviour
             }
         }
 
+    }
+
+    void ResetSizeMultiplier() {
+        currentSizeMultiplier = sizeMultiplier;
+    }
+
+    void DecreaseBulletSize() {
+        var minimumSize = 0.1f;
+        currentSizeMultiplier -= sizeIncrements;
+        if(currentSizeMultiplier <= 0) {
+            currentSizeMultiplier = minimumSize;
+        }
+    }
+
+    void IncreaseBulletSize() {
+        if (currentSizeMultiplier < sizeMultiplier)
+            currentSizeMultiplier += sizeRecovery;
+    }
+
+    public void ApplyChargeSizeMultiplier() {
+        oldSizeMultiplier = currentSizeMultiplier;
+        currentSizeMultiplier = sizeMultiplier * chargeBonus;
+        charged = true;
+    }
+
+    void DecreaseCooldownMultiplier() {
+        // Currently unused, slows down bullet fire speed
+        currentCooldownMultiplier -= cooldownIncrements;
+        if(currentCooldownMultiplier <= 0) {
+            currentCooldownMultiplier = 0.1f;
+        }
+    }
+
+    void IncreaseCooldownMultiplier() {
+        // Currently unused, speeds up fire speed
+        if (currentCooldownMultiplier < cooldownMultiplier)
+            currentCooldownMultiplier += cooldownRecovery;
     }
 
     public void ClearPrimaryCooldown() {
@@ -87,11 +152,17 @@ public class GunController : MonoBehaviour
         // Check to make sure we aren't colliding
         if (CheckShotValidity(cur_pos)) {
             GameObject bullet = UnityEngine.Object.Instantiate(bulletType);
+            bullet.transform.localScale *= currentSizeMultiplier;
             bullet.transform.position = cur_pos;
             bullet.transform.rotation = this.transform.rotation;
             bullet.GetComponent<BulletLogic>().setShooter(owner);
             bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
             primaryOnCooldown = true;
+            DecreaseBulletSize();
+            if (charged) {
+                currentSizeMultiplier = oldSizeMultiplier;
+                charged = !charged;
+            }
         } else {
             Debug.Log("Bullet would appear inside an object!");
         }
@@ -113,5 +184,9 @@ public class GunController : MonoBehaviour
 
     public void setOwner(Controller player) {
         owner = player;
+    }
+
+    public void setSecondary(GameObject newSecondary) {
+        secondaryType = newSecondary;
     }
 }

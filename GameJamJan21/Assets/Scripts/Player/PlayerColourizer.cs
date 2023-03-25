@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerColourizer : MonoBehaviour
@@ -16,8 +15,8 @@ public class PlayerColourizer : MonoBehaviour
         get => _primaryColour;
         set
         {
-            _primaryMat?.SetColor(_colourAttributeId, value);
             _primaryColour = value;
+            if (_primaryMat) _primaryMat.SetColor(_colourAttributeId, value);
         }
     }
 
@@ -26,8 +25,8 @@ public class PlayerColourizer : MonoBehaviour
         get => _secondaryColour;
         set
         {
-            _secondaryMat?.SetColor(_colourAttributeId, value);
             _secondaryColour = value;
+            if (_secondaryMat) _secondaryMat.SetColor(_colourAttributeId, value);
         }
     }
 
@@ -37,30 +36,30 @@ public class PlayerColourizer : MonoBehaviour
 
     public void initialColourize()
     {
+        if (_primaryMat != null) return; // dont init if already inited
+        
         _colourAttributeId = Shader.PropertyToID(colourAttribute);
         _primaryMat = Instantiate(primary);
         _secondaryMat = Instantiate(secondary);
         
         foreach (var renderer in model.GetComponentsInChildren<MeshRenderer>())
         {
-            var materials = renderer.materials;
+            var materials = renderer.sharedMaterials;
             for (var i = 0; i < materials.Length; i++)
             {
                 var material = materials[i];
-                var mattName = material.name.Substring(0,
-                    material.name.Length - " (Instance)".Length); // probably not the best way to do this
 
-                if (mattName == primary.name || material.name == primary.name)
+                if (material == primary)
                 {
                     materials[i] = _primaryMat;
                 }
-                else if (mattName == secondary.name || material.name == secondary.name)
+                else if (material == secondary)
                 {
                     materials[i] = _secondaryMat;
                 }
                 else
                 {
-                    Debug.Log($"material not matched: {material.name}");
+                    Debug.Log($"material not matched on {renderer.gameObject.name}: {material.name}");
                 }
             }
 
@@ -68,13 +67,13 @@ public class PlayerColourizer : MonoBehaviour
         }
 
         if (_primaryColour != Color.clear)
-        {
             PrimaryColour = _primaryColour;
-        }
-
+        else
+            _primaryColour = primary.GetColor(_colourAttributeId);
+        
         if (_secondaryColour != Color.clear)
-        {
             SecondaryColour = _secondaryColour;
-        }
+        else 
+            _secondaryColour = secondary.GetColor(_colourAttributeId);
     }
 }

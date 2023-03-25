@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{231036fa-2986-454a-aab0-1dee370f0c0e}">
+		<property name="assetPath">
+			<value>Artermis Falling Sfx/PlayerWalk/mech_walking_sfx_ESM_DGF_fx_foley_footstep_robot_metal_walk_slow_clank_hydraulic_15.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.98077083333333337</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ef4f5f9e-c4cd-4597-a2b6-6b071ce04a19}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7118070730978189553
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -7156765127581516829, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: networkTypeId
+      value: ICE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296478522850859445, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: colour.b
+      value: 0.9725491
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296478522850859445, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: colour.g
+      value: 0.43921572
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296478522850859445, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: colour.r
+      value: 0.1254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: label
+      value: Freeze Grenade
+      objectReference: {fileID: 0}
+    - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: cooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: thumbnail
+      value: 
+      objectReference: {fileID: 7482667652216324306, guid: 4ce4d74e4e32f47c7b572ec30284111b, type: 3}
+    - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: splashZone
+      value: 
+      objectReference: {fileID: 6234232466112906086, guid: 89bdaff0bbe5148b8b09fbe8c91bd454, type: 3}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Name
+      value: FreezeGrenade
+      objectReference: {fileID: 0}
+    - target: {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_TagString
+      value: Grenade
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4213059346157768680, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+    - {fileID: 7769586475236240067, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+    - {fileID: 2420030110721789441, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
