@@ -5,7 +5,7 @@ namespace Online
     public sealed class Address
     {
         private const string DefaultProtocol = "http";
-        private const string DefaultAddr = "localhost"; //"ziv.shalit.name";
+        private const string DefaultAddr = "ziv.shalit.name"; // "localhost";
         private const int DefaultPort = 37892;
 
         /// <summary>

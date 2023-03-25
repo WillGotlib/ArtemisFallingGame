@@ -265,19 +265,19 @@ public class Controller : MonoBehaviour
             return;
         }
 
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Dash", GetComponent<Transform>().position);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Dash", transform.position);
         currentCooldown = GlobalStats.dashCooldown;
         _hudManager.UseStamina(playerNumber);
         StartCoroutine(Dash());
     }
 
-    private bool _dashing;
+    public bool Dashing { private set; get; }
     IEnumerator Dash() {
         float startTime = Time.time;
         //_jetParticles.Shoot();
         _jetParticles.SetStartSpeed(10);
         animator.Dashing = true;
-        _dashing = true;
+        Dashing = true;
 
         while (Time.time < startTime + dashDuration) {
             if (moveDirection.magnitude > 0) {
@@ -292,7 +292,7 @@ public class Controller : MonoBehaviour
         // _jetParticles.Stop();
         _jetParticles.SetStartSpeed();
         animator.Dashing = false;
-        _dashing = false;
+        Dashing = false;
     }
 
     // Update is called once per frame
@@ -388,7 +388,7 @@ public class Controller : MonoBehaviour
             if (mag != 0 &&
                 !currentlyDead &&
                 !animator.Landing &&
-                !_dashing &&
+                !Dashing &&
                 isGrounded()) // todo you cant go up on ledges 
                // rb.MovePosition(transform.position + moveDirection.normalized * mag);       todo reenable this
                 rb.MovePosition(transform.position + moveDirection.normalized * (0.01f * GetSpeedBonus() * speed * momentum));

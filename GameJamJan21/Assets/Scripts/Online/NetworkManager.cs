@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
@@ -20,6 +21,7 @@ namespace Online
 
         public int updateFps = 60; // update at 60 fps
 
+        private static Mutex _mu = new();
         private readonly Dictionary<ByteString, NetworkedElement> _objects;
         private readonly Dictionary<ByteString, (Vector3, Quaternion, float)> _objectLastPos;
         private const float MaxSecondsNoUpdate = 3; // update every 3 seconds even if no movement 
@@ -33,7 +35,7 @@ namespace Online
         private RepeatedField<Entity> onJoinEnteties;
 
         private bool _active;
-        
+
         public NetworkManager()
 
         {
@@ -48,13 +50,15 @@ namespace Online
             if (positionUpdater != null) StopCoroutine(positionUpdater);
 
             networkParent = new GameObject("Networked Objects");
+            _mu.WaitOne();
             _objects.Clear();
             _objectLastPos.Clear();
+            _mu.ReleaseMutex();
             foreach (var entity in onJoinEnteties)
             {
                 AddEntity(entity);
             }
-            
+
             PostRegistrers();
 
             positionUpdater = StartCoroutine(UpdatePosition());
@@ -97,11 +101,16 @@ namespace Online
             {
                 try
                 {
+                    _mu.WaitOne();
                     _mainthreadQueue.Dequeue()();
                 }
                 catch (MissingReferenceException e)
                 {
                     Debug.LogWarning(e);
+                }
+                finally
+                {
+                    _mu.ReleaseMutex();
                 }
             }
         }
@@ -222,7 +231,8 @@ namespace Online
 
         private bool isControlled(ByteString id)
         {
-            return _objects.ContainsKey(id) && _objects[id].GetControlType() == ElementType.Owner;
+            return _objects.ContainsKey(id) &&
+                   _objects[id].GetControlType() == ElementType.Owner;
         }
 
         private void AddEntity(Entity entity)
@@ -245,15 +255,16 @@ namespace Online
         {
             if (isControlled(entity.Id)) return;
             _objects[entity.Id]
-                .HandleUpdate(Helpers.ToVector3(entity.Position), Helpers.ToQuaternion(entity.Rotation), entity.Data);
+                .HandleUpdate(Helpers.ToVector3(entity.Position),
+                    Helpers.ToQuaternion(entity.Rotation), entity.Data);
         }
 
         private void MoveEntity(MoveEntity moveAction)
         {
             if (isControlled(moveAction.Id)) return;
-            if (_objects.ContainsKey(moveAction.Id))
-               _objects[moveAction.Id].HandleUpdate(Helpers.ToVector3(moveAction.Position),
-                    Helpers.ToQuaternion(moveAction.Rotation), "");
+            if (!_objects.ContainsKey(moveAction.Id)) return;
+            _objects[moveAction.Id].HandleUpdate(Helpers.ToVector3(moveAction.Position),
+                Helpers.ToQuaternion(moveAction.Rotation), "");
         }
 
         private void OnDestroy()
@@ -331,7 +342,7 @@ namespace Online
 
                     if (_objectLastPos.ContainsKey(id) && (Time.time - _objectLastPos[id].Item3) < MaxSecondsNoUpdate &&
                         _objectLastPos[id].Item1 == pos.Item1 && _objectLastPos[id].Item2 == pos.Item2) continue;
-                    _objectLastPos[id] = (pos.Item1,pos.Item2, Time.time);
+                    _objectLastPos[id] = (pos.Item1, pos.Item2, Time.time);
 
                     requests.Add(new StreamAction
                     {
