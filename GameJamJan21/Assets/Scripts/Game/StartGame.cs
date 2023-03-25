@@ -58,9 +58,9 @@ public class StartGame : MonoBehaviour
         var o = player.GetComponent<NetworkedPlayerController>();
         o.controlled = true;
 
-        networkManager.ActivateNetwork();
         networkManager.RegisterObject(o);
-        FindObjectOfType<PausedMenu>().ResumeGame();
+        if (Connection.GetIndex() % 2 == 0)
+            FindObjectOfType<PausedMenu>().SwitchMenuState();
     }
 
     private void StartLocalGame(GameObject[] spawnPoints)

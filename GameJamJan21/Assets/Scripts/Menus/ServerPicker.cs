@@ -60,7 +60,7 @@ public class ServerPicker : MonoBehaviour
         if (scene.name != gameSceneName) return;
                     
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        FindObjectOfType<StartGame>().StartMatch();
+        FindObjectOfType<NetworkManager>().ActivateNetwork();
     }
 
     
