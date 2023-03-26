@@ -34,6 +34,7 @@ public class StartGame : MonoBehaviour
         // 
         if (mds.primaryColours.Length != mds.accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
+        _hudManager.InitHealth();
         StartMatch();
     }
     public void StartMatch()

@@ -12,21 +12,6 @@ public class MatchMenu : MatchSetupMenu
     [SerializeField] GameObject[] playerOptionsParents;
 
     void Start() {
-        //Fetch the Dropdown GameObject the script is attached to
-        // button_set = GetComponent<TMPro.TMP_Dropdown>();
-        
-        Button[] levelButtonSet = buttonSetParent.GetComponentsInChildren<Button>();
-
-        // List of level names
-        // TODO: This is not extensible right now. Fix it.
-        for (int i = 0; i < mds.levels.Length; i++) {
-            Level currLevel = mds.levels[i].GetComponent<Level>();
-            levelButtonSet[i].GetComponent<Image>().sprite = currLevel.thumbnail;
-            levelButtonSet[i].gameObject.GetComponentInChildren<TMP_Text>().text = currLevel.nid;
-            levelButtonSet[i].gameObject.GetComponent<MatchMenuSelector>().buttonOptionNumber = i;
-        }
-        mds.levelIdx = 0;
-        levelButtonSet[0].interactable = false;
 
         for (int i = 0; i < mds.numPlayers; i++) { // Two for the players, two for the options (color and secondary type)
             Button[] optionsButtons = playerOptionsParents[i].GetComponentsInChildren<Button>();
@@ -37,7 +22,6 @@ public class MatchMenu : MatchSetupMenu
             optionsButtons[1].GetComponent<Image>().sprite = mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().thumbnail;
             optionsButtons[1].gameObject.GetComponentInChildren<TMP_Text>().text = 
                 mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label;
-            print(mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label);
         }
         initialColors();
     }
