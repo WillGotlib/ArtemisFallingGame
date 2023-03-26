@@ -197,7 +197,6 @@ public class Controller : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateLookDirection();
-        Debug.Log(lookDirection.x);
     }
 
     public void OnPrimaryFire()
