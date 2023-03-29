@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -33,7 +34,12 @@ public class VictoryMenu : MatchSetupMenu
         } else {
             seriesStatsRoot.SetActive(false);
         }
+        StartCoroutine(victoryExpiry(4.5f));
+    }
 
+    private IEnumerator victoryExpiry(float time){
+        yield return new WaitForSeconds(time);
+        PlayGame();
     }
 
     public override void PlayGame() {
