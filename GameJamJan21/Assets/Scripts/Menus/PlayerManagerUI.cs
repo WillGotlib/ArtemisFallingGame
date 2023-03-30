@@ -6,7 +6,10 @@ using UnityEngine.InputSystem.UI;
 
 public class PlayerManagerUI : MonoBehaviour
 {
+    public MatchDataScriptable mds;
+    
     [SerializeField] GameObject MPEventSystem;
+    [SerializeField] MatchMenu PreMatchMenu;
     [SerializeField] GameObject[] DefaultFirstSelected;
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject PlayerPrefab;
@@ -20,6 +23,7 @@ public class PlayerManagerUI : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
+        mds.numPlayers = currNumPlayers;
         //print("Starting");
         // Instantiate(PlayerPrefab);
         // OnPlayerJoined(); // Call this once
@@ -80,7 +84,10 @@ public class PlayerManagerUI : MonoBehaviour
         playerCursors.Add(x);
         Debug.Log(go.name + " added.");
         x.refresh(Vector2.zero);
-        // print(go);
+        mds.numPlayers = currNumPlayers;
+
+        // Prompt the match menu to add a new player options panel
+        PreMatchMenu.RefreshPlayerSections(currNumPlayers);
     }
 
     void Awake() {

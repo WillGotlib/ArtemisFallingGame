@@ -10,6 +10,7 @@ public class MatchMenu : MatchSetupMenu
     [Header("Starting Match Menu")]
     [SerializeField] GameObject buttonSetParent;
     [SerializeField] GameObject[] playerOptionsParents;
+    [SerializeField] GameObject[] playerOptionsSections;
 
     void Start() {
 
@@ -24,6 +25,8 @@ public class MatchMenu : MatchSetupMenu
                 mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label;
         }
         initialColors();
+
+        RefreshPlayerSections(mds.numPlayers);
     }
     
     public override void ChooseLevel(int levelNumber) {
@@ -45,5 +48,11 @@ public class MatchMenu : MatchSetupMenu
             PausedMenu.isPaused = false;
         }
         SceneManager.LoadScene("Gameplay");
+    }
+
+    public void RefreshPlayerSections(int numPlayers) {
+        for (int i = 0; i < numPlayers; i++) {
+            playerOptionsSections[i].SetActive(true);
+        }
     }
 }
