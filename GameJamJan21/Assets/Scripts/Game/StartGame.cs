@@ -20,12 +20,6 @@ public class StartGame : MonoBehaviour
     [SerializeField] private float deathCooldown; // Amount of time before a player respawns
     [SerializeField] private float invincibilityCooldown; // Amount of time after respawning that the player cannot die
 
-    // [Header("Colours")]
-    // [Tooltip("Lists have to be the same length")]
-    // public Color[] primaryColours;
-    // public Color[] accentColours;
-    // //public Color player2PrimaryColour=new Color(.22f,.11f,.055f);
-    // //public Color player2AccentColour= Color.magenta;
     public MatchDataScriptable mds;
 
     // Start is called before the first frame update
@@ -45,7 +39,7 @@ public class StartGame : MonoBehaviour
         var spawnPoints = levelManager.GetSpawnPoints();
         // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
         // CreatePhysicsScene();
-        players = new Controller[Mathf.Min(playerCount, spawnPoints.Length)];
+        players = new Controller[Mathf.Min(mds.numPlayers, spawnPoints.Length)];
         var i=0;
         foreach (GameObject spawn in spawnPoints) {
             if (i >= players.Length) { break; }

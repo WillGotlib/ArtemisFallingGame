@@ -28,11 +28,14 @@ public class MainMenu : MonoBehaviour
     }
 
     public void PlayGame() {
+        if (mds.numPlayers < 2) { 
+            print("ERROR: Tried to play game with under min # of players (2)");
+            return; 
+        }
         if (PausedMenu.isPaused == true) {
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
-
         SceneManager.LoadScene("Gameplay");
     }
 

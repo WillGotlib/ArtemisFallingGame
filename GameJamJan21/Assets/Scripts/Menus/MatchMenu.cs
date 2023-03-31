@@ -12,6 +12,8 @@ public class MatchMenu : MatchSetupMenu
     [SerializeField] GameObject[] playerOptionsParents;
     [SerializeField] GameObject[] playerOptionsSections;
 
+    [SerializeField] Button playButton;
+
     void Start() {
 
         for (int i = 0; i < mds.numPlayers; i++) { // Two for the players, two for the options (color and secondary type)
@@ -53,6 +55,9 @@ public class MatchMenu : MatchSetupMenu
     public void RefreshPlayerSections(int numPlayers) {
         for (int i = 0; i < numPlayers; i++) {
             playerOptionsSections[i].SetActive(true);
+        }
+        if (!playButton.interactable && numPlayers >= 2) {
+            playButton.interactable = true;
         }
     }
 }
