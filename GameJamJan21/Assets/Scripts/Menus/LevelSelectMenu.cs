@@ -8,14 +8,14 @@ using TMPro;
 public class LevelSelectMenu : MatchSetupMenu
 {    
     [Header("Starting Level Select Menu")]
-    [SerializeField] GameObject buttonSetParent;
-    [SerializeField] GameObject[] playerOptionsParents;
+    [SerializeField] GameObject levelButtonParent;
+    [SerializeField] GameObject gamesButtonParent;
 
     void Start() {
         //Fetch the Dropdown GameObject the script is attached to
         // button_set = GetComponent<TMPro.TMP_Dropdown>();
         
-        Button[] levelButtonSet = buttonSetParent.GetComponentsInChildren<Button>();
+        Button[] levelButtonSet = levelButtonParent.GetComponentsInChildren<Button>();
 
         // List of level names
         // TODO: This is not extensible right now. Fix it.
@@ -35,8 +35,17 @@ public class LevelSelectMenu : MatchSetupMenu
         print("Selected " + levelNumber);
 
         // Find the disabled level and bring it back
-        Button[] levelButtonSet = buttonSetParent.GetComponentsInChildren<Button>();
+        Button[] levelButtonSet = levelButtonParent.GetComponentsInChildren<Button>();
         foreach (Button level in levelButtonSet) {
+            if (level.interactable == false) {
+                level.interactable = true;
+            }
+        }
+    }
+
+    public void ChooseNumGames(int numGames) {
+        Button[] gamesButtonSet = gamesButtonParent.GetComponentsInChildren<Button>();
+        foreach (Button level in gamesButtonSet) {
             if (level.interactable == false) {
                 level.interactable = true;
             }
