@@ -364,7 +364,7 @@ public class Controller : MonoBehaviour
     }
 
     private void LateUpdate()
-    {
+    {       
             var mag = animator.transform.localPosition.magnitude;
             if (mag != 0 &&
                 !currentlyDead &&
@@ -373,6 +373,10 @@ public class Controller : MonoBehaviour
                 isGrounded()) // todo you cant go up on ledges 
                // rb.MovePosition(transform.position + moveDirection.normalized * mag);       todo reenable this
                 rb.MovePosition(transform.position + moveDirection.normalized * (0.01f * GetSpeedBonus() * speed * momentum));
+            else if (!currentlyDead && !animator.Landing && !_dashing && !isGrounded()) {
+                moveDirection.y = -20;
+                rb.MovePosition(transform.position + moveDirection.normalized * momentum);
+            }
     }
 
     bool isGrounded()
