@@ -44,6 +44,9 @@ public class MenuCursor : MonoBehaviour
 
     public void refresh(Vector2 dir) {
         GameObject newTarget = _eventSys.currentSelectedGameObject;
+        if (!currentlySelected) {
+            newTarget = manager.GetCurrentMenuDefault().gameObject;
+        }
         if (newTarget != currentlySelected) {
             print("Cursor Target didn't match: cursor had " + currentlySelected + ", ES had " + newTarget);
             currentlySelected = newTarget;
@@ -56,6 +59,8 @@ public class MenuCursor : MonoBehaviour
                 _eventSys.SetSelectedGameObject(currSelectable.gameObject);
                 currentlySelected = currSelectable.gameObject;
                 print("Had to manually make the move. Now on " + currSelectable);
+            } else {
+                currSelectable = manager.GetCurrentMenuDefault();
             }
             MoveToTarget(currentlySelected, new Vector3(-110f, -5f, 0));
         }

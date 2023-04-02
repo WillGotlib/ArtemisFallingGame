@@ -16,6 +16,12 @@ public class MatchMenu : MatchSetupMenu
 
     void Start() {
 
+        ButtonAssignment();
+
+        RefreshPlayerSections(mds.numPlayers);
+    }
+
+    void ButtonAssignment() {
         for (int i = 0; i < mds.numPlayers; i++) { // Two for the players, two for the options (color and secondary type)
             Button[] optionsButtons = playerOptionsParents[i].GetComponentsInChildren<Button>();
             Color temp = mds.primaryColours[mds.playerColourSchemes[i]];
@@ -27,8 +33,6 @@ public class MatchMenu : MatchSetupMenu
                 mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label;
         }
         initialColors();
-
-        RefreshPlayerSections(mds.numPlayers);
     }
     
     public override void ChooseLevel(int levelNumber) {
@@ -59,5 +63,6 @@ public class MatchMenu : MatchSetupMenu
         if (!playButton.interactable && numPlayers >= 2) {
             playButton.interactable = true;
         }
+        ButtonAssignment();
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -9,8 +10,8 @@ public class PlayerManagerUI : MonoBehaviour
     public MatchDataScriptable mds;
     
     [SerializeField] GameObject MPEventSystem;
-    [SerializeField] MatchMenu PreMatchMenu;
-    [SerializeField] GameObject[] DefaultFirstSelected;
+    [SerializeField] MenuRunner MenuRunner;
+    [SerializeField] GameObject DefaultFirstSelected;
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject PlayerPrefab;
     [SerializeField] CurrentControlScheme controlScheme;
@@ -42,7 +43,7 @@ public class PlayerManagerUI : MonoBehaviour
         // Make sure that if there's a cursor beside a Selectable, it's selected
         for (int i = 0; i < playerCursors.Count; i++) {
             print("CURRENTLY SELECTED: " + playerES[i].currentSelectedGameObject);
-            // playerCursors[i].MoveToTarget(playerES[i].currentSelectedGameObject, new Vector3(0, 0, 0));
+            playerCursors[i].MoveToTarget(playerES[i].currentSelectedGameObject, new Vector3(0, 0, 0));
             // playerES[i].currentSelectedGameObject.GetComponent<Selectable>().Select();
             
             // GameObject curr = playerCursors[i].currentlySelected;
@@ -50,13 +51,17 @@ public class PlayerManagerUI : MonoBehaviour
         }
     }
 
+    public Button GetCurrentMenuDefault() {
+        return MenuRunner.GetCurrentMenuDefault();
+    }
+
     void OnPlayerJoined() {
         print("Player Joined");
         GameObject newPlayer = Instantiate(MPEventSystem, transform);
         MultiplayerEventSystem playerEventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
-        playerEventSys.firstSelectedGameObject = DefaultFirstSelected[currNumPlayers];
+        playerEventSys.firstSelectedGameObject = DefaultFirstSelected;
         playerEventSys.playerRoot = canvas;
-        playerEventSys.SetSelectedGameObject(DefaultFirstSelected[currNumPlayers]);
+        playerEventSys.SetSelectedGameObject(DefaultFirstSelected);
         playerES.Add(playerEventSys);
 
         currNumPlayers++;
@@ -83,11 +88,12 @@ public class PlayerManagerUI : MonoBehaviour
         x.setManager(this);
         playerCursors.Add(x);
         Debug.Log(go.name + " added.");
-        x.refresh(Vector2.zero);
-        mds.numPlayers = currNumPlayers;
 
+        mds.numPlayers = currNumPlayers;
         // Prompt the match menu to add a new player options panel
-        PreMatchMenu.RefreshPlayerSections(currNumPlayers);
+        MenuRunner.RefreshPlayerSections(currNumPlayers);
+        
+        x.refresh(Vector2.left);
     }
 
     void Awake() {

@@ -24,7 +24,9 @@ public class NumGameSelectDropdown : MonoBehaviour
         GetComponent<Button>().Select();
         mds.numGames = numGames;
         LevelSelectMenu.ChooseNumGames(numGames);
-        GetComponent<Button>().FindSelectable(new Vector3(1,0,0)).Select();
+        Selectable next = GetComponent<Button>().FindSelectable(new Vector3(1,0,0));
+        if (!next) next = GetComponent<Button>().FindSelectable(new Vector3(-1,0,0));
+        next.Select();
         GetComponent<Button>().interactable = false;
     }
     // void StartAlt() {

@@ -18,7 +18,10 @@ public class MatchMenuSelector : MonoBehaviour
     public void ChooseMap() {
         print(buttonOptionNumber.ToString());
         matchMenu.ChooseLevel(buttonOptionNumber);
-        GetComponent<Button>().FindSelectable(new Vector3(1,0,0)).Select();
+        Selectable next = GetComponent<Button>().FindSelectable(new Vector3(1,0,0));
+        if (!next) { next = GetComponent<Button>().FindSelectable(new Vector3(-1,0,0));
+        }
+        next.Select();
         GetComponent<Button>().interactable = false;
     }
 
@@ -60,7 +63,7 @@ public class MatchMenuSelector : MonoBehaviour
         if (selectionOnCooldown) { return; }
         
         selectionOnCooldown = true;
-        mds.playerSecondaries[playerNumber] = (mds.playerSecondaries[playerNumber] + 1) % mds.playerSecondaries.Length;
+        mds.playerSecondaries[playerNumber] = (mds.playerSecondaries[playerNumber] + 1) % mds.secondaryTypes.Length;
         buttonOptionNumber = mds.playerSecondaries[playerNumber];
         GetComponent<Image>().sprite = mds.secondaryTypes[buttonOptionNumber].GetComponent<BulletLogic>().thumbnail;
         GetComponentInChildren<TMP_Text>().text = mds.secondaryTypes[buttonOptionNumber].GetComponent<BulletLogic>().label;
