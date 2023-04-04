@@ -59,9 +59,8 @@ public class MainMenu : MonoBehaviour
 
     public void ShowPrematchMenu() 
     { 
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
-            player.GetComponentInChildren<AnimationUtils>().PlayLanding();
-        }    
+        PreMatchMenu.GetComponent<LevelSelectMenu>().CueRobotDrop();
+        print("Showing prematch menu!");
     }
 
     public static void QuitGame() {

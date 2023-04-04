@@ -533,7 +533,7 @@
                 {
                     "name": "",
                     "id": "b7eb651b-924f-4bb8-95a1-cce1bea61dc9",
-                    "path": "<Keyboard>/y",
+                    "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": "P1Keyboard",
@@ -544,7 +544,7 @@
                 {
                     "name": "",
                     "id": "279ba734-9200-4ff8-8cf3-769d26260d6b",
-                    "path": "<Keyboard>/backslash",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "P2Keyboard",

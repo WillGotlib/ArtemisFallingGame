@@ -60,7 +60,7 @@ public class AnimationUtils : MonoBehaviour
         if (!t && _transition)
         {
             // in the case an animation was quit early
-            Debug.Log("switched state");
+            // Debug.Log("switched state");
             _holdPosition = true;
             _jets.SetStartSpeed();
             Landing = false;

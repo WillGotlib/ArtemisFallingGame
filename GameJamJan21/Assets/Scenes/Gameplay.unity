@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028414, g: 0.22571482, b: 0.30692223, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028353, g: 0.22571346, b: 0.30692047, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1119,9 +1119,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 6
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 6
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1816,9 +1816,9 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 6
   m_WholeNumbers: 0
-  m_Value: 100
+  m_Value: 6
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4271,11 +4271,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2992de513708d34394b94c5d8d9a1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerOneHealth: {fileID: 0}
-  playerTwoHealth: {fileID: 0}
-  playerOneStamina: {fileID: 0}
-  playerTwoStamina: {fileID: 0}
   mds: {fileID: 0}
+  playerHealthBars: []
+  playerStaminaBars: []
 --- !u!1 &1547631709
 GameObject:
   m_ObjectHideFlags: 0
@@ -5002,11 +5000,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2992de513708d34394b94c5d8d9a1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerOneHealth: {fileID: 815565797}
-  playerTwoHealth: {fileID: 996679649}
-  playerOneStamina: {fileID: 913008186}
-  playerTwoStamina: {fileID: 531201859}
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
+  playerHealthBars:
+  - {fileID: 531201859}
+  - {fileID: 913008186}
+  playerStaminaBars:
+  - {fileID: 996679649}
+  - {fileID: 815565797}
 --- !u!114 &1695668389
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -31,8 +31,23 @@ public class LevelSelectMenu : MatchSetupMenu
         mds.levelIdx = 0;
         levelButtonSet[0].interactable = false;
 
+        for (int i = 0; i < mds.numPlayers; i++) {
+            print("Dropping robot " + i);
+            CueRobotDrop(i);
+        }
+
         initialColors();
         RefreshPlayerSections();
+    }
+
+    public void CueRobotDrop() {
+        for (int i = 0; i < mds.numPlayers; i++) {
+            robots[i].GetComponentInChildren<AnimationUtils>().PlayLanding();
+        }
+    }
+
+    void CueRobotDrop(int playerNumber) {
+        robots[playerNumber].GetComponentInChildren<AnimationUtils>().PlayLanding();
     }
     
     public override void ChooseLevel(int levelNumber) {
@@ -53,7 +68,11 @@ public class LevelSelectMenu : MatchSetupMenu
         print("Number of players is " + mds.numPlayers);
         for (int i = 0; i < 4; i++) {
             if (i >= mds.numPlayers) playerOptionsSections[i].SetActive(false);
-            else playerOptionsSections[i].SetActive(true);
+            else if (!playerOptionsSections[i].activeSelf) {
+                print("activating a new section");
+                playerOptionsSections[i].SetActive(true);
+                CueRobotDrop(i);
+            }
         }
 
         if (mds.numPlayers < 2) { 

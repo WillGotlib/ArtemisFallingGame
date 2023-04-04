@@ -5,63 +5,56 @@ using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
-
-//    private int playerCount = 2;
-    [SerializeField] private Slider playerOneHealth;
-    [SerializeField] private Slider playerTwoHealth;
-    [SerializeField] private Slider playerOneStamina;
-    [SerializeField] private Slider playerTwoStamina;
     public MatchDataScriptable mds;
-    private float playerOneWaitTime = GlobalStats.dashCooldown;
-    private float playerTwoWaitTime = GlobalStats.dashCooldown;
-    private int[] playerStocks;
+    
     private float[] playerHealths;
+    [SerializeField] private Slider[] playerHealthBars;
+    private float[] playerWaitTimes;
+    [SerializeField] private Slider[] playerStaminaBars;
+    private int[] playerStocks;
+
+    
     private int staminaDisplayMultiplier = 30;
 
     void Start() {
         playerStocks = new int[mds.numPlayers];
         playerHealths = new float[mds.numPlayers];
+        playerWaitTimes = new float[mds.numPlayers];
 
-        var i = 0;
-        while (i < playerHealths.Length) {
+        for (int i = 0; i < mds.numPlayers; i++) {
             playerHealths[i] = GlobalStats.baseHealth;
-            i += 1;
+            playerHealthBars[i].value = playerHealths[i];
+            playerStaminaBars[i].value = 100;
+            playerWaitTimes[i] = GlobalStats.dashCooldown;
         }
-
-        playerOneHealth.value = GlobalStats.baseHealth;
-        playerTwoHealth.value = GlobalStats.baseHealth;
-        playerOneStamina.value = 100;
-        playerTwoStamina.value = 100;
     }
 
     public void InitHealth() {
         playerStocks = new int[mds.numPlayers];
         playerHealths = new float[mds.numPlayers];
 
-        var i = 0;
-        while (i < playerHealths.Length) {
+        for (int i = 0; i < mds.numPlayers; i++) {
             playerHealths[i] = GlobalStats.baseHealth;
-            i += 1;
+            playerHealthBars[i].value = playerHealths[i];
+            playerStaminaBars[i].value = 100;
         }
     }
 
     void Update() {
-        if (playerOneStamina.value != 100) {
-            playerOneWaitTime -= Time.deltaTime;
-            playerOneStamina.value = (GlobalStats.dashCooldown - playerOneWaitTime) * staminaDisplayMultiplier;
-        }
-        if (playerTwoStamina.value != 100) {
-            playerTwoWaitTime -= Time.deltaTime;
-            playerTwoStamina.value = (GlobalStats.dashCooldown - playerTwoWaitTime) * staminaDisplayMultiplier;
+        for (int i = 0; i < mds.numPlayers; i++) {
+            if (playerStaminaBars[i].value != 0) {
+                playerWaitTimes[i] -= Time.deltaTime;
+                playerStaminaBars[i].value = (GlobalStats.dashCooldown - playerWaitTimes[i]) * staminaDisplayMultiplier;
+            }
+            playerHealthBars[i].value = playerHealths[i];
         }
     }
 
     public void LateUpdate()
     {
-        // playerOneHealth.value = Mathf.RoundToInt(playerHealths[0]);
-        // playerTwoHealth.value = Mathf.RoundToInt(playerHealths[1]);
-        playerOneHealth.value = (playerHealths[0]);
-        playerTwoHealth.value = (playerHealths[1]);
+        for (int i = 0; i < mds.numPlayers; i++) {
+            playerHealthBars[i].value = playerHealths[i];
+        }
     }
 
     public void ChangeHealth(int playerNumber, float newHealth) {
@@ -73,14 +66,9 @@ public class HUDManager : MonoBehaviour
     }
     
     public void UseStamina(int playerNumber) {
-        if (playerNumber == 0) {
-            playerOneStamina.value = 0;
-            playerOneWaitTime = GlobalStats.dashCooldown;
-        }
-
-        else if (playerNumber == 1) {
-            playerTwoStamina.value = 0;
-            playerTwoWaitTime = GlobalStats.dashCooldown;
+        for (int i = 0; i < mds.numPlayers; i++) {
+            playerStaminaBars[i].value = 0;
+            playerWaitTimes[i] = GlobalStats.dashCooldown;
         }
     }
 }

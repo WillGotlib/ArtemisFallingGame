@@ -23,7 +23,6 @@ public class MatchDataScriptable : ScriptableObject
 
     public bool skipMainMenu = false;
     
-    
     private int[] playerColourSchemes;
     private List<int> selectedColourSchemes; // For no overlap
 }
