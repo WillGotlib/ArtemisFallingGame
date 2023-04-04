@@ -152,7 +152,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             
             reflectedVelo.y = 0;
             // print("CONTACT NORMAL = " + contact.normal.ToString() + "\t NEW VEL = " + reflectedVelo.ToString());
-            _rb.velocity = reflectedVelo.normalized * _bulletSpeed * GetBulletSpeedBonus();
+            _rb.velocity = reflectedVelo.normalized * _bulletSpeed;
             vel = _rb.velocity;
             // Rather than: _rb.velocity = -reflectedVelo.normalized * _bulletSpeed;
 

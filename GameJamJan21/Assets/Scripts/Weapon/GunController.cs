@@ -100,7 +100,7 @@ public class GunController : MonoBehaviour
 
     public void ApplyChargeSizeMultiplier() {
         oldSizeMultiplier = currentSizeMultiplier;
-        currentSizeMultiplier = sizeMultiplier * chargeBonus;
+        currentSizeMultiplier = sizeMultiplier * 1.3f * chargeBonus;
         charged = true;
     }
 
