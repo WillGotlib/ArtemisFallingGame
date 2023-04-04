@@ -76,7 +76,7 @@ public class MenuCursor : MonoBehaviour
     {
         // Debug.Log("Started Coroutine at timestamp : " + Time.time);
         yield return new WaitForSeconds(0.05f);
-        manager.SelectionCheck();
+        manager.SelectionCheck(playerNumber);
         refresh(vec);
         // print("\tTerminating coroutine");
     }

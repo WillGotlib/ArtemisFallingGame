@@ -11,7 +11,6 @@ public class PlayerManagerUI : MonoBehaviour
     
     [SerializeField] GameObject MPEventSystem;
     [SerializeField] MenuRunner MenuRunner;
-    [SerializeField] GameObject DefaultFirstSelected;
     [SerializeField] GameObject canvas;
     [SerializeField] GameObject PlayerPrefab;
     [SerializeField] CurrentControlScheme controlScheme;
@@ -40,15 +39,15 @@ public class PlayerManagerUI : MonoBehaviour
     }
 
     public void SelectionCheck() {
-        // Make sure that if there's a cursor beside a Selectable, it's selected
         for (int i = 0; i < playerCursors.Count; i++) {
-            print("CURRENTLY SELECTED: " + playerES[i].currentSelectedGameObject);
-            playerCursors[i].MoveToTarget(playerES[i].currentSelectedGameObject, Vector3.zero);
-            // playerES[i].currentSelectedGameObject.GetComponent<Selectable>().Select();
-            
-            // GameObject curr = playerCursors[i].currentlySelected;
-            // curr.GetComponent<Selectable>().Select();
+            SelectionCheck(i);
         }
+    }
+
+    public void SelectionCheck(int playerNumber) {
+        // Make sure that if there's a cursor beside a Selectable, it's selected
+        print("CURRENTLY SELECTED: " + playerES[playerNumber].currentSelectedGameObject);
+        playerCursors[playerNumber].MoveToTarget(playerES[playerNumber].currentSelectedGameObject, Vector3.zero);
     }
 
     public Button GetCurrentMenuDefault() {
@@ -59,9 +58,9 @@ public class PlayerManagerUI : MonoBehaviour
         print("Player Joined");
         GameObject newPlayer = Instantiate(MPEventSystem, transform);
         MultiplayerEventSystem playerEventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
-        playerEventSys.firstSelectedGameObject = DefaultFirstSelected;
+        playerEventSys.firstSelectedGameObject = GetCurrentMenuDefault().gameObject;
         playerEventSys.playerRoot = canvas;
-        playerEventSys.SetSelectedGameObject(DefaultFirstSelected);
+        playerEventSys.SetSelectedGameObject(playerEventSys.firstSelectedGameObject);
         playerES.Add(playerEventSys);
 
         currNumPlayers++;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,8 @@ using UnityEngine.UI;
 
 public class MenuRunner : MonoBehaviour
 {
-    public int startingIndex;
+    [NonSerialized] public int startingIndex;
+    public int currentIndex;
 
     [Header("Parallel arrays. Must be same length.")]
     public GameObject[] menusPriority;
@@ -32,5 +34,10 @@ public class MenuRunner : MonoBehaviour
 
     public void RefreshPlayerSections() {
         LevelSelectMenu.RefreshPlayerSections();
+    }
+
+    public void SwitchToMenu(int newIndex) {
+        if (newIndex > menusPriority.Length) return;
+        currentIndex = newIndex;
     }
 }
