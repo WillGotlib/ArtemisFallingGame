@@ -480,7 +480,6 @@ public class Controller : MonoBehaviour
             HideGun();
             if (StartGame)
                 StartGame.ProcessDeath(playerNumber);
-            }
             
             _tempLivesManager.ApplyDeath(playerNumber);
             _analyticsManager.DeathEvent(gameObject);

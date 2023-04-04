@@ -92,7 +92,7 @@ public class StartGame : MonoBehaviour
     // Check whether or not the match will end upon this player death. 
     // Note: Only call this when we know the player's going to die.
     public int CheckForMatchEnding(int playerNumber) {
-        if (!CheckForElimination(playerNumber)) return false;
+        if (!CheckForElimination(playerNumber)) return -1;
         int anyoneAlive = -1;
         for (int i = 0; i < mds.numPlayers; i++) {
             if (players[i].Stock > 0) {
@@ -104,7 +104,7 @@ public class StartGame : MonoBehaviour
     }
 
     public void ProcessDeath(int playerNumber) {
-        player.Stock--;
+        players[playerNumber].Stock--;
         PlayerStockUpdate(playerNumber, players[playerNumber].Stock);
         print("STOCKS: " + players[0].Stock + "/" + players[1].Stock);
         
