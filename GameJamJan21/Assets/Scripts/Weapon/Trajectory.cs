@@ -78,10 +78,10 @@ public class Trajectory : MonoBehaviour
                 }
         
                 if (hit.collider.tag == "Player") {
-                    if (hit.collider.gameObject.GetComponent<Controller>() != player) {
-                        _line.startColor = Color.red;
-                        _line.endColor = Color.red;
-                    }
+                    // if (hit.collider.gameObject.GetComponent<Controller>() != player) {
+                    //     _line.startColor = Color.red;
+                    //     _line.endColor = Color.red;
+                    // }
                     break;
                 }
                 else {

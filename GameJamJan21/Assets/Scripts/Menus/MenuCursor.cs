@@ -26,7 +26,7 @@ public class MenuCursor : MonoBehaviour
         Vector2 vec = value.Get<Vector2>();
         if (!currentlyMoving && vec.magnitude > 0.5) {
             currentlyMoving = true;
-            print("Navigated" + value.Get<Vector2>() + " to " + _eventSys.currentSelectedGameObject);
+            print("P" + playerNumber + " navigated" + value.Get<Vector2>() + " to " + _eventSys.currentSelectedGameObject);
             // print(GetComponent<PlayerInput>().currentControlScheme);
             StartCoroutine(waitTest(vec));
             // manager.SelectionCheck();
@@ -37,7 +37,8 @@ public class MenuCursor : MonoBehaviour
     }
 
     public void OnEnter() {
-        print("We pressed enter");
+        print("[P" + playerNumber + "] We pressed enter");
+        StartCoroutine(waitTest(Vector2.zero));
         if (playerNumber > 0) 
             _eventSys.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
     }
@@ -52,42 +53,37 @@ public class MenuCursor : MonoBehaviour
             newTarget = manager.GetCurrentMenuDefault().gameObject;
         }
         if (newTarget != currentlySelected) {
-            print("Cursor Target didn't match: cursor had " + currentlySelected + ", ES had " + newTarget);
+            print("[P" + playerNumber + "] Cursor Target didn't match: cursor had " + currentlySelected + ", ES had " + newTarget);
             currentlySelected = newTarget;
-            MoveToTarget(newTarget, offsetVector);
+            print("[P" + playerNumber + "] Moving to :" + newTarget);
         } else if (dir.magnitude != 0) {
             Vector3 dir3 = new Vector3(dir.x , dir.y, 0);
             Selectable currSelectable = currentlySelected.GetComponent<Selectable>().FindSelectable(dir3);
-            print(currSelectable);
             if (currSelectable) {
                 _eventSys.SetSelectedGameObject(currSelectable.gameObject);
                 currentlySelected = currSelectable.gameObject;
-                print("Had to manually make the move. Now on " + currSelectable);
+                print("[P" + playerNumber + "] Had to manually make the move. Now on " + currSelectable);
             } else {
                 currSelectable = manager.GetCurrentMenuDefault();
             }
-            MoveToTarget(currentlySelected, offsetVector);
+            print("[P" + playerNumber + "] Moving to :" + currSelectable);
+            currentlySelected = currSelectable.gameObject;
         }
+        MoveToTarget(currentlySelected, offsetVector);
         // Do a check for if there are any hovering cursors with a non-selected button
         // manager.SelectionCheck();
     }
 
     IEnumerator waitTest(Vector2 vec)
     {
-        // Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        refresh(vec);
         yield return new WaitForSeconds(0.05f);
         manager.SelectionCheck(playerNumber);
-        refresh(vec);
-        // print("\tTerminating coroutine");
     }
 
     public void MoveToTarget(GameObject newTarget, Vector3 offset) {
         transform.position = newTarget.transform.position + offset;;
-        // RectTransform x = newTarget.GetComponent<RectTransform>();
-        // transform.position = transform.position 
-        print("New target: " + newTarget);
-        // StartCoroutine(waitTest());
-        // manager.SelectionCheck();
+        print("[P" + playerNumber + "] New target: " + newTarget);
     }
 
     public void LoadCursorImage(int playerNumber) {

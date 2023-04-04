@@ -15,7 +15,7 @@ public class VictoryMenu : MatchSetupMenu
     // Start is called before the first frame update
     void Start()
     {
-        currentWinnerText.text = $"PLAYER {mds.lastWinner} WINS!";
+        currentWinnerText.text = $"PLAYER {mds.lastWinner + 1} WINS!";
         // Correctly colouring the robots
         int j = 0;
         for (int i = 0; i < mds.numPlayers; i++) {

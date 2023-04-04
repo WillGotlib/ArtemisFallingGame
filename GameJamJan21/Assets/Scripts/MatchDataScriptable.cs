@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class MatchDataScriptable : ScriptableObject
 {
     public int numPlayers;
+    [NonSerialized] public int maxPlayers = 4;
 
     public int levelIdx;
     public int numGames;

@@ -216,7 +216,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 0}
   lookDirection: {x: 0, y: 0, z: 0}
   menu: {fileID: 0}
-  dashIntensity: 60
+  dashIntensity: 40
   momentum: 0.85
   maxMomentum: 1.05
   dashDuration: 0.1

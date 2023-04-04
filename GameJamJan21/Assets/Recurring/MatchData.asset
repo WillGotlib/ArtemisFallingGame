@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d317405217159f94a9131f4d5474b95f, type: 3}
   m_Name: MatchData
   m_EditorClassIdentifier: 
-  numPlayers: 1
-  levelIdx: 0
+  numPlayers: 2
+  levelIdx: 1
   numGames: 1
   levels:
   - {fileID: 8804078544648102232, guid: d12e17ee50f58ef4db46cbba110a777e, type: 3}

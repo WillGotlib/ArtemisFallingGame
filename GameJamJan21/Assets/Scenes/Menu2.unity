@@ -1472,7 +1472,7 @@ MonoBehaviour:
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 1951768359}
-    m_SelectOnLeft: {fileID: 683748311}
+    m_SelectOnLeft: {fileID: 494059045}
     m_SelectOnRight: {fileID: 297212765}
   m_Transition: 1
   m_Colors:
@@ -9938,7 +9938,6 @@ MonoBehaviour:
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
   MPEventSystem: {fileID: 7423630436019392835, guid: ae26dd2c47cc443b48f35f471fe5470f, type: 3}
   MenuRunner: {fileID: 888204329}
-  DefaultFirstSelected: {fileID: 709711292}
   canvas: {fileID: 888204324}
   PlayerPrefab: {fileID: 1727477523385163371, guid: 034345ef0ba0040169140eda45249778, type: 3}
   controlScheme: {fileID: 11400000, guid: 2acf5ab650eb3ec4fac7c1a8598e9e22, type: 2}

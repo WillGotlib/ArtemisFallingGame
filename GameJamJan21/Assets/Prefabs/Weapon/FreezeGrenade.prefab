@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: splashZone
       value: 
       objectReference: {fileID: 6234232466112906086, guid: 89bdaff0bbe5148b8b09fbe8c91bd454, type: 3}
+    - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: _bulletSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
       propertyPath: m_RootOrder
       value: 0

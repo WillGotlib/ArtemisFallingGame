@@ -16,7 +16,7 @@ public class MatchMenuSelector : MonoBehaviour
     private bool selectionOnCooldown = false;
     
     public void ChooseMap() {
-        print(buttonOptionNumber.ToString());
+        // print(buttonOptionNumber.ToString());
         matchMenu.ChooseLevel(buttonOptionNumber);
         Selectable next = GetComponent<Button>().FindSelectable(new Vector3(1,0,0));
         if (!next) { next = GetComponent<Button>().FindSelectable(new Vector3(-1,0,0));

@@ -49,6 +49,13 @@ public class LevelSelectMenu : MatchSetupMenu
     void CueRobotDrop(int playerNumber) {
         robots[playerNumber].GetComponentInChildren<AnimationUtils>().PlayLanding();
     }
+
+    public void ResetRobotDrops() {
+        for (int i = 0; i < mds.numPlayers; i++) {
+            robots[i].GetComponent<Controller>().HideGun();
+            robots[i].GetComponentInChildren<AnimationUtils>().Landing = false;
+        }
+    }
     
     public override void ChooseLevel(int levelNumber) {
         mds.levelIdx = levelNumber;

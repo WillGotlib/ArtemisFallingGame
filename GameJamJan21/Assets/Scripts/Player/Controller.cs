@@ -102,7 +102,7 @@ public class Controller : MonoBehaviour
         _tempLivesManager = FindObjectOfType<TempLivesManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
-        menu.SwitchMenuState();
+        // menu.SwitchMenuState();
         
         _jetParticles.Shoot();
 
@@ -314,6 +314,11 @@ public class Controller : MonoBehaviour
                     
                 return;
             }
+        } else {
+            if (transform.position.y <= -1) {
+                print("Not on the right plane:: phased through the floor");
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            }
         }
         // ASSERTION: If player gets to this point they are not dead.
         if (invincibilityCooldown > 0) {
@@ -369,18 +374,18 @@ public class Controller : MonoBehaviour
 
     private void LateUpdate()
     {       
-            var mag = animator.transform.localPosition.magnitude;
-            if (mag != 0 &&
-                !currentlyDead &&
-                !animator.Landing &&
-                !_dashing &&
-                isGrounded()) // todo you cant go up on ledges 
-               // rb.MovePosition(transform.position + moveDirection.normalized * mag);       todo reenable this
-                rb.MovePosition(transform.position + moveDirection.normalized * (0.01f * GetSpeedBonus() * speed * momentum));
-            else if (!currentlyDead && !animator.Landing && !_dashing && !isGrounded()) {
-                moveDirection.y = -20;
-                rb.MovePosition(transform.position + moveDirection.normalized * momentum);
-            }
+        var mag = animator.transform.localPosition.magnitude;
+        if (mag != 0 &&
+            !currentlyDead &&
+            !animator.Landing &&
+            !_dashing &&
+            isGrounded()) // todo you cant go up on ledges 
+            // rb.MovePosition(transform.position + moveDirection.normalized * mag);       todo reenable this
+            rb.MovePosition(transform.position + moveDirection.normalized * (0.01f * GetSpeedBonus() * speed * momentum));
+        else if (!currentlyDead && !animator.Landing && !_dashing && !isGrounded()) {
+            moveDirection.y = -10;
+            rb.MovePosition(transform.position + moveDirection.normalized * momentum);
+        }
     }
 
     bool isGrounded()

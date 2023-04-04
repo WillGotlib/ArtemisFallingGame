@@ -19,11 +19,13 @@ public class PlayerManagerUI : MonoBehaviour
 
     private List<MenuCursor> playerCursors = new List<MenuCursor>();
     private List<MultiplayerEventSystem> playerES = new List<MultiplayerEventSystem>();
+    private GameObject[] previousTargets;
     
     // Update is called once per frame
     void Start()
     {
         mds.numPlayers = currNumPlayers;
+        previousTargets = new GameObject[mds.maxPlayers];
         //print("Starting");
         // Instantiate(PlayerPrefab);
         // OnPlayerJoined(); // Call this once
@@ -46,8 +48,14 @@ public class PlayerManagerUI : MonoBehaviour
 
     public void SelectionCheck(int playerNumber) {
         // Make sure that if there's a cursor beside a Selectable, it's selected
-        print("CURRENTLY SELECTED: " + playerES[playerNumber].currentSelectedGameObject);
+        // Also indicates that THIS IS THE PLAYER MOVING RIGHT NOW.
+        print("[P" + playerNumber + "] CURRENTLY SELECTED: " + playerES[playerNumber].currentSelectedGameObject);
         playerCursors[playerNumber].MoveToTarget(playerES[playerNumber].currentSelectedGameObject, Vector3.zero);
+        
+        previousTargets[playerNumber] = playerES[playerNumber].currentSelectedGameObject;
+        for (int i = 0; i < playerES.Count; i++) {
+            playerES[i].SetSelectedGameObject(previousTargets[i]);
+        }
     }
 
     public Button GetCurrentMenuDefault() {
@@ -62,6 +70,8 @@ public class PlayerManagerUI : MonoBehaviour
         playerEventSys.playerRoot = canvas;
         playerEventSys.SetSelectedGameObject(playerEventSys.firstSelectedGameObject);
         playerES.Add(playerEventSys);
+
+        previousTargets[currNumPlayers] = playerEventSys.firstSelectedGameObject;
 
         currNumPlayers++;
         newPlayer.name = "MenuEventSystem P" + currNumPlayers;
