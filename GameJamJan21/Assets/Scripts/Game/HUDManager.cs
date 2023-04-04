@@ -11,19 +11,38 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private Slider playerTwoHealth;
     [SerializeField] private Slider playerOneStamina;
     [SerializeField] private Slider playerTwoStamina;
+    public MatchDataScriptable mds;
     private float playerOneWaitTime = GlobalStats.dashCooldown;
     private float playerTwoWaitTime = GlobalStats.dashCooldown;
-    private int[] playerStocks = new int[2];
-    private float[] playerHealths = new float[2];
+    private int[] playerStocks;
+    private float[] playerHealths;
     private int staminaDisplayMultiplier = 30;
 
     void Start() {
-        playerHealths[0] = GlobalStats.baseHealth;
-        playerHealths[1] = GlobalStats.baseHealth;
+        playerStocks = new int[mds.numPlayers];
+        playerHealths = new float[mds.numPlayers];
+
+        var i = 0;
+        while (i < playerHealths.Length) {
+            playerHealths[i] = GlobalStats.baseHealth;
+            i += 1;
+        }
+
         playerOneHealth.value = GlobalStats.baseHealth;
         playerTwoHealth.value = GlobalStats.baseHealth;
         playerOneStamina.value = 100;
         playerTwoStamina.value = 100;
+    }
+
+    public void InitHealth() {
+        playerStocks = new int[mds.numPlayers];
+        playerHealths = new float[mds.numPlayers];
+
+        var i = 0;
+        while (i < playerHealths.Length) {
+            playerHealths[i] = GlobalStats.baseHealth;
+            i += 1;
+        }
     }
 
     void Update() {

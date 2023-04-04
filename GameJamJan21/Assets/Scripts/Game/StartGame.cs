@@ -20,12 +20,6 @@ public class StartGame : MonoBehaviour
     [SerializeField] private float deathCooldown; // Amount of time before a player respawns
     [SerializeField] private float invincibilityCooldown; // Amount of time after respawning that the player cannot die
 
-    // [Header("Colours")]
-    // [Tooltip("Lists have to be the same length")]
-    // public Color[] primaryColours;
-    // public Color[] accentColours;
-    // //public Color player2PrimaryColour=new Color(.22f,.11f,.055f);
-    // //public Color player2AccentColour= Color.magenta;
     public MatchDataScriptable mds;
 
     // Start is called before the first frame update
@@ -34,6 +28,7 @@ public class StartGame : MonoBehaviour
         // 
         if (mds.primaryColours.Length != mds.accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
+        _hudManager.InitHealth();
         StartMatch();
     }
     public void StartMatch()
@@ -44,7 +39,7 @@ public class StartGame : MonoBehaviour
         var spawnPoints = levelManager.GetSpawnPoints();
         // spawnPoints = GameObject.FindGameObjectsWithTag(targetTag);
         // CreatePhysicsScene();
-        players = new Controller[Mathf.Min(playerCount, spawnPoints.Length)];
+        players = new Controller[Mathf.Min(mds.numPlayers, spawnPoints.Length)];
         var i=0;
         foreach (GameObject spawn in spawnPoints) {
             if (i >= players.Length) { break; }
@@ -60,7 +55,8 @@ public class StartGame : MonoBehaviour
 
             if (i < mds.primaryColours.Length)
             {
-                int playerIndex = mds.playerColourSchemes[i];
+                // int playerIndex = mds.playerColourSchemes[i];
+                int playerIndex = i;
                 var colourizer = player.GetComponent<PlayerColourizer>();
                 colourizer.PrimaryColour = mds.primaryColours[playerIndex];
                 colourizer.SecondaryColour = mds.accentColours[playerIndex];
@@ -81,13 +77,49 @@ public class StartGame : MonoBehaviour
         _hudManager.ChangeStock(playerNumber, playerStock);
     }
 
+    // Check whether or not the player will be eliminated by this death. 
+    // Note: Only call this when we know the player's going to die.
+    public bool CheckForElimination(int playerNumber) {
+        if (players[playerNumber].Stock - 1 > 0) {
+            return false;
+        } else {
+            // This player will be eliminated on this death.
+            print("PLAYER " + playerNumber + " IS OUT!");
+            return true;
+        }
+    }
+    
+    // Check whether or not the match will end upon this player death. 
+    // Note: Only call this when we know the player's going to die.
+    public int CheckForMatchEnding(int playerNumber) {
+        if (!CheckForElimination(playerNumber)) return false;
+        int anyoneAlive = -1;
+        for (int i = 0; i < mds.numPlayers; i++) {
+            if (players[i].Stock > 0) {
+                if (anyoneAlive == -1) anyoneAlive = i; // One person can be alive.
+                else return -1; // Match hasn't ended.
+            }
+        }
+        return anyoneAlive; // This player is the winner.
+    }
+
+    public void ProcessDeath(int playerNumber) {
+        player.Stock--;
+        PlayerStockUpdate(playerNumber, players[playerNumber].Stock);
+        print("STOCKS: " + players[0].Stock + "/" + players[1].Stock);
+        
+        int winner = CheckForMatchEnding(playerNumber);
+        if (winner != -1) {
+            // TODO: GAME IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
+            
+            levelManager.EndLevel(winner);
+        }
+    }
+
     public void RespawnPlayer(Controller player)
     {
-        player.Stock--;
         var playerNumber = player.playerNumber;
-        PlayerStockUpdate(playerNumber, player.Stock);
         PlayerHealthUpdate(playerNumber, GlobalStats.baseHealth);
-        print("STOCKS: " + players[0].Stock + "/" + players[1].Stock);
 
         if (player.Stock > 0) {
             var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
@@ -100,10 +132,7 @@ public class StartGame : MonoBehaviour
             player.GetComponentInChildren<AnimationUtils>().PlayLanding();
         }
         else {
-            print("PLAYER " + playerNumber + " IS OUT!");
-            int winner = 0;
-            if (playerNumber == winner) winner = 1;
-            levelManager.EndLevel(winner);
+            // print("PLAYER " + playerNumber + " IS OUT!");
         }
     }
 }

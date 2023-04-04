@@ -10,34 +10,27 @@ public class MatchMenu : MatchSetupMenu
     [Header("Starting Match Menu")]
     [SerializeField] GameObject buttonSetParent;
     [SerializeField] GameObject[] playerOptionsParents;
+    [SerializeField] GameObject[] playerOptionsSections;
+
+    [SerializeField] Button playButton;
 
     void Start() {
-        //Fetch the Dropdown GameObject the script is attached to
-        // button_set = GetComponent<TMPro.TMP_Dropdown>();
-        
-        Button[] levelButtonSet = buttonSetParent.GetComponentsInChildren<Button>();
 
-        // List of level names
-        // TODO: This is not extensible right now. Fix it.
-        for (int i = 0; i < mds.levels.Length; i++) {
-            Level currLevel = mds.levels[i].GetComponent<Level>();
-            levelButtonSet[i].GetComponent<Image>().sprite = currLevel.thumbnail;
-            levelButtonSet[i].gameObject.GetComponentInChildren<TMP_Text>().text = currLevel.nid;
-            levelButtonSet[i].gameObject.GetComponent<MatchMenuSelector>().buttonOptionNumber = i;
-        }
-        mds.levelIdx = 0;
-        levelButtonSet[0].interactable = false;
+        ButtonAssignment();
 
+        RefreshPlayerSections();
+    }
+
+    void ButtonAssignment() {
         for (int i = 0; i < mds.numPlayers; i++) { // Two for the players, two for the options (color and secondary type)
             Button[] optionsButtons = playerOptionsParents[i].GetComponentsInChildren<Button>();
-            Color temp = mds.primaryColours[mds.playerColourSchemes[i]];
+            Color temp = mds.primaryColours[i]; //mds.playerColourSchemes[i]];
             temp.a = 1f;
             optionsButtons[0].GetComponent<Image>().color = temp;
             
             optionsButtons[1].GetComponent<Image>().sprite = mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().thumbnail;
             optionsButtons[1].gameObject.GetComponentInChildren<TMP_Text>().text = 
                 mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label;
-            print(mds.secondaryTypes[mds.playerSecondaries[i]].GetComponent<BulletLogic>().label);
         }
         initialColors();
     }
@@ -61,5 +54,15 @@ public class MatchMenu : MatchSetupMenu
             PausedMenu.isPaused = false;
         }
         SceneManager.LoadScene("Gameplay");
+    }
+
+    public void RefreshPlayerSections() {
+        for (int i = 0; i < mds.numPlayers; i++) {
+            playerOptionsSections[i].SetActive(true);
+        }
+        if (!playButton.interactable && mds.numPlayers >= 2) {
+            playButton.interactable = true;
+        }
+        ButtonAssignment();
     }
 }

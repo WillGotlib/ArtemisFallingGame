@@ -43,11 +43,18 @@ public class MenuCursor : MonoBehaviour
     }
 
     public void refresh(Vector2 dir) {
+        // Vector3 offsetVector = new Vector3(-110f, -5f, 0);
+        Vector3 offsetVector = Vector3.zero;
+        // TODO: MAKE THIS BETTER. RIGHT NOW IT OBSTRUCTS.
+        
         GameObject newTarget = _eventSys.currentSelectedGameObject;
+        if (!currentlySelected) {
+            newTarget = manager.GetCurrentMenuDefault().gameObject;
+        }
         if (newTarget != currentlySelected) {
             print("Cursor Target didn't match: cursor had " + currentlySelected + ", ES had " + newTarget);
             currentlySelected = newTarget;
-            MoveToTarget(newTarget, new Vector3(-110f, -5f, 0));
+            MoveToTarget(newTarget, offsetVector);
         } else if (dir.magnitude != 0) {
             Vector3 dir3 = new Vector3(dir.x , dir.y, 0);
             Selectable currSelectable = currentlySelected.GetComponent<Selectable>().FindSelectable(dir3);
@@ -56,8 +63,10 @@ public class MenuCursor : MonoBehaviour
                 _eventSys.SetSelectedGameObject(currSelectable.gameObject);
                 currentlySelected = currSelectable.gameObject;
                 print("Had to manually make the move. Now on " + currSelectable);
+            } else {
+                currSelectable = manager.GetCurrentMenuDefault();
             }
-            MoveToTarget(currentlySelected, new Vector3(-110f, -5f, 0));
+            MoveToTarget(currentlySelected, offsetVector);
         }
         // Do a check for if there are any hovering cursors with a non-selected button
         // manager.SelectionCheck();

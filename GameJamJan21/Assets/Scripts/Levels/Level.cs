@@ -21,7 +21,7 @@ public class Level : MonoBehaviour
             {
                 var item = playerSpawnPoints[i];
                 var nextItem = playerSpawnPoints[i + 1];
-                if (nextItem.transform.position.z < item.transform.position.z)
+                if (nextItem.transform.position.z <= item.transform.position.z)
                 {
                     continue;
                 }

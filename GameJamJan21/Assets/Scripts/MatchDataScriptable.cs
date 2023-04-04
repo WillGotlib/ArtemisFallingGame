@@ -17,13 +17,13 @@ public class MatchDataScriptable : ScriptableObject
     [Tooltip("Lists have to be the same length")]
     [SerializeField] public Color[] primaryColours;
     [SerializeField] public Color[] accentColours;
-    public int[] playerColourSchemes;
-    public List<int> selectedColourSchemes; // For no overlap
 
     public GameObject[] secondaryTypes;
     public int[] playerSecondaries;
 
     public bool skipMainMenu = false;
     
-
+    
+    private int[] playerColourSchemes;
+    private List<int> selectedColourSchemes; // For no overlap
 }

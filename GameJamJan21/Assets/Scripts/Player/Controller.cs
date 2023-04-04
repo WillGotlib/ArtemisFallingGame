@@ -53,7 +53,7 @@ public class Controller : MonoBehaviour
     private float deathCooldown = GlobalStats.deathCooldown;
     private float invincibilityCooldown;
 
-    private StartGame playerController;
+    private StartGame StartGame;
     private List<Effect> effects = new List<Effect>();
 
     private Vector3 direction;
@@ -94,7 +94,7 @@ public class Controller : MonoBehaviour
         lookDirection = rotation * transform.rotation * Vector3.forward;
         
         _analyticsManager = FindObjectOfType<AnalyticsManager>();
-        playerController = FindObjectOfType<StartGame>();
+        StartGame = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
         _jetParticles = GetComponent<DashJets>();
         cameraController = FindObjectOfType<CameraSwitch>();
@@ -122,8 +122,8 @@ public class Controller : MonoBehaviour
 
         _capsule = GetComponent<CapsuleCollider>();
         
-        playerController.PlayerHealthUpdate(playerNumber, playerHealth);
-        // playerController.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
+        StartGame.PlayerHealthUpdate(playerNumber, playerHealth);
+        // StartGame.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
 
     public void SpawnGun()
@@ -155,7 +155,6 @@ public class Controller : MonoBehaviour
         // Vector3 temp = value.Get<Vector3>();
         // if (temp.magnitude > 0) print("3d vector input: " + temp);
         Vector2 temp2 = value.Get<Vector2>();
-        if (temp2.magnitude > 0) print("2d vector input: " + temp2);
         moveDirection = new Vector3(-temp2.y, 0, temp2.x);
     }
 
@@ -197,7 +196,6 @@ public class Controller : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateLookDirection();
-        Debug.Log(lookDirection.x);
     }
 
     public void OnPrimaryFire()
@@ -278,6 +276,15 @@ public class Controller : MonoBehaviour
         _dashing = false;
     }
 
+    void RespawnRoutine() {
+        if (StartGame == null) {
+            var tutorialSpawner = FindObjectOfType<StartTutorial>();
+            tutorialSpawner.RespawnPlayer(this);
+        } else {
+            StartGame.RespawnPlayer(this);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -296,12 +303,7 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0)
             {
-                if (playerController == null) {
-                    var tutorialSpawner = FindObjectOfType<StartTutorial>();
-                    tutorialSpawner.RespawnPlayer(this);
-                } else {
-                    playerController.RespawnPlayer(this);
-                }
+                RespawnRoutine();
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
@@ -366,7 +368,7 @@ public class Controller : MonoBehaviour
     }
 
     private void LateUpdate()
-    {
+    {       
             var mag = animator.transform.localPosition.magnitude;
             if (mag != 0 &&
                 !currentlyDead &&
@@ -375,6 +377,10 @@ public class Controller : MonoBehaviour
                 isGrounded()) // todo you cant go up on ledges 
                // rb.MovePosition(transform.position + moveDirection.normalized * mag);       todo reenable this
                 rb.MovePosition(transform.position + moveDirection.normalized * (0.01f * GetSpeedBonus() * speed * momentum));
+            else if (!currentlyDead && !animator.Landing && !_dashing && !isGrounded()) {
+                moveDirection.y = -20;
+                rb.MovePosition(transform.position + moveDirection.normalized * momentum);
+            }
     }
 
     bool isGrounded()
@@ -450,7 +456,7 @@ public class Controller : MonoBehaviour
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
 
-        // playerController.PlayerHealthUpdate(playerNumber, playerHealth);
+        // StartGame.PlayerHealthUpdate(playerNumber, playerHealth);
         _hudManager.ChangeHealth(playerNumber, playerHealth);
         _analyticsManager.HealthEvent(gameObject, playerHealth);
         if (playerHealth <= 0)
@@ -472,6 +478,9 @@ public class Controller : MonoBehaviour
             // SetActive(false);
             
             HideGun();
+            if (StartGame)
+                StartGame.ProcessDeath(playerNumber);
+            }
             
             _tempLivesManager.ApplyDeath(playerNumber);
             _analyticsManager.DeathEvent(gameObject);
