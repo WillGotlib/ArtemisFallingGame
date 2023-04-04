@@ -77,13 +77,49 @@ public class StartGame : MonoBehaviour
         _hudManager.ChangeStock(playerNumber, playerStock);
     }
 
+    // Check whether or not the player will be eliminated by this death. 
+    // Note: Only call this when we know the player's going to die.
+    public bool CheckForElimination(int playerNumber) {
+        if (players[playerNumber].Stock - 1 > 0) {
+            return false;
+        } else {
+            // This player will be eliminated on this death.
+            print("PLAYER " + playerNumber + " IS OUT!");
+            return true;
+        }
+    }
+    
+    // Check whether or not the match will end upon this player death. 
+    // Note: Only call this when we know the player's going to die.
+    public int CheckForMatchEnding(int playerNumber) {
+        if (!CheckForElimination(playerNumber)) return false;
+        int anyoneAlive = -1;
+        for (int i = 0; i < mds.numPlayers; i++) {
+            if (players[i].Stock > 0) {
+                if (anyoneAlive == -1) anyoneAlive = i; // One person can be alive.
+                else return -1; // Match hasn't ended.
+            }
+        }
+        return anyoneAlive; // This player is the winner.
+    }
+
+    public void ProcessDeath(int playerNumber) {
+        player.Stock--;
+        PlayerStockUpdate(playerNumber, players[playerNumber].Stock);
+        print("STOCKS: " + players[0].Stock + "/" + players[1].Stock);
+        
+        int winner = CheckForMatchEnding(playerNumber);
+        if (winner != -1) {
+            // TODO: GAME IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
+            
+            levelManager.EndLevel(winner);
+        }
+    }
+
     public void RespawnPlayer(Controller player)
     {
-        player.Stock--;
         var playerNumber = player.playerNumber;
-        PlayerStockUpdate(playerNumber, player.Stock);
         PlayerHealthUpdate(playerNumber, GlobalStats.baseHealth);
-        print("STOCKS: " + players[0].Stock + "/" + players[1].Stock);
 
         if (player.Stock > 0) {
             var spawnpoint = levelManager.GetSpawnPoints()[playerNumber];
@@ -96,10 +132,7 @@ public class StartGame : MonoBehaviour
             player.GetComponentInChildren<AnimationUtils>().PlayLanding();
         }
         else {
-            print("PLAYER " + playerNumber + " IS OUT!");
-            int winner = 0;
-            if (playerNumber == winner) winner = 1;
-            levelManager.EndLevel(winner);
+            // print("PLAYER " + playerNumber + " IS OUT!");
         }
     }
 }
