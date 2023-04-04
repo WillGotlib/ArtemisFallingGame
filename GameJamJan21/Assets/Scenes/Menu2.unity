@@ -970,7 +970,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 4
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 657580559}
@@ -2435,7 +2435,7 @@ RectTransform:
   m_GameObject: {fileID: 657580558}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.13, y: 2.0160866, z: 3.162795}
+  m_LocalScale: {x: 1.5, y: 2.6762211, z: 4.1984005}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1304751806}
@@ -7323,8 +7323,8 @@ RectTransform:
   m_GameObject: {fileID: 1304751805}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7741825, y: 0.54024136, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5832175, y: 0.40698183, z: 0.75333333}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 657580563}
   m_RootOrder: 0
@@ -11304,8 +11304,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: {fileID: 1902504653}
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
-  PreMatchMenu: {fileID: 0}
-  PreMatchButton: {fileID: 0}
+  PreMatchMenu: {fileID: 1237094281}
+  PreMatchButton: {fileID: 709711295}
 --- !u!114 &2092663302
 MonoBehaviour:
   m_ObjectHideFlags: 0
