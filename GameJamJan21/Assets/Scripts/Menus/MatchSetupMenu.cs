@@ -13,7 +13,9 @@ public abstract class MatchSetupMenu : MonoBehaviour
     public abstract void ChooseLevel(int levelNumber);
 
     public void initialColors() {
-        for (int i = 0; i < mds.numPlayers; i++) {
+        // int numPlayers = mds.numPlayers;
+        int numPlayers = 4; // Might as well.
+        for (int i = 0; i < numPlayers; i++) {
             ColourUpdate(i);
         }
     }
@@ -23,8 +25,11 @@ public abstract class MatchSetupMenu : MonoBehaviour
     }
 
     public void ColourUpdate(int playerNumber, GameObject target) {
-        int playerIndex = mds.playerColourSchemes[playerNumber];
+        // int playerIndex = mds.playerColourSchemes[playerNumber];
+        int playerIndex = playerNumber;
+        print("Colour player " + playerNumber + ", " + mds.primaryColours[0]);
         var colourizer = target.GetComponent<PlayerColourizer>();
+        print("Colourizer: " + colourizer);
         colourizer.PrimaryColour = mds.primaryColours[playerIndex];
         colourizer.SecondaryColour = mds.accentColours[playerIndex];
         colourizer.initialColourize();

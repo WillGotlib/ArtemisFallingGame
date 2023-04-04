@@ -13,17 +13,13 @@ public class MenuRunner : MonoBehaviour
 
     public MainMenu MainMenu;
     public LevelSelectMenu LevelSelectMenu;
-    public MatchMenu PreMatchMenu;
 
     // Start is called before the first frame update
     void Start()
     {
         foreach (GameObject menu in menusPriority) menu.SetActive(false);
         menusPriority[startingIndex].SetActive(true);
-    }
-
-    public void RefreshPlayerSections(int currNumPlayers){
-        PreMatchMenu.RefreshPlayerSections(currNumPlayers);
+        LevelSelectMenu.RefreshPlayerSections();
     }
 
     public Button GetCurrentMenuDefault() {
@@ -32,5 +28,9 @@ public class MenuRunner : MonoBehaviour
         }
         // It should never get here. Exactly one menu should be active at all times.
         return null;
+    }
+
+    public void RefreshPlayerSections() {
+        LevelSelectMenu.RefreshPlayerSections();
     }
 }

@@ -55,7 +55,8 @@ public class StartGame : MonoBehaviour
 
             if (i < mds.primaryColours.Length)
             {
-                int playerIndex = mds.playerColourSchemes[i];
+                // int playerIndex = mds.playerColourSchemes[i];
+                int playerIndex = i;
                 var colourizer = player.GetComponent<PlayerColourizer>();
                 colourizer.PrimaryColour = mds.primaryColours[playerIndex];
                 colourizer.SecondaryColour = mds.accentColours[playerIndex];

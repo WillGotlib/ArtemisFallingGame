@@ -18,13 +18,13 @@ public class MatchMenu : MatchSetupMenu
 
         ButtonAssignment();
 
-        RefreshPlayerSections(mds.numPlayers);
+        RefreshPlayerSections();
     }
 
     void ButtonAssignment() {
         for (int i = 0; i < mds.numPlayers; i++) { // Two for the players, two for the options (color and secondary type)
             Button[] optionsButtons = playerOptionsParents[i].GetComponentsInChildren<Button>();
-            Color temp = mds.primaryColours[mds.playerColourSchemes[i]];
+            Color temp = mds.primaryColours[i]; //mds.playerColourSchemes[i]];
             temp.a = 1f;
             optionsButtons[0].GetComponent<Image>().color = temp;
             
@@ -56,11 +56,11 @@ public class MatchMenu : MatchSetupMenu
         SceneManager.LoadScene("Gameplay");
     }
 
-    public void RefreshPlayerSections(int numPlayers) {
-        for (int i = 0; i < numPlayers; i++) {
+    public void RefreshPlayerSections() {
+        for (int i = 0; i < mds.numPlayers; i++) {
             playerOptionsSections[i].SetActive(true);
         }
-        if (!playButton.interactable && numPlayers >= 2) {
+        if (!playButton.interactable && mds.numPlayers >= 2) {
             playButton.interactable = true;
         }
         ButtonAssignment();
