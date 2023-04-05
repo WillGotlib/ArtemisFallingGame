@@ -206,6 +206,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRateBonus: 1
   speedBonus: 0.1
-  dashBonus: 0
+  dashBonus: 0.1
   maxDuration: 1
   requiresWeapon: 0
