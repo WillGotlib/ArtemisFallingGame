@@ -207,8 +207,4 @@ public class GunController : MonoBehaviour
             secondaryOnCooldown = false;
         }
     }
-
-    public void setSecondaryAmmo(int ammo) {
-        
-    }
 }

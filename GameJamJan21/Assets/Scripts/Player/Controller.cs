@@ -139,7 +139,7 @@ public class Controller : MonoBehaviour
         
         var gunController = weapon.GetComponent<GunController>();
         gunController.setOwner(this);
-        gunController.setSecondary(null);
+        gunController.setSecondary(null, 0);
         // gunController.setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
     }
 
