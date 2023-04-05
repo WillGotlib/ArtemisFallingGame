@@ -20,9 +20,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject PreMatchMenu;
     [SerializeField] Button PreMatchButton;
 
-
     public void Awake() {
         if (mds.skipMainMenu) {
+            print("Skipping Main Menu directly to Match Setup Menu");
             mds.skipMainMenu = false;
             PreMatchButton.onClick.Invoke();
         }

@@ -534,7 +534,7 @@ public class Controller : MonoBehaviour
     }
 
     public void RemoveSecondary() {
-        _hudManager.ChangeSecondary(playerNumber);
+        _hudManager?.ChangeSecondary(playerNumber);
     }
 
     public void AddEffect(Effect e) {

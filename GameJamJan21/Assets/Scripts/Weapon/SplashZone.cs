@@ -15,7 +15,7 @@ public class SplashZone : MonoBehaviour
 
     // Note: These fields only matter if damageOverTime == true.
     public float damageOverTimeDamage = 0.1f;
-    private bool damageOverTimeActive = false;
+    // private bool damageOverTimeActive = false;
     public float damageOverTimeCooldown = 0.2f;
     private float damageOverTimeRemaining = 0.2f;
 
@@ -46,16 +46,16 @@ public class SplashZone : MonoBehaviour
                 foreach (Collider target in damageablesInside) {
                     // TODO: Make it a different timer for each target. Use Coroutines.
                     Controller playerInside = target.gameObject.GetComponent<Controller>();
-                    print($"Splash zone damaging {target}!");
+                    // print($"Splash zone damaging {target}!");
                     playerInside.InflictDamage(damageOverTimeDamage);
                     _analytics.DamageEvent(target.gameObject,gameObject);
                     
                     // damageOverTimeActive = false;
                     damageOverTimeRemaining = damageOverTimeCooldown;
                 }
-            } else if (damageOverTimeRemaining == damageOverTimeCooldown) {  // We need to start the countdown.
-                damageOverTimeActive = true;
-            }
+            }// else if (damageOverTimeRemaining == damageOverTimeCooldown) {  // We need to start the countdown.
+            //     damageOverTimeActive = true;
+            // }
         }
 
         if (timeRemaining > 0)

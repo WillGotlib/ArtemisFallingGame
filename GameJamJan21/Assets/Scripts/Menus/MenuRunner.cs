@@ -15,6 +15,7 @@ public class MenuRunner : MonoBehaviour
 
     public MainMenu MainMenu;
     public LevelSelectMenu LevelSelectMenu;
+    [SerializeField] PlayerManagerUI PlayerManagerUI;
 
     // Start is called before the first frame update
     void Start()
@@ -36,8 +37,28 @@ public class MenuRunner : MonoBehaviour
         LevelSelectMenu.RefreshPlayerSections();
     }
 
+    private bool navigationCooldownComplete = true;
+
+    private IEnumerator NavigationCooldown() {
+        yield return new WaitForSeconds(0.2f);
+        navigationCooldownComplete = true;
+    }
+
     public void SwitchToMenu(int newIndex) {
         if (newIndex > menusPriority.Length) return;
+        print($"newIndex: {newIndex}, oldIndex: {currentIndex}");
+        if (!navigationCooldownComplete) {
+            print("Tried to navigate between menus too fast. Chill the fuck out dude");
+            return;
+        }
+        navigationCooldownComplete = false;
+        StartCoroutine(NavigationCooldown());
+
+        menusPriority[currentIndex].SetActive(false);
+        menusPriority[newIndex].SetActive(true);
+        PlayerManagerUI.RefreshCursors(defaultButtons[newIndex].gameObject);
+
         currentIndex = newIndex;
+        
     }
 }
