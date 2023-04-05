@@ -14,6 +14,8 @@ public class LevelSelectMenu : MatchSetupMenu
 
     [SerializeField] GameObject[] playerOptionsSections;
 
+    [SerializeField] MenuRunner MenuRunner;
+
     void Start() {
         //Fetch the Dropdown GameObject the script is attached to
         // button_set = GetComponent<TMPro.TMP_Dropdown>();
@@ -106,6 +108,7 @@ public class LevelSelectMenu : MatchSetupMenu
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
-        SceneManager.LoadScene("Gameplay");
+        if (MenuRunner.navigationCooldownComplete) SceneManager.LoadScene("Gameplay");
+        else print("Hit play button too fast. Didn't load into scene");
     }
 }

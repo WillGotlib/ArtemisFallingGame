@@ -24,8 +24,8 @@ public class VictoryMenu : MatchSetupMenu
             } else {
                 j++;
                 ColourUpdate(i, robots[j]);
+                loserRobots[j].SetActive(true);
             }
-            loserRobots[j].SetActive(true);
         }
         int sum = 0;
         foreach (int num in mds.playerWins) sum += num;

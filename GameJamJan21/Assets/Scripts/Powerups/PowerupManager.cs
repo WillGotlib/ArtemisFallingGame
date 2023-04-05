@@ -49,6 +49,7 @@ public class PowerupManager : MonoBehaviour
             curPowerups += 1;
         }
     }
+    
 
     public void RemovePowerup() {
         curPowerups -= 1;
