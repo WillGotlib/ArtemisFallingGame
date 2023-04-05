@@ -138,6 +138,7 @@ MonoBehaviour:
   requiresWeapon: 0
   secondaryType: {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
   ammo: 1
+  icon: {fileID: 21300000, guid: 7e9b43615aa6041f0b764a72e9173450, type: 3}
 --- !u!136 &4068034673374940072
 CapsuleCollider:
   m_ObjectHideFlags: 0

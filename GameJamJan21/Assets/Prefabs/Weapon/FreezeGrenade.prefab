@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
       propertyPath: cooldown
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3251894738368888167, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
       propertyPath: thumbnail

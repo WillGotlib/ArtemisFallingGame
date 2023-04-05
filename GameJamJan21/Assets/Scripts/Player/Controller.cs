@@ -435,7 +435,7 @@ public class Controller : MonoBehaviour
         float totalBonus = 1;
         foreach (Effect e in effects)
         {
-            totalBonus += e.dashBonus;
+            totalBonus *= e.dashBonus;
         }
 
         return totalBonus;
@@ -518,9 +518,14 @@ public class Controller : MonoBehaviour
 
             var gunController = weapon.GetComponent<GunController>();
             gunController.setSecondary(newSecondary.secondaryType, newSecondary.ammo);
+            _hudManager.ChangeSecondary(playerNumber, newSecondary.icon);
             newSecondary.removePowerup();
             Destroy(collider.gameObject);
         }
+    }
+
+    public void RemoveSecondary() {
+        _hudManager.ChangeSecondary(playerNumber);
     }
 
     public void AddEffect(Effect e) {

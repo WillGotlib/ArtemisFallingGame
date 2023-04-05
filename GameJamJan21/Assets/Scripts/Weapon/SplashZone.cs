@@ -38,19 +38,19 @@ public class SplashZone : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (damageOverTimeActive) {
-            damageOverTimeRemaining -= Time.deltaTime;
-        }
         if (damageOverTime) {
+            if (damageOverTimeRemaining > 0) {
+                damageOverTimeRemaining -= Time.deltaTime;
+            }
             if (damageOverTimeRemaining <= 0) { // The countdown has expired. Inflict the damage
                 foreach (Collider target in damageablesInside) {
-                // TODO: Make it a different timer for each target. Use Coroutines.
+                    // TODO: Make it a different timer for each target. Use Coroutines.
                     Controller playerInside = target.gameObject.GetComponent<Controller>();
-                  
+                    print($"Splash zone damaging {target}!");
                     playerInside.InflictDamage(damageOverTimeDamage);
                     _analytics.DamageEvent(target.gameObject,gameObject);
                     
-                    damageOverTimeActive = false;
+                    // damageOverTimeActive = false;
                     damageOverTimeRemaining = damageOverTimeCooldown;
                 }
             } else if (damageOverTimeRemaining == damageOverTimeCooldown) {  // We need to start the countdown.
@@ -65,6 +65,7 @@ public class SplashZone : MonoBehaviour
 
             objectColour = new Color(objectColour.r, objectColour.g, objectColour.b, fadeAmount);
             this.GetComponent<MeshRenderer>().material.color = objectColour;
+            print($"Time remaining: {timeRemaining} || DOT Timer: {damageOverTimeRemaining}");
             timeRemaining -= Time.deltaTime;
         }
         else {
@@ -81,6 +82,7 @@ public class SplashZone : MonoBehaviour
             _analytics.DamageEvent(collider.gameObject,gameObject);
         }
         if (damageOverTime && collider.gameObject.tag == "Player") {
+            print($"Target {collider} entered the zone.");
             if (!damageablesInside.Contains(collider)) {
                 damageablesInside.Add(collider);
             }

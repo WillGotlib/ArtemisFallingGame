@@ -978,7 +978,7 @@ MonoBehaviour:
   bullet: {fileID: 6117381863587361867}
   maxBounces: 1
   _bulletSpeed: 10
-  cooldown: 4
+  cooldown: 2
   spin: {x: 270, y: 0, z: 0}
   splashZone: {fileID: 6234232466112906086, guid: da5c5bc93ddf0ad4792869db5085d860, type: 3}
   rotationSpeed: 0.3

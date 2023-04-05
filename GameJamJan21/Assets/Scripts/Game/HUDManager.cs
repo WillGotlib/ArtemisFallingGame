@@ -13,6 +13,7 @@ public class HUDManager : MonoBehaviour
     private float[] playerWaitTimes;
     [SerializeField] private Slider[] playerStaminaBars;
     private int[] playerStocks;
+    [SerializeField] private Image[] playerSecondaryIcons;
 
     [SerializeField] private GameObject[] playerStockParents;
     private GameObject[,] playerStockBoxes;
@@ -41,6 +42,8 @@ public class HUDManager : MonoBehaviour
                 playerStockBoxes[i,j] = newStock;
                 newStock.transform.SetParent(playerStockParents[i].transform);
             }
+            playerSecondaryIcons[i].color = new Color (playerSecondaryIcons[i].color.r, 
+                playerSecondaryIcons[i].color.g, playerSecondaryIcons[i].color.b, 0f);
         }
     }
 
@@ -83,6 +86,19 @@ public class HUDManager : MonoBehaviour
             if (!playerStockBoxes[playerNumber, i].activeSelf) { break; }
             playerStockBoxes[playerNumber, i].SetActive(false);
         }
+    }
+
+    public void ChangeSecondary(int playerNumber, Sprite secondaryImage) {
+        playerSecondaryIcons[playerNumber].sprite = secondaryImage;
+        float alpha = 0;
+        alpha = (secondaryImage) ? 1f : 0f;
+        playerSecondaryIcons[playerNumber].color = new Color (playerSecondaryIcons[playerNumber].color.r, 
+                playerSecondaryIcons[playerNumber].color.g, playerSecondaryIcons[playerNumber].color.b, alpha);
+    }
+    
+    // Removes secondary
+    public void ChangeSecondary(int playerNumber) {
+        ChangeSecondary(playerNumber, null);
     }
     
     public void UseStamina(int playerNumber) {

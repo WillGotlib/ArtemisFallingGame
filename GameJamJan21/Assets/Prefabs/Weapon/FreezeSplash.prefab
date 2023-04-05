@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: damageOverTime
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: explosionDamage
@@ -29,6 +29,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: explodesOnImpact
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+      propertyPath: damageOverTimeDamage
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2477174288545087538, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+      propertyPath: damageOverTimeCooldown
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1848706326924120752, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
@@ -197,7 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRateBonus: 1
-  speedBonus: 0.2
-  dashBonus: 1
+  speedBonus: 0.1
+  dashBonus: 0
   maxDuration: 1
   requiresWeapon: 0

@@ -202,6 +202,7 @@ public class GunController : MonoBehaviour
             secondaryCooldown = newSecondary.GetComponent<BulletLogic>().cooldown;
             secondaryCooldownTimer = secondaryCooldown;
         } else {
+            owner.RemoveSecondary();
             secondaryCooldown = 0;
             secondaryCooldownTimer = 0;
             secondaryOnCooldown = false;
