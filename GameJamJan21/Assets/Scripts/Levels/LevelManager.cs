@@ -76,12 +76,13 @@ public class LevelManager : MonoBehaviour
     public void EndLevel(int playerNumber) {
         mds.playerWins[playerNumber]++;
         mds.lastWinner = playerNumber;
-        int threshold = mds.numGames / 2 + 1;
-        if (mds.playerWins[0] < threshold && mds.playerWins[1] < threshold) {
-            SceneManager.LoadScene("MidMatchMenu");
-        } else {
-            SceneManager.LoadScene("VictoryMenu");
-        }
+        SceneManager.LoadScene("VictoryMenu");
+        // int threshold = mds.numGames / 2 + 1;
+        // if (mds.playerWins[0] < threshold && mds.playerWins[1] < threshold) {
+        //     SceneManager.LoadScene("MidMatchMenu");
+        // } else {
+        //     SceneManager.LoadScene("VictoryMenu");
+        // }
     }
 
     

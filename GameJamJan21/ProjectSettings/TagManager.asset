@@ -13,6 +13,7 @@ TagManager:
   - Modifier
   - SkyBox
   - Grenade
+  - Weapon
   layers:
   - Default
   - TransparentFX

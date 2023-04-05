@@ -61,7 +61,6 @@ public class Controller : MonoBehaviour
 
     private AnalyticsManager _analyticsManager;
     private HUDManager _hudManager;
-    private TempLivesManager _tempLivesManager;
     
     public MatchDataScriptable mds;
 
@@ -99,7 +98,6 @@ public class Controller : MonoBehaviour
         _jetParticles = GetComponent<DashJets>();
         cameraController = FindObjectOfType<CameraSwitch>();
         _hudManager = FindObjectOfType<HUDManager>();
-        _tempLivesManager = FindObjectOfType<TempLivesManager>();
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         // menu.SwitchMenuState();
@@ -296,7 +294,7 @@ public class Controller : MonoBehaviour
             if (transform.position.y != 100)
             {
                 // TODO: Un-hard-code this value. Each map should have a "floor" coord?
-                print("Not on the right plane:: on life plane");
+                // print("Not on the right plane:: on life plane");
                 transform.position = new Vector3(0, 100, 0);
             }
             
@@ -486,7 +484,6 @@ public class Controller : MonoBehaviour
             if (StartGame)
                 StartGame.ProcessDeath(playerNumber);
             
-            _tempLivesManager.ApplyDeath(playerNumber);
             _analyticsManager.DeathEvent(gameObject);
         }
     }
@@ -512,6 +509,14 @@ public class Controller : MonoBehaviour
                 weapon.GetComponent<GunController>().ClearPrimaryCooldown();
             }
             powerup.removePowerup(); //todo make this script trackable and keep trac of powerups
+            Destroy(collider.gameObject);
+        } else if (collider.gameObject.tag == "Weapon") {
+            print("PICKED UP A SECONDARY!");
+            WeaponDrop newSecondary = collider.gameObject.GetComponent<WeaponDrop>();
+
+            var gunController = weapon.GetComponent<GunController>();
+            gunController.setSecondary(newSecondary.secondaryType);
+            newSecondary.removePowerup();
             Destroy(collider.gameObject);
         }
     }
