@@ -84,3 +84,4 @@ MonoBehaviour:
   dashBonus: 1
   maxDuration: 4
   requiresWeapon: 0
+  icon: {fileID: 21300000, guid: fdadcc3ca211fe740840a063cfc93508, type: 3}

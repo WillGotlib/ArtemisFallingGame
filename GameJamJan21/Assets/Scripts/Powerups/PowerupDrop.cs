@@ -13,6 +13,8 @@ public abstract class PowerupDrop : MonoBehaviour
 
     public bool requiresWeapon;
 
+    public Sprite icon;
+
     public void SetManager(PowerupManager newManager) {
         manager = newManager;
     }

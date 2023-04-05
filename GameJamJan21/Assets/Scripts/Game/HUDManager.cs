@@ -14,6 +14,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private Slider[] playerStaminaBars;
     private int[] playerStocks;
     [SerializeField] private Image[] playerSecondaryIcons;
+    [SerializeField] private Image[] playerPowerupIcons;
 
     [SerializeField] private GameObject[] playerStockParents;
     private GameObject[,] playerStockBoxes;
@@ -44,7 +45,23 @@ public class HUDManager : MonoBehaviour
             }
             playerSecondaryIcons[i].color = new Color (playerSecondaryIcons[i].color.r, 
                 playerSecondaryIcons[i].color.g, playerSecondaryIcons[i].color.b, 0f);
+
+            playerPowerupIcons[i].color = new Color (playerPowerupIcons[i].color.r, 
+                playerPowerupIcons[i].color.g, playerPowerupIcons[i].color.b, 0f);
         }
+    }
+
+    public void AddPowerupIcon(int playerNumber, Sprite powerImage) {
+        playerPowerupIcons[playerNumber].sprite = powerImage;
+        float alpha = 0;
+        alpha = (powerImage) ? 1f : 0f;
+        playerPowerupIcons[playerNumber].color = new Color (playerPowerupIcons[playerNumber].color.r, 
+                playerPowerupIcons[playerNumber].color.g, playerPowerupIcons[playerNumber].color.b, alpha);
+    }
+
+    public void HidePowerupIcon(int playerNumber) {
+            playerPowerupIcons[playerNumber].color = new Color (playerPowerupIcons[playerNumber].color.r, 
+                playerPowerupIcons[playerNumber].color.g, playerPowerupIcons[playerNumber].color.b, 0f); 
     }
 
     public void InitHealth() {

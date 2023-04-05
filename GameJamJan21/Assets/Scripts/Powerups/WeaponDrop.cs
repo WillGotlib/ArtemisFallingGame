@@ -7,7 +7,7 @@ public class WeaponDrop : PowerupDrop
 {
     public GameObject secondaryType;
     public int ammo;
-    public Sprite icon;
+    
 
     public override Effect GiveEffect() {
         Effect weaponNeutral = new Effect();
