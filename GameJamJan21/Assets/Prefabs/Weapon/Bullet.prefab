@@ -231,14 +231,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 4972240987904475784}
+  splashZone: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
   maxBounces: 3
   _bulletSpeed: 15
   cooldown: 1
   spin: {x: 0, y: 180, z: 0}
-  splashZone: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
-  rotationSpeed: 0.3
-  trail: {fileID: 1364202883547966758}
   maxFlightTimeSeconds: 10
+  trail: {fileID: 1364202883547966758}
   thumbnail: {fileID: 7482667652216324306, guid: 75fb88f8570b04ae8bfb869e5ed3b6e2, type: 3}
   label: Bullet
 --- !u!114 &2301455758190603568

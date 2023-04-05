@@ -65,7 +65,6 @@ public class SplashZone : MonoBehaviour
 
             objectColour = new Color(objectColour.r, objectColour.g, objectColour.b, fadeAmount);
             this.GetComponent<MeshRenderer>().material.color = objectColour;
-            print($"Time remaining: {timeRemaining} || DOT Timer: {damageOverTimeRemaining}");
             timeRemaining -= Time.deltaTime;
         }
         else {

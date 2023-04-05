@@ -15,7 +15,7 @@ public class BulletDynamics : MonoBehaviour
     {
         outerRenderer = outerBullet.GetComponent<MeshRenderer>();
         outerMaterial = new Material(outerRenderer.material);
-        print(outerMaterial.name);
+        // print(outerMaterial.name);
         // outerMaterial = Instantiate(outerMaterial); // So we can edit it safely.
         BulletBrighten(0f);
         // outerRenderer.material = outerMaterial;
@@ -24,7 +24,7 @@ public class BulletDynamics : MonoBehaviour
     public void BulletBrighten(float percentage) {
         Color temp = outerMaterial.GetColor(colourAttribute);
         temp.a = percentage;
-        print("Brightening bullet -> alpha: " + temp.a);
+        // print("Brightening bullet -> alpha: " + temp.a);
         outerMaterial.color = temp;
         outerRenderer.material = outerMaterial;
     }
