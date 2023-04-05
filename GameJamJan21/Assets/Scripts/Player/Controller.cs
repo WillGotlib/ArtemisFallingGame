@@ -139,7 +139,8 @@ public class Controller : MonoBehaviour
         
         var gunController = weapon.GetComponent<GunController>();
         gunController.setOwner(this);
-        gunController.setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
+        gunController.setSecondary(null);
+        // gunController.setSecondary(mds.secondaryTypes[mds.playerSecondaries[playerNumber]]);
     }
 
     public void HideGun()
@@ -497,6 +498,7 @@ public class Controller : MonoBehaviour
         currentlyDead = false;
     }
 
+    // For use with powerups!
     void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Powerup")
@@ -515,7 +517,7 @@ public class Controller : MonoBehaviour
             WeaponDrop newSecondary = collider.gameObject.GetComponent<WeaponDrop>();
 
             var gunController = weapon.GetComponent<GunController>();
-            gunController.setSecondary(newSecondary.secondaryType);
+            gunController.setSecondary(newSecondary.secondaryType, newSecondary.ammo);
             newSecondary.removePowerup();
             Destroy(collider.gameObject);
         }

@@ -137,6 +137,7 @@ MonoBehaviour:
   maxDuration: 5
   requiresWeapon: 0
   secondaryType: {fileID: 2160589781498056887, guid: b7577be1fd91c4a7a9fab71345e58277, type: 3}
+  ammo: 2
 --- !u!136 &1820133773136197765
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponDrop : PowerupDrop
 {
     public GameObject secondaryType;
+    public int ammo;
 
     public override Effect GiveEffect() {
         Effect weaponNeutral = new Effect();

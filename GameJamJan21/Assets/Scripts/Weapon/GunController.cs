@@ -8,18 +8,17 @@ public class GunController : MonoBehaviour
     [SerializeField] private GameObject bulletType;
     [SerializeField] private GameObject secondaryType;
 
-
-    public int maxAmmo = 12;
-    public int maxBouncers = 1;
+    [NonSerialized] public int secondaryAmmoCount = 0;
+    
+    // Primary and Secondary Cooldown Information. Probably could be stored more gracefully...
     private float primaryCooldown;
     private bool primaryOnCooldown = false;
     private float primaryCooldownTimer;
     private float secondaryCooldown;
     private bool secondaryOnCooldown = false;
     private float secondaryCooldownTimer;
-    // not serialized so that other things can read and update this, ammo refills or the ui that shows ammo
-    [NonSerialized] public int ammoCount;
-    [NonSerialized] public int bouncingCount;
+    
+
     [SerializeField] private Trajectory _trajectory;
     
     [SerializeField] private float cooldownMultiplier = 1f;
@@ -41,12 +40,10 @@ public class GunController : MonoBehaviour
 
     void Start()
     {
-        ammoCount = maxAmmo;
-        bouncingCount = maxBouncers;
         primaryCooldown = bulletType.GetComponent<BulletLogic>().cooldown;
         primaryCooldownTimer = primaryCooldown;
-        secondaryCooldown = secondaryType.GetComponent<BulletLogic>().cooldown;
-        secondaryCooldownTimer = secondaryCooldown;
+        // secondaryCooldown = secondaryType.GetComponent<BulletLogic>().cooldown;
+        // secondaryCooldownTimer = secondaryCooldown;
         currentCooldownMultiplier = cooldownMultiplier;
         ResetSizeMultiplier();
     }
@@ -170,15 +167,27 @@ public class GunController : MonoBehaviour
     
     public bool SecondaryFire()
     {
+        if (!secondaryType || secondaryAmmoCount <= 0) { print("No secondary to fire."); return false; }
         Debug.Log("Secondary Fire");
         if (secondaryOnCooldown) { return false; }
+        
+        // Instantiate and set up the projectile.
         GameObject grenade = UnityEngine.Object.Instantiate(secondaryType);
         Vector3 cur_pos = this.transform.position + (this.transform.forward / 3);
         grenade.transform.position = cur_pos;
         grenade.transform.rotation = this.transform.rotation;
+
+        // Make necessary setup calls on the projectile to get it going. Now it's out of our hands.
         grenade.GetComponent<BulletLogic>().setShooter(owner);
         grenade.GetComponent<BulletLogic>().Fire(this.transform.forward, false);
-        secondaryOnCooldown = true;
+
+        // Deal with the projectile's continued availability to the player.
+        secondaryAmmoCount--;
+        if (secondaryAmmoCount <= 0) {
+            print($"P{owner.playerNumber} ran out of bullets in their {secondaryType}");
+            setSecondary(null, 0);
+        } else { secondaryOnCooldown = true; }
+
         return true;
     }
 
@@ -186,7 +195,20 @@ public class GunController : MonoBehaviour
         owner = player;
     }
 
-    public void setSecondary(GameObject newSecondary) {
+    public void setSecondary(GameObject newSecondary, int ammo) {
         secondaryType = newSecondary;
+        if (newSecondary) {
+            secondaryAmmoCount = ammo;
+            secondaryCooldown = newSecondary.GetComponent<BulletLogic>().cooldown;
+            secondaryCooldownTimer = secondaryCooldown;
+        } else {
+            secondaryCooldown = 0;
+            secondaryCooldownTimer = 0;
+            secondaryOnCooldown = false;
+        }
+    }
+
+    public void setSecondaryAmmo(int ammo) {
+        
     }
 }
