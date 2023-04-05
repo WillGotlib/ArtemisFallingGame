@@ -158,7 +158,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
         // add to bounces tally and maybe destroy
         bounced++;
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Richochet", GetComponent<Transform>().position);
+       
         // Modify model
         if (_dynamics != null) {
             float ratio = 1.0f * bounced / (maxBounces + 1);
@@ -173,9 +173,11 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
             FinishShot(true);
         }
         else
+        
         {
             // store that it ricocheted for analytics
             _ricocheted = true;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Richochet", GetComponent<Transform>().position);
         }
     }
 
