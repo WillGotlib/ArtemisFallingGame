@@ -40,10 +40,11 @@ public class MenuCursor : MonoBehaviour
     }
 
     public void OnEnter() {
-        print("[P" + playerNumber + "] We pressed enter");
         StartCoroutine(waitTest(Vector2.zero));
-        if (playerNumber > 0) 
+        print("[P" + playerNumber + "] We pressed enter");
+        if (playerNumber > 0) {
             _eventSys.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+        }
     }
 
     public void refresh(Vector2 dir) {        

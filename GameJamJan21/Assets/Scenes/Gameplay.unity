@@ -1645,8 +1645,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58cfad2096308af4899054710cf2c7e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxNumPowerups: 3
-  scndsBetweenSpawns: 3
+  maxNumPowerups: 1
+  scndsBetweenSpawns: 5
   powerups:
   - {fileID: 2301369132541853536, guid: 01811da82e60542d785d55ca1ec9ddd7, type: 3}
   - {fileID: 2301369132541853536, guid: b0a6b5a5b47d64298aa4e5b72f3cddc3, type: 3}

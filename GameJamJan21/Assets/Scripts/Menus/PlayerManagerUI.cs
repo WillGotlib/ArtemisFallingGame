@@ -100,6 +100,10 @@ public class PlayerManagerUI : MonoBehaviour
         cursor.transform.SetParent(canvas.transform);
         x.setManager(this);
         playerCursors.Add(x);
+
+        InputSystemUIInputModule inputModule = newPlayer.GetComponent<InputSystemUIInputModule>();
+        inputModule.actionsAsset = playerInput.actions;
+
         Debug.Log(cursor.name + " added.");
 
         mds.numPlayers = currNumPlayers;
