@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 2073565223626383832}
   - component: {fileID: 1067523678096033842}
   - component: {fileID: 5872601517530652582}
+  - component: {fileID: -4342152024243376752}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -364,6 +365,19 @@ MonoBehaviour:
   jets:
   - {fileID: 4619497912976985598}
   - {fileID: 4509250623417325264}
+--- !u!114 &-4342152024243376752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1001 &4326175258516686480
 PrefabInstance:
   m_ObjectHideFlags: 0

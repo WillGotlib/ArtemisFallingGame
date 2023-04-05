@@ -459,6 +459,8 @@ public class Controller : MonoBehaviour
         // print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
+        
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/PlayerHurt", GetComponent<Transform>().position);
 
         // StartGame.PlayerHealthUpdate(playerNumber, playerHealth);
         _hudManager.ChangeHealth(playerNumber, playerHealth);

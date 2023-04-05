@@ -103,6 +103,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     void OnCollisionEnter(Collision collision)
     {
+       
         // Check tag for Transient or Reflector
         // Reflect if applicable
         if (collision.gameObject.tag == "Transient")
@@ -127,8 +128,9 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     }
 
     void EncounterTransient(Collision collision) {
-            // Do nothing and pass through
+        // Do nothing and pass through
             Physics.IgnoreCollision(GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
+        
             // Destroy but keep velocity!
             _rb.velocity = vel;
     }
@@ -142,7 +144,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     }
 
     void ricochetBullet(Collision collision) {
-            ContactPoint contact = collision.contacts[0];
+        ContactPoint contact = collision.contacts[0];
             Vector3 oldvel = vel;
             float speed = oldvel.magnitude;
 
@@ -158,6 +160,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
             // add to bounces tally and maybe destroy
             bounced++;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Richochet", GetComponent<Transform>().position);
             // Modify model
             if (_dynamics != null) {
                 float ratio = 1.0f * bounced / (maxBounces + 1);

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{716107bb-18ac-4196-86f0-fb289e7bdac9}">
+		<property name="assetPath">
+			<value>ricochet_ting.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.48077083333333331</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ef4f5f9e-c4cd-4597-a2b6-6b071ce04a19}</destination>
+		</relationship>
+	</object>
+</objects>
