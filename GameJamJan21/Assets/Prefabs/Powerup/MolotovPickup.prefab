@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7101000858155362510}
   - component: {fileID: 5141254290332790066}
   - component: {fileID: 7350896321074659391}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 60326696225875992}
   - component: {fileID: -3987628115731665141}
   - component: {fileID: 4068034673374940072}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MolotovPickup
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   - component: {fileID: 3222906421482067231}
   - component: {fileID: 4249366468107368299}
   - component: {fileID: 1401532491447482865}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 4862684963608523680}
   - component: {fileID: 4217317196119508286}
   - component: {fileID: 5728831951792888289}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 8577699948051163333}
   - component: {fileID: 4658348410359179104}
   - component: {fileID: 7440281365664633770}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: powerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
