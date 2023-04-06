@@ -304,7 +304,7 @@ public class Controller : MonoBehaviour
             }
             
             deathCooldown -= Time.deltaTime;
-            if (deathCooldown <= 0)
+            if (deathCooldown <= 0 && Stock > 0)
             {
                 RespawnRoutine();
                 // transform.position = pos;
@@ -399,12 +399,18 @@ public class Controller : MonoBehaviour
 
     void TickDownEffects()
     {
+        bool anyEffects = false;
         foreach (Effect e in new List<Effect>(effects))
         {
             e.TickDown();
-            if (e.CheckTimer())
+            if (e.CheckTimer()) {
                 effects.Remove(e);
+            } else {
+                anyEffects = true;
+            }
         }
+        if (!anyEffects)
+            _hudManager.HidePowerupIcon(playerNumber);
     }
 
     public bool hasEffect(Effect e) {
@@ -463,6 +469,8 @@ public class Controller : MonoBehaviour
         // print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
+        
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/PlayerHurt", GetComponent<Transform>().position);
 
         // StartGame.PlayerHealthUpdate(playerNumber, playerHealth);
         _hudManager.ChangeHealth(playerNumber, playerHealth);
@@ -516,7 +524,8 @@ public class Controller : MonoBehaviour
                 // TODO: Make this generally-applicable. Right now the only weapon powerup is the fire rate one...
                 weapon.GetComponent<GunController>().ClearPrimaryCooldown();
             }
-            powerup.removePowerup(); //todo make this script trackable and keep trac of powerups
+            _hudManager.AddPowerupIcon(playerNumber, powerup.icon);
+            powerup.removePowerup(); 
             Destroy(collider.gameObject);
         } else if (collider.gameObject.tag == "Weapon") {
             print("PICKED UP A SECONDARY!");
@@ -531,7 +540,7 @@ public class Controller : MonoBehaviour
     }
 
     public void RemoveSecondary() {
-        _hudManager.ChangeSecondary(playerNumber);
+        _hudManager?.ChangeSecondary(playerNumber);
     }
 
     public void AddEffect(Effect e) {

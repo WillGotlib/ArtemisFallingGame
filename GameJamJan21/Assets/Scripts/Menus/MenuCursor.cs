@@ -17,9 +17,13 @@ public class MenuCursor : MonoBehaviour
     private bool currentlyMoving;
 
     private PlayerManagerUI manager;
+
+    public Vector3 offsetVector;
+    // Vector3 offsetVector = Vector3.zero;
     
-    public void Update() {
-        
+    public void Start() {
+        offsetVector = new Vector3(-30f, (-15f * playerNumber), 0);
+        // print($"P{playerNumber}'s offsetVector = {offsetVector}");
     }
 
     public void OnNavigate(InputValue value) {
@@ -27,7 +31,6 @@ public class MenuCursor : MonoBehaviour
         if (!currentlyMoving && vec.magnitude > 0.5) {
             currentlyMoving = true;
             print("P" + playerNumber + " navigated" + value.Get<Vector2>() + " to " + _eventSys.currentSelectedGameObject);
-            // print(GetComponent<PlayerInput>().currentControlScheme);
             StartCoroutine(waitTest(vec));
             // manager.SelectionCheck();
         } else if (vec.magnitude < 0.05) {
@@ -37,17 +40,14 @@ public class MenuCursor : MonoBehaviour
     }
 
     public void OnEnter() {
-        print("[P" + playerNumber + "] We pressed enter");
         StartCoroutine(waitTest(Vector2.zero));
-        if (playerNumber > 0) 
+        print("[P" + playerNumber + "] We pressed enter");
+        if (playerNumber > 0) {
             _eventSys.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+        }
     }
 
-    public void refresh(Vector2 dir) {
-        // Vector3 offsetVector = new Vector3(-110f, -5f, 0);
-        Vector3 offsetVector = Vector3.zero;
-        // TODO: MAKE THIS BETTER. RIGHT NOW IT OBSTRUCTS.
-        
+    public void refresh(Vector2 dir) {        
         GameObject newTarget = _eventSys.currentSelectedGameObject;
         if (!currentlySelected) {
             newTarget = manager.GetCurrentMenuDefault().gameObject;
@@ -82,8 +82,9 @@ public class MenuCursor : MonoBehaviour
     }
 
     public void MoveToTarget(GameObject newTarget, Vector3 offset) {
-        transform.position = newTarget.transform.position + offset;;
-        print("[P" + playerNumber + "] New target: " + newTarget);
+        offset = new Vector3((-30f * playerNumber), 0, 0);
+        transform.position = newTarget.transform.position + offset;
+        print($"[P{playerNumber}] New target: {newTarget} at {newTarget.transform.position}, With Offset {newTarget.transform.position + offset}");
     }
 
     public void LoadCursorImage(int playerNumber) {

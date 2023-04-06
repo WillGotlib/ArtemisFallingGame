@@ -36,12 +36,12 @@ public class PlayerManagerUI : MonoBehaviour
             print("player " + playerCursors[i] + " selected " + next);
             playerES[i].SetSelectedGameObject(next);
             // playerCursors[i].refresh(Vector2.zero);
-            playerCursors[i].MoveToTarget(next, new Vector3(0, 0, 0));
+            playerCursors[i].MoveToTarget(next, playerCursors[i].offsetVector);
         }
     }
 
     public void SelectionCheck() {
-        for (int i = 0; i < playerCursors.Count; i++) {
+        for (int i = 0; i < playerCursors.Count && i < mds.numPlayers; i++) {
             SelectionCheck(i);
         }
     }
@@ -50,7 +50,7 @@ public class PlayerManagerUI : MonoBehaviour
         // Make sure that if there's a cursor beside a Selectable, it's selected
         // Also indicates that THIS IS THE PLAYER MOVING RIGHT NOW.
         print("[P" + playerNumber + "] CURRENTLY SELECTED: " + playerES[playerNumber].currentSelectedGameObject);
-        playerCursors[playerNumber].MoveToTarget(playerES[playerNumber].currentSelectedGameObject, Vector3.zero);
+        playerCursors[playerNumber].MoveToTarget(playerES[playerNumber].currentSelectedGameObject, playerCursors[playerNumber].offsetVector);
         
         previousTargets[playerNumber] = playerES[playerNumber].currentSelectedGameObject;
         for (int i = 0; i < playerES.Count; i++) {
@@ -64,6 +64,10 @@ public class PlayerManagerUI : MonoBehaviour
 
     void OnPlayerJoined() {
         print("Player Joined");
+        if (currNumPlayers >= mds.maxPlayers) {
+            print("Too many players! WE'VE GOTTA SHUT DOWN!!!");
+            return;
+        }
         GameObject newPlayer = Instantiate(MPEventSystem, transform);
         MultiplayerEventSystem playerEventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
         playerEventSys.firstSelectedGameObject = GetCurrentMenuDefault().gameObject;
@@ -76,33 +80,38 @@ public class PlayerManagerUI : MonoBehaviour
         currNumPlayers++;
         newPlayer.name = "MenuEventSystem P" + currNumPlayers;
 
-        GameObject go = GameObject.Find ("MenuPlayer(Clone)"); // Temp
+        GameObject cursor = GameObject.Find ("MenuPlayer(Clone)"); // Temp
         
         //if the character doesn't exist we need to manually spawn them in.
-        if (!go) {
+        if (!cursor) {
             GameObject menuPlayer = Instantiate(PlayerPrefab, canvas.transform);
         }
-        go.name = "MenuP" + currNumPlayers;
-        var playerInput = go.GetComponent<PlayerInput>();
+        cursor.name = "MenuP" + currNumPlayers;
+        var playerInput = cursor.GetComponent<PlayerInput>();
         playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
         controlScheme.SetControlScheme(playerInput.currentControlScheme);
         
-        MenuCursor x = go.GetComponent<MenuCursor>();
+        MenuCursor x = cursor.GetComponent<MenuCursor>();
         x.playerNumber = currNumPlayers - 1;
         x.LoadCursorImage(currNumPlayers - 1);
         print("GETTING EVENT SYSTEM: " + newPlayer.GetComponent<EventSystem>());
         x._eventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
         print("NEW ROOT: " + newPlayer.GetComponent<MultiplayerEventSystem>());
-        go.transform.SetParent(canvas.transform);
+        cursor.transform.SetParent(canvas.transform);
         x.setManager(this);
         playerCursors.Add(x);
-        Debug.Log(go.name + " added.");
+
+        InputSystemUIInputModule inputModule = newPlayer.GetComponent<InputSystemUIInputModule>();
+        inputModule.actionsAsset = playerInput.actions;
+
+        Debug.Log(cursor.name + " added.");
 
         mds.numPlayers = currNumPlayers;
         // Prompt the match menu to add a new player options panel
         MenuRunner.RefreshPlayerSections();
         
         x.refresh(Vector2.left);
+        x.MoveToTarget(playerEventSys.firstSelectedGameObject, x.offsetVector);
     }
 
     void Awake() {

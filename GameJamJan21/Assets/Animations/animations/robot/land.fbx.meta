@@ -58,24 +58,38 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: AllowAnimationMovement
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0
         functionName: JetLength
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.11267606
+      - time: 0
         functionName: JetLength
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 20
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.11262798
+        functionName: AllowAnimationMovement
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.30872485
+        functionName: JetLength
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 10
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4832215
+        functionName: JetLength
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 5
         intParameter: 0
         messageOptions: 0
       - time: 0.61475414
@@ -97,20 +111,6 @@ ModelImporter:
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.30872485
-        functionName: JetLength
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 10
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.4832215
-        functionName: JetLength
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 5
         intParameter: 0
         messageOptions: 0
       transformMask: []

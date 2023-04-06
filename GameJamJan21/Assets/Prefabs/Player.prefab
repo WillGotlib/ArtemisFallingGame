@@ -209,7 +209,7 @@ MonoBehaviour:
   rb: {fileID: 3109998347142427980}
   animator: {fileID: 344936565922596221}
   speed: 8
-  sensitivity: 3000
+  sensitivity: 4000
   kbdSensitivity: 4
   weaponType: {fileID: 7493655363811869585, guid: de91b2575e2037b4e91a5466dacf42a4, type: 3}
   weaponHandBone: {fileID: 8487846109932820590}
@@ -364,6 +364,19 @@ MonoBehaviour:
   jets:
   - {fileID: 4619497912976985598}
   - {fileID: 4509250623417325264}
+--- !u!114 &-4342152024243376752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 0}
 --- !u!1001 &4326175258516686480
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,7 +13,8 @@ public class Level : MonoBehaviour
 
     public void SortSpawnPoints()
     {
-        var sorted = false;
+        // Disabled and set manually per-level
+        /**var sorted = false;
         while (!sorted)
         {
             sorted = true;
@@ -29,6 +30,6 @@ public class Level : MonoBehaviour
                 sorted = false;
                 (playerSpawnPoints[i], playerSpawnPoints[i + 1]) = (nextItem, item);
             }
-        }
+        }**/ 
     }
 }

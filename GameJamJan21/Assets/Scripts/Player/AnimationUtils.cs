@@ -96,6 +96,8 @@ public class AnimationUtils : MonoBehaviour
         Landing = true;
         AnimationSpeed = 1;
         Play(Animations.Landing);
+
+        FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/MechLanding", GetComponent<Transform>().position);
     }
 
     public void Play(string animationName)
