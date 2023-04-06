@@ -362,8 +362,6 @@ MonoBehaviour:
   - {fileID: 1709140140474190974}
   powerupDropPoints:
   - {fileID: 1760252614235171436}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 9193980831746266955}
   obstacles: {fileID: 3140440346062844428}
   nid: Eyesight
