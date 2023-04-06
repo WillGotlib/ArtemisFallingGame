@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class StartGame : MonoBehaviour
 {
@@ -22,10 +23,19 @@ public class StartGame : MonoBehaviour
 
     public MatchDataScriptable mds;
 
+    private GameObject p1Camera;
+    private GameObject p2Camera;
+    private GameObject p3Camera;
+    private GameObject p4Camera;
+
     // Start is called before the first frame update
     void Start()
     {
-        // 
+        //
+        p1Camera = GameObject.Find("VirtualCameraPlayerOne"); 
+        p2Camera = GameObject.Find("VirtualCameraPlayerTwo"); 
+        p3Camera = GameObject.Find("VirtualCameraPlayerThree"); 
+        p4Camera = GameObject.Find("VirtualCameraPlayerFour"); 
         if (mds.primaryColours.Length != mds.accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
         _hudManager.InitHealth();
@@ -111,9 +121,30 @@ public class StartGame : MonoBehaviour
         int winner = CheckForMatchEnding(playerNumber);
         if (winner != -1) {
             // TODO: GAME IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
-            
-            levelManager.EndLevel(winner);
+            if (winner == 0) {
+                var virtualCamera = p1Camera.GetComponent<CinemachineVirtualCamera>();
+                virtualCamera.Priority = 50;
+            }
+            else if (winner == 1) {
+                var virtualCamera = p2Camera.GetComponent<CinemachineVirtualCamera>();
+                virtualCamera.Priority = 50;                
+            }
+            else if (winner == 2) {
+                var virtualCamera = p3Camera.GetComponent<CinemachineVirtualCamera>();
+                virtualCamera.Priority = 50;                
+            }
+            else if (winner == 3) {
+                var virtualCamera = p4Camera.GetComponent<CinemachineVirtualCamera>();
+                virtualCamera.Priority = 50;                
+            }
+            StartCoroutine(VictoryMotion(winner));
         }
+    }
+
+    IEnumerator VictoryMotion(int winner)
+    {
+        yield return new WaitForSecondsRealtime(8);
+        levelManager.EndLevel(winner);
     }
 
     public void RespawnPlayer(Controller player)

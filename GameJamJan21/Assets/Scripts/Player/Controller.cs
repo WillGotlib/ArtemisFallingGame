@@ -73,6 +73,9 @@ public class Controller : MonoBehaviour
 
     private GameObject dynamicCamera;
 
+    private GameObject explosion;
+    public GameObject explosionAnimation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -306,6 +309,7 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0 && Stock > 0)
             {
+                GetComponent<PlayerInput>().enabled = true;
                 RespawnRoutine();
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
@@ -478,13 +482,20 @@ public class Controller : MonoBehaviour
         if (playerHealth <= 0)
         {
             Debug.Log(playerNumber);
+            GetComponent<PlayerInput>().enabled = false;
+            moveDirection = new Vector3(0, 0, 0);
             dynamicCamera.SetActive(false);
+            explosion = Instantiate(explosionAnimation);
+            var pos = transform.position+Vector3.zero;
+            pos.y = 0;
+            explosion.transform.position = pos;
             Invoke("PlayerDeath", 2);
             // PlayerDeath();
         }
 
         return true;
     }
+
 
     private void PlayerDeath()
     {
