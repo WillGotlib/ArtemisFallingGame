@@ -81,6 +81,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2500
+--- !u!114 &-6341499217849803128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Music.bank
+  m_EditorClassIdentifier: 
+  Path: ArtemisFallingSoundDesign/Build/Desktop/Music.bank
+  Name: Music
+  StudioPath: bank:/Music
+  lastModified: 638163331593301140
+  FileSizes:
+  - Name: Desktop
+    Value: 2025536
+  Exists: 1
 --- !u!114 &-4444065046304747837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,7 +150,7 @@ MonoBehaviour:
   - {fileID: -215624059490189421}
   IsStream: 0
   Is3D: 1
-  IsOneShot: 0
+  IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
@@ -177,7 +197,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638163308917485592
+  lastModified: 638163331593103492
   FileSizes:
   - Name: Desktop
     Value: 1428
@@ -209,6 +229,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &-402702489562519954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Actions/IceGrenade
+  m_EditorClassIdentifier: 
+  Path: event:/Actions/IceGrenade
+  Guid:
+    Data1: 911873305
+    Data2: 1181955698
+    Data3: -706021757
+    Data4: -941211442
+  Banks:
+  - {fileID: -215624059490189421}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2331
 --- !u!114 &-215624059490189421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,10 +271,10 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638163308917513906
+  lastModified: 638163331594115889
   FileSizes:
   - Name: Desktop
-    Value: 699328
+    Value: 699488
   Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -244,6 +291,8 @@ MonoBehaviour:
   EditorBanks:
   - {fileID: -632647421326203543}
   - {fileID: -215624059490189421}
+  - {fileID: 5452340093450609372}
+  - {fileID: -6341499217849803128}
   EditorEvents:
   - {fileID: 3019759261318802398}
   - {fileID: -9119039377973955723}
@@ -254,12 +303,15 @@ MonoBehaviour:
   - {fileID: 3598972275554827806}
   - {fileID: -3470006985421352886}
   - {fileID: -4444065046304747837}
-  - {fileID: 5637753389520446323}
+  - {fileID: 7549792736522272769}
+  - {fileID: 5089668072399436582}
+  - {fileID: -402702489562519954}
   EditorParameters: []
-  MasterBanks: []
+  MasterBanks:
+  - {fileID: 5452340093450609372}
   StringsBanks:
   - {fileID: -632647421326203543}
-  cacheTime: 638163308917513906
+  cacheTime: 638163331594115889
   cacheVersion: 131601
 --- !u!114 &3019759261318802398
 MonoBehaviour:
@@ -315,7 +367,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &5637753389520446323
+--- !u!114 &5089668072399436582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -325,20 +377,67 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Actions/IceGrenade
+  m_Name: event:/Menu/MainMenuMusic
   m_EditorClassIdentifier: 
-  Path: event:/Actions/IceGrenade
+  Path: event:/Menu/MainMenuMusic
   Guid:
-    Data1: 911873305
-    Data2: 1181955698
-    Data3: -706021757
-    Data4: -941211442
+    Data1: 992655803
+    Data2: 1312779483
+    Data3: 1917969564
+    Data4: 199664510
   Banks:
-  - {fileID: -215624059490189421}
-  IsStream: 0
+  - {fileID: -6341499217849803128}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 148965
+--- !u!114 &5452340093450609372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: ArtemisFallingSoundDesign/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638163331593095458
+  FileSizes:
+  - Name: Desktop
+    Value: 1036
+  Exists: 1
+--- !u!114 &7549792736522272769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Menu/Victory screen music
+  m_EditorClassIdentifier: 
+  Path: event:/Menu/Victory screen music
+  Guid:
+    Data1: -533171292
+    Data2: 1288583455
+    Data3: 82245005
+    Data4: -1941918438
+  Banks:
+  - {fileID: -6341499217849803128}
+  IsStream: 1
   Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 2331
+  Length: 13961

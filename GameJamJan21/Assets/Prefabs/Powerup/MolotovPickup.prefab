@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 60326696225875992}
   - component: {fileID: -3987628115731665141}
   - component: {fileID: 4068034673374940072}
+  - component: {fileID: 7193682469899099166}
   m_Layer: 0
   m_Name: MolotovPickup
   m_TagString: Weapon
@@ -136,9 +137,9 @@ MonoBehaviour:
   dashBonus: 1
   maxDuration: 5
   requiresWeapon: 0
+  icon: {fileID: 21300000, guid: 7e9b43615aa6041f0b764a72e9173450, type: 3}
   secondaryType: {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
   ammo: 1
-  icon: {fileID: 21300000, guid: 7e9b43615aa6041f0b764a72e9173450, type: 3}
 --- !u!136 &4068034673374940072
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -153,6 +154,18 @@ CapsuleCollider:
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: 1.1382761, z: 0}
+--- !u!114 &7193682469899099166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301369132541853536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00aeca087b4a401785ea1664675b60c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4772001702713721134
 GameObject:
   m_ObjectHideFlags: 0
