@@ -71,9 +71,13 @@ public class Controller : MonoBehaviour
 
     public PlayerInput Input;
 
+    private GameObject dynamicCamera;
+
     // Start is called before the first frame update
     void Start()
     {
+        dynamicCamera = GameObject.Find("DynamicCamera");
+
         if (Input.devices.Count == 0) {
             Input.SwitchCurrentControlScheme("P1Keyboard", Keyboard.current);
         }
@@ -310,7 +314,7 @@ public class Controller : MonoBehaviour
                 
                 _analyticsManager.RespawnEvent(gameObject);
                 _analyticsManager.StockUpdate(gameObject, Stock); // maybe put all these events in the game manager rather then in each player and bullet
-                    
+                dynamicCamera.SetActive(true);
                 return;
             }
         } else {
@@ -466,7 +470,9 @@ public class Controller : MonoBehaviour
         if (playerHealth <= 0)
         {
             Debug.Log(playerNumber);
-            PlayerDeath();
+            dynamicCamera.SetActive(false);
+            Invoke("PlayerDeath", 2);
+            // PlayerDeath();
         }
 
         return true;
