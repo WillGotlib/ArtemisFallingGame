@@ -482,8 +482,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletType: {fileID: 9165814152039018566, guid: 46b405b11a4104e4d94c322cc2ca5117, type: 3}
   secondaryType: {fileID: 0}
-  maxAmmo: 12
-  maxBouncers: 1
   _trajectory: {fileID: -4194139606902899362}
   cooldownMultiplier: 1
   cooldownIncrements: 0.1
@@ -491,6 +489,7 @@ MonoBehaviour:
   sizeMultiplier: 1
   sizeIncrements: 0.06
   sizeRecovery: 0.001
+  chargeIncrements: 0.002
   chargeBonus: 1.5
   animationController: {fileID: 2263409211759763732}
   owner: {fileID: 0}
