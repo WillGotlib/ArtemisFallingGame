@@ -141,7 +141,7 @@ MonoBehaviour:
   explodesOnImpact: 1
   damageOverTimeDamage: 0
   damageOverTimeCooldown: 0.2
-  explosion: {fileID: 6821552766381278329}
+  explosion: {fileID: 1190407533784283270, guid: 089b82526b2906c44a89a7314e2181c3, type: 3}
 --- !u!23 &2400874512953037060
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -330,10 +330,5 @@ PrefabInstance:
 --- !u!4 &6821552766381278328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1190407533784283271, guid: 089b82526b2906c44a89a7314e2181c3, type: 3}
-  m_PrefabInstance: {fileID: 5633487742556208383}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &6821552766381278329 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1190407533784283270, guid: 089b82526b2906c44a89a7314e2181c3, type: 3}
   m_PrefabInstance: {fileID: 5633487742556208383}
   m_PrefabAsset: {fileID: 0}
