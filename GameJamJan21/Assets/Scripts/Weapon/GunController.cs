@@ -220,14 +220,15 @@ public class GunController : MonoBehaviour
     }
 
     public void UpdateChargeGUI() {
-        currentChargeAmount -= chargeIncrements;
-        _hudManagerLocal.UpdateChargeBar(currentChargeAmount);
+        if (!primaryOnCooldown) {
+            currentChargeAmount -= chargeIncrements;
+            _hudManagerLocal.UpdateChargeBar(currentChargeAmount);
+        }
     }
 
     public void ClearChargeGUI() {
-        if (!primaryOnCooldown) {
-            currentChargeAmount = defaultChargeValue;
-            _hudManagerLocal.UpdateChargeBar(defaultChargeValue);
-        }
+
+        currentChargeAmount = defaultChargeValue;
+        _hudManagerLocal.UpdateChargeBar(defaultChargeValue);
     }
 }

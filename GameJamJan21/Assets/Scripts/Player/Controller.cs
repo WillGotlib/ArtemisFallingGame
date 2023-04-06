@@ -380,7 +380,7 @@ public class Controller : MonoBehaviour
         var playerActions = Input.actions.actionMaps[0];
         var chargeShot = playerActions["PrimaryFireCharge"];
         // triggered is only true when the shot actually releases
-        if (chargeShot.triggered) {
+        if (chargeShot.triggered || chargeShot.phase != InputActionPhase.Started) {
             charging = false;
         } else if (!charging && chargeShot.phase == InputActionPhase.Started) {
             charging = true;
