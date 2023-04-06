@@ -26,6 +26,7 @@ public class PlayerManagerUI : MonoBehaviour
     {
         mds.numPlayers = currNumPlayers;
         previousTargets = new GameObject[mds.maxPlayers];
+        mds.tutorial = false;
         //print("Starting");
         // Instantiate(PlayerPrefab);
         // OnPlayerJoined(); // Call this once

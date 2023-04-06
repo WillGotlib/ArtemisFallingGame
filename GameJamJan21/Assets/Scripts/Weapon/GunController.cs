@@ -33,6 +33,11 @@ public class GunController : MonoBehaviour
     private float oldSizeMultiplier;
     private bool charged = false;
 
+    // The default is 1f since that will empty the gauge (gauge is 1f - amount passed)
+    private float defaultChargeValue = 1f;
+    private float currentChargeAmount = 1f;
+    [SerializeField] private float chargeIncrements = 0.1f;
+
     [SerializeField] private float chargeBonus = 5f;
 
     [Header("Object values")] public Animator animationController;
@@ -164,6 +169,7 @@ public class GunController : MonoBehaviour
                 currentSizeMultiplier = oldSizeMultiplier;
                 charged = !charged;
             }
+            ClearChargeGUI();
         } else {
             Debug.Log("Bullet would appear inside an object!");
         }
@@ -211,5 +217,18 @@ public class GunController : MonoBehaviour
             secondaryCooldownTimer = 0;
             secondaryOnCooldown = false;
         }
+    }
+
+    public void UpdateChargeGUI() {
+        if (!primaryOnCooldown) {
+            currentChargeAmount -= chargeIncrements;
+            _hudManagerLocal.UpdateChargeBar(currentChargeAmount);
+        }
+    }
+
+    public void ClearChargeGUI() {
+
+        currentChargeAmount = defaultChargeValue;
+        _hudManagerLocal.UpdateChargeBar(defaultChargeValue);
     }
 }

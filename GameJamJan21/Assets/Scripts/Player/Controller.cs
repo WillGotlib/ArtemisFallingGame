@@ -387,13 +387,15 @@ public class Controller : MonoBehaviour
     private void HandleCharge() {
         var playerActions = Input.actions.actionMaps[0];
         var chargeShot = playerActions["PrimaryFireCharge"];
-        // Set this once the first time charging is detected, but don't re-set it
-        if (!charging && chargeShot.phase == InputActionPhase.Started) {
+        // triggered is only true when the shot actually releases
+        if (chargeShot.triggered || chargeShot.phase != InputActionPhase.Started) {
+            charging = false;
+        } else if (!charging && chargeShot.phase == InputActionPhase.Started) {
             charging = true;
         }
-        // triggered is only true when the shot actually releases
-        if (chargeShot.triggered) {
-            charging = false;
+        // Actually update GUI
+        if (charging) {
+            weapon.GetComponent<GunController>().UpdateChargeGUI();
         }
     }
 

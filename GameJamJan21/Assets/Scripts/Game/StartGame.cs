@@ -29,6 +29,8 @@ public class StartGame : MonoBehaviour
     private GameObject p2Camera;
     private GameObject p3Camera;
     private GameObject p4Camera;
+    
+    [SerializeField] private GameObject[] tutorialUI;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,7 @@ public class StartGame : MonoBehaviour
         p4Camera = GameObject.Find("VirtualCameraPlayerFour"); 
         if (mds.primaryColours.Length != mds.accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
+        HandleTutorialUI();
         _hudManager.InitHealth();
         StartMatch();
     }
@@ -79,6 +82,20 @@ public class StartGame : MonoBehaviour
             player.GetComponentInChildren<AnimationUtils>().Landing = true;
             
             i++;
+        }
+    }
+
+    private void HandleTutorialUI() {
+        if (!mds.tutorial) {
+            foreach (GameObject tut in tutorialUI) {
+                tut.SetActive(false);
+                if (tut.GetComponent<Renderer>() != null) {
+                    tut.GetComponent<Renderer>().enabled = false;
+                }
+                if (tut.GetComponent<CanvasRenderer>() != null) {
+                    tut.GetComponent<CanvasRenderer>().SetAlpha(0f);
+                }
+            }
         }
     }
 

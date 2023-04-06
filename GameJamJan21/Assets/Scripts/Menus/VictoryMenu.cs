@@ -40,9 +40,20 @@ public class VictoryMenu : MatchSetupMenu
     }
 
     public override void PlayGame() {
-        // Go to the regular match menu.
-        mds.skipMainMenu = true;
-        ReturnMainMenu();
+        var newMatch = true;
+        for (int i = 0; i < mds.numPlayers; i++) {
+            if (mds.playerWins[i] > Mathf.Floor(mds.numGames/2)) {
+                newMatch = false;
+                break;
+            }
+        }
+        if (newMatch) {
+            SceneManager.LoadScene("Gameplay");
+        } else {
+            // Go to the regular match menu.
+            mds.skipMainMenu = true;
+            ReturnMainMenu();
+        }
     }
 
     public void ReturnMainMenu() {
