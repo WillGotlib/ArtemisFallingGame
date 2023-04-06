@@ -22,7 +22,7 @@ public class MenuCursor : MonoBehaviour
     // Vector3 offsetVector = Vector3.zero;
     
     public void Start() {
-        offsetVector = new Vector3(-30f, (-15f * playerNumber), 0);
+        offsetVector = new Vector3(-30f, (-100f * (playerNumber + 1)), 0);
         // print($"P{playerNumber}'s offsetVector = {offsetVector}");
     }
 
@@ -82,7 +82,7 @@ public class MenuCursor : MonoBehaviour
     }
 
     public void MoveToTarget(GameObject newTarget, Vector3 offset) {
-        offset = new Vector3((-30f * playerNumber), 0, 0);
+        offset = new Vector3((-30f * (playerNumber + 0.5f)), 0, 0);
         transform.position = newTarget.transform.position + offset;
         print($"[P{playerNumber}] New target: {newTarget} at {newTarget.transform.position}, With Offset {newTarget.transform.position + offset}");
     }

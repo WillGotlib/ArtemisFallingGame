@@ -109,22 +109,22 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Emit_Strength: 0.13
+    - _Emit_Strength: -0.01
     - _EnvironmentReflections: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _Line_Count: 0.9
+    - _Line_Count: 0.72
     - _Metallic: 0
     - _Metalness: 0.79
     - _Mode: 0
-    - _Normal_strength: 2
+    - _Normal_strength: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 6.86
+    - _Smoothness: -8.45
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -134,7 +134,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.4586891, g: 0.70374894, b: 0.46759158, a: 1}
-    - _Color: {r: 0.3773585, g: 0.023595635, b: 0, a: 1}
+    - _Color: {r: 0.37355074, g: 0.26980245, b: 0.4056604, a: 1}
     - _EmissionColor: {r: 0.458689, g: 0.703749, b: 0.467592, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
