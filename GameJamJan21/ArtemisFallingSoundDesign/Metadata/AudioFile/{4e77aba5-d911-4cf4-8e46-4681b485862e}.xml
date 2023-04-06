@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{4e77aba5-d911-4cf4-8e46-4681b485862e}">
+		<property name="assetPath">
+			<value>ESM_GB_fx_foley_one_shot_magspel_magic_star_victory_sparkles_airy_light.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>1.7227187500000001</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ef4f5f9e-c4cd-4597-a2b6-6b071ce04a19}</destination>
+		</relationship>
+	</object>
+</objects>
