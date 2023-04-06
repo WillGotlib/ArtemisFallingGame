@@ -78,6 +78,8 @@ public class Controller : MonoBehaviour
     
     private bool charging = false;
 
+    private bool isLocked = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -160,10 +162,12 @@ public class Controller : MonoBehaviour
 
     public void OnMovement(InputValue value)
     {
-        // Vector3 temp = value.Get<Vector3>();
-        // if (temp.magnitude > 0) print("3d vector input: " + temp);
-        Vector2 temp2 = value.Get<Vector2>();
-        moveDirection = new Vector3(-temp2.y, 0, temp2.x);
+        if (isLocked == false) {
+            // Vector3 temp = value.Get<Vector3>();
+            // if (temp.magnitude > 0) print("3d vector input: " + temp);
+            Vector2 temp2 = value.Get<Vector2>();
+            moveDirection = new Vector3(-temp2.y, 0, temp2.x);
+        }
     }
 
     public void OnSwitchCamera()
@@ -178,10 +182,11 @@ public class Controller : MonoBehaviour
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
-
-        kbdHeld = !kbdHeld;
-        // print("ROTATION (DASH): " + direction);
-        direction = value.Get<Vector3>();
+        if (isLocked == false) {
+            kbdHeld = !kbdHeld;
+            // print("ROTATION (DASH): " + direction);
+            direction = value.Get<Vector3>();
+        }
     }
 
     private void UpdateLookDirection()
@@ -248,17 +253,19 @@ public class Controller : MonoBehaviour
     }
 
     public void OnDash()
-    {
-        if (currentCooldown > 0)
-        {
-            // print("Dash on cooldown!");
-            return;
-        }
+    {   
+        if (isLocked == false) {
+            if (currentCooldown > 0)
+            {
+                // print("Dash on cooldown!");
+                return;
+            }
 
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Dash", GetComponent<Transform>().position);
-        currentCooldown = GlobalStats.dashCooldown;
-        _hudManager.UseStamina(playerNumber);
-        StartCoroutine(Dash());
+            FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Dash", GetComponent<Transform>().position);
+            currentCooldown = GlobalStats.dashCooldown;
+            _hudManager.UseStamina(playerNumber);
+            StartCoroutine(Dash());
+        }
     }
 
     private bool _dashing;
@@ -312,7 +319,8 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0 && Stock > 0)
             {
-                GetComponent<PlayerInput>().enabled = true;
+                // GetComponent<PlayerInput>().enabled = true;
+                isLocked = false;
                 RespawnRoutine();
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
@@ -502,7 +510,8 @@ public class Controller : MonoBehaviour
         if (playerHealth <= 0)
         {
             Debug.Log(playerNumber);
-            GetComponent<PlayerInput>().enabled = false;
+            isLocked = true;
+            // GetComponent<PlayerInput>().enabled = false;
             moveDirection = new Vector3(0, 0, 0);
             dynamicCamera.SetActive(false);
             explosion = Instantiate(explosionAnimation);
