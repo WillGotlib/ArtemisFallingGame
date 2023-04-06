@@ -11,6 +11,10 @@ public class PausedMenu : MonoBehaviour
     public GameObject settingUI;
     // Update is called once per frame
 
+    void Start() {
+        Resume();
+    }
+
     public void SwitchMenuState() {
         settingUI.SetActive(false);
         print("is paused: " + isPaused);
@@ -39,11 +43,13 @@ public class PausedMenu : MonoBehaviour
     }
 
     public void ReturnToMenu() {
-        SceneManager.LoadScene(0);
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
+            Destroy(player);
+        }
+        SceneManager.LoadScene("Menu2");
     }
 
     public void QuitGame() {
-        Debug.Log("Game exited!");
-        Application.Quit();
+        MainMenu.QuitGame();
     }
 }

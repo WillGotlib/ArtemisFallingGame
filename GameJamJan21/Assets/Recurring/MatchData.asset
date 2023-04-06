@@ -12,11 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d317405217159f94a9131f4d5474b95f, type: 3}
   m_Name: MatchData
   m_EditorClassIdentifier: 
-  levelIdx: 0
+  numPlayers: 2
+  levelIdx: 1
   numGames: 1
   levels:
   - {fileID: 8804078544648102232, guid: d12e17ee50f58ef4db46cbba110a777e, type: 3}
-  - {fileID: 8804078544648102232, guid: 0230432c8b38873458457f0083a9002c, type: 3}
+  - {fileID: 8804078544648102232, guid: bee05a9ff03524ba697b338eb4a11afe, type: 3}
   - {fileID: 8804078544648102232, guid: 857ae5ce289abbf4c852cf8339bedf0e, type: 3}
-  p1Wins: 0
-  p2Wins: 0
+  - {fileID: 8804078544648102232, guid: 0a792fe37963f9b45b34aecd003c47ba, type: 3}
+  playerWins: 00000000010000000000000000000000
+  lastWinner: 1
+  primaryColours:
+  - {r: 0.31855002, g: 0.5377358, b: 0.13443395, a: 0}
+  - {r: 0.9150943, g: 0.34618747, b: 0.12517802, a: 0}
+  - {r: 0.8207547, g: 0.0038714937, b: 0.65187275, a: 0}
+  - {r: 0, g: 0.5594592, b: 1, a: 0}
+  accentColours:
+  - {r: 0.5188679, g: 0.32119623, b: 0.21782662, a: 0}
+  - {r: 0.42455417, g: 0.21586864, b: 0.46226418, a: 0}
+  - {r: 0.903554, g: 1, b: 0.10849059, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  secondaryTypes:
+  - {fileID: 9165814152039018566, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+  - {fileID: 2160589781498056887, guid: b7577be1fd91c4a7a9fab71345e58277, type: 3}
+  playerSecondaries: 00000000000000000000000000000000
+  skipMainMenu: 0

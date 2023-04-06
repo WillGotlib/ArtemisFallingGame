@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EncodableAsset" id="{08fb6f3d-888d-4764-a82d-dc505fcbc1fa}">
+		<property name="assetPath">
+			<value>Artermis Falling Sfx/PlayerWalk/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ef4f5f9e-c4cd-4597-a2b6-6b071ce04a19}</destination>
+		</relationship>
+	</object>
+</objects>

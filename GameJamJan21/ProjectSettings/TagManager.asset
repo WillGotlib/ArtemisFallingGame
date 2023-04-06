@@ -9,6 +9,11 @@ TagManager:
   - Spawnpoint
   - SIMULATION
   - Powerup
+  - Transparent
+  - Modifier
+  - SkyBox
+  - Grenade
+  - Weapon
   layers:
   - Default
   - TransparentFX
@@ -17,7 +22,7 @@ TagManager:
   - Water
   - UI
   - 
-  - 
+  - background
   - 
   - 
   - 
@@ -43,6 +48,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Behind
+    uniqueID: 3557641093
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ahead
+    uniqueID: 1740651591
     locked: 0

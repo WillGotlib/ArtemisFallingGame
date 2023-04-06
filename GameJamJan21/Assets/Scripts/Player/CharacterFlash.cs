@@ -1,75 +1,65 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterFlash : MonoBehaviour
 {
+
+    private PlayerColourizer _colourizer;
     
-    [SerializeField] private Material normalMaterial;
-    [Tooltip("Material to switch to when damaged")]
-    [SerializeField] private Material damageMaterial;
-    [SerializeField] private Material invincibleMaterial;
+    [Tooltip("Colours to switch to when damaged")]
+    [SerializeField] private Color damageColour;
+    [SerializeField] private Color invincibleColour;
 
     [Tooltip("Duration of the flash.")]
     [SerializeField] private float damageDuration;
     [SerializeField] private float invincibleDuration;
 
-    // The SpriteRenderer that should flash.
-    private MeshRenderer meshRenderer;
+    private void Awake()
+    {
+        _colourizer = GetComponent<PlayerColourizer>();
+    }
+
+    // defualt colours
+    private Color _originalPrimary;
+    private Color _originalSecondary;
 
     // The currently running coroutine.
-    private Coroutine flashRoutine;
-
-    void Start()
-    {
-        // Get the SpriteRenderer to be used,
-        // alternatively you could set it from the inspector.
-        meshRenderer = GetComponent<MeshRenderer>();
-
-        // Copy the material so it can be modified without any side effects.
-        damageMaterial = new Material(damageMaterial);
-        invincibleMaterial = new Material(invincibleMaterial);
-        
-    }
+    private Coroutine _flashRoutine;
 
     public void DamageFlash()
     {
-        Flash(damageMaterial, damageDuration);
+        Flash(damageColour, damageDuration);
     }
     
     public void InvincibilityFlash()
     {
-        Flash(invincibleMaterial, invincibleDuration);
+        Flash(invincibleColour, invincibleDuration);
     }
 
-    private void Flash(Material mat, float duration) {
-        if (flashRoutine != null)
-        {
-            if (mat != damageMaterial) {
-                return; // We can let this happen if it's damage but not invincibility.
-            }
-            StopCoroutine(flashRoutine);
-            flashRoutine = null;
-        }
-        if (flashRoutine == null) {
-            flashRoutine = StartCoroutine(FlashRoutine(mat, duration));
-        }
+    private void Flash(Color col, float duration) {
+        if (_flashRoutine != null)
+            return;
+        
+            
+        _originalPrimary = _colourizer.PrimaryColour;
+        _originalSecondary = _colourizer.SecondaryColour;
+        _flashRoutine = StartCoroutine(FlashRoutine(col, duration));
     }
 
-    private IEnumerator FlashRoutine(Material mat, float duration)
+    private IEnumerator FlashRoutine(Color col, float duration)
     {
-        // Swap to the flashMaterial.
-        meshRenderer.material = mat;
+        _colourizer.PrimaryColour = col;
+        _colourizer.SecondaryColour = col;
 
         // Pause the execution of this function for "duration" seconds.
         yield return new WaitForSeconds(duration);
 
-        // After the pause, swap back to the original material.
-        meshRenderer.material = normalMaterial;
-        
+        _colourizer.PrimaryColour = _originalPrimary;
+        _colourizer.SecondaryColour = _originalSecondary;
+
         yield return new WaitForSeconds(duration);
 
         // Set the flashRoutine to null, signaling that it's finished.
-        flashRoutine = null;
+        _flashRoutine = null;
     }
 }
