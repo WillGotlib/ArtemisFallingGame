@@ -4511,6 +4511,7 @@ MonoBehaviour:
   MainMenu: {fileID: 2092663301}
   LevelSelectMenu: {fileID: 1237094283}
   PlayerManagerUI: {fileID: 1824809441}
+  navigationCooldownComplete: 1
 --- !u!1 &896146272
 GameObject:
   m_ObjectHideFlags: 0
@@ -6236,6 +6237,7 @@ MonoBehaviour:
   - {fileID: 587609685}
   - {fileID: 592637607}
   - {fileID: 1925308558}
+  MenuRunner: {fileID: 888204329}
 --- !u!1 &1238125242
 GameObject:
   m_ObjectHideFlags: 0

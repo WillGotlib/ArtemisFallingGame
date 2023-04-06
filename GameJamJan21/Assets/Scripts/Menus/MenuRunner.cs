@@ -37,7 +37,7 @@ public class MenuRunner : MonoBehaviour
         LevelSelectMenu.RefreshPlayerSections();
     }
 
-    private bool navigationCooldownComplete = true;
+    public bool navigationCooldownComplete = true;
 
     private IEnumerator NavigationCooldown() {
         yield return new WaitForSeconds(0.2f);

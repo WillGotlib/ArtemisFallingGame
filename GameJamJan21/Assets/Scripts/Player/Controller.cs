@@ -300,7 +300,7 @@ public class Controller : MonoBehaviour
             }
             
             deathCooldown -= Time.deltaTime;
-            if (deathCooldown <= 0)
+            if (deathCooldown <= 0 && Stock > 0)
             {
                 RespawnRoutine();
                 // transform.position = pos;
