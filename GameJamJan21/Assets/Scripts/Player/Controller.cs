@@ -71,11 +71,18 @@ public class Controller : MonoBehaviour
 
     public PlayerInput Input;
 
+    private GameObject dynamicCamera;
+
+    private GameObject explosion;
+    public GameObject explosionAnimation;
+    
     private bool charging = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        dynamicCamera = GameObject.Find("DynamicCamera");
+
         if (Input.devices.Count == 0) {
             Input.SwitchCurrentControlScheme("P1Keyboard", Keyboard.current);
         }
@@ -305,6 +312,7 @@ public class Controller : MonoBehaviour
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0 && Stock > 0)
             {
+                GetComponent<PlayerInput>().enabled = true;
                 RespawnRoutine();
                 // transform.position = pos;
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
@@ -313,7 +321,7 @@ public class Controller : MonoBehaviour
                 
                 _analyticsManager.RespawnEvent(gameObject);
                 _analyticsManager.StockUpdate(gameObject, Stock); // maybe put all these events in the game manager rather then in each player and bullet
-                    
+                dynamicCamera.SetActive(true);
                 return;
             }
         } else {
@@ -494,11 +502,20 @@ public class Controller : MonoBehaviour
         if (playerHealth <= 0)
         {
             Debug.Log(playerNumber);
-            PlayerDeath();
+            GetComponent<PlayerInput>().enabled = false;
+            moveDirection = new Vector3(0, 0, 0);
+            dynamicCamera.SetActive(false);
+            explosion = Instantiate(explosionAnimation);
+            var pos = transform.position+Vector3.zero;
+            pos.y = 0;
+            explosion.transform.position = pos;
+            Invoke("PlayerDeath", 2);
+            // PlayerDeath();
         }
 
         return true;
     }
+
 
     private void PlayerDeath()
     {
