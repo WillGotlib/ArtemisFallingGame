@@ -164,6 +164,7 @@ public class GunController : MonoBehaviour
                 currentSizeMultiplier = oldSizeMultiplier;
                 charged = !charged;
             }
+            ClearChargeGUI();
         } else {
             Debug.Log("Bullet would appear inside an object!");
         }
@@ -211,5 +212,13 @@ public class GunController : MonoBehaviour
             secondaryCooldownTimer = 0;
             secondaryOnCooldown = false;
         }
+    }
+
+    public void UpdateChargeGUI() {
+        _hudManagerLocal.UpdateChargeBar(0.3f);
+    }
+
+    public void ClearChargeGUI() {
+        _hudManagerLocal.UpdateChargeBar(1f);
     }
 }
