@@ -71,6 +71,8 @@ public class Controller : MonoBehaviour
 
     public PlayerInput Input;
 
+    private bool charging = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -210,6 +212,7 @@ public class Controller : MonoBehaviour
         if (!currentlyDead && weapon != null && weapon.activeSelf)
         {
             weapon.GetComponent<GunController>().ApplyChargeSizeMultiplier();
+            print("CHARGING");
             weapon.GetComponent<GunController>().PrimaryFire();
         }
     }
@@ -368,6 +371,21 @@ public class Controller : MonoBehaviour
         else
         {
             momentum = startMomentum;
+        }
+
+        HandleCharge();
+    }
+
+    private void HandleCharge() {
+        var playerActions = Input.actions.actionMaps[0];
+        var chargeShot = playerActions["PrimaryFireCharge"];
+        // Set this once the first time charging is detected, but don't re-set it
+        if (!charging && chargeShot.phase == InputActionPhase.Started) {
+            charging = true;
+        }
+        // triggered is only true when the shot actually releases
+        if (chargeShot.triggered) {
+            charging = false;
         }
     }
 

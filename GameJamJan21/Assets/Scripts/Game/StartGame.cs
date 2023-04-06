@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class StartGame : MonoBehaviour
 {
+    [SerializeField] GameObject ActiveCamera; // TODO: for tomorrow...This will have to change around now...
+
     public GameObject playerPrefab;
     private LevelManager levelManager;
     private Scene _simulatorScene;
@@ -47,9 +49,11 @@ public class StartGame : MonoBehaviour
             Vector3 playerPos = spawnPoints[i].transform.position;
             playerPos.Set(playerPos.x, playerPos.y + 0.25f, playerPos.z);
             GameObject player = Instantiate(playerPrefab, playerPos, spawnPoints[i].transform.rotation, transform);
-            player.GetComponent<Controller>().playerNumber = i;
-            player.name = "Player " + i;
             players[i] = player.GetComponent<Controller>();
+            players[i].playerNumber = i;
+            player.name = "Player " + i;
+            player.GetComponent<MovingUIPointer>().target = ActiveCamera.gameObject;
+
             // playerStocks[i] = GlobalStats.defaultStockCount;
             PlayerStockUpdate(i, GlobalStats.defaultStockCount);
 
@@ -110,10 +114,19 @@ public class StartGame : MonoBehaviour
         
         int winner = CheckForMatchEnding(playerNumber);
         if (winner != -1) {
-            // TODO: GAME IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
+            // TODO: MATCH IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
             
+            // Insert call to camera-zoom-in-on-winner here. int winner == the player id of the winner.
+
+            StartCoroutine(MatchEndDelay());
             levelManager.EndLevel(winner);
         }
+    }
+
+    private IEnumerator MatchEndDelay()
+    {
+        print("Match is over, but we will wait a few seconds before moving to victory screen.");
+        yield return new WaitForSeconds(4f);
     }
 
     public void RespawnPlayer(Controller player)
