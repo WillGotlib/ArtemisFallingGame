@@ -985,7 +985,7 @@ MonoBehaviour:
   - {fileID: 2108337399757475050}
   obstacles: {fileID: 1258592583860531839}
   nid: Torque
-  thumbnail: {fileID: 21300000, guid: 58d9ad430dfb94a5d8e0a9e741410abe, type: 3}
+  thumbnail: {fileID: 21300000, guid: 798d88107a09cb24da9728ccef865e99, type: 3}
 --- !u!1 &9178838830107674336
 GameObject:
   m_ObjectHideFlags: 0
