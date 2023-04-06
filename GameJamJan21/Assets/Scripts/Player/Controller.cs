@@ -210,6 +210,7 @@ public class Controller : MonoBehaviour
         if (!currentlyDead && weapon != null && weapon.activeSelf)
         {
             weapon.GetComponent<GunController>().ApplyChargeSizeMultiplier();
+            print("CHARGING");
             weapon.GetComponent<GunController>().PrimaryFire();
         }
     }
