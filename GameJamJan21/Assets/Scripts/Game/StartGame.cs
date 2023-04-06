@@ -149,13 +149,6 @@ public class StartGame : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(8);
         levelManager.EndLevel(winner);
-            // TODO: MATCH IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
-            
-            // Insert call to camera-zoom-in-on-winner here. int winner == the player id of the winner.
-
-            StartCoroutine(MatchEndDelay());
-            levelManager.EndLevel(winner);
-        }
     }
 
     private IEnumerator MatchEndDelay()
