@@ -37,8 +37,8 @@ public class MainMenu : MonoBehaviour
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
-        SceneManager.LoadScene("Gameplay");
         mds.tutorial = false;
+        SceneManager.LoadScene("Gameplay");
     }
 
     public void PlayTutorial() {

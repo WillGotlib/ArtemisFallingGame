@@ -79,6 +79,12 @@ public class StartGame : MonoBehaviour
         if (!mds.tutorial) {
             foreach (GameObject tut in tutorialUI) {
                 tut.SetActive(false);
+                if (tut.GetComponent<Renderer>() != null) {
+                    tut.GetComponent<Renderer>().enabled = false;
+                }
+                if (tut.GetComponent<CanvasRenderer>() != null) {
+                    tut.GetComponent<CanvasRenderer>().SetAlpha(0f);
+                }
             }
         }
     }
