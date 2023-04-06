@@ -24,7 +24,7 @@ public class LevelSelectMenu : MatchSetupMenu
 
         // List of level names
         // TODO: This is not extensible right now. Fix it.
-        for (int i = 0; i < mds.levels.Length; i++) {
+        for (int i = 0; i < levelButtonSet.Length && i < mds.levels.Length; i++) {
             Level currLevel = mds.levels[i].GetComponent<Level>();
             levelButtonSet[i].GetComponent<Image>().sprite = currLevel.thumbnail;
             levelButtonSet[i].gameObject.GetComponentInChildren<TMP_Text>().text = currLevel.nid;

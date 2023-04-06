@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4933184261850188247}
   m_Layer: 0
   m_Name: TurningObstacle
-  m_TagString: Untagged
+  m_TagString: Reflector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -85,8 +85,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0027976164, y: 0.013496975, z: 0.008496204}
-  m_Center: {x: 3.100618e-10, y: 1.9364765e-10, z: -0.004234966}
+  m_Size: {x: 3, y: 2, z: 0.6}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &951287085129100302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,6 +1125,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6346705865577390408, guid: c89c60935a34da44bbe07c5b7d13e3b8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c89c60935a34da44bbe07c5b7d13e3b8, type: 3}
 --- !u!1 &7413897921060188712 stripped
@@ -1554,6 +1558,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6346705865577390408, guid: c89c60935a34da44bbe07c5b7d13e3b8, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c89c60935a34da44bbe07c5b7d13e3b8, type: 3}
 --- !u!4 &8369035879681174163 stripped
@@ -1878,7 +1886,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4948993480395887297, guid: 4b43cd70dfacda14aacf20655ecc582e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0.0002
       objectReference: {fileID: 0}
     - target: {fileID: -4948993480395887297, guid: 4b43cd70dfacda14aacf20655ecc582e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1982,7 +1990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 916495145215222449, guid: 4b43cd70dfacda14aacf20655ecc582e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 916495145215222449, guid: 4b43cd70dfacda14aacf20655ecc582e, type: 3}
       propertyPath: m_TagString
@@ -2213,7 +2221,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 3
 --- !u!65 &5329450987676059759
 BoxCollider:
@@ -2226,8 +2234,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0027976164, y: 0.013496975, z: 0.008496204}
-  m_Center: {x: 3.100618e-10, y: 1.9364765e-10, z: -0.004234966}
+  m_Size: {x: 0.00397616, y: 0.013496976, z: 0.006486195}
+  m_Center: {x: -4.2375814e-10, y: -6.9418967e-12, z: -0.0032299715}
 --- !u!114 &5977155355475321717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2243,8 +2251,8 @@ MonoBehaviour:
   activated: 1
   rb: {fileID: 1216618565177520228}
   rotationSpeeds:
-  - 0
   - 1
+  - 0
   - 0
   reverseIntervals:
   - 0
