@@ -184,8 +184,8 @@ PrefabInstance:
       value: 0.106593296
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 392166303206611285, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
-    - {fileID: -4888395568687776378, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
 --- !u!1 &6234232466112906086 stripped
 GameObject:
@@ -209,3 +209,16 @@ MonoBehaviour:
   dashBonus: 0.1
   maxDuration: 1
   requiresWeapon: 0
+  icon: {fileID: 0}
+--- !u!114 &-4778470296125061729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6234232466112906086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c092c35e8cb44a25b05b96be0dcdd16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
