@@ -489,7 +489,7 @@ MonoBehaviour:
   sizeMultiplier: 1
   sizeIncrements: 0.06
   sizeRecovery: 0.001
-  chargeIncrements: 0.002
+  chargeIncrements: 0.0028
   chargeBonus: 1.5
   animationController: {fileID: 2263409211759763732}
   owner: {fileID: 0}
