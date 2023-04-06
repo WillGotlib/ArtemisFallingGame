@@ -38,6 +38,7 @@ public class MainMenu : MonoBehaviour
             PausedMenu.isPaused = false;
         }
         SceneManager.LoadScene("Gameplay");
+        mds.tutorial = false;
     }
 
     public void PlayTutorial() {
@@ -45,8 +46,14 @@ public class MainMenu : MonoBehaviour
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
+        SetupTutorial();
+        SceneManager.LoadScene("Gameplay");
+    }
 
-        SceneManager.LoadScene("Tutorial");
+    private void SetupTutorial() {
+        mds.tutorial = true;
+        mds.levelIdx = 4; //HAHAHAHAHAHHAHA
+        mds.numPlayers = 2;
     }
 
     public void ResetLanding()

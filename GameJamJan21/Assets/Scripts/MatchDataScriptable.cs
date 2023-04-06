@@ -27,4 +27,6 @@ public class MatchDataScriptable : ScriptableObject
     
     private int[] playerColourSchemes;
     private List<int> selectedColourSchemes; // For no overlap
+
+    public bool tutorial = false;
 }

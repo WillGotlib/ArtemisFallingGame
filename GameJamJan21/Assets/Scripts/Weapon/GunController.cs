@@ -225,7 +225,9 @@ public class GunController : MonoBehaviour
     }
 
     public void ClearChargeGUI() {
-        currentChargeAmount = defaultChargeValue;
-        _hudManagerLocal.UpdateChargeBar(defaultChargeValue);
+        if (!primaryOnCooldown) {
+            currentChargeAmount = defaultChargeValue;
+            _hudManagerLocal.UpdateChargeBar(defaultChargeValue);
+        }
     }
 }

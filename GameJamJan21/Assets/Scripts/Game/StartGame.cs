@@ -24,12 +24,15 @@ public class StartGame : MonoBehaviour
 
     public MatchDataScriptable mds;
 
+    [SerializeField] private GameObject[] tutorialUI;
+
     // Start is called before the first frame update
     void Start()
     {
         // 
         if (mds.primaryColours.Length != mds.accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
+        HandleTutorialUI();
         _hudManager.InitHealth();
         StartMatch();
     }
@@ -69,6 +72,14 @@ public class StartGame : MonoBehaviour
             player.GetComponentInChildren<AnimationUtils>().Landing = true;
             
             i++;
+        }
+    }
+
+    private void HandleTutorialUI() {
+        if (!mds.tutorial) {
+            foreach (GameObject tut in tutorialUI) {
+                tut.SetActive(false);
+            }
         }
     }
 
