@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{70aa1491-2a93-4c71-8ba9-9b237c5bd406}">
+		<property name="assetPath">
+			<value>ESM_GB_fx_foley_one_shot_magshim_crystal_use_impact_energy_smash.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.2374166666666668</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{ef4f5f9e-c4cd-4597-a2b6-6b071ce04a19}</destination>
+		</relationship>
+	</object>
+</objects>

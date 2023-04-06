@@ -37,6 +37,8 @@ public class GunController : MonoBehaviour
 
     [Header("Object values")] public Animator animationController;
     public Controller owner;
+    // Note: This really could go in Controller.cs, but right now it's just taking care of gun stuff.
+    private PlayerHUDManager _hudManagerLocal; 
 
     void Start()
     {
@@ -46,6 +48,7 @@ public class GunController : MonoBehaviour
         // secondaryCooldownTimer = secondaryCooldown;
         currentCooldownMultiplier = cooldownMultiplier;
         ResetSizeMultiplier();
+        _hudManagerLocal = owner.GetComponent<PlayerHUDManager>();
     }
 
     private int _runCounter;
@@ -60,6 +63,7 @@ public class GunController : MonoBehaviour
 
         if (primaryOnCooldown) {
             primaryCooldownTimer -= Time.deltaTime * currentCooldownMultiplier;
+            _hudManagerLocal.UpdateCooldownBar(primaryCooldownTimer / primaryCooldown);
             if (primaryCooldownTimer <= 0) {
                 Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;

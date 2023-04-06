@@ -81,6 +81,9 @@
 		<property name="length">
 			<value>13.961208333333333</value>
 		</property>
+		<relationship name="fadeInCurve">
+			<destination>{1d8f39de-81e1-4782-be2e-69c38e90e2f0}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{bb875328-fcbb-4578-bac4-d64abba7c2a1}</destination>
 		</relationship>
@@ -94,9 +97,54 @@
 	<object class="MixerBusEffectChain" id="{f1e970ad-a3d5-44eb-8492-c451347c55a2}">
 		<relationship name="effects">
 			<destination>{f4e0b4bc-40c9-4e2a-bf73-7a236cb11c78}</destination>
+			<destination>{8e839a7f-413c-4cf3-b156-58cf46217ad9}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{8163755b-f23b-4a80-a9b9-7d06876fcc45}" />
+	<object class="FadeCurve" id="{1d8f39de-81e1-4782-be2e-69c38e90e2f0}">
+		<relationship name="startPoint">
+			<destination>{e119b4c1-e1f8-4358-82b6-bb59f309d490}</destination>
+		</relationship>
+		<relationship name="endPoint">
+			<destination>{62a419b1-6cdf-4a25-a136-bec13a8147c3}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{bd5da2bc-7dbb-45a8-a0f9-9efeb4833d74}" />
 	<object class="MixerBusFader" id="{f4e0b4bc-40c9-4e2a-bf73-7a236cb11c78}" />
+	<object class="MultibandEqEffect" id="{8e839a7f-413c-4cf3-b156-58cf46217ad9}">
+		<property name="filterTypeB">
+			<value>1</value>
+		</property>
+		<property name="frequencyA">
+			<value>21999.9902</value>
+		</property>
+		<property name="frequencyB">
+			<value>21999.9902</value>
+		</property>
+		<property name="qualityA">
+			<value>4.04767036</value>
+		</property>
+		<property name="qualityB">
+			<value>3.63163567</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{e119b4c1-e1f8-4358-82b6-bb59f309d490}">
+		<property name="position">
+			<value>0</value>
+		</property>
+		<property name="value">
+			<value>0</value>
+		</property>
+		<property name="curveShape">
+			<value>-0.2547189</value>
+		</property>
+	</object>
+	<object class="AutomationPoint" id="{62a419b1-6cdf-4a25-a136-bec13a8147c3}">
+		<property name="position">
+			<value>0.15818117816091953</value>
+		</property>
+		<property name="value">
+			<value>1</value>
+		</property>
+	</object>
 </objects>
