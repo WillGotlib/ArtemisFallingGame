@@ -7,19 +7,23 @@ namespace Player
     public class ExplodePlayer : MonoBehaviour
     {
         [SerializeField] private Transform parentObject;
-        [SerializeField] private float minForce = 1;
-        [SerializeField] private float maxForce = 10;
+        [SerializeField] private Vector2 forceRange = new (1,10);
+        [SerializeField] private Vector2 massRange = new (1,1);
 
         private List<(Transform obj, Transform parent, Vector3 position, Quaternion, Vector3 scale)> _orig;
 
+        private Rigidbody _rb;
+        private Collider _col;
+        
         private void Start()
         {
             _orig = new();
             Flatten(parentObject);
-            //ResetExplosion();
+            _rb = GetComponent<Rigidbody>();
+            _col = GetComponent<CapsuleCollider>();
         }
 
-#if UNITY_EDITOR && false // for testing
+#if UNITY_EDITOR && true // for testing
         private bool ex;
 
         private void Update()
@@ -40,19 +44,31 @@ namespace Player
         public void Explode()
         {
             // special sound for explosion
-
+            
+            // freeze parent
+            _rb.isKinematic = true;
+            _col.enabled = false;
+            
+            // flatten and yeet objects
             foreach (var (obj, _, _, _, _) in _orig)
             {
                 obj.SetParent(parentObject.parent);
 
                 var rb = obj.gameObject.AddComponent<Rigidbody>();
-                rb.AddForce(Random.rotation * Vector3.up * Random.Range(minForce, maxForce));
+                rb.AddForce(Random.rotation * Vector3.up * Random.Range(forceRange.x, forceRange.y));
+                rb.mass = Random.Range(massRange.x, massRange.y);
+                //rb.drag = 50;
                 obj.gameObject.AddComponent<BoxCollider>();
             }
         }
 
         public void ResetExplosion()
         {
+            // resume parent
+            _rb.isKinematic = false;
+            _col.enabled = true;
+            
+            // reset positions
             foreach (var (obj, parent, vector3, quaternion, scale) in _orig)
             {
                 Destroy(obj.gameObject.GetComponent<Rigidbody>());

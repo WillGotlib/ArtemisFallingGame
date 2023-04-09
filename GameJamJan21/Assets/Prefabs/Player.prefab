@@ -633,6 +633,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentObject: {fileID: 9007030689590978157}
+  forceRange: {x: 1, y: 3}
+  massRange: {x: 8, y: 20}
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0
