@@ -23,7 +23,7 @@ namespace Player
             _col = GetComponent<CapsuleCollider>();
         }
 
-#if UNITY_EDITOR && true // for testing
+#if UNITY_EDITOR && false // for testing
         private bool ex;
 
         private void Update()
