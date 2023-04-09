@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028353, g: 0.22571346, b: 0.30692047, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028417, g: 0.2257145, b: 0.3069222, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1938,6 +1938,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1373217284111133474, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1373217284111133474, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
       propertyPath: m_Cameras.Array.data[0]
       value: 
       objectReference: {fileID: 830083915}
@@ -1967,15 +1971,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3728489329499391202, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.040455
+      value: 5.0424323
       objectReference: {fileID: 0}
     - target: {fileID: 3728489329499391202, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.636899
+      value: 8.6357565
       objectReference: {fileID: 0}
     - target: {fileID: 3728489329499391202, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.52203965
+      value: -0.5210154
       objectReference: {fileID: 0}
     - target: {fileID: 3728489329499391202, guid: 6926427030adc2240b39e092ea7cb6b1, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8907,7 +8911,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538129701}
   m_LocalRotation: {x: -0.3535534, y: 0.61237246, z: -0.3535534, w: -0.61237246}
-  m_LocalPosition: {x: 5.040455, y: 8.636899, z: -0.52203965}
+  m_LocalPosition: {x: 5.0424323, y: 8.6357565, z: -0.5210154}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
