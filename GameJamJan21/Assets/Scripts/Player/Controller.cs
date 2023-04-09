@@ -11,15 +11,14 @@ using UnityEngine.InputSystem.Users;
 public class Controller : MonoBehaviour
 {
     [NonSerialized] public int playerNumber;
+
     // Number of times a player can die before they are out of the game
     [NonSerialized] public int Stock = GlobalStats.defaultStockCount;
 
-    [Header("Nodes")]
-    public Rigidbody rb;
+    [Header("Nodes")] public Rigidbody rb;
     public AnimationUtils animator;
-    
-    [Header("Values")]
-    public float speed = 2f;
+
+    [Header("Values")] public float speed = 2f;
     public float sensitivity = 5;
     public float kbdSensitivity = 4;
     public GameObject weaponType;
@@ -33,7 +32,7 @@ public class Controller : MonoBehaviour
     new Camera camera;
     bool followingCamera = true;
     public PausedMenu menu;
-    
+
     CameraSwitch cameraController;
     private CharacterFlash flashManager;
 
@@ -44,7 +43,7 @@ public class Controller : MonoBehaviour
     public float momentum = 0.85f;
     private float startMomentum;
     public float maxMomentum = 1.5f;
-    public float dashDuration= 0.1f;
+    public float dashDuration = 0.1f;
     public GameObject backupCamera;
 
     private bool currentlyDead;
@@ -61,7 +60,7 @@ public class Controller : MonoBehaviour
 
     private AnalyticsManager _analyticsManager;
     private HUDManager _hudManager;
-    
+
     public MatchDataScriptable mds;
 
     private DashJets _jetParticles;
@@ -75,7 +74,7 @@ public class Controller : MonoBehaviour
 
     private GameObject explosion;
     public GameObject explosionAnimation;
-    
+
     private bool charging = false;
 
     private bool isLocked = false;
@@ -85,16 +84,20 @@ public class Controller : MonoBehaviour
     {
         dynamicCamera = GameObject.Find("DynamicCamera");
 
-        if (Input.devices.Count == 0) {
+        if (Input.devices.Count == 0)
+        {
             Input.SwitchCurrentControlScheme("P1Keyboard", Keyboard.current);
         }
+
         var unpaired = InputUser.GetUnpairedInputDevices();
         var ipa = new InputMaster();
 
-        foreach (var devices in unpaired) {
+        foreach (var devices in unpaired)
+        {
             var scheme = InputControlScheme.FindControlSchemeForDevice(devices, ipa.controlSchemes);
 
-            if (scheme?.name == "Gamepad2") {
+            if (scheme?.name == "Gamepad2")
+            {
                 Input.SwitchCurrentControlScheme("Gamepad2", devices);
                 break;
             }
@@ -102,7 +105,7 @@ public class Controller : MonoBehaviour
 
         var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
         lookDirection = rotation * transform.rotation * Vector3.forward;
-        
+
         _analyticsManager = FindObjectOfType<AnalyticsManager>();
         StartGame = FindObjectOfType<StartGame>();
         camera = GetComponentInChildren<Camera>();
@@ -112,7 +115,7 @@ public class Controller : MonoBehaviour
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         // menu.SwitchMenuState();
-        
+
         _jetParticles.Shoot();
 
         // controller = GetComponent<CharacterController>();
@@ -125,12 +128,12 @@ public class Controller : MonoBehaviour
 
         currentCooldown = 0;
         startMomentum = momentum;
-        
+
         _analyticsManager.HealthEvent(gameObject, playerHealth);
         _analyticsManager.StockUpdate(gameObject, Stock);
 
         _capsule = GetComponent<CapsuleCollider>();
-        
+
         StartGame.PlayerHealthUpdate(playerNumber, playerHealth);
         // StartGame.PlayerStockUpdate(playerNumber, ) TODO: Should stocks be stored here too?
     }
@@ -142,12 +145,12 @@ public class Controller : MonoBehaviour
             weapon.SetActive(true);
             return;
         }
-        
+
         weapon = Instantiate(weaponType, weaponHandBone);
         weapon.transform.localPosition = new Vector3(.6f, 6f, 0);
         weapon.transform.localRotation = Quaternion.Euler(-113, -180, 90);
         weapon.transform.localScale = new Vector3(.5f, .5f, .5f);
-        
+
         var gunController = weapon.GetComponent<GunController>();
         gunController.setOwner(this);
         gunController.setSecondary(null, 0);
@@ -162,7 +165,8 @@ public class Controller : MonoBehaviour
 
     public void OnMovement(InputValue value)
     {
-        if (isLocked == false) {
+        if (isLocked == false)
+        {
             // Vector3 temp = value.Get<Vector3>();
             // if (temp.magnitude > 0) print("3d vector input: " + temp);
             Vector2 temp2 = value.Get<Vector2>();
@@ -182,7 +186,8 @@ public class Controller : MonoBehaviour
     {
         // Read value from control. The type depends on what type of controls.
         // the action is bound to.
-        if (isLocked == false) {
+        if (isLocked == false)
+        {
             kbdHeld = !kbdHeld;
             // print("ROTATION (DASH): " + direction);
             direction = value.Get<Vector3>();
@@ -201,7 +206,7 @@ public class Controller : MonoBehaviour
             lookDirection = rotation * transform.rotation * Vector3.forward;
             lookDirection.Normalize();
         }
-        else 
+        else
             lookDirection = direction.normalized * sensitivity;
     }
 
@@ -233,13 +238,15 @@ public class Controller : MonoBehaviour
     {
         if (!currentlyDead && weapon != null && weapon.activeSelf)
         {
-            if (weapon.GetComponent<GunController>().SecondaryFire()) {
+            if (weapon.GetComponent<GunController>().SecondaryFire())
+            {
                 animator.Play(Animations.Lobbing);
             }
         }
     }
 
-    public void OnEnterMenu() {
+    public void OnEnterMenu()
+    {
         if (menuOnCooldown) return;
         menuOnCooldown = true;
         menu.SwitchMenuState();
@@ -253,8 +260,9 @@ public class Controller : MonoBehaviour
     }
 
     public void OnDash()
-    {   
-        if (isLocked == false) {
+    {
+        if (isLocked == false)
+        {
             if (currentCooldown > 0)
             {
                 // print("Dash on cooldown!");
@@ -269,34 +277,45 @@ public class Controller : MonoBehaviour
     }
 
     private bool _dashing;
-    IEnumerator Dash() {
+
+    IEnumerator Dash()
+    {
         float startTime = Time.time;
         //_jetParticles.Shoot();
         _jetParticles.SetStartSpeed(10);
         animator.Dashing = true;
         _dashing = true;
 
-        while (Time.time < startTime + dashDuration) {
-            if (moveDirection.magnitude > 0) {
+        while (Time.time < startTime + dashDuration)
+        {
+            if (moveDirection.magnitude > 0)
+            {
                 // controller.Move(moveDirection.normalized * Time.deltaTime * dashIntensity * GetDashBonus());    
-                rb.AddForce((dashIntensity * GetDashBonus()) * moveDirection.normalized);    
+                rb.AddForce((dashIntensity * GetDashBonus()) * moveDirection.normalized);
             }
-            else {
+            else
+            {
                 rb.AddForce((dashIntensity * GetDashBonus()) * lookDirection.normalized);
             }
+
             yield return null;
         }
+
         // _jetParticles.Stop();
         _jetParticles.SetStartSpeed();
         animator.Dashing = false;
         _dashing = false;
     }
 
-    void RespawnRoutine() {
-        if (StartGame == null) {
+    void RespawnRoutine()
+    {
+        if (StartGame == null)
+        {
             var tutorialSpawner = FindObjectOfType<StartTutorial>();
             tutorialSpawner.RespawnPlayer(this);
-        } else {
+        }
+        else
+        {
             StartGame.RespawnPlayer(this);
         }
     }
@@ -315,7 +334,7 @@ public class Controller : MonoBehaviour
                 // print("Not on the right plane:: on life plane");
                 transform.position = new Vector3(0, 100, 0);
             }
-            
+
             deathCooldown -= Time.deltaTime;
             if (deathCooldown <= 0 && Stock > 0)
             {
@@ -326,20 +345,26 @@ public class Controller : MonoBehaviour
                 // print("Player position after respawn is: " + transform.position + ", should be " + pos);
                 ResetAttributes();
                 _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
-                
+
                 _analyticsManager.RespawnEvent(gameObject);
-                _analyticsManager.StockUpdate(gameObject, Stock); // maybe put all these events in the game manager rather then in each player and bullet
+                _analyticsManager.StockUpdate(gameObject,
+                    Stock); // maybe put all these events in the game manager rather then in each player and bullet
                 dynamicCamera.SetActive(true);
                 return;
             }
-        } else {
-            if (transform.position.y <= -1) {
+        }
+        else
+        {
+            if (transform.position.y <= -1)
+            {
                 print("Not on the right plane:: phased through the floor");
                 transform.position = new Vector3(transform.position.x, 0, transform.position.z);
             }
         }
+
         // ASSERTION: If player gets to this point they are not dead.
-        if (invincibilityCooldown > 0) {
+        if (invincibilityCooldown > 0)
+        {
             flashManager.InvincibilityFlash();
             invincibilityCooldown -= Time.deltaTime;
         }
@@ -368,10 +393,12 @@ public class Controller : MonoBehaviour
             rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, newAngle, sensitivity * Time.deltaTime));
         }
 
-        Vector3 newMove = new Vector3(-lookDirection.x,0,lookDirection.z).normalized;
+        Vector3 newMove = new Vector3(-lookDirection.x, 0, lookDirection.z).normalized;
         var animationMovement = Quaternion.LookRotation(newMove) * moveDirection;
-        if (newMove.sqrMagnitude != 0) {
+        if (newMove.sqrMagnitude != 0)
+        {
         }
+
         animator.XSpeed = animationMovement.x;
         animator.YSpeed = animationMovement.z;
         if (!currentlyDead && moveDirection.magnitude >= 0.1f && !animator.Landing)
@@ -392,23 +419,29 @@ public class Controller : MonoBehaviour
         HandleCharge();
     }
 
-    private void HandleCharge() {
+    private void HandleCharge()
+    {
         var playerActions = Input.actions.actionMaps[0];
         var chargeShot = playerActions["PrimaryFireCharge"];
         // triggered is only true when the shot actually releases
-        if (chargeShot.triggered || chargeShot.phase != InputActionPhase.Started) {
+        if (chargeShot.triggered || chargeShot.phase != InputActionPhase.Started)
+        {
             charging = false;
-        } else if (!charging && chargeShot.phase == InputActionPhase.Started) {
+        }
+        else if (!charging && chargeShot.phase == InputActionPhase.Started)
+        {
             charging = true;
         }
+
         // Actually update GUI
-        if (charging) {
+        if (charging)
+        {
             weapon.GetComponent<GunController>().UpdateChargeGUI();
         }
     }
 
     private void LateUpdate()
-    {       
+    {
         var mag = animator.transform.localPosition.magnitude;
         if (mag != 0 &&
             !currentlyDead &&
@@ -416,8 +449,10 @@ public class Controller : MonoBehaviour
             !_dashing &&
             isGrounded()) // todo you cant go up on ledges 
             // rb.MovePosition(transform.position + moveDirection.normalized * mag);       todo reenable this
-            rb.MovePosition(transform.position + moveDirection.normalized * (0.01f * GetSpeedBonus() * speed * momentum));
-        else if (!currentlyDead && !animator.Landing && !_dashing && !isGrounded()) {
+            rb.MovePosition(
+                transform.position + moveDirection.normalized * (0.01f * GetSpeedBonus() * speed * momentum));
+        else if (!currentlyDead && !animator.Landing && !_dashing && !isGrounded())
+        {
             moveDirection.y = -10;
             rb.MovePosition(transform.position + moveDirection.normalized * momentum);
         }
@@ -435,24 +470,29 @@ public class Controller : MonoBehaviour
         foreach (Effect e in new List<Effect>(effects))
         {
             e.TickDown();
-            if (e.CheckTimer()) {
+            if (e.CheckTimer())
+            {
                 effects.Remove(e);
-            } else {
+            }
+            else
+            {
                 anyEffects = true;
             }
         }
+
         if (!anyEffects)
             _hudManager.HidePowerupIcon(playerNumber);
     }
 
-    public bool hasEffect(Effect e) {
+    public bool hasEffect(Effect e)
+    {
         return effects.Contains(e);
     }
 
     public float GetSpeedBonus()
     {
         float totalBonus = 1;
-        
+
         foreach (Effect e in effects)
         {
             totalBonus *= e.speedBonus;
@@ -469,6 +509,7 @@ public class Controller : MonoBehaviour
         {
             totalBonus *= e.fireRateBonus;
         }
+
         return totalBonus;
     }
 
@@ -501,7 +542,7 @@ public class Controller : MonoBehaviour
         // print("P" + playerNumber + " TOOK " + damageAmount + " dmg >> HP = " + playerHealth);
         playerHealth = Mathf.Max(0, Mathf.Round((playerHealth - damageAmount) * 10) / 10);
         flashManager.DamageFlash();
-        
+
         FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/PlayerHurt", GetComponent<Transform>().position);
 
         // StartGame.PlayerHealthUpdate(playerNumber, playerHealth);
@@ -515,7 +556,7 @@ public class Controller : MonoBehaviour
             moveDirection = new Vector3(0, 0, 0);
             dynamicCamera.SetActive(false);
             explosion = Instantiate(explosionAnimation);
-            var pos = transform.position+Vector3.zero;
+            var pos = transform.position + Vector3.zero;
             pos.y = 0;
             explosion.transform.position = pos;
             Invoke("PlayerDeath", 2);
@@ -528,19 +569,21 @@ public class Controller : MonoBehaviour
 
     private void PlayerDeath()
     {
-        if (!currentlyDead) {
-            currentlyDead = true;
-            // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
-            print("PLAYER DIED");
-            // transform.position = transform.position + new Vector3(0, 10, 0);
-            // SetActive(false);
-            
-            HideGun();
-            if (StartGame)
-                StartGame.ProcessDeath(playerNumber);
-            
-            _analyticsManager.DeathEvent(gameObject);
-        }
+        if (currentlyDead) return;
+
+        currentlyDead = true;
+        // Vector3 newPos = this.transform.position += Vector3.up * 10; // TODO: CHANGE THIS. HOW DO WE "DE-ACTIVATE" THE PLAYER
+        print("PLAYER DIED");
+        // transform.position = transform.position + new Vector3(0, 10, 0);
+        // SetActive(false);
+
+        GetComponent<ExplodePlayer>().Explode();
+
+        HideGun();
+        if (StartGame)
+            StartGame.ProcessDeath(playerNumber);
+
+        _analyticsManager.DeathEvent(gameObject);
     }
 
     public void ResetAttributes()
@@ -550,6 +593,7 @@ public class Controller : MonoBehaviour
         deathCooldown = GlobalStats.deathCooldown;
         invincibilityCooldown = GlobalStats.invincibilityCooldown;
         currentlyDead = false;
+        GetComponent<ExplodePlayer>().ResetExplosion();
     }
 
     // For use with powerups!
@@ -560,14 +604,18 @@ public class Controller : MonoBehaviour
             PowerupDrop powerup = collider.gameObject.GetComponent<PowerupDrop>();
             effects.Add(powerup.GiveEffect());
             FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/PowerUppickup", GetComponent<Transform>().position);
-            if (powerup.requiresWeapon) {
+            if (powerup.requiresWeapon)
+            {
                 // TODO: Make this generally-applicable. Right now the only weapon powerup is the fire rate one...
                 weapon.GetComponent<GunController>().ClearPrimaryCooldown();
             }
+
             _hudManager.AddPowerupIcon(playerNumber, powerup.icon);
-            powerup.removePowerup(); 
+            powerup.removePowerup();
             Destroy(collider.gameObject);
-        } else if (collider.gameObject.tag == "Weapon") {
+        }
+        else if (collider.gameObject.tag == "Weapon")
+        {
             print("PICKED UP A SECONDARY!");
             WeaponDrop newSecondary = collider.gameObject.GetComponent<WeaponDrop>();
 
@@ -579,11 +627,13 @@ public class Controller : MonoBehaviour
         }
     }
 
-    public void RemoveSecondary() {
+    public void RemoveSecondary()
+    {
         _hudManager?.ChangeSecondary(playerNumber);
     }
 
-    public void AddEffect(Effect e) {
+    public void AddEffect(Effect e)
+    {
         effects.Add(e);
     }
 }

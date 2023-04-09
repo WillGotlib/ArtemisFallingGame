@@ -526,6 +526,7 @@ GameObject:
   - component: {fileID: 3109998347142427980}
   - component: {fileID: 9118361132717935750}
   - component: {fileID: 2111890155133846231}
+  - component: {fileID: 7009632931860476722}
   - component: {fileID: 3349455145992540270}
   - component: {fileID: 1574579996388501985}
   - component: {fileID: 2073565223626383832}
@@ -619,6 +620,19 @@ MonoBehaviour:
   mds: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
   Input: {fileID: 3349455145992540270}
   explosionAnimation: {fileID: 6212968709647210588, guid: 634fe204a901bd041a3f1d9debfa1758, type: 3}
+--- !u!114 &7009632931860476722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6668230694903963034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa6db3f9166ab34e9977f11c605799b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentObject: {fileID: 9007030689590978157}
 --- !u!114 &3349455145992540270
 MonoBehaviour:
   m_ObjectHideFlags: 0
