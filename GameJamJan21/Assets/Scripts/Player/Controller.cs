@@ -548,7 +548,7 @@ public class Controller : MonoBehaviour
         // StartGame.PlayerHealthUpdate(playerNumber, playerHealth);
         _hudManager.ChangeHealth(playerNumber, playerHealth);
         _analyticsManager.HealthEvent(gameObject, playerHealth);
-        if (playerHealth <= 0)
+        if (playerHealth <= 0 && !isLocked)
         {
             Debug.Log(playerNumber);
             isLocked = true;
@@ -559,9 +559,9 @@ public class Controller : MonoBehaviour
             var pos = transform.position + Vector3.zero;
             pos.y = 0;
             explosion.transform.position = pos;
-            Invoke("PlayerDeath", 2);
-            
             GetComponent<ExplodePlayer>().Explode();
+            
+            Invoke(nameof(PlayerDeath), 2);
             // PlayerDeath();
         }
 
