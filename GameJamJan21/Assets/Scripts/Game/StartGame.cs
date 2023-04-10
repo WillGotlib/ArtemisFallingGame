@@ -25,10 +25,7 @@ public class StartGame : MonoBehaviour
 
     public MatchDataScriptable mds;
 
-    private GameObject p1Camera;
-    private GameObject p2Camera;
-    private GameObject p3Camera;
-    private GameObject p4Camera;
+    private readonly GameObject[] _playerCameras = new GameObject[4];
     
     [SerializeField] private GameObject[] tutorialUI;
 
@@ -36,10 +33,10 @@ public class StartGame : MonoBehaviour
     void Start()
     {
         //
-        p1Camera = GameObject.Find("VirtualCameraPlayerOne"); 
-        p2Camera = GameObject.Find("VirtualCameraPlayerTwo"); 
-        p3Camera = GameObject.Find("VirtualCameraPlayerThree"); 
-        p4Camera = GameObject.Find("VirtualCameraPlayerFour"); 
+        _playerCameras[0] = GameObject.Find("VirtualCameraPlayerOne"); 
+        _playerCameras[1] = GameObject.Find("VirtualCameraPlayerTwo"); 
+        _playerCameras[2] = GameObject.Find("VirtualCameraPlayerThree"); 
+        _playerCameras[3] = GameObject.Find("VirtualCameraPlayerFour"); 
         if (mds.primaryColours.Length != mds.accentColours.Length) throw new Exception("colour lists must be the same length");
         levelManager = FindObjectOfType<LevelManager>();
         HandleTutorialUI();
@@ -142,22 +139,9 @@ public class StartGame : MonoBehaviour
         int winner = CheckForMatchEnding(playerNumber);
         if (winner != -1) {
             // TODO: GAME IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
-            if (winner == 0) {
-                var virtualCamera = p1Camera.GetComponent<CinemachineVirtualCamera>();
-                virtualCamera.Priority = 50;
-            }
-            else if (winner == 1) {
-                var virtualCamera = p2Camera.GetComponent<CinemachineVirtualCamera>();
-                virtualCamera.Priority = 50;                
-            }
-            else if (winner == 2) {
-                var virtualCamera = p3Camera.GetComponent<CinemachineVirtualCamera>();
-                virtualCamera.Priority = 50;                
-            }
-            else if (winner == 3) {
-                var virtualCamera = p4Camera.GetComponent<CinemachineVirtualCamera>();
-                virtualCamera.Priority = 50;                
-            }
+            var virtualCamera = _playerCameras[winner].GetComponent<CinemachineVirtualCamera>(); 
+            virtualCamera.Priority = 50;
+            
             StartCoroutine(VictoryMotion(winner));
         }
     }
