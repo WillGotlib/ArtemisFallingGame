@@ -560,6 +560,8 @@ public class Controller : MonoBehaviour
             pos.y = 0;
             explosion.transform.position = pos;
             Invoke("PlayerDeath", 2);
+            
+            GetComponent<ExplodePlayer>().Explode();
             // PlayerDeath();
         }
 
@@ -576,8 +578,6 @@ public class Controller : MonoBehaviour
         print("PLAYER DIED");
         // transform.position = transform.position + new Vector3(0, 10, 0);
         // SetActive(false);
-
-        GetComponent<ExplodePlayer>().Explode();
 
         HideGun();
         if (StartGame)
