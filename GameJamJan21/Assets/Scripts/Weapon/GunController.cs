@@ -53,7 +53,7 @@ public class GunController : MonoBehaviour
         // secondaryCooldownTimer = secondaryCooldown;
         currentCooldownMultiplier = cooldownMultiplier;
         ResetSizeMultiplier();
-        _hudManagerLocal = owner.GetComponent<PlayerHUDManager>();
+        if(owner) _hudManagerLocal = owner.GetComponent<PlayerHUDManager>();
     }
 
     private int _runCounter;
@@ -68,11 +68,11 @@ public class GunController : MonoBehaviour
 
         if (primaryOnCooldown) {
             primaryCooldownTimer -= Time.deltaTime * currentCooldownMultiplier;
-            _hudManagerLocal.UpdateCooldownBar(primaryCooldownTimer / primaryCooldown);
+            if (_hudManagerLocal) _hudManagerLocal.UpdateCooldownBar(primaryCooldownTimer / primaryCooldown);
             if (primaryCooldownTimer <= 0) {
                 Debug.Log("PRIMARY COOLDOWN PERIOD COMPLETED");
                 primaryOnCooldown = false;
-                primaryCooldownTimer = primaryCooldown / owner.GetFireRateBonus();
+                primaryCooldownTimer = primaryCooldown / (owner ? owner.GetFireRateBonus() : 1);
             }
         } else {
             IncreaseBulletSize();
@@ -148,6 +148,9 @@ public class GunController : MonoBehaviour
     // returns true if fired
     public void PrimaryFire()
     {
+#if UNITY_EDITOR // dont run in edit mode since its spawning objects when scrubbing the timeline
+        if (!Application.isPlaying) return;
+#endif
         // Debug.Log("PRIMARY COOLDOWN: " + primaryCooldownTimer);
         if (primaryOnCooldown) {
             Debug.Log("Tried to primary fire, but cooldown has not completed yet.");
@@ -226,8 +229,9 @@ public class GunController : MonoBehaviour
         }
     }
 
-    public void ClearChargeGUI() {
-
+    public void ClearChargeGUI()
+    {
+        if (!owner) return;
         currentChargeAmount = defaultChargeValue;
         _hudManagerLocal.UpdateChargeBar(defaultChargeValue);
     }
