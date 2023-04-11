@@ -96,7 +96,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638165662165047403
+  lastModified: 638163920128026226
   FileSizes:
   - Name: Desktop
     Value: 2026112
@@ -197,7 +197,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638165662164987413
+  lastModified: 638163920127936450
   FileSizes:
   - Name: Desktop
     Value: 1428
@@ -271,7 +271,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638165662165077401
+  lastModified: 638163931610042664
   FileSizes:
   - Name: Desktop
     Value: 701408
@@ -311,7 +311,7 @@ MonoBehaviour:
   - {fileID: 5452340093450609372}
   StringsBanks:
   - {fileID: -632647421326203543}
-  cacheTime: 638165662165077401
+  cacheTime: 638163931610042664
   cacheVersion: 131601
 --- !u!114 &3019759261318802398
 MonoBehaviour:
@@ -409,7 +409,7 @@ MonoBehaviour:
   Path: ArtemisFallingSoundDesign/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638143869491162466
+  lastModified: 638144949984820647
   FileSizes:
   - Name: Desktop
     Value: 1036

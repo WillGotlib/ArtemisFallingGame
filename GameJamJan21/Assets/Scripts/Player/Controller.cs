@@ -145,6 +145,9 @@ public class Controller : MonoBehaviour
             weapon.SetActive(true);
             return;
         }
+        if (!weaponType || !weaponHandBone) {
+            return;
+        }
 
         weapon = Instantiate(weaponType, weaponHandBone);
         weapon.transform.localPosition = new Vector3(.6f, 6f, 0);

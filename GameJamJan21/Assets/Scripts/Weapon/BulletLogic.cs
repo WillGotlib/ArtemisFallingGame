@@ -183,6 +183,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     public void FinishShot(bool explode) {
         _rb.velocity = new Vector3(0,0,0);
+        GetComponent<TrailerCameraScript>()?.Terminate();
 
         bullet.SetActive(false);
         if (explode) {
