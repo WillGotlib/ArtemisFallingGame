@@ -61,14 +61,28 @@ ModelImporter:
         functionName: JetLength
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 50
+        floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.5943396
+      - time: 0.059101004
         functionName: JetLength
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
+        floatParameter: 100
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.24528302
+        functionName: JetLength
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 80
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.33490565
+        functionName: JetLength
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 50
         intParameter: 0
         messageOptions: 0
       - time: 0.4433962
@@ -78,25 +92,11 @@ ModelImporter:
         floatParameter: 20
         intParameter: 0
         messageOptions: 0
-      - time: 0.33490565
+      - time: 0.5943396
         functionName: JetLength
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 100
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.117924534
-        functionName: JetLength
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 70
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.24528302
-        functionName: JetLength
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 80
+        floatParameter: 0
         intParameter: 0
         messageOptions: 0
       transformMask: []
