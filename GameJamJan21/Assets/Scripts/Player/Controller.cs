@@ -158,9 +158,10 @@ public class Controller : MonoBehaviour
     }
 
     public void HideGun()
-    {
-        if (weapon)
+    {   
+        if (weapon) {
             weapon.SetActive(false);
+        }
     }
 
     public void OnMovement(InputValue value)
@@ -436,7 +437,9 @@ public class Controller : MonoBehaviour
         // Actually update GUI
         if (charging)
         {
-            weapon.GetComponent<GunController>().UpdateChargeGUI();
+            if (weapon != null) {
+                weapon.GetComponent<GunController>().UpdateChargeGUI();
+            }
         }
     }
 
@@ -555,6 +558,7 @@ public class Controller : MonoBehaviour
             // GetComponent<PlayerInput>().enabled = false;
             moveDirection = new Vector3(0, 0, 0);
             dynamicCamera.SetActive(false);
+            HideGun();
             explosion = Instantiate(explosionAnimation);
             var pos = transform.position + Vector3.zero;
             pos.y = 0;
@@ -579,7 +583,6 @@ public class Controller : MonoBehaviour
         // transform.position = transform.position + new Vector3(0, 10, 0);
         // SetActive(false);
 
-        HideGun();
         if (StartGame)
             StartGame.ProcessDeath(playerNumber);
 

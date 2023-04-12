@@ -11,8 +11,6 @@ public class StartGame : MonoBehaviour
 
     public GameObject playerPrefab;
     private LevelManager levelManager;
-    private Scene _simulatorScene;
-    private PhysicsScene _physicsScene;
     [SerializeField] private HUDManager _hudManager;
 
     public int playerCount; 
@@ -28,11 +26,13 @@ public class StartGame : MonoBehaviour
     private readonly GameObject[] _playerCameras = new GameObject[4];
     
     [SerializeField] private GameObject[] tutorialUI;
+    private GameObject dynamicCamera;
 
     // Start is called before the first frame update
     void Start()
     {
         //
+        dynamicCamera = GameObject.Find("DynamicCamera");
         _playerCameras[0] = GameObject.Find("VirtualCameraPlayerOne"); 
         _playerCameras[1] = GameObject.Find("VirtualCameraPlayerTwo"); 
         _playerCameras[2] = GameObject.Find("VirtualCameraPlayerThree"); 
@@ -41,6 +41,7 @@ public class StartGame : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         HandleTutorialUI();
         _hudManager.InitHealth();
+        dynamicCamera.SetActive(true);
         StartMatch();
     }
     public void StartMatch()
@@ -140,8 +141,9 @@ public class StartGame : MonoBehaviour
         if (winner != -1) {
             // TODO: GAME IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
             var virtualCamera = _playerCameras[winner].GetComponent<CinemachineVirtualCamera>(); 
-            virtualCamera.Priority = 50;
-            
+            virtualCamera.Priority = 100;
+            virtualCamera.DestroyCinemachineComponent<Cinemachine3rdPersonFollow>();
+            dynamicCamera.SetActive(false);
             StartCoroutine(VictoryMotion(winner));
         }
     }
