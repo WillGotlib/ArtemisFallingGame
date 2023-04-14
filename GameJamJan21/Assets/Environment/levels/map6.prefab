@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 490426828906065385}
   m_Layer: 0
   m_Name: InsideBox4
-  m_TagString: Untagged
+  m_TagString: Reflector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1235,7 +1235,7 @@ GameObject:
   - component: {fileID: 5167342338285711280}
   m_Layer: 0
   m_Name: InsideBox2
-  m_TagString: Untagged
+  m_TagString: Reflector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1429,7 +1429,7 @@ GameObject:
   - component: {fileID: 4459130442026465270}
   m_Layer: 0
   m_Name: InsideBox3
-  m_TagString: Untagged
+  m_TagString: Reflector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1623,7 +1623,7 @@ GameObject:
   - component: {fileID: 3450683626759122288}
   m_Layer: 0
   m_Name: InsideBox1
-  m_TagString: Untagged
+  m_TagString: Reflector
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3194,7 +3194,7 @@ MonoBehaviour:
   - {fileID: 587761572749451170}
   obstacles: {fileID: 3617230064282137439}
   nid: Eruption
-  thumbnail: {fileID: 21300000, guid: eb69a586d58dc4891b84df2bd721cd43, type: 3}
+  thumbnail: {fileID: 21300000, guid: 9842b72c7819c6242869c8c86a27312c, type: 3}
 --- !u!1 &9183154290206518278
 GameObject:
   m_ObjectHideFlags: 0

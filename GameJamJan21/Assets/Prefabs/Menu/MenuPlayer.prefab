@@ -30,7 +30,7 @@ RectTransform:
   m_GameObject: {fileID: 1727477523385163371}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -131,6 +131,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 35c3626db703948268549f72661d5709, type: 3}
   - {fileID: 21300000, guid: 6305ffd538fcf4f3cb3912b33d220e73, type: 3}
   _eventSys: {fileID: 0}
+  offsetVector: {x: 0, y: 0, z: 0}
 --- !u!212 &3493855110424310300
 SpriteRenderer:
   m_ObjectHideFlags: 0

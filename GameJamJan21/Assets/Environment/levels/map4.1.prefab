@@ -653,7 +653,7 @@ MonoBehaviour:
   - {fileID: 357641230696397844}
   obstacles: {fileID: 5430008317158653184}
   nid: Dynamic
-  thumbnail: {fileID: 21300000, guid: dbc62d4ffb3fd449d8c90264625dfecc, type: 3}
+  thumbnail: {fileID: 21300000, guid: 14de5c0495081fe4d883738bda571d43, type: 3}
 --- !u!1001 &201022067355345392
 PrefabInstance:
   m_ObjectHideFlags: 0
