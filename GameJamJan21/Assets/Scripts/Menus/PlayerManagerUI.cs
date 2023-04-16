@@ -90,8 +90,12 @@ public class PlayerManagerUI : MonoBehaviour
         cursor.name = "MenuP" + currNumPlayers;
         var playerInput = cursor.GetComponent<PlayerInput>();
         playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
-        controlScheme.SetControlScheme(playerInput.currentControlScheme);
-        
+
+        print("Control Scheme" + controlScheme);
+        var controls = controlScheme;
+        var input = playerInput.currentControlScheme;
+        print("Input" + input);
+        controls.SetControlScheme(input);
         MenuCursor x = cursor.GetComponent<MenuCursor>();
         x.playerNumber = currNumPlayers - 1;
         x.LoadCursorImage(currNumPlayers - 1);
@@ -99,6 +103,7 @@ public class PlayerManagerUI : MonoBehaviour
         x._eventSys = newPlayer.GetComponent<MultiplayerEventSystem>();
         print("NEW ROOT: " + newPlayer.GetComponent<MultiplayerEventSystem>());
         cursor.transform.SetParent(canvas.transform);
+        cursor.transform.localScale = new Vector3(100, 100, 100);
         x.setManager(this);
         playerCursors.Add(x);
 

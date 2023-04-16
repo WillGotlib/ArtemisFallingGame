@@ -52,7 +52,7 @@ public class CurrentControlScheme : ScriptableObject
     {
         foreach (var gameObject in _listeners)
         {
-            gameObject.BroadcastMessage("OnSchemeChange", currentScheme);
+            if (gameObject != null) gameObject.BroadcastMessage("OnSchemeChange", currentScheme);
         }
     }
 

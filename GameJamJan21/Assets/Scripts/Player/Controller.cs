@@ -115,6 +115,7 @@ public class Controller : MonoBehaviour
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         // menu.SwitchMenuState();
+        print("Got through player setup! hudManager = " + _hudManager);
 
         _jetParticles.Shoot();
 
@@ -129,8 +130,8 @@ public class Controller : MonoBehaviour
         currentCooldown = 0;
         startMomentum = momentum;
 
-        _analyticsManager.HealthEvent(gameObject, playerHealth);
-        _analyticsManager.StockUpdate(gameObject, Stock);
+        _analyticsManager?.HealthEvent(gameObject, playerHealth);
+        _analyticsManager?.StockUpdate(gameObject, Stock);
 
         _capsule = GetComponent<CapsuleCollider>();
 
@@ -283,6 +284,7 @@ public class Controller : MonoBehaviour
     {
         float startTime = Time.time;
         //_jetParticles.Shoot();
+        if (!_jetParticles) _jetParticles = GetComponent<DashJets>();
         _jetParticles.SetStartSpeed(10);
         animator.Dashing = true;
         _dashing = true;
@@ -347,8 +349,8 @@ public class Controller : MonoBehaviour
                 ResetAttributes();
                 _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
 
-                _analyticsManager.RespawnEvent(gameObject);
-                _analyticsManager.StockUpdate(gameObject,
+                _analyticsManager?.RespawnEvent(gameObject);
+                _analyticsManager?.StockUpdate(gameObject,
                     Stock); // maybe put all these events in the game manager rather then in each player and bullet
                 dynamicCamera.SetActive(true);
                 return;
@@ -373,7 +375,7 @@ public class Controller : MonoBehaviour
         if (currentCooldown > 0)
             currentCooldown -= Time.deltaTime;
 
-        if (followingCamera == true)
+        if (followingCamera == true && camera)
             camera.transform.localRotation = Quaternion.Euler(lookDirection);
 
         if (!isGrounded())
@@ -395,13 +397,14 @@ public class Controller : MonoBehaviour
         }
 
         Vector3 newMove = new Vector3(-lookDirection.x, 0, lookDirection.z).normalized;
-        var animationMovement = Quaternion.LookRotation(newMove) * moveDirection;
+
         if (newMove.sqrMagnitude != 0)
         {
+            var animationMovement = Quaternion.LookRotation(newMove) * moveDirection;
+            animator.XSpeed = animationMovement.x;
+            animator.YSpeed = animationMovement.z;
         }
 
-        animator.XSpeed = animationMovement.x;
-        animator.YSpeed = animationMovement.z;
         if (!currentlyDead && moveDirection.magnitude >= 0.1f && !animator.Landing)
         {
             // Handle the actual movement
@@ -459,10 +462,12 @@ public class Controller : MonoBehaviour
             moveDirection.y = -10;
             rb.MovePosition(transform.position + moveDirection.normalized * momentum);
         }
+        if (!_hudManager) _hudManager = FindObjectOfType<HUDManager>();
     }
 
     bool isGrounded()
     {
+        if (!_capsule) _capsule = GetComponent<CapsuleCollider>();
         var bounds = _capsule.bounds;
         return Physics.Raycast(bounds.center, Vector3.down, bounds.extents.y + 0.1f);
     }
@@ -484,7 +489,7 @@ public class Controller : MonoBehaviour
         }
 
         if (!anyEffects)
-            _hudManager.HidePowerupIcon(playerNumber);
+            _hudManager?.HidePowerupIcon(playerNumber);
     }
 
     public bool hasEffect(Effect e)
@@ -535,6 +540,7 @@ public class Controller : MonoBehaviour
             return false;
         }
 
+        if (!flashManager) flashManager = GetComponent<CharacterFlash>();
         if (damageAmount == 0)
         {
             Debug.Log("Direct shot invalidated");
@@ -550,7 +556,7 @@ public class Controller : MonoBehaviour
 
         // StartGame.PlayerHealthUpdate(playerNumber, playerHealth);
         _hudManager.ChangeHealth(playerNumber, playerHealth);
-        _analyticsManager.HealthEvent(gameObject, playerHealth);
+        _analyticsManager?.HealthEvent(gameObject, playerHealth);
         if (playerHealth <= 0 && !isLocked)
         {
             Debug.Log(playerNumber);
@@ -586,7 +592,7 @@ public class Controller : MonoBehaviour
         if (StartGame)
             StartGame.ProcessDeath(playerNumber);
 
-        _analyticsManager.DeathEvent(gameObject);
+        _analyticsManager?.DeathEvent(gameObject);
     }
 
     public void ResetAttributes()
