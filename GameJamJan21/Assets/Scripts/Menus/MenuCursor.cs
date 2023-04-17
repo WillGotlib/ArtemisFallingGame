@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class MenuCursor : MonoBehaviour
 {
@@ -19,10 +20,15 @@ public class MenuCursor : MonoBehaviour
     private PlayerManagerUI manager;
 
     public Vector3 offsetVector;
+
+    [SerializeField] private TMP_Text number;
+    [SerializeField] private Image colouredCircle;
+    
     // Vector3 offsetVector = Vector3.zero;
     
     public void Start() {
         offsetVector = new Vector3(-30f, (-100f * (playerNumber + 1)), 0);
+        number.text = $"{playerNumber + 1}";
         // print($"P{playerNumber}'s offsetVector = {offsetVector}");
     }
 
@@ -52,7 +58,7 @@ public class MenuCursor : MonoBehaviour
             newTarget = manager.GetCurrentMenuDefault().gameObject;
         }
         if (newTarget != currentlySelected) {
-            print("[P" + playerNumber + "] Cursor Target didn't match: cursor had " + currentlySelected + ", ES had " + newTarget);
+            // print("[P" + playerNumber + "] Cursor Target didn't match: cursor had " + currentlySelected + ", ES had " + newTarget);
             currentlySelected = newTarget;
             // print("[P" + playerNumber + "] Moving to :" + newTarget);
         } else if (dir.magnitude != 0) {
@@ -79,14 +85,17 @@ public class MenuCursor : MonoBehaviour
     public void MoveToTarget(GameObject newTarget, Vector3 offset) {
         offset = new Vector3((-30f * (playerNumber + 0.5f)), 0, 0);
         if (currentlySelected != newTarget) {
-            print($"[P{playerNumber}] New target: {newTarget} at {newTarget.transform.position}, With Offset {newTarget.transform.position + offset}");
+            // print($"[P{playerNumber}] New target: {newTarget} at {newTarget.transform.position}, With Offset {newTarget.transform.position + offset}");
             currentlySelected = newTarget;
         }
         transform.position = currentlySelected.transform.position + offset;
     }
 
-    public void LoadCursorImage(int playerNumber) {
-        GetComponent<Image>().sprite = cursorImages[playerNumber];
+    public void LoadCursorColour(Color c) {
+        c.a = 1;
+        print("Setting this cursor to " + c + ", player number is " + playerNumber);
+        colouredCircle.color = c;
+        number.text = $"{playerNumber + 1}";
     }
 
     public void setManager(PlayerManagerUI man) {

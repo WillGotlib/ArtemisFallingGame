@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/MatchDataScriptable", order = 1)]
 public class MatchDataScriptable : ScriptableObject
@@ -26,6 +27,9 @@ public class MatchDataScriptable : ScriptableObject
     
     private int[] playerColourSchemes;
     private List<int> selectedColourSchemes; // For no overlap
+
+    public string[] playerControlSchemes = new string[4];
+    public InputDevice[] playerControlDevices = new InputDevice[4];
 
     public bool tutorial = false;
     

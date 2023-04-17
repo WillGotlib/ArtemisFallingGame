@@ -27,8 +27,12 @@ public abstract class MatchSetupMenu : MonoBehaviour
 
     public void ColourUpdate(int playerNumber, GameObject target) {
         // int playerIndex = mds.playerColourSchemes[playerNumber];
+        // int playerIndex = playerNumber % 2 == 0 ? playerNumber + 1 : playerNumber - 1;
         int playerIndex = playerNumber;
-        print("Colour player " + playerNumber + ", " + mds.primaryColours[0]);
+        // Note: not 100% sure this is right. For p1 and p2 it's right.
+        // What would be better is to manually transfer the control schemes...but that's more complicated
+
+        print("Colour player " + playerNumber + ", " + mds.primaryColours[playerIndex]);
         var colourizer = target.GetComponent<PlayerColourizer>();
         print("Colourizer: " + colourizer);
         colourizer.PrimaryColour = mds.primaryColours[playerIndex];

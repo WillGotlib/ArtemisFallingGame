@@ -30,15 +30,7 @@ public class PlayerManagerUI : MonoBehaviour
         //print("Starting");
         // Instantiate(PlayerPrefab);
         // OnPlayerJoined(); // Call this once
-    }
-
-    private int frameCount;
-    void Update() {
-        frameCount++;
-        if (frameCount % 50 == 0) {
-            frameCount = 0;
-            SelectionCheck();
-        }
+        // OnPlayerJoined(); // Call this once
     }
 
     public void RefreshCursors(GameObject next) {
@@ -109,19 +101,23 @@ public class PlayerManagerUI : MonoBehaviour
         var playerInput = cursor.GetComponent<PlayerInput>();
         playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
 
-        print("Control Scheme" + controlScheme);
-        var controls = controlScheme;
         var input = playerInput.currentControlScheme;
-        print("Input" + input);
-        controls.SetControlScheme(input);
+        var device = playerInput.devices[0]; // Assuming each player has exactly 1 device...
+        print("Input Scheme: " + input + ", Device: " + device);
+        mds.playerControlDevices[currNumPlayers - 1] = device;
+        mds.playerControlSchemes[currNumPlayers - 1] = input;
+        controlScheme.SetControlScheme(input);
+
         MenuCursor x = cursor.GetComponent<MenuCursor>();
         x.playerNumber = currNumPlayers - 1;
-        x.LoadCursorImage(currNumPlayers - 1);
+        // int playerIndex = (currNumPlayers - 1) % 2 == 0 ? currNumPlayers : currNumPlayers - 2;
+        int playerIndex = currNumPlayers - 1;
+        x.LoadCursorColour(mds.primaryColours[playerIndex]);
         print("GETTING EVENT SYSTEM: " + newPlayer.GetComponent<EventSystem>());
         x._eventSys = playerEventSys;
         print("NEW ROOT: " + playerEventSys);
         cursor.transform.SetParent(canvas.transform);
-        cursor.transform.localScale = new Vector3(100, 100, 100);
+        cursor.transform.localScale = new Vector3(1, 1, 1);
         x.setManager(this);
         playerCursors.Add(x);
 
