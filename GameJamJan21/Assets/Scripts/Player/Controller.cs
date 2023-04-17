@@ -339,21 +339,26 @@ public class Controller : MonoBehaviour
             }
 
             deathCooldown -= Time.deltaTime;
-            if (deathCooldown <= 0 && Stock > 0)
+            if (deathCooldown <= 0)
             {
-                // GetComponent<PlayerInput>().enabled = true;
-                isLocked = false;
-                RespawnRoutine();
-                // transform.position = pos;
-                // print("Player position after respawn is: " + transform.position + ", should be " + pos);
-                ResetAttributes();
-                _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
+                GetComponent<ExplodePlayer>().ResetExplosion();
 
-                _analyticsManager?.RespawnEvent(gameObject);
-                _analyticsManager?.StockUpdate(gameObject,
-                    Stock); // maybe put all these events in the game manager rather then in each player and bullet
-                dynamicCamera.SetActive(true);
-                return;
+                if (Stock > 0)
+                {
+                    // GetComponent<PlayerInput>().enabled = true;
+                    isLocked = false;
+                    RespawnRoutine();
+                    // transform.position = pos;
+                    // print("Player position after respawn is: " + transform.position + ", should be " + pos);
+                    ResetAttributes();
+                    _hudManager.ChangeHealth(playerNumber, GlobalStats.baseHealth);
+
+                    _analyticsManager?.RespawnEvent(gameObject);
+                    _analyticsManager?.StockUpdate(gameObject,
+                        Stock); // maybe put all these events in the game manager rather then in each player and bullet
+                    dynamicCamera.SetActive(true);
+                    return;
+                }
             }
         }
         else
@@ -602,7 +607,6 @@ public class Controller : MonoBehaviour
         deathCooldown = GlobalStats.deathCooldown;
         invincibilityCooldown = GlobalStats.invincibilityCooldown;
         currentlyDead = false;
-        GetComponent<ExplodePlayer>().ResetExplosion();
     }
 
     // For use with powerups!
