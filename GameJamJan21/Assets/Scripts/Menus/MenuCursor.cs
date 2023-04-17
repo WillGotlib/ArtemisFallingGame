@@ -30,9 +30,8 @@ public class MenuCursor : MonoBehaviour
         Vector2 vec = value.Get<Vector2>();
         if (!currentlyMoving && vec.magnitude > 0.5) {
             currentlyMoving = true;
-            print("P" + playerNumber + " navigated" + value.Get<Vector2>() + " to " + _eventSys.currentSelectedGameObject);
+            // print("P" + playerNumber + " navigated" + value.Get<Vector2>() + " to " + _eventSys.currentSelectedGameObject);
             StartCoroutine(waitTest(vec));
-            // manager.SelectionCheck();
         } else if (vec.magnitude < 0.05) {
             currentlyMoving = false;
         }
@@ -55,18 +54,17 @@ public class MenuCursor : MonoBehaviour
         if (newTarget != currentlySelected) {
             print("[P" + playerNumber + "] Cursor Target didn't match: cursor had " + currentlySelected + ", ES had " + newTarget);
             currentlySelected = newTarget;
-            print("[P" + playerNumber + "] Moving to :" + newTarget);
+            // print("[P" + playerNumber + "] Moving to :" + newTarget);
         } else if (dir.magnitude != 0) {
             Vector3 dir3 = new Vector3(dir.x , dir.y, 0);
             Selectable currSelectable = currentlySelected.GetComponent<Selectable>().FindSelectable(dir3);
             if (currSelectable) {
-                _eventSys.SetSelectedGameObject(currSelectable.gameObject);
                 currentlySelected = currSelectable.gameObject;
-                print("[P" + playerNumber + "] Had to manually make the move. Now on " + currSelectable);
+                // print("[P" + playerNumber + "] Had to manually make the move. Now on " + currSelectable);
             } else {
                 currSelectable = manager.GetCurrentMenuDefault();
             }
-            print("[P" + playerNumber + "] Moving to :" + currSelectable);
+            // print("[P" + playerNumber + "] Moving to :" + currSelectable);
             currentlySelected = currSelectable.gameObject;
         }
         MoveToTarget(currentlySelected, offsetVector);
@@ -83,8 +81,11 @@ public class MenuCursor : MonoBehaviour
 
     public void MoveToTarget(GameObject newTarget, Vector3 offset) {
         offset = new Vector3((-30f * (playerNumber + 0.5f)), 0, 0);
-        transform.position = newTarget.transform.position + offset;
-        print($"[P{playerNumber}] New target: {newTarget} at {newTarget.transform.position}, With Offset {newTarget.transform.position + offset}");
+        if (currentlySelected != newTarget) {
+            print($"[P{playerNumber}] New target: {newTarget} at {newTarget.transform.position}, With Offset {newTarget.transform.position + offset}");
+            currentlySelected = newTarget;
+        }
+        transform.position = currentlySelected.transform.position + offset;
     }
 
     public void LoadCursorImage(int playerNumber) {
