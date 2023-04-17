@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,4 +28,11 @@ public class MatchDataScriptable : ScriptableObject
     private List<int> selectedColourSchemes; // For no overlap
 
     public bool tutorial = false;
+    
+#if  !UNITY_EDITOR
+    private void Awake()
+    {
+        numPlayers = 0;
+    }
+#endif
 }
