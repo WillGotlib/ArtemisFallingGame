@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Cinemachine;
 
@@ -31,7 +32,6 @@ public class StartGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //
         dynamicCamera = GameObject.Find("DynamicCamera");
         _playerCameras[0] = GameObject.Find("VirtualCameraPlayerOne"); 
         _playerCameras[1] = GameObject.Find("VirtualCameraPlayerTwo"); 
@@ -44,6 +44,7 @@ public class StartGame : MonoBehaviour
         dynamicCamera.SetActive(true);
         StartMatch();
     }
+    
     public void StartMatch()
     {
         foreach (Transform player in transform)

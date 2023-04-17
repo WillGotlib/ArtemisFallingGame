@@ -62,6 +62,8 @@ public class Controller : MonoBehaviour
     private HUDManager _hudManager;
 
     public MatchDataScriptable mds;
+    [NonSerialized] private string _controlScheme;
+    [NonSerialized] private InputDevice _inputDevice;
 
     private DashJets _jetParticles;
     private Collider _capsule;
@@ -83,25 +85,33 @@ public class Controller : MonoBehaviour
     void Start()
     {
         dynamicCamera = GameObject.Find("DynamicCamera");
+        _controlScheme = mds.playerControlSchemes[playerNumber];
+        _inputDevice = mds.playerControlDevices[playerNumber];
+        PlayerInput PlayerInput = GetComponent<PlayerInput>();
+        print($"Previously we had device {PlayerInput.devices[0]} on this player.");
+        print($"About to modify {PlayerInput}: Scheme {mds.playerControlSchemes[playerNumber]}" + 
+                $" and device {mds.playerControlDevices[playerNumber]}");
+        PlayerInput.SwitchCurrentControlScheme(_controlScheme, new InputDevice[] {_inputDevice});
+        print($"Now we have device {PlayerInput.devices[0]} on this player.");
 
-        if (Input.devices.Count == 0)
-        {
-            Input.SwitchCurrentControlScheme("P1Keyboard", Keyboard.current);
-        }
+        // if (Input.devices.Count == 0)
+        // {
+        //     Input.SwitchCurrentControlScheme("P1Keyboard", Keyboard.current);
+        // }
 
-        var unpaired = InputUser.GetUnpairedInputDevices();
-        var ipa = new InputMaster();
+        // var unpaired = InputUser.GetUnpairedInputDevices();
+        // var ipa = new InputMaster();
 
-        foreach (var devices in unpaired)
-        {
-            var scheme = InputControlScheme.FindControlSchemeForDevice(devices, ipa.controlSchemes);
+        // foreach (var devices in unpaired)
+        // {
+        //     var scheme = InputControlScheme.FindControlSchemeForDevice(devices, ipa.controlSchemes);
 
-            if (scheme?.name == "Gamepad2")
-            {
-                Input.SwitchCurrentControlScheme("Gamepad2", devices);
-                break;
-            }
-        }
+        //     if (scheme?.name == "Gamepad2")
+        //     {
+        //         Input.SwitchCurrentControlScheme("Gamepad2", devices);
+        //         break;
+        //     }
+        // }
 
         var rotation = Quaternion.AngleAxis(direction.y * kbdSensitivity, Vector3.up);
         lookDirection = rotation * transform.rotation * Vector3.forward;
@@ -115,7 +125,6 @@ public class Controller : MonoBehaviour
         flashManager = GetComponent<CharacterFlash>();
         menu = FindObjectOfType<PausedMenu>();
         // menu.SwitchMenuState();
-        print("Got through player setup! hudManager = " + _hudManager);
 
         _jetParticles.Shoot();
 

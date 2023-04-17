@@ -51,7 +51,6 @@ public class Spinning : DynamicComponent
         while (true) {
             yield return new WaitForSeconds(reverseIntervals[i]);
             reversing[i] = true;
-            print("REVERSING START!");
             rotationSpeeds[i] = -rotations[i];
         }
     }
