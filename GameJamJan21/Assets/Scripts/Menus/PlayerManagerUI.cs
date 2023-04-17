@@ -32,6 +32,15 @@ public class PlayerManagerUI : MonoBehaviour
         // OnPlayerJoined(); // Call this once
     }
 
+    private int frameCount;
+    void Update() {
+        frameCount++;
+        if (frameCount % 10 == 0) {
+            frameCount = 0;
+            SelectionCheck();
+        }
+    }
+
     public void RefreshCursors(GameObject next) {
         for (int i = 0; i < playerCursors.Count; i++) {
             print("player " + playerCursors[i] + " selected " + next);
@@ -52,7 +61,6 @@ public class PlayerManagerUI : MonoBehaviour
         // Also indicates that THIS IS THE PLAYER MOVING RIGHT NOW.
         print("[P" + playerNumber + "] CURRENTLY SELECTED: " + playerES[playerNumber].currentSelectedGameObject);
         playerCursors[playerNumber].MoveToTarget(playerES[playerNumber].currentSelectedGameObject, playerCursors[playerNumber].offsetVector);
-        
         previousTargets[playerNumber] = playerES[playerNumber].currentSelectedGameObject;
         for (int i = 0; i < playerES.Count; i++) {
             playerES[i].SetSelectedGameObject(previousTargets[i]);
@@ -125,9 +133,9 @@ public class PlayerManagerUI : MonoBehaviour
         // for (int i = 0; i < currNumPlayers; i++) {
         //     OnPlayerJoined();
         // }
-        GameObject cursor = GameObject.Find("MenuP1");
-        print("CURSOR:" + cursor);
-        RefreshCursors(GetCurrentMenuDefault().gameObject);
+        // GameObject cursor = GameObject.Find("MenuP1");
+        // print("CURSOR:" + cursor);
+        // RefreshCursors(GetCurrentMenuDefault().gameObject);
     }
 
     void reset() {
