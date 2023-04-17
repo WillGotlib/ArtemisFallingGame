@@ -14,13 +14,17 @@ namespace Player
 
         private Rigidbody _rb;
         private Collider _col;
-        
+
         private void Start()
         {
             _orig = new();
             Flatten(parentObject);
             _rb = GetComponent<Rigidbody>();
             _col = GetComponent<CapsuleCollider>();
+
+            var bodypartLayer = LayerMask.NameToLayer("Bodypart");
+            foreach (var value in _orig)
+                value.obj.gameObject.layer = bodypartLayer;
         }
 
 #if UNITY_EDITOR && false // for testing
@@ -58,6 +62,7 @@ namespace Player
                 rb.AddForce(Random.rotation * Vector3.up * Random.Range(forceRange.x, forceRange.y));
                 rb.mass = Random.Range(massRange.x, massRange.y);
                 //rb.drag = 50;
+
                 obj.gameObject.AddComponent<BoxCollider>();
             }
         }
