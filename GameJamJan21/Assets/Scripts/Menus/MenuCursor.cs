@@ -64,12 +64,9 @@ public class MenuCursor : MonoBehaviour
             } else {
                 currSelectable = manager.GetCurrentMenuDefault();
             }
-            // print("[P" + playerNumber + "] Moving to :" + currSelectable);
             currentlySelected = currSelectable.gameObject;
         }
         MoveToTarget(currentlySelected, offsetVector);
-        // Do a check for if there are any hovering cursors with a non-selected button
-        // manager.SelectionCheck();
     }
 
     IEnumerator waitTest(Vector2 vec)

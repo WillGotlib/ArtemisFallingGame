@@ -31,7 +31,18 @@ public class LevelSelectMenu : MatchSetupMenu
             levelButtonSet[i].gameObject.GetComponent<MatchMenuSelector>().buttonOptionNumber = i;
         }
         mds.levelIdx = 0;
-        levelButtonSet[0].interactable = false;
+        HighlightButton(levelButtonSet[0]);
+        Button[] gamesButtonSet = gamesButtonParent.GetComponentsInChildren<Button>();
+        for (int i = 0; i < gamesButtonSet.Length; i++) {
+            print("Button " + i + " " + gamesButtonSet[i]);
+            if (i == (mds.numGames / 2) * 2) {
+                HighlightButton(gamesButtonSet[i]);
+                print("Highlighted Button " + i);
+            } else {
+                UnHighlightButton(gamesButtonSet[i]);
+            }
+            
+        }
 
         for (int i = 0; i < mds.numPlayers; i++) {
             print("Dropping robot " + i);
@@ -65,12 +76,16 @@ public class LevelSelectMenu : MatchSetupMenu
 
         // Find the disabled level and bring it back
         Button[] levelButtonSet = levelButtonParent.GetComponentsInChildren<Button>();
-        foreach (Button level in levelButtonSet) { level.interactable = true; }
+        foreach (Button level in levelButtonSet) { 
+            UnHighlightButton(level);
+        }
     }
 
     public void ChooseNumGames(int numGames) {
         Button[] gamesButtonSet = gamesButtonParent.GetComponentsInChildren<Button>();
-        foreach (Button level in gamesButtonSet) { level.interactable = true; }
+        foreach (Button games in gamesButtonSet) { 
+            UnHighlightButton(games);
+        }
     }
 
     public void RefreshPlayerSections() {

@@ -18,11 +18,13 @@ public class MatchMenuSelector : MonoBehaviour
     public void ChooseMap() {
         // print(buttonOptionNumber.ToString());
         matchMenu.ChooseLevel(buttonOptionNumber);
-        Selectable next = GetComponent<Button>().FindSelectable(new Vector3(1,0,0));
-        if (!next) { next = GetComponent<Button>().FindSelectable(new Vector3(-1,0,0));
-        }
-        next.Select();
-        GetComponent<Button>().interactable = false;
+        // Selectable next = GetComponent<Button>().FindSelectable(new Vector3(1,0,0));
+        // if (!next) { next = GetComponent<Button>().FindSelectable(new Vector3(-1,0,0));
+        // }
+        // next.Select();
+
+        matchMenu.HighlightButton(GetComponent<Button>());
+        // GetComponent<Button>().interactable = false;
     }
 
     // Note: This function isn't going to be used in the final build

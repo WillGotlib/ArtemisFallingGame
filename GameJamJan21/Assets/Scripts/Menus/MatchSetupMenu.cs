@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class MatchSetupMenu : MonoBehaviour
 {
@@ -33,5 +34,17 @@ public abstract class MatchSetupMenu : MonoBehaviour
         colourizer.PrimaryColour = mds.primaryColours[playerIndex];
         colourizer.SecondaryColour = mds.accentColours[playerIndex];
         colourizer.initialColourize();
+    }
+
+    public void HighlightButton(Button b) {
+        var colors = b.colors;
+        colors.normalColor = Color.green;
+        b.colors = colors;
+    }
+
+    public void UnHighlightButton(Button b) {
+        var colors = b.colors;
+        colors.normalColor = Color.white;
+        b.colors = colors;
     }
 }
