@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class Trajectory : MonoBehaviour
 {   
     public int reflections;
@@ -13,15 +12,28 @@ public class Trajectory : MonoBehaviour
     private Vector3 direction;
     private Controller player;
     private GunController gunController;
+    private StartGame startGame;
+    private int playerNumber;
 
     [SerializeField] private LineRenderer _line;
     [SerializeField] private int _lineLength;
     [SerializeField] private int _traceLength;
+    [SerializeField] private MatchDataScriptable matchData;
 
     private void Start() {
+        Scene scene = SceneManager.GetActiveScene();
+        startGame = FindObjectOfType<StartGame>();
         gunController = gameObject.GetComponent<GunController>();
         player = gunController.owner;
         _line.sortingOrder = 1;
+
+        if (scene.name == "Gameplay") {
+            for (int i = 0; i < startGame.players.Length; i++) {
+                if (startGame.players[i] == player) {
+                    playerNumber = i;
+                }
+            }
+        }
     }
 
 
@@ -85,8 +97,10 @@ public class Trajectory : MonoBehaviour
                     break;
                 }
                 else {
-                    _line.startColor = Color.white;
-                    _line.endColor = Color.white;
+                    // matchData.primaryColours[]
+                    _line.material.color = matchData.primaryColours[playerNumber];
+                    // _line.startColor = matchData.primaryColours[playerNumber];
+                    // _line.endColor = matchData.accentColours[playerNumber];
                 }
             }
 
