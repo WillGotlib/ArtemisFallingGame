@@ -235,6 +235,7 @@ MonoBehaviour:
   maxBounces: 3
   _bulletSpeed: 15
   cooldown: 1
+  matchData: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
   spin: {x: 0, y: 180, z: 0}
   maxFlightTimeSeconds: 10
   trail: {fileID: 1364202883547966758}

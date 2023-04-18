@@ -13,7 +13,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     private GlobalStats stats;
     
     public static float splashDamage = 0.5f; // TODO: Delete this.
-
+    
     private Rigidbody _rb;
     public GameObject bullet;
     public GameObject splashZone;
@@ -22,6 +22,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     [NonSerialized] public int bounced;
     [SerializeField] private float _bulletSpeed = 5f;
     [SerializeField] public float cooldown;
+    [SerializeField] private MatchDataScriptable matchData;
     private bool _ricocheted = false;
     
     [Tooltip("spin amount every frame for x y z in degrees per second")]
@@ -39,6 +40,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     private AudioSource _audioBullet;
     private AnalyticsManager _analytics;
     private BulletDynamics _dynamics;
+    private StartGame startGame;
+    private int playerNumber;
 
     [Header("Labels")]
     public Sprite thumbnail;
@@ -46,6 +49,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
 
     private void Awake()
     {
+        startGame = FindObjectOfType<StartGame>();
         _rb = GetComponent<Rigidbody>();
         _analytics = FindObjectOfType<AnalyticsManager>();
         _dynamics = GetComponent<BulletDynamics>();
@@ -66,8 +70,14 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         vel = _rb.velocity;
         
         expiration = StartCoroutine(ExpirationTimer());
-
         trail.enabled = true;
+        for (int i = 0; i < startGame.players.Length; i++) {
+            if (startGame.players[i] == shooter) {
+                playerNumber = i;
+            }
+        }
+        trail.startColor = matchData.primaryColours[playerNumber];
+        trail.endColor = matchData.primaryColours[playerNumber];
         // Play sound
         FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Rocket Launch", GetComponent<Transform>().position);
     }
