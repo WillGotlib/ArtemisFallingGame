@@ -16,6 +16,9 @@ public class LevelSelectMenu : MatchSetupMenu
 
     [SerializeField] MenuRunner MenuRunner;
 
+    private int numPlayersReady = 0;
+    private bool selectionOnCooldown = false;
+
     void Start() {
         //Fetch the Dropdown GameObject the script is attached to
         // button_set = GetComponent<TMPro.TMP_Dropdown>();
@@ -119,11 +122,35 @@ public class LevelSelectMenu : MatchSetupMenu
             print("ERROR: Tried to play game with under min # of players (2)");
             // return; 
         }
+        print(mds.numPlayers);
+        print(numPlayersReady);
+        if (mds.numPlayers != numPlayersReady) {
+            print("ERROR: Not all players ready!");
+            return;  
+        }
         if (PausedMenu.isPaused == true) {
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
         }
         if (MenuRunner.navigationCooldownComplete) SceneManager.LoadScene("Gameplay");
         else print("Hit play button too fast. Didn't load into scene");
+    }
+
+    public void ReadyPlayer() {
+        if (selectionOnCooldown) { return; }
+        selectionOnCooldown = true;
+        numPlayersReady += 1;
+        print(numPlayersReady);
+        StartCoroutine(SelectCooldown());
+    }
+
+    private IEnumerator SelectCooldown()
+    {
+        yield return null;
+        selectionOnCooldown = false;
+    }
+
+    public void UnreadyPlayer() {
+        numPlayersReady -= 1;
     }
 }
