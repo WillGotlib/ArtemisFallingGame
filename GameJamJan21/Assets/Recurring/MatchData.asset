@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d317405217159f94a9131f4d5474b95f, type: 3}
   m_Name: MatchData
   m_EditorClassIdentifier: 
-  numPlayers: 3
+  numPlayers: 2
   levelIdx: 0
   numGames: 1
   levels:
@@ -22,7 +22,7 @@ MonoBehaviour:
   - {fileID: 8804078544648102232, guid: 0a792fe37963f9b45b34aecd003c47ba, type: 3}
   - {fileID: 8804078544648102232, guid: 35a4f7632c9bed64d99221373770fffc, type: 3}
   playerWins: 00000000000000000000000000000000
-  lastWinner: 1
+  lastWinner: 0
   primaryColours:
   - {r: 0.61260146, g: 0.7075472, b: 0.45723566, a: 0}
   - {r: 0.9150943, g: 0.34618747, b: 0.12517802, a: 0}
@@ -38,4 +38,9 @@ MonoBehaviour:
   - {fileID: 2160589781498056887, guid: b7577be1fd91c4a7a9fab71345e58277, type: 3}
   playerSecondaries: 00000000000000000000000000000000
   skipMainMenu: 0
+  playerControlSchemes:
+  - Gamepad2
+  - P1Keyboard
+  - 
+  - 
   tutorial: 0
