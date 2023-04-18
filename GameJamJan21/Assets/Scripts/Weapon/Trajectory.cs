@@ -40,7 +40,6 @@ public class Trajectory : MonoBehaviour
     private void Update() {
 
         ray = new Ray(transform.position, transform.forward);
-    
 
         _line.positionCount = 1;
         _line.SetPosition(0, transform.position);
@@ -51,7 +50,7 @@ public class Trajectory : MonoBehaviour
 
         for (int i = 0; i < reflections; i++)
         {
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, remainingLineLength, ~layerMask)) {
+            if (Physics.SphereCast(ray.origin, 0.14f, ray.direction, out hit, remainingLineLength, ~layerMask)) {
                 _line.positionCount += 1;
                 _line.SetPosition(_line.positionCount -1, hit.point);
                 remainingLineLength -= Vector3.Distance(ray.origin, hit.point);
@@ -74,7 +73,7 @@ public class Trajectory : MonoBehaviour
 
         for (int i = 0; i < reflections; i++)
         {
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, remainingTraceLength, ~layerMask)) {
+            if (Physics.SphereCast(ray.origin, 0.14f, ray.direction, out hit, remainingTraceLength, ~layerMask)) {
                 remainingTraceLength -= Vector3.Distance(ray.origin, hit.point);
                 if (hit.collider.tag == "Reflector") {
                     ray = new Ray(hit.point, Vector3.Reflect(ray.direction, hit.normal));
