@@ -150,12 +150,11 @@ public class StartGame : MonoBehaviour
     }
 
     IEnumerator VirtualCameraActivate(CinemachineVirtualCamera virtualCamera, int winner) {
-            yield return new WaitForSecondsRealtime(1);
-            virtualCamera.Priority = 100;
-            virtualCamera.DestroyCinemachineComponent<Cinemachine3rdPersonFollow>();
-            dynamicCamera.SetActive(false);
-            StartCoroutine(VictoryMotion(winner));
-
+        yield return new WaitForSecondsRealtime(1);
+        virtualCamera.Priority = 100;
+        virtualCamera.DestroyCinemachineComponent<Cinemachine3rdPersonFollow>();
+        dynamicCamera.SetActive(false);
+        StartCoroutine(VictoryMotion(winner));
     }
 
     IEnumerator VictoryMotion(int winner)

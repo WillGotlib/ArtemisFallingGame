@@ -15,6 +15,10 @@ public class MainMenu : MonoBehaviour
     {
         ResetLanding();
         version.text = Application.version;
+        for (int i = 0; i < 4; i++) {
+            mds.playerControlDevices[i] = null;
+            mds.playerControlSchemes[i] = "";
+        }
     }
 
     [SerializeField] GameObject PreMatchMenu;

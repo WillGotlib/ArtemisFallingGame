@@ -22,9 +22,9 @@ public class VictoryMenu : MatchSetupMenu
             if (mds.lastWinner == i) {
                 ColourUpdate(i, robots[0]);
             } else {
-                j++;
                 ColourUpdate(i, robots[j]);
                 loserRobots[j].SetActive(true);
+                j++;
             }
         }
         int sum = 0;
@@ -47,6 +47,7 @@ public class VictoryMenu : MatchSetupMenu
                 break;
             }
         }
+        ResetData();
         if (newMatch) {
             SceneManager.LoadScene("Gameplay");
         } else {

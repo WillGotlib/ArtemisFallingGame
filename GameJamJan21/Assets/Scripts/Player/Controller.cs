@@ -91,7 +91,7 @@ public class Controller : MonoBehaviour
         _controlScheme = mds.playerControlSchemes[playerNumber];
         _inputDevice = mds.playerControlDevices[playerNumber];
         PlayerInput PlayerInput = GetComponent<PlayerInput>();
-        print($"Previously we had device {PlayerInput.devices[0]} on this player.");
+        // print($"Previously we had device {PlayerInput.devices[0]} on this player.");
         print($"About to modify {PlayerInput}: Scheme {mds.playerControlSchemes[playerNumber]}" + 
                 $" and device {mds.playerControlDevices[playerNumber]}");
         PlayerInput.SwitchCurrentControlScheme(_controlScheme, new InputDevice[] {_inputDevice});
