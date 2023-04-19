@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: -313486080353990170}
   - component: {fileID: 1820133773136197765}
   - component: {fileID: 1833830663137018865}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FreezePickup
   m_TagString: Weapon
   m_Icon: {fileID: 0}

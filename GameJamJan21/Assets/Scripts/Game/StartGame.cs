@@ -140,13 +140,22 @@ public class StartGame : MonoBehaviour
         
         int winner = CheckForMatchEnding(playerNumber);
         if (winner != -1) {
+            Debug.Log("winner decided");
+            players[winner].isWinner = true;
+            players[winner].invincibilityCooldown = 10f;
             // TODO: GAME IS OVER HERE. DO WHATEVER WE NEED TO DO (zoom in on player, etc...)
-            var virtualCamera = _playerCameras[winner].GetComponent<CinemachineVirtualCamera>(); 
+            var virtualCamera = _playerCameras[winner].GetComponent<CinemachineVirtualCamera>();
+            StartCoroutine(VirtualCameraActivate(virtualCamera, winner));
+        }
+    }
+
+    IEnumerator VirtualCameraActivate(CinemachineVirtualCamera virtualCamera, int winner) {
+            yield return new WaitForSecondsRealtime(1);
             virtualCamera.Priority = 100;
             virtualCamera.DestroyCinemachineComponent<Cinemachine3rdPersonFollow>();
             dynamicCamera.SetActive(false);
             StartCoroutine(VictoryMotion(winner));
-        }
+
     }
 
     IEnumerator VictoryMotion(int winner)

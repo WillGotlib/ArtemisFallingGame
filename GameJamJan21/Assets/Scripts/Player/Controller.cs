@@ -50,7 +50,7 @@ public class Controller : MonoBehaviour
 
     // These decrease as time goes on
     private float deathCooldown = GlobalStats.deathCooldown;
-    private float invincibilityCooldown;
+    public float invincibilityCooldown;
 
     private StartGame StartGame;
     private List<Effect> effects = new List<Effect>();
@@ -81,9 +81,12 @@ public class Controller : MonoBehaviour
 
     private bool isLocked = false;
 
+    public bool isWinner;
+
     // Start is called before the first frame update
     void Start()
     {
+        isWinner = false;
         dynamicCamera = GameObject.Find("DynamicCamera");
         _controlScheme = mds.playerControlSchemes[playerNumber];
         _inputDevice = mds.playerControlDevices[playerNumber];
@@ -380,7 +383,7 @@ public class Controller : MonoBehaviour
         }
 
         // ASSERTION: If player gets to this point they are not dead.
-        if (invincibilityCooldown > 0)
+        if (invincibilityCooldown > 0 && !isWinner)
         {
             flashManager.InvincibilityFlash();
             invincibilityCooldown -= Time.deltaTime;
@@ -584,6 +587,8 @@ public class Controller : MonoBehaviour
             pos.y = 0;
             explosion.transform.position = pos;
             GetComponent<ExplodePlayer>().Explode();
+            if (StartGame)
+                StartGame.ProcessDeath(playerNumber);
             
             Invoke(nameof(PlayerDeath), 2);
             // PlayerDeath();
@@ -602,9 +607,6 @@ public class Controller : MonoBehaviour
         print("PLAYER DIED");
         // transform.position = transform.position + new Vector3(0, 10, 0);
         // SetActive(false);
-
-        if (StartGame)
-            StartGame.ProcessDeath(playerNumber);
 
         _analyticsManager?.DeathEvent(gameObject);
     }

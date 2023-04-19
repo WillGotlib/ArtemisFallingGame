@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: -3987628115731665141}
   - component: {fileID: 4068034673374940072}
   - component: {fileID: 7193682469899099166}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: MolotovPickup
   m_TagString: Weapon
   m_Icon: {fileID: 0}
