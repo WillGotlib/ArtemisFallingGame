@@ -5579,7 +5579,7 @@ MonoBehaviour:
   - {fileID: 1021073401}
   defaultButtons:
   - {fileID: 709711295}
-  - {fileID: 657580559}
+  - {fileID: 1951768359}
   - {fileID: 747764054}
   MainMenu: {fileID: 2092663301}
   LevelSelectMenu: {fileID: 1237094283}
