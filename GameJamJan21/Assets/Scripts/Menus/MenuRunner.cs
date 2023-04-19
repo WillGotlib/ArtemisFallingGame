@@ -17,12 +17,15 @@ public class MenuRunner : MonoBehaviour
     public LevelSelectMenu LevelSelectMenu;
     [SerializeField] PlayerManagerUI PlayerManagerUI;
 
+    public bool navigationCooldownComplete = true;
+
     // Start is called before the first frame update
     void Start()
     {
         foreach (GameObject menu in menusPriority) menu.SetActive(false);
         menusPriority[startingIndex].SetActive(true);
         LevelSelectMenu.RefreshPlayerSections();
+        navigationCooldownComplete = true;
     }
 
     public Button GetCurrentMenuDefault() {
@@ -37,10 +40,8 @@ public class MenuRunner : MonoBehaviour
         LevelSelectMenu.RefreshPlayerSections();
     }
 
-    public bool navigationCooldownComplete = true;
-
     private IEnumerator NavigationCooldown() {
-        yield return new WaitForSeconds(0.2f);
+        yield return null;
         navigationCooldownComplete = true;
     }
 
