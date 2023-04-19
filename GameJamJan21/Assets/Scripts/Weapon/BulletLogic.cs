@@ -72,7 +72,6 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         vel = _rb.velocity;
         
         expiration = StartCoroutine(ExpirationTimer());
-        trail.enabled = true;
         for (int i = 0; i < startGame.players.Length; i++) {
             if (startGame.players[i] == shooter) {
                 playerNumber = i;

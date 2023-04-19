@@ -578,7 +578,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5623787596941181516}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -980,7 +980,7 @@ MonoBehaviour:
   maxBounces: 1
   _bulletSpeed: 10
   cooldown: 2
-  matchData: {fileID: 0}
+  matchData: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
   spin: {x: 270, y: 0, z: 0}
   maxFlightTimeSeconds: 10
   trail: {fileID: 7718076483670826406}
