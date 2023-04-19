@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
 using Analytics;
 using Google.Protobuf;
 using UnityEngine;
-using UnityEngine.InputSystem;           
-using UnityEngine.InputSystem.Controls;
 
 
 public class BulletLogic : MonoBehaviour, ITrackableScript
@@ -69,7 +66,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         _rb.velocity = vel.normalized * _bulletSpeed * GetBulletSpeedBonus();
     }
 
-    public void Fire(Vector3 direction, bool ghost)
+    public void Fire(Vector3 direction)
     {
         _rb.velocity = direction.normalized * (_bulletSpeed * GetBulletSpeedBonus());
         vel = _rb.velocity;

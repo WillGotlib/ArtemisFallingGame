@@ -162,7 +162,7 @@ public class GunController : MonoBehaviour
             bullet.transform.position = cur_pos;
             bullet.transform.rotation = this.transform.rotation;
             bullet.GetComponent<BulletLogic>().setShooter(owner);
-            bullet.GetComponent<BulletLogic>().Fire(this.transform.forward * 2, false);
+            bullet.GetComponent<BulletLogic>().Fire(transform.forward * 2);
             primaryOnCooldown = true;
             DecreaseBulletSize();
             if (charged) {
@@ -183,13 +183,13 @@ public class GunController : MonoBehaviour
         
         // Instantiate and set up the projectile.
         GameObject grenade = UnityEngine.Object.Instantiate(secondaryType);
-        Vector3 cur_pos = this.transform.position + (this.transform.forward / 3);
+        Vector3 cur_pos = transform.position + (transform.forward / 3);
         grenade.transform.position = cur_pos;
-        grenade.transform.rotation = this.transform.rotation;
+        grenade.transform.rotation = transform.rotation;
 
         // Make necessary setup calls on the projectile to get it going. Now it's out of our hands.
         grenade.GetComponent<BulletLogic>().setShooter(owner);
-        grenade.GetComponent<BulletLogic>().Fire(this.transform.forward, false);
+        grenade.GetComponent<BulletLogic>().Fire(transform.forward);
 
         // Deal with the projectile's continued availability to the player.
         secondaryAmmoCount--;
