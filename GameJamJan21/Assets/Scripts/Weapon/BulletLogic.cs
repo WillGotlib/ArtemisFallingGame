@@ -47,12 +47,17 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
     public Sprite thumbnail;
     public string label;
 
+    private const string TrailColourName = "_trail_colour";
+    private int _trailColourId;
+
     private void Awake()
     {
         startGame = FindObjectOfType<StartGame>();
         _rb = GetComponent<Rigidbody>();
         _analytics = FindObjectOfType<AnalyticsManager>();
         _dynamics = GetComponent<BulletDynamics>();
+
+        _trailColourId = Shader.PropertyToID(TrailColourName);
     }
 
     // Update is called once per frame
@@ -76,8 +81,8 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
                 playerNumber = i;
             }
         }
-        trail.startColor = matchData.primaryColours[playerNumber];
-        trail.endColor = matchData.primaryColours[playerNumber];
+        
+        trail.material.SetColor(_trailColourId, matchData.primaryColours[playerNumber]);
         // Play sound
         FMODUnity.RuntimeManager.PlayOneShot("event:/Actions/Rocket Launch", GetComponent<Transform>().position);
     }
