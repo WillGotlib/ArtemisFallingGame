@@ -122,8 +122,7 @@ public class LevelSelectMenu : MatchSetupMenu
             print("ERROR: Tried to play game with under min # of players (2)");
             // return; 
         }
-        print(mds.numPlayers);
-        print(numPlayersReady);
+        print($"{numPlayersReady}/{mds.numPlayers} players ready");
         if (mds.numPlayers != numPlayersReady) {
             print("ERROR: Not all players ready!");
             return;  
@@ -140,7 +139,7 @@ public class LevelSelectMenu : MatchSetupMenu
         if (selectionOnCooldown) { return; }
         selectionOnCooldown = true;
         numPlayersReady += 1;
-        print(numPlayersReady);
+        print($"{numPlayersReady} players ready");
         StartCoroutine(SelectCooldown());
     }
 
