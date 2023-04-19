@@ -39,6 +39,38 @@ PrefabInstance:
       propertyPath: _bulletSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 7718076483670826406, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718076483670826406, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718076483670826406, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718076483670826406, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718076483670826406, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718076483670826406, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718076483670826406, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7718076483670826406, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8157800748615938826, guid: 71437f0dbcc6f3141b7cc67058156b61, type: 3}
       propertyPath: m_RootOrder
       value: 0

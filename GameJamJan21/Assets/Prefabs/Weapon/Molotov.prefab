@@ -651,8 +651,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.754717, g: 0.3097188, b: 0.3097188, a: 1}
-      key1: {r: 0.3584906, g: 0.31283376, b: 0.31283376, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0.3584906, g: 0.31283376, b: 0.31283376, a: 0.8117647}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -660,7 +660,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65150
+      ctime1: 65535
       ctime2: 65150
       ctime3: 0
       ctime4: 0
@@ -976,14 +976,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 6117381863587361867}
+  splashZone: {fileID: 6234232466112906086, guid: da5c5bc93ddf0ad4792869db5085d860, type: 3}
   maxBounces: 1
   _bulletSpeed: 10
   cooldown: 2
+  matchData: {fileID: 0}
   spin: {x: 270, y: 0, z: 0}
-  splashZone: {fileID: 6234232466112906086, guid: da5c5bc93ddf0ad4792869db5085d860, type: 3}
-  rotationSpeed: 0.3
-  trail: {fileID: 7718076483670826406}
   maxFlightTimeSeconds: 10
+  trail: {fileID: 7718076483670826406}
   thumbnail: {fileID: 7482667652216324306, guid: 7e9b43615aa6041f0b764a72e9173450, type: 3}
   label: Molotov
 --- !u!108 &5761309379727644029
@@ -1102,7 +1102,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9165814152039018566}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
   m_Name: 

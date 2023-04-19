@@ -43,6 +43,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.21
       objectReference: {fileID: 0}
+    - target: {fileID: -718981201349760569, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 210597942409183111, guid: ae2e742bf8aa75049b964a43c3aa0a4d, type: 3}
       propertyPath: m_Name
       value: MolotovSplash
