@@ -63,7 +63,7 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
         bullet.transform.Rotate(spin * Time.deltaTime);
         
         // TODO: Look at this. Wasteful making this run every frame...
-        _rb.velocity = vel.normalized * _bulletSpeed * GetBulletSpeedBonus();
+        _rb.velocity = vel.normalized * (_bulletSpeed * GetBulletSpeedBonus());
     }
 
     public void Fire(Vector3 direction)
@@ -109,19 +109,24 @@ public class BulletLogic : MonoBehaviour, ITrackableScript
        
         // Check tag for Transient or Reflector
         // Reflect if applicable
-        if (collision.gameObject.tag == "Transient")
+        switch (collision.gameObject.tag)
         {
-            EncounterTransient(collision);
-        } else if (collision.gameObject.tag == "Player") {
-            EncounterPlayer(collision);
-        } else if (collision.gameObject.tag == "Powerup") {
-            // Do nothing lol
-        } else if (collision.gameObject.tag == "Grenade") {
-            EncounterGrenade(collision);
-        }
-        else  {
-            // Ricochet
-            ricochetBullet(collision);
+            case "Transient":
+                EncounterTransient(collision);
+                break;
+            case "Player":
+                EncounterPlayer(collision);
+                break;
+            case "Powerup":
+                // Do nothing lol
+                break;
+            case "Grenade":
+                EncounterGrenade(collision);
+                break;
+            default:
+                // Ricochet
+                ricochetBullet(collision);
+                break;
         }
     }
 
