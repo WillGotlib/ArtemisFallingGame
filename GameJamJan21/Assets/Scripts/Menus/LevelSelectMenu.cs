@@ -123,10 +123,10 @@ public class LevelSelectMenu : MatchSetupMenu
             // return; 
         }
         print($"{numPlayersReady}/{mds.numPlayers} players ready");
-        if (mds.numPlayers != numPlayersReady) {
-            print("ERROR: Not all players ready!");
-            return;  
-        }
+        // if (mds.numPlayers != numPlayersReady) { todo temp disabled since its kinda broken
+        //     print("ERROR: Not all players ready!");
+        //     return;  
+        // }
         if (PausedMenu.isPaused == true) {
             Time.timeScale = 1f;
             PausedMenu.isPaused = false;
