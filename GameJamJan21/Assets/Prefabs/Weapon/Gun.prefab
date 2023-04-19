@@ -509,6 +509,7 @@ MonoBehaviour:
   _line: {fileID: -6796899859370855475}
   _lineLength: 10
   _traceLength: 20
+  matchData: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
 --- !u!120 &-6796899859370855475
 LineRenderer:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ public class HUDManager : MonoBehaviour
     [SerializeField] GameObject StockBox;
 
     private int staminaDisplayMultiplier = 30;
+    [SerializeField] private GameObject[] playerIcons;
 
     void Start() {
         playerStocks = new int[mds.numPlayers];
@@ -33,6 +34,11 @@ public class HUDManager : MonoBehaviour
                 playerSections[i].SetActive(false);
                 continue;
             }
+            playerIcons[i].GetComponent<Image>().color = mds.primaryColours[i];
+            var tempImg = playerIcons[i].GetComponent<Image>().color;
+            tempImg.g = 0.7f;
+            tempImg.a = 1f;
+            playerIcons[i].GetComponent<Image>().color = tempImg;
             playerHealths[i] = GlobalStats.baseHealth;
             playerHealthBars[i].value = playerHealths[i];
             playerStaminaBars[i].value = 100;

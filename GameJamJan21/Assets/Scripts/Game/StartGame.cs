@@ -17,7 +17,7 @@ public class StartGame : MonoBehaviour
     public int playerCount; 
     // Number of players participating in this game
     public int stockCount;
-    private Controller[] players;
+    public Controller[] players;
     
     [SerializeField] private float deathCooldown; // Amount of time before a player respawns
     [SerializeField] private float invincibilityCooldown; // Amount of time after respawning that the player cannot die

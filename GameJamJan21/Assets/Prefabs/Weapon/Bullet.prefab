@@ -113,8 +113,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.754717, g: 0.3097188, b: 0.3097188, a: 1}
-      key1: {r: 0.3584906, g: 0.31283376, b: 0.31283376, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0.3584906, g: 0.31283376, b: 0.31283376, a: 0.8117647}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -122,7 +122,7 @@ TrailRenderer:
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
-      ctime1: 65150
+      ctime1: 65535
       ctime2: 65150
       ctime3: 0
       ctime4: 0
@@ -235,6 +235,7 @@ MonoBehaviour:
   maxBounces: 3
   _bulletSpeed: 15
   cooldown: 1
+  matchData: {fileID: 11400000, guid: b440255ae56c4e8498de26b28a555f0e, type: 2}
   spin: {x: 0, y: 180, z: 0}
   maxFlightTimeSeconds: 10
   trail: {fileID: 1364202883547966758}
